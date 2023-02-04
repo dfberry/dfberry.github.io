@@ -41,7 +41,7 @@ jobs:
       - name: Share artifact inside workflow
         uses: actions/upload-artifact@v3
         with:
-          name: docusaurus-build
+          name: github-pages
           path: build
           if-no-files-found: error
 
