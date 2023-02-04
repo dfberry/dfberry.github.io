@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[327],{8316:a=>{a.exports=JSON.parse('{"label":"Type guard","permalink":"/tags/type-guard","allTagsPath":"/tags","count":1}')}}]);
