@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[535],{5641:t=>{t.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"TypeScript type guard for empty JSON object","permalink":"/2023.02.04-github-graphql-commit-history-with-typescript"}]}')}}]);
