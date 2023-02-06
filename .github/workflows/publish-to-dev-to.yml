@@ -19,9 +19,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: publish blog to dev.to
-        uses: protiumx/blogpub@main
+      # - name: publish blog to dev.to
+      #   uses: protiumx/blogpub@main
+      #   with:
+      #     articles_folder: blog
+      #     devto_api_key: ${{ secrets.DEV_TO_GIT_TOKEN }}
+      #     gh_token: ${{ secrets.GH_TOKEN }}
+      - name: Sycing Article to dev.to
+        uses: ful1e5/TheActionDev@v3
         with:
-          articles_folder: blog
-          devto_api_key: ${{ secrets.DEV_TO_GIT_TOKEN }}
-          gh_token: ${{ secrets.GH_TOKEN }}
+          api-key: ${{ secrets.DEV_TO_GIT_TOKEN }} # Store your 'api-key' in Github Secret
+          directory: ./blog # Your article directory
+          ignore: Development.md, Production.md # Markdown file you wan't to ignore. Multple files separated by ,(comma)
