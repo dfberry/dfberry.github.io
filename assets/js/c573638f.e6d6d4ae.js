@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[964],{8866:a=>{a.exports=JSON.parse('[{"label":"TypeScript","permalink":"/tags/type-script","count":1},{"label":"Type guard","permalink":"/tags/type-guard","count":1},{"label":"Optional params","permalink":"/tags/optional-params","count":1}]')}}]);
