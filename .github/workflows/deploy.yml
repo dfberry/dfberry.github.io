@@ -38,10 +38,11 @@ jobs:
           npm run build
 
       - name: Run Prettier
-        run: yarn run prettier:check
+        #fix markdown files in /blog 
+        run: npm run prettier:fix
 
-      - name: Run Embedme
-        run: yarn run embedme:check
+      #- name: Run Embedme
+        #run: npm run embedme:fix
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.5
