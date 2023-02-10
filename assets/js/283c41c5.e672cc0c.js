@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[22],{7687:s=>{s.exports=JSON.parse('{"label":"Azure CLI","permalink":"/tags/azure-cli","allTagsPath":"/tags","count":1}')}}]);
