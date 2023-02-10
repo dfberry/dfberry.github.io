@@ -6,7 +6,11 @@ sidebar_label: "2023.02.09 Azure Cloud Shell FAQ"
 title: "Azure Cloud Shell Frequently asked questions"
 description: "Things I wish I knew about Azure CLI and Azure Cloud shell"
 published: true
-tags: Azure, Azure CLI, Azure Cloud Shell, Tips
+tags: 
+  - Azure
+  - Azure CLI
+  - Azure Cloud Shell
+  - Tips
 updated: 2023-02-09 05:00 PST
 ---
 
