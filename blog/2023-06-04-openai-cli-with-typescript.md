@@ -48,7 +48,7 @@ Remember to store and pass along the conversation so Azure OpenAI has the contex
 
 This conversation manager class is a starting point to your first Azure OpenAI app. After you [create your Azure OpenAI resource](https://learn.microsoft.com/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal), you need to pass in your Azure OpenAI endpoint (URL), key, and deployment name to use this class. 
 
-```
+```typescript
 import {
   OpenAIClient,
   AzureKeyCredential,
@@ -212,7 +212,7 @@ export default class OpenAIConversationClient {
 
 Now that the Azure OpenAI library is built, you need a conversational loop. I used [commander](https://www.npmjs.com/package/commander) with [readline's question](https://nodejs.org/api/readline.html#rlquestionquery-options) to build the CLI. 
 
-```
+```typescript
 import { Command } from 'commander';
 import * as dotenv from 'dotenv';
 import { writeFileSync } from 'fs';
