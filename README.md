@@ -31,4 +31,5 @@ The ordering of an item in the directory is controlled in each file's metadata `
 3. Go to profile for Dev.to.
 4. Under settings, fetch RSS feed.
 5. Blog post is in drafts, review it to make sure images and code blocks display correctly.
-6. Then publish.
+6. Code blocks may need to be recopied because they don't have end of lines.
+7. Change publish from false to true in the top metadata.
