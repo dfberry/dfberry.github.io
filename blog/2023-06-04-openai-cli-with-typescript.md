@@ -384,3 +384,6 @@ program.parse(process.argv);
 
 [Full sample code for Conversational loop](https://github.com/Azure-Samples/azure-typescript-e2e-apps/tree/main/cli-openai)
 
+## Learn more
+
+Learn more about how to [create this Conversational CLI](https://learn.microsoft.com/azure/developer/javascript/openai-cli).
