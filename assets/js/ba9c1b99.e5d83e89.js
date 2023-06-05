@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[8100],{3288:a=>{a.exports=JSON.parse('{"label":"Azure OpenAI","permalink":"/tags/azure-open-ai","allTagsPath":"/tags","count":1}')}}]);
