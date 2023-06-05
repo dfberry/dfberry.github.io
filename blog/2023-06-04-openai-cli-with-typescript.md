@@ -8,8 +8,8 @@ description: "Running boilerplate for a Conversational CLI with Azure OpenAI and
 published: false
 tags: 
   - Azure
-  - Azure OpenAI
-  - JS/TS
+  - OpenAI
+  - TypeScript
   - Sample
 updated: 2023-06-04 05:00 PST
 ---
