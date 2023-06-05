@@ -23,3 +23,12 @@ npm run local
 The appearance of an item in the left nav is based on a new file in the `./docs` directory. 
 
 The ordering of an item in the directory is controlled in each file's metadata `sidebar_position: 1`. The absense of the property means file are sorted in alpahnum order.
+
+## Publish to dev.to
+
+1. Push to GitHub, wait for pipelines to complete.
+2. View site on GitHub pages
+3. Go to profile for Dev.to.
+4. Under settings, fetch RSS feed.
+5. Blog post is in drafts, review it to make sure images and code blocks display correctly.
+6. Then publish.
