@@ -43,7 +43,11 @@ jobs:
 
       #- name: Run Embedme
         #run: npm run embedme:fix
-
+      - name: Proofread PR
+        uses: awreck/proofread-action@v1
+        id: proofread
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Required to write a PR review
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
