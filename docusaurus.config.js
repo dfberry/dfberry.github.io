@@ -51,6 +51,13 @@ const site = require('./site.config');
           customCss: require.resolve('./src/css/custom.css'),
         },
       }),
+      '@docusaurus/preset-classic',
+      {
+        gtag: {
+          trackingID: 'G-2F4N5RRH1Q',
+          anonymizeIP: false,
+        },
+      },
     ],
   ],
 
