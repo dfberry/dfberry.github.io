@@ -25,7 +25,7 @@ While this project is focused on cloud-native, I set up my environment the same 
 
 If you haven't heard of dev containers, let me welcome you to the club. I ❤️  dev containers. 
 
-    A development container (or dev container for short) allows you to use a container as a full-featured development environment.
+"A development container (or dev container for short) allows you to use a container as a full-featured development environment."
     
 Visual Studio Code has taken this idea, realized how hard Docker can be for newbies, and sorted it out so it is generally painless for beginners. By the time you want to expand beyond the beginner environment, you are ready to ask the right questions. 
 
