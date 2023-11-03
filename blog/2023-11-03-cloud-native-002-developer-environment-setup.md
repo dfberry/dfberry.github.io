@@ -84,7 +84,7 @@ For now, the most important parts are the `image` which is equivalent to your op
 
 Since I know I want to use Copilot as my pair programmer, I need to add that to the environment. In the Visual Studio extensions, search for `GitHub Copilot Chat` and select `Install in Dev Container`. This adds the appropriate setting to the `customizations` property.
 
-Once final setting I use a bit is the `postCreateCommand`. I usually add some npm packages for developer experience here but for now I just want to make sure the correct versions of the tools are in the environment. 
+One final setting I use a bit is the `postCreateCommand`. I usually add some npm packages for developer experience here but for now I just want to make sure the correct versions of the tools are in the environment. 
 
 At this point, my `devcontainer.json` looks like: 
 
