@@ -50,7 +50,7 @@ This is pretty routine for me - I've been in Dockerland for many years so I have
 
 **Prompt**: I need to set up a Todo microservice. What Visual Studio Code dev container would you suggest? 
 
-**Copilot**: For a JavaScript project using npm and React, I would suggest using a Node.js based dev container. Visual Studio Code has a predefined Node.js & TypeScript dev container that could be a good starting point.
+**GitHub Copilot**: For a JavaScript project using npm and React, I would suggest using a Node.js based dev container. Visual Studio Code has a predefined Node.js & TypeScript dev container that could be a good starting point.
 
 Here's a basic setup:
 
@@ -124,6 +124,14 @@ At this point, my `devcontainer.json` looks like:
 
 Now that you have a working dev container, check it into source control and ask everyone on the team to try it out. This simple container should work on all hosts (`host` is the term for the machine running the container). More complicated dev containers may not work. 
 
-## Wrap up
+## Where's the Cloud-Native? 
 
 You may be wondering why there isn't any cloud-native code yet. Don't worry, I'll get to it. Setting up a dev environment that works for every member of your team paves the way to a smooth development experience. Take the time to make sure the dev container is configured correctly and works for everyone. 
+
+## Sample Code Repository
+
+* [cloud-native-todo repo, 002-developer-environment-setup branch](https://github.com/dfberry/cloud-native-todo/tree/002-developer-environment-setup)
+
+## Questions?
+
+This is how I approach a consistent developer experience across a team. How do you do it? Let me know.
