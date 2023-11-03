@@ -122,7 +122,7 @@ At this point, my `devcontainer.json` looks like:
 
 ## Check the dev container into source control
 
-Now that you have a working dev container, check it into source control and ask everyone on the team to try it out. This simple container should work on all hosts (`host` is the term for the machine running the container). More complicated dev containers may not work. 
+Now that you have a working dev container, check it into source control and ask everyone on the team to try it out. This simple container should work on all hosts (`host` is the term for the machine running the container). More complicated dev containers may not work the first and take some tinkering. 
 
 ## Where's the Cloud-Native? 
 
