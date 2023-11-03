@@ -21,6 +21,8 @@ updated: 2023-11-03 00:00 PST
 
 While this project is focused on cloud-native, I set up my environment the same way with GitHub repositories and [dev containers](https://containers.dev/). This allows me to move from my Windows laptop, to my Mac M1, and on to [GitHub Codespaces](https://github.com/features/codespaces) when demo-ing. 
 
+How do you ensure a consistent developer setup on your team? [Survey](https://bit.ly/3FL6FZ6)
+
 ## Visual Studio Code + dev containers
 
 If you haven't heard of dev containers, let me welcome you to the club. I ❤️  dev containers. 
