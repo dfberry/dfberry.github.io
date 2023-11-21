@@ -62,7 +62,7 @@ The `azd init` process created a `./next-steps.md` which was a huge help in vali
 
 ## Get cloud resource environment variables from Azure Developer CLI
 
-The [next steps](../next-steps.md#define-environment-variables-for-running-services) covered environment variables because your project may need access to cloud resource secrets, connection strings, resource names, database names, and other settings created during provisioning to complete deployment tests. Azure Developer CLI gives you access this list of environment variables with `azd env get-values` to create your own `.env` file for your project. 
+The [next steps](https://github.com/dfberry/cloud-native-todo/blob/main/next-steps.md) covered environment variables because your project may need access to cloud resource secrets, connection strings, resource names, database names, and other settings created during provisioning to complete deployment tests. Azure Developer CLI gives you access this list of environment variables with `azd env get-values` to create your own `.env` file for your project. 
 
 I created a Bash script to get those values so I could test the endpoint.
 
