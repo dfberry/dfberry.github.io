@@ -40,7 +40,7 @@ The easiest way to find the correct `azure-dev.yml` is to use the official docum
 
     ![Browser screenshot of template source code azure-dev.yml](media/2023-12-10-cloud-native-005-deploy-from-source-control/azure-dev-yml.png)
 
-2. Add the **name** to the top of the file if one isn't there, such as `name: AZD Deploy`. This helps distinguish between other actions you have the in repository. 
+2. Add the **name** to the top of the file if one isn't there, such as `name: AZD Deploy`. This helps distinguish between other actions you have in the repository. 
 
     ```
     name: AZD Deploy
@@ -68,19 +68,20 @@ The easiest way to find the correct `azure-dev.yml` is to use the official docum
     az-dev-12-04-2023-18-11-29 (abc2c40c-b547-4dca-b591-1a4590963066)
     ```
 
-    When you need to add new configurations, you'll need to know either the name or ID to find it in the Microsoft Entra ID in the Azure portal.
+    When you need to add new configurations, you'll need to know either the name or ID to find it in the [Microsoft Entra ID](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps) in the Azure portal.
 
 ## Service principal for secure identity
 
 The process created your service principal which is the identity used to deploy securely from GitHub to Azure. If you search for service principal in the Azure portal, it takes you Enterprise app. Don't go there. An Enterprise app is meant for other people, like customers, to log in. That's a different kind of thing. When you want to find your deployment service principal, search for **Microsoft Entra ID**. 
     
-1. Go ahead ... find your service principal in the [Azure portal](https://portal.azure.com/) by searching for **Microsoft Entra ID**. The service principals are listed under the **Manage -> App registrations -> All applications**. 
-2. Select your service principal. This takes you to the **Default Directory | App registrations**.
-3. On the **Manage -> Certificates & secrets**, view the federated credentials. 
+1. Go your service principal in [Microsoft Entra ID applications](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps). This takes you to the **Default Directory | App registrations**.
+2. On the **Manage -> Certificates & secrets**, view the federated credentials. 
 
-    ![Browser screenshot of federated credentials](media/2023-12-10-cloud-native-005-deploy-from-source-control/azure-portal-federated-credentials.png)
+    ![Browser screenshot of Azure portal Microsoft Entra ID application's federated credentials](media/2023-12-10-cloud-native-005-deploy-from-source-control/azure-portal-federated-credentials.png)
 
-4. On the **Manage -> Roles and Administrators**, view the **Cloud Application Administrator**. 
+3. On the **Manage -> Roles and Administrators**, view the **Cloud Application Administrator**. 
+
+    ![Browser screenshot of Azure portal Microsoft Entra ID application's roles and administrators](media/2023-12-10-cloud-native-005-deploy-from-source-control/azure-portal-roles-and-administrators.png)
 
 When you want to remove this service principal, you can come back to the portal, or use [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/)'s `az ad sp delete --id <service-principal-id>`
 
@@ -92,7 +93,7 @@ The process added the service principal information to your GitHub repository as
 2. Select **Security -> Secrets and variable -> Actions**.
 3. Select variables to see the service principal variables. 
 
-    ![Browser screenshot of GitHub repository showing settings page with secure action variables table which lists the values necessary to deploy to Azure securely.]
+    ![Browser screenshot of GitHub repository showing settings page with secure action variables table which lists the values necessary to deploy to Azure securely.](media/2023-12-10-cloud-native-005-deploy-from-source-control/github-repo-settings-action-variables.png)
 
 4. Take a look at the actions run as part of the push from the process. The **Build/Test** action ran successfully when AZD pushed the new pipeline file in commit [24f78f4](https://github.com/dfberry/cloud-native-todo/commit/24f78f4336e7bed72801a620176c04f0330b198e). Look for the actions that run based on that commit. 
 
