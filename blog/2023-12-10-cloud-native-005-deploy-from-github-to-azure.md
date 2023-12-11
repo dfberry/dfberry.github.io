@@ -20,11 +20,11 @@ This [fifth iteration](https://github.com/dfberry/cloud-native-todo/tree/005-dep
 
 [YouTube demo](https://youtu.be/CSZ6dMEkO4Q)
 
-1) Add `azure-dev.yml` GitHub action to deploy from source code
-2) Run `azd pipeline config`
-    - push action to repo
-    - create Azure service principal with appropriate cloud permissions
-    - create GitHub variables to connect to Azure service principal
+1. Add `azure-dev.yml` GitHub action to deploy from source code
+2. Run `azd pipeline config`
+    * push action to repo
+    * create Azure service principal with appropriate cloud permissions
+    * create GitHub variables to connect to Azure service principal
 
 ## Setup
 
