@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[1207],{8035:a=>{a.exports=JSON.parse('{"label":"Cloud-native","permalink":"/tags/cloud-native","allTagsPath":"/tags","count":5}')}}]);
