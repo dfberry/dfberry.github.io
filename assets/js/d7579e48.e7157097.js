@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[7499],{7218:s=>{s.exports=JSON.parse('{"label":"Client UI","permalink":"/tags/client-ui","allTagsPath":"/tags","count":1}')}}]);
