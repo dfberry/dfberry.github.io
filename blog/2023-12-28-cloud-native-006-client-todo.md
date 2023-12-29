@@ -3,7 +3,7 @@ slug: /2023-12-28-cloud-native-006-client-todo.md
 canonical_url: https://dfberry.github.io/blog/2023-12-28-cloud-native-006-client-todo.md
 custom_edit_url: null
 sidebar_label: "2023.12-28 Cloud native client"
-title: "Client UI: quick proof of concept"
+title: "React Vite Client UI: quick Todo app proof of concept"
 description: "Create Client UI with Vite React and ViTest"
 published: false
 tags: 
@@ -14,9 +14,11 @@ tags:
 updated: 2023-12-28 00:00 PST
 ---
 
-# Create Client UI with Vite React and ViTest
+# React Vite Client UI: quick Todo app proof of concept
 
 This [sixth iteration][006Code] of the cloud-native project, [https://github.com/dfberry/cloud-native-todo](https://github.com/dfberry/cloud-native-todo), added the client UI to the monorepo. 
+
+[YouTube demo](https://youtu.be/HTdVSKhnXek)
 
 1. Use Vite React to create basic project structure. 
 2. Add React page and components for Todo: form, list, item.
@@ -400,6 +402,19 @@ export default App
 
 Now that the bare bones proof of concept is working, add the UI tests to validate it. This is important so that any future changes to the app don't break existing functionality. 
 
+The tests cover the following simple cases:
+
+* renders form without error
+* renders form with error
+* renders button disabled
+* renders button enabled
+* accepts input text
+* submit form by button
+* submit form by keypress enter
+* item component deletes item
+* renders List with todos
+* does not render List when todos is empty
+
 1. Add [ViTest][ViTest] following the instructions for that site and a few other packages for [testing UI with ViTest][ViTestUI]. Refer to the [package.json][006-ui-package-json] for the complete list.
 
     ```bash
@@ -433,27 +448,13 @@ Now that the bare bones proof of concept is working, add the UI tests to validat
 
     The `outputFile` keeps the output files out of the way. The `setupFiles` also keep the test setup files tucked away. 
 
-3. The tests cover the following simple cases:
-
-    * renders form without error
-    * renders form with error
-    * renders button disabled
-    * renders button enabled
-    * accepts input text
-    * submit form by button
-    * submit form by keypress enter
-    * item component deletes item
-    * renders List with todos
-    * does not render List when todos is empty
-
-4. The hardest part about getting these tests to work was the TypeScript types for the testing library user events such as `await user.type(input, title)`. The test setup and utility files helped with that. If you run into this, make sure to restart your TS Server in Visual Studio Code as well. 
+3. The hardest part about getting these tests to work was the TypeScript types for the testing library user events such as `await user.type(input, title)`. The test setup and utility files helped with that. If you run into this, make sure to restart your TS Server in Visual Studio Code as well. 
 
     ```TypeScript
     // test/setup.ts
     import '@testing-library/jest-dom/vitest';
-    ```
 
-    ```TypeScript
+
     // test/utilities.ts
     import type { ReactElement } from 'react';
     import { render as renderComponent } from '@testing-library/react';
@@ -471,7 +472,7 @@ Now that the bare bones proof of concept is working, add the UI tests to validat
     };
     ```
 
-5. Then the User event test, such as the following, builds and runs.
+4. Then the User event test, such as the following, builds and runs.
 
     ```TypeScript
     test('submit form by keypress enter', async () => {
@@ -498,7 +499,7 @@ Now that the bare bones proof of concept is working, add the UI tests to validat
     })
     ```
 
-6. Run the test with `npm run test` and see the results:
+5. Run the test with `npm run test` and see the results:
 
     ![Visual Studio Code terminal running tests](media/2023-12-28-cloud-native-006-client-todo/visual-studio-code-terminal-vitest-result.png)
 
