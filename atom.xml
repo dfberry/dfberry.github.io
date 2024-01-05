@@ -7,7 +7,7 @@
     <link rel="alternate" href="http://dfberry.github.io/"/>
     <subtitle>Dina Berry developer and technical writer RSS feed</subtitle>
     <icon>http://dfberry.github.io/favicon.ico</icon>
-    <rights>Copyright © 2023 Dina Berry.</rights>
+    <rights>Copyright © 2024 Dina Berry.</rights>
     <entry>
         <title type="html"><![CDATA[React Vite Client UI: quick Todo app proof of concept]]></title>
         <id>http://dfberry.github.io/2023-12-28-cloud-native-006-client-todo.md</id>
