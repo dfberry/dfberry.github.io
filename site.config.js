@@ -13,7 +13,7 @@ const site = {
       title: "Development",
       items: [
         {
-          label: "dfberry (person)",
+          label: "dfberry (personal)",
           href: "https://github.com/dfberry",
         },
         {
@@ -26,12 +26,24 @@ const site = {
       title: "Developer content",
       items: [
         {
-          label: "Microsoft",
-          href: "https://learn.microsoft.com/en-us/azure/developer/javascript/",
+          label: "Blog",
+          href: "https://dfberry.github.io/",
         },
         {
-          label: "Project 31a",
+          label: "Video",
+          href: "https://www.youtube.com/@DFBerry-dev",
+        },
+        {
+          label: "Presentations",
+          href: "/docs/presentations",
+        },
+        {
+          label: "Archive - Project 31a",
           href: "http://www.31a2ba2a-b718-11dc-8314-0800200c9a66.com/search/label/Dina",
+        },
+        {
+          label: "Microsoft",
+          href: "https://learn.microsoft.com/en-us/azure/developer/javascript/",
         },
       ],
     },

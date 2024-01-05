@@ -21,6 +21,7 @@ Tech sites:
 
 - GitHub (Microsoft): https://github.com/diberry
 - GitHub (personal): https://github.com/dfberry
+- YouTube: https://www.youtube.com/@DFBerry-dev
 - StackOverflow: https://stackoverflow.com/users/92312/dfberry
 - Previous tech writing blog: http://www.31a2ba2a-b718-11dc-8314-0800200c9a66.com/search/label/Dina
 
