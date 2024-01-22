@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[547],{1553:s=>{s.exports=JSON.parse('{"label":"MongoDB","permalink":"/tags/mongo-db","allTagsPath":"/tags","count":1}')}}]);
