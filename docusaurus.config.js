@@ -49,6 +49,7 @@ const site = require('./site.config');
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
+        
         },
         gtag: {
           trackingID: 'G-2F4N5RRH1Q',
@@ -59,7 +60,11 @@ const site = require('./site.config');
     ],
   ],
 
-  themeConfig:
+  themes: [
+    'docusaurus-theme-github-codeblock'
+  ],
+
+  themeConfig: 
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
@@ -77,7 +82,13 @@ const site = require('./site.config');
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
-      feedOptions: site.feedOptions
+      feedOptions: site.feedOptions,
+      codeblock: {
+        showGithubLink: true,
+        githubLinkLabel: 'View on GitHub',
+        showRunmeLink: false,
+        runmeLinkLabel: 'Checkout via Runme'
+    },
     }),
 
   plugins: [
