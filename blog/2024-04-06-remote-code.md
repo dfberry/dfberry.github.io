@@ -52,5 +52,5 @@ https://github.com/dfberry/rust-axum-mongodb-todo/blob/main/src/main.rs
 ## Yaml
 
 ```yml reference
-https://github.com/dfberry/actions/blob/main/examples/azure-functions-monorepo-with-typescript.yml
+https://github.com/dfberry/actions/blob/main/examples/mono-app-workflow.yml
 ```
