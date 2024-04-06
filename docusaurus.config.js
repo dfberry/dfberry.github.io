@@ -17,6 +17,9 @@ const site = require('./site.config');
   organizationName: site.githubAccount, // Usually your GitHub org/user name.
   projectName: site.githubRepo, // Usually your repo name.
 
+  themes: [
+    '@saucelabs/theme-github-codeblock'],
+
   presets: [
     [
       '@docusaurus/preset-classic',
