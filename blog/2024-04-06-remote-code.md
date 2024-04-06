@@ -48,3 +48,9 @@ https://github.com/dfberry/dev-diary/blob/main/notes/Learning-DataLake/Neal.txt
 ```rs reference
 https://github.com/dfberry/rust-axum-mongodb-todo/blob/main/src/main.rs
 ```
+
+## Yaml
+
+```yml reference
+https://github.com/dfberry/actions/blob/main/examples/azure-functions-monorepo-with-typescript.yml
+```
