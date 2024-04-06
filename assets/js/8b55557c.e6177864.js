@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[8346],{4394:e=>{e.exports=JSON.parse('{"permalink":"/tags/azure/page/2","page":2,"postsPerPage":3,"totalPages":2,"totalCount":4,"previousPage":"/tags/azure","blogDescription":"Blog","blogTitle":"Blog"}')}}]);
