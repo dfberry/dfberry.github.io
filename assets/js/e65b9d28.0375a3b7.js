@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[6550],{1637:s=>{s.exports=JSON.parse('{"label":"Rust","permalink":"/tags/rust","allTagsPath":"/tags","count":1}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[3560],{8700:a=>{a.exports=JSON.parse('{"label":"Azure Container App","permalink":"/tags/azure-container-app","allTagsPath":"/tags","count":1}')}}]);
