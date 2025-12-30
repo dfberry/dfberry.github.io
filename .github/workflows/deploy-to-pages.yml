@@ -8,7 +8,7 @@ on:
   push:
     branches: ["main"]
   pull_request:
-    types: [opened, synchronize, reopen]
+    types: [opened, synchronize]
     branches: ["main"]
 permissions:
   contents: write
@@ -23,11 +23,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 18
-          cache: "npm"
+          node-version: 22
 
       - name: Install dependencies
         run: npm install
@@ -49,7 +48,7 @@ jobs:
       #  with:
       #    token: ${{ secrets.GITHUB_TOKEN }} # Required to write a PR review
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4.7.6
         with:
           folder: build
           branch: gh-pages
