@@ -7,9 +7,6 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-  pull_request:
-    types: [opened, synchronize]
-    branches: ["main"]
 permissions:
   contents: write
 
@@ -19,6 +16,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -27,6 +27,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+
+      - name: Versions
+        run: |
+          node -v
+          npm -v
 
       - name: Install dependencies
         run: npm install
@@ -50,7 +55,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.7.6
         with:
-          folder: build
+          folder: website/build
           branch: gh-pages
 
 
