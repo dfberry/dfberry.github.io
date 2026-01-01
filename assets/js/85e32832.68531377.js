@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[1950],{6244:e=>{e.exports=JSON.parse('{"permalink":"/tags/cloud-native/page/2","page":2,"postsPerPage":3,"totalPages":3,"totalCount":7,"previousPage":"/tags/cloud-native","nextPage":"/tags/cloud-native/page/3","blogDescription":"Blog","blogTitle":"Blog"}')}}]);

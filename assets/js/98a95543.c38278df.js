@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocusaurus_blog_with_search=self.webpackChunkdocusaurus_blog_with_search||[]).push([[5887],{3967:s=>{s.exports=JSON.parse('{"label":"Vite and ViTest","permalink":"/tags/vite-and-vi-test","allTagsPath":"/tags","count":1}')}}]);
