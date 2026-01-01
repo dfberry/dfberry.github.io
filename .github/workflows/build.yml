@@ -42,3 +42,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           npm run build
+
+      - name: Run Prettier
+        #fix markdown files in /blog 
+        run: npm run prettier:fix
