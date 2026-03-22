@@ -20,6 +20,7 @@
 | Julieta | SEO Specialist | `.squad/agents/julieta/charter.md` | ✅ Active |
 | Abuela | Product Manager | `.squad/agents/abuela/charter.md` | ✅ Active |
 | Bruno | Squad Specialist | `.squad/agents/bruno/charter.md` | ✅ Active |
+| Antonio | Storyteller | `.squad/agents/antonio/charter.md` | ✅ Active |
 | Scribe | Session Logger | `.squad/agents/scribe/charter.md` | 📋 Silent |
 | Ralph | Work Monitor | — | 🔄 Monitor |
 

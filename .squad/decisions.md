@@ -2,6 +2,92 @@
 
 ## Active Decisions
 
+### Blog Post: Vibrant Tropical Color Prompts
+
+**Date:** 2026-03-22  
+**Agent:** Isabela (Writer)  
+
+**Decision:** Update image prompts with vibrant tropical/magical-realism color palette
+
+**Details:**
+- Applied deep magentas, teal, emerald, and gold particles
+- Warm background tones align with emotional warmth of narrative
+- Enhances visual storytelling and narrative consistency
+- Part of Squad inner source blog post refinement
+
+**Status:** Complete
+
+---
+
+### Team Expansion: Antonio Joins as Storyteller
+
+**Date:** 2026-03-22  
+**Coordinator:** Mirabel
+
+**Decision:** Add Antonio (Encanto universe) as Storyteller to the team
+
+**Role:** 
+- Narrative review of blog posts and long-form content
+- Story arc and emotional core assessment
+- Character voice consistency
+- Editorial recommendations
+
+**Integration:**
+- Updated `.squad/agents/antonio/charter.md`
+- Updated `.squad/agents/antonio/history.md` with project context and learnings
+- Added to team.md and routing.md
+- Casting registry updated (Encanto active)
+
+**Status:** Complete — Ready for narrative work assignments
+
+---
+
+### Blog Post Narrative Review: APPROVED
+
+**Date:** 2026-03-22  
+**Reviewer:** Antonio (Storyteller)  
+**Post:** `website/blog/2026-03-22-squad-inner-source.md`
+
+**Verdict:** APPROVE
+
+**Narrative Assessment:**
+- Strong emotional core: "Contributing to unfamiliar codebases shouldn't cost you weeks of context-gathering"
+- Clear hero (the contributor) and villain (collaboration friction)
+- Well-managed tension across multiple scenarios (inner source, OSS, interrupted contributors)
+- Human moment lands effectively: "three weeks later, completely lost the thread"
+- Earned resolution and strong call to action
+
+**Optional Refinements (Non-Blockers):**
+1. "What Squad actually is" section could open with concrete example before taxonomy
+2. Inner source section (lines 60-71) could benefit from mini-anecdote to break up density
+3. Image prompts section could use brief framing sentence tying aesthetic to narrative
+
+**Recommendation:** Ship as-is. Narrative is strong and story is earned. Three notes are optional polish.
+
+**Status:** Complete — Ready for publication via Luisa (Publisher)
+
+---
+
+### PAO Skills Integration: Blog Post Enhancement
+
+**Date:** 2026-03-22  
+**Agent:** Isabela (Writer)
+
+**Decision:** Add PAO skills (humanizer, external-comms) as concrete examples in blog post
+
+**Context:** PR #427 (bradygaster/squad:dev) merged Brady Gaster's PAO agent with production skills. These provide clearest proof that contributors inherit team voice and engagement playbooks via `.squad/`.
+
+**Changes Made:**
+1. **"What you inherit" section:** Upgraded to four things, added Skills with humanizer and external-comms examples
+2. **OSS friction section:** Added concrete workflow (issue → external-comms draft → pao approve → institutionalized voice) with confidence flags (🟢/🟡/🔴)
+3. **Blog meta section:** Added note that guest authors inherit communication patterns alongside structure
+
+**Specificity:** Used exact terminology (skill names, command syntax, confidence flags) for credibility and grounding.
+
+**Status:** Complete
+
+---
+
 ### Inner Source Collaboration: Blog Post Publication
 
 **Date:** 2026-03-22  

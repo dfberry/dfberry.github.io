@@ -7,6 +7,7 @@ How to decide who handles what on dfberry.github.io.
 | Work Type | Route To | Examples |
 |-----------|----------|---------|
 | Blog post drafting | Isabela | Write a new post, draft from outline, rewrite a draft |
+| Narrative review | Antonio | Story arc, emotional resonance, reader connection, storytelling quality |
 | Editing & polish | Dolores | Edit a draft, proofreading, consistency review |
 | Site code & config | Luisa | Docusaurus config, React components, TypeScript, build/deploy |
 | SEO & metadata | Julieta | Meta tags, keywords, structured data, sitemap |

@@ -20,3 +20,36 @@
   - Confirm the GitHub repo URL for dfberry's blog is correct (`dfberry/dfberry.github.io`).
   - Check word count sits in 900–1400 range (draft is approximately 1,050 words body).
 - **Voice:** First person, practical, no hype. Follows dfberry's established register well.
+
+### 2026-03-22 — PAO skills added to Squad inner source post
+
+- **Change:** Wove Brady Gaster's PR #427 (PAO's `humanizer` and `external-comms` skills) into three sections:
+  1. "What you inherit when you clone" — added Skills as 4th item (after Ceremonies, Rules, Agent Memory), using PAO's humanizer + external-comms as concrete example.
+  2. "Open source: friction at maintainer scale" — added concrete PAO example: new contributor files issue → external-comms drafts reply with confidence flags → maintainer reviews and types `pao approve` → voice is institutionalized.
+  3. "I'm using Squad on this blog right now" — added note that guest authors inherit communication patterns, not just structure.
+- **Why:** PAO skills are the clearest concrete proof that contributors inherit not just code/docs but team voice and engagement playbooks. Skills are the mechanism for "team comes along in git clone."
+- **Specificity constraint:** Used actual skill names, command syntax (`pao approve`), confidence flags (🟢/🟡/🔴) to anchor the example. No abstract framing.
+- **Thesis alignment:** Reinforces central claim: `.squad/` reduces collaboration friction by distributing institutional knowledge. Skills are that knowledge, operationalized.
+
+### 2026-03-22 — Image prompts section appended to Squad inner source post
+
+- **Approach:** Created 5 AI-generation prompts covering core concepts: team arrival, inherited collaboration structure, knowledge transfer, community gate with human review, and friction resolution.
+- **Style established:** Warm, editorial, slightly abstract — "tech blog hero" aesthetic. Used isometric vectors, glowing elements, amber/blue color palettes, minimal text. No Disney/Encanto references, no real people or brand logos, no stock photo clichés.
+- **Technique notes for future posts:** 
+  - Lead with composition and mood before specific objects ("warm amber light" before "holographic teammates")
+  - Use metaphor judiciously: "particles of dissolved friction" works; "dancing code" would be overblown
+  - Specify style language explicitly (flat vector, isometric, watercolor digital) to avoid photorealism
+  - Prompt length: 30–60 words with lighting, mood, and material hints for consistency
+- **Themes mapped:** contributor arrival → inherited ceremonies/knowledge → portable skills → moderated community response → smooth collaboration. Each prompt grounds one conceptual pillar in visual language.
+
+### 2026-03-22 — Antonio's narrative repairs applied
+
+**Three targeted additions from Dolores (Storyteller review):**
+
+1. **Repair 1 — "What Squad actually is" opener:** Added concrete scenario sentence before definitional text. New opening: "When you run `squad`, you might find Isabela drafting your pull request description, Julieta generating SEO metadata, and Dolores flagging a terminology inconsistency — all before you've written a single line. That's Squad in action..." This gives readers a visceral moment before the explanation.
+
+2. **Repair 2 — Inner source mini-anecdote:** Inserted 2-sentence scenario after the dense explanatory paragraph about ceremonies, rules, and skills. Added: "Think of a mobile team cloning the identity platform's repo for the first time. Without Squad, they'd spend a sprint reading Confluence pages and pinging the platform team on Slack. With Squad, the agent memory already knows the auth flow, the edge cases, and the naming conventions. The first PR comes from someone who never met the platform team." Grounds the abstraction in a concrete platform team use case.
+
+3. **Repair 3 — Image prompts framing:** Inserted single sentence between italicized intro and first prompt that ties visual aesthetic to emotional journey: "The palette below mirrors the post's emotional arc: warm tropical colors for belonging and momentum, luminous particles for knowledge in motion, and deep magentas for the friction that dissolves when the right team shows up." Connects visual strategy to post's narrative spine.
+
+**Status:** All three repairs applied. Voice maintained (warm, technical, practical). No rewrites — pure targeted insertions.

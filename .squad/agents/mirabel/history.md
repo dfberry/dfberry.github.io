@@ -7,4 +7,4 @@
 
 ## Learnings
 
-<!-- Append new learnings below. Each entry is something lasting about the project. -->
+- Antonio added as Storyteller (Encanto universe, 2026-03-22)

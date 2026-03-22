@@ -144,6 +144,14 @@
       "created_at": "2026-03-22T21:30:25Z",
       "legacy_named": false,
       "status": "active"
+    },
+    {
+      "persistent_name": "Antonio",
+      "role": "Storyteller",
+      "universe": "Encanto",
+      "created_at": "2026-03-22T21:43:22Z",
+      "legacy_named": false,
+      "status": "active"
     }
   ]
 }
