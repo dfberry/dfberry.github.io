@@ -6,38 +6,39 @@ How to decide who handles what on dfberry.github.io.
 
 | Work Type | Route To | Examples |
 |-----------|----------|---------|
-| Blog post drafting | Inara | Write a new post, draft from outline, rewrite a draft |
-| Editing & polish | Book | Edit a draft, proofreading, consistency review |
-| Site code & config | Kaylee | Docusaurus config, React components, TypeScript, build/deploy |
-| SEO & metadata | Simon | Meta tags, keywords, structured data, sitemap |
-| Social media copy | Wash | Twitter/X copy, LinkedIn post, distribution |
-| Content roadmap | Zoe | What to write next, prioritization, content calendar |
-| Technical decisions | Mal | Architecture, code review, cross-domain coordination |
-| Code review | Mal | Review PRs, check quality |
+| Blog post drafting | Isabela | Write a new post, draft from outline, rewrite a draft |
+| Editing & polish | Dolores | Edit a draft, proofreading, consistency review |
+| Site code & config | Luisa | Docusaurus config, React components, TypeScript, build/deploy |
+| SEO & metadata | Julieta | Meta tags, keywords, structured data, sitemap |
+| Social media copy | Camilo | Twitter/X copy, LinkedIn post, distribution |
+| Content roadmap | Abuela | What to write next, prioritization, content calendar |
+| Technical decisions | Mirabel | Architecture, code review, cross-domain coordination |
+| Code review | Mirabel | Review PRs, check quality |
+| Squad terminology/accuracy | Bruno | Verify Squad file names, structure, commands, terminology against official source |
 | Session logging | Scribe | Automatic — never needs routing |
 
 ## Post Publication Pipeline
 
 When a new post is requested, use this sequence (parallelize where inputs allow):
 
-1. **Inara** — writes the draft
-2. **Book** — edits the draft *(needs Inara's output)*
-3. **Simon** — adds SEO metadata *(can start from outline; finalizes on edited draft)*
-4. **Kaylee** — publishes to `website/blog/` *(needs edited + SEO'd draft)*
-5. **Wash** — writes social copy *(can draft from outline; finalizes on published post)*
+1. **Isabela** — writes the draft
+2. **Dolores** — edits the draft *(needs Isabela's output)*
+3. **Julieta** — adds SEO metadata *(can start from outline; finalizes on edited draft)*
+4. **Luisa** — publishes to `website/blog/` *(needs edited + SEO'd draft)*
+5. **Camilo** — writes social copy *(can draft from outline; finalizes on published post)*
 
 ## Issue Routing
 
 | Label | Action | Who |
 |-------|--------|-----|
-| `squad` | Triage: analyze issue, assign `squad:{member}` label | Mal |
-| `squad:mal` | Lead/architecture work | Mal |
-| `squad:inara` | Writing work | Inara |
-| `squad:book` | Editing work | Book |
-| `squad:kaylee` | Development work | Kaylee |
-| `squad:wash` | Social media work | Wash |
-| `squad:simon` | SEO work | Simon |
-| `squad:zoe` | Product/roadmap work | Zoe |
+| `squad` | Triage: analyze issue, assign `squad:{member}` label | Mirabel |
+| `squad:mal` | Lead/architecture work | Mirabel |
+| `squad:inara` | Writing work | Isabela |
+| `squad:book` | Editing work | Dolores |
+| `squad:kaylee` | Development work | Luisa |
+| `squad:wash` | Social media work | Camilo |
+| `squad:simon` | SEO work | Julieta |
+| `squad:zoe` | Product/roadmap work | Abuela |
 
 ### How Issue Assignment Works
 

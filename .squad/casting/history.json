@@ -7,14 +7,52 @@
       "repo": "dfberry.github.io",
       "created_at": "2026-03-22T19:54:22Z",
       "agents": [
-        { "persistent_name": "Mal", "role": "Lead" },
-        { "persistent_name": "Inara", "role": "Writer" },
-        { "persistent_name": "Book", "role": "Editor" },
-        { "persistent_name": "Kaylee", "role": "Full-Stack TypeScript Developer" },
-        { "persistent_name": "Wash", "role": "Social Media Specialist" },
-        { "persistent_name": "Simon", "role": "SEO Specialist" },
-        { "persistent_name": "Zoe", "role": "Product Manager" }
+        {
+          "persistent_name": "Mal",
+          "role": "Lead"
+        },
+        {
+          "persistent_name": "Inara",
+          "role": "Writer"
+        },
+        {
+          "persistent_name": "Book",
+          "role": "Editor"
+        },
+        {
+          "persistent_name": "Kaylee",
+          "role": "Full-Stack TypeScript Developer"
+        },
+        {
+          "persistent_name": "Wash",
+          "role": "Social Media Specialist"
+        },
+        {
+          "persistent_name": "Simon",
+          "role": "SEO Specialist"
+        },
+        {
+          "persistent_name": "Zoe",
+          "role": "Product Manager"
+        }
       ]
+    },
+    {
+      "assignment_id": "encanto-recast-2026-03-22",
+      "event": "universe_recast",
+      "from_universe": "Firefly",
+      "to_universe": "Encanto",
+      "timestamp": "2026-03-22T21:30:25Z",
+      "mapping": {
+        "Mal": "Mirabel",
+        "Inara": "Isabela",
+        "Book": "Dolores",
+        "Kaylee": "Luisa",
+        "Wash": "Camilo",
+        "Simon": "Julieta",
+        "Zoe": "Abuela",
+        "River": "Bruno"
+      }
     }
   ]
 }

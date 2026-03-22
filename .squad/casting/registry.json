@@ -7,7 +7,7 @@
       "universe": "Firefly",
       "created_at": "2026-03-22T19:54:22Z",
       "legacy_named": false,
-      "status": "active"
+      "status": "retired"
     },
     {
       "persistent_name": "Inara",
@@ -15,7 +15,7 @@
       "universe": "Firefly",
       "created_at": "2026-03-22T19:54:22Z",
       "legacy_named": false,
-      "status": "active"
+      "status": "retired"
     },
     {
       "persistent_name": "Book",
@@ -23,7 +23,7 @@
       "universe": "Firefly",
       "created_at": "2026-03-22T19:54:22Z",
       "legacy_named": false,
-      "status": "active"
+      "status": "retired"
     },
     {
       "persistent_name": "Kaylee",
@@ -31,7 +31,7 @@
       "universe": "Firefly",
       "created_at": "2026-03-22T19:54:22Z",
       "legacy_named": false,
-      "status": "active"
+      "status": "retired"
     },
     {
       "persistent_name": "Wash",
@@ -39,7 +39,7 @@
       "universe": "Firefly",
       "created_at": "2026-03-22T19:54:22Z",
       "legacy_named": false,
-      "status": "active"
+      "status": "retired"
     },
     {
       "persistent_name": "Simon",
@@ -47,7 +47,7 @@
       "universe": "Firefly",
       "created_at": "2026-03-22T19:54:22Z",
       "legacy_named": false,
-      "status": "active"
+      "status": "retired"
     },
     {
       "persistent_name": "Zoe",
@@ -55,7 +55,15 @@
       "universe": "Firefly",
       "created_at": "2026-03-22T19:54:22Z",
       "legacy_named": false,
-      "status": "active"
+      "status": "retired"
+    },
+    {
+      "persistent_name": "River",
+      "role": "Squad Specialist",
+      "universe": "Firefly",
+      "created_at": "2026-03-22T21:17:00Z",
+      "legacy_named": false,
+      "status": "retired"
     },
     {
       "persistent_name": "Scribe",
@@ -70,6 +78,70 @@
       "role": "Work Monitor",
       "universe": null,
       "created_at": "2026-03-22T19:54:22Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    {
+      "persistent_name": "Mirabel",
+      "role": "Lead",
+      "universe": "Encanto",
+      "created_at": "2026-03-22T21:30:25Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    {
+      "persistent_name": "Isabela",
+      "role": "Writer",
+      "universe": "Encanto",
+      "created_at": "2026-03-22T21:30:25Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    {
+      "persistent_name": "Dolores",
+      "role": "Editor",
+      "universe": "Encanto",
+      "created_at": "2026-03-22T21:30:25Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    {
+      "persistent_name": "Luisa",
+      "role": "Full-Stack TypeScript Developer",
+      "universe": "Encanto",
+      "created_at": "2026-03-22T21:30:25Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    {
+      "persistent_name": "Camilo",
+      "role": "Social Media Specialist",
+      "universe": "Encanto",
+      "created_at": "2026-03-22T21:30:25Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    {
+      "persistent_name": "Julieta",
+      "role": "SEO Specialist",
+      "universe": "Encanto",
+      "created_at": "2026-03-22T21:30:25Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    {
+      "persistent_name": "Abuela",
+      "role": "Product Manager",
+      "universe": "Encanto",
+      "created_at": "2026-03-22T21:30:25Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    {
+      "persistent_name": "Bruno",
+      "role": "Squad Specialist",
+      "universe": "Encanto",
+      "created_at": "2026-03-22T21:30:25Z",
       "legacy_named": false,
       "status": "active"
     }
