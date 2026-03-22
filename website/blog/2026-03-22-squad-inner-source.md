@@ -5,7 +5,7 @@ custom_edit_url: null
 sidebar_label: "Squad: Inner Source Collaboration"
 title: "Squad: Accelerating Inner Source with Agentic Teams"
 description: "How Brady Gaster's Squad uses GitHub Copilot CLI agents to enable faster, broader inner source collaboration through team ceremonies and skills."
-published: true
+published: false
 tags:
   - GitHub Copilot
   - GitHub Copilot CLI
