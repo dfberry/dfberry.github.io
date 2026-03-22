@@ -23,6 +23,8 @@ That friction is what kills contributor momentum on both inner source platform l
 
 <!-- truncate -->
 
+![A labyrinth of colorful doors and tangled vines representing contributor friction in an unfamiliar codebase](/img/squad-blog/01-friction-wall.png)
+
 ## What Squad actually is
 
 When you run `squad`, you might find Isabela drafting your pull request description, Julieta generating SEO metadata, and Dolores flagging a terminology inconsistency — all before you've written a single line. That's Squad in action: an agentic virtual team that lives in your repo as committed files. It runs on GitHub Copilot CLI. You define agents with roles — writer, editor, developer, SEO specialist, whatever your project needs — and each agent gets a charter and a persistent memory in `history.md`; the team shares a `routing.md` that defines who handles what. The team coordinates through a shared `decisions.md` file.
@@ -44,6 +46,8 @@ When a maintainer commits their `.squad/`, contributors don't clone just code �
 **Skills** — reusable patterns defined in `.squad/skills/{name}/SKILL.md`. These are team-wide playbooks for common problems. Brady's Squad ships with two: the `humanizer` skill enforces communication tone (warm openings, active voice, empathy markers), and the `external-comms` skill handles community workflows (issue triage, response templates, confidence flagging). When you clone the repo, you inherit not just the project's code style — you inherit its voice and engagement patterns.
 
 None of this replaces reading the code. But it gives you the *reasoning* behind the code — which is the part that documentation almost never captures.
+
+![A radiant community gathering where each figure glows with their unique skill, representing the squad gift cloned with every repo](/img/squad-blog/02-squad-gift.png)
 
 ## The contributor's perspective
 
@@ -71,6 +75,8 @@ Squad's upstream inheritance is git-native: the `.squad/` files travel with the 
 
 The institutional knowledge travels with the code. That's exactly what inner source needs to work at scale, and it's something that READMEs and wikis consistently fail to deliver because they go stale and nobody owns them.
 
+![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing inner source knowledge flow](/img/squad-blog/03-inner-source-bridge.png)
+
 ## Open source: friction at maintainer scale
 
 For open source maintainers, the problem is similar but the stakes are different.
@@ -82,6 +88,8 @@ Committing your `.squad/` doesn't solve all of that. But it gives every contribu
 Take community engagement: a new contributor files their first issue. Instead of the maintainer manually triaging it, the `external-comms` skill scans for unanswered items, classifies the response type, and drafts a reply using the matching template. The maintainer reviews the draft, flags it with a confidence level (🟢 high / 🟡 medium / 🔴 needs review), and types `pao approve`. The contributor gets a warm, prompt response — and the maintainer's voice is institutionalized, not burned out. Same pattern for a frustrated bug report or a question that's really a feature request: the skill already knows how to handle it. The maintainer reviews, not reinvents.
 
 The friction-reduction mechanism is the same as inner source. The stakes just shift from enterprise velocity to maintainer sanity.
+
+![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](/img/squad-blog/04-contributor-success.png)
 
 ## The interrupted contributor problem
 
@@ -103,6 +111,8 @@ The meta-point isn't that AI wrote this. It's that the *team* has context about 
 
 The collaboration friction doesn't disappear. But it collapses.
 
+![An aerial view of a ceremonial circle in a tropical garden, representing the Squad team ceremonies that come with every clone](/img/squad-blog/05-ceremonies-circle.png)
+
 ## What to do next
 
 - **Try Squad:** [github.com/bradygaster/squad](https://github.com/bradygaster/squad)
@@ -111,23 +121,4 @@ The collaboration friction doesn't disappear. But it collapses.
 
 ---
 
-## Image prompts
-
-*AI-generated image suggestions for this post. Use with Midjourney, DALL-E, or Stable Diffusion.*
-
-The palette below mirrors the post's emotional arc: warm tropical colors for belonging and momentum, luminous particles for knowledge in motion, and deep magentas for the friction that dissolves when the right team shows up.
-
-**Hero — The team is already there**
-> A developer opens a laptop at an ornate desk adorned with luminous vines and tropical flowers, discovering three teammates already seated with screens glowing in deep magenta and teal. Golden light particles dance through warm candlelit air mixed with magical luminescence, botanical illustration style with vibrant magentas, golden yellows, and emerald greens.
-
-**Concept — What you inherit**
-> An ornately decorated repository folder blooms with layered knowledge scrolls, ceremony diagrams, and skill cards swirling in luminous trails of hot pink, emerald, and gold. Magical particle effects and glowing vines frame the composition. Saturated coral accents and turquoise shimmer create festival-like energy. Latin American folk art aesthetic with high-saturation tropical botanicals.
-
-**Concept — Skills in transit**
-> A vibrant git commit envelope travels through a magical network path, leaving shimmering gold particle trails and luminous skill tokens. Deep magenta and teal geometric shapes guide the motion. Rich indigo accents and glowing turquoise highlights create movement. Warm carnival lighting with cool magical luminescence. Luminous botanical illustration style suggesting momentum and transformation.
-
-**Concept — Community response with human gate**
-> A moderator at an ornately decorated desk reviews luminous drafts in a warm tropical office. Community voices wait as glowing elements framed by jade vines and coral flowers. Hot pinks, emerald greens, and golden amber glow from warm candlelight mixed with magical luminescence. Watercolor magical realism style with folk art botanical framing, calm and dignified.
-
-**Concept — Friction dissolving**
-> Two interlocking puzzle pieces with jagged edges dissolve into smooth surfaces, releasing luminous gold particles and magical light trails in deep magentas, teals, and rich indigo. Warm tropical golden light breaks through with glowing jade vines and saturated coral accents. Luminous botanical illustration style with high-saturation colors suggesting transformation and renewal.
+*Images generated with Stable Diffusion XL — tropical magical-realism palette.*
