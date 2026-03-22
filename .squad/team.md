@@ -21,6 +21,8 @@
 | Abuela | Product Manager | `.squad/agents/abuela/charter.md` | ✅ Active |
 | Bruno | Squad Specialist | `.squad/agents/bruno/charter.md` | ✅ Active |
 | Antonio | Storyteller | `.squad/agents/antonio/charter.md` | ✅ Active |
+| Félix | Python/ML Engineer | Encanto | 🐍 Python/ML |
+| Pepa | Image Specialist | Encanto | 🎨 Image |
 | Scribe | Session Logger | `.squad/agents/scribe/charter.md` | 📋 Silent |
 | Ralph | Work Monitor | — | 🔄 Monitor |
 

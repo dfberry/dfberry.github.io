@@ -16,6 +16,8 @@ How to decide who handles what on dfberry.github.io.
 | Technical decisions | Mirabel | Architecture, code review, cross-domain coordination |
 | Code review | Mirabel | Review PRs, check quality |
 | Squad terminology/accuracy | Bruno | Verify Squad file names, structure, commands, terminology against official source |
+| Python/ML pipelines | Félix | Python code, diffusers, SDXL, HuggingFace, PyTorch, requirements.txt, generate.py |
+| Image prompts & quality | Pepa | Prompt engineering, aesthetic direction, guidance scale, image parameters, visual quality |
 | Session logging | Scribe | Automatic — never needs routing |
 
 ## Post Publication Pipeline
