@@ -4,7 +4,7 @@ canonical_url: https://dfberry.github.io/blog/2026-03-22-squad-inner-source
 custom_edit_url: null
 sidebar_label: "Squad: Project Collaboration"
 title: "Squad: Accelerating Project Collaboration with Agentic Teams"
-description: "How Brady Gaster's Squad uses GitHub Copilot CLI agents to enable faster, broader project collaboration through team ceremonies and skills."
+description: "How the Squad tool uses GitHub Copilot CLI agents to enable faster, broader project collaboration through team ceremonies and skills."
 published: false
 tags:
   - GitHub Copilot
@@ -31,7 +31,7 @@ When you clone a repo — to fix a bug, add a feature, or extend it for your own
 
 Squad is an agentic virtual team that lives in your repo as a committed `.squad/` directory. Each squad member (agent) has a charter (role description), and a history (persistent memory). The team knows who handles what and tracks what the team has deliberated.
 
-Brady's framing: "Not a chatbot wearing hats." What that means in practice: each squd agent has a specialization, bounded scope and a memory that persists across sessions — not a single prompt with personas bolted on.
+The repo owner's framing: "Not a chatbot wearing hats." What that means in practice: each squd agent has a specialization, bounded scope and a memory that persists across sessions — not a single prompt with personas bolted on.
 
 Here's what the `.squad/` directory contains:
 
@@ -54,11 +54,11 @@ A charter can include:
 - **Boundaries** — explicit list of what this agent handles and what it doesn't, so work routes correctly
 - **Model** — which AI model to use for this agent's tasks
 
-Brady's `flight` charter, for example, says Flight owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the contract any contributor gets when they clone — they know exactly what Flight will and won't take on before they ask.
+The repo owner's `flight` charter, for example, says Flight owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the contract any contributor gets when they clone — they know exactly what Flight will and won't take on before they ask.
 
 ## What you get when you clone
 
-I'm writing this from the contributor's seat, not the repo owner's seat. Brady wrote about [building Squad](https://github.com/bradygaster/squad). Tamir Dresher wrote about [scaling it across an enterprise](https://tamirdresher.com/2026/03/12/scaling-ai-part2-collective). This is what it looks like to clone a repo that already has `.squad/` committed.
+I'm writing this from the contributor's seat, not the repo owner's seat. The repo owner wrote about [building Squad](https://github.com/bradygaster/squad). Tamir Dresher wrote about [scaling it across an enterprise](https://tamirdresher.com/2026/03/12/scaling-ai-part2-collective). This is what it looks like to clone a repo that already has `.squad/` committed.
 
 You `git clone` a repo. You find the `.squad/` directory described above. In a terminal, you run `squad` with `copilot --agent squad --yolo --autopilot`. You have a team that already knows the codebase — and that context travels with the clone.
 
@@ -128,13 +128,13 @@ You find out before the PR, not during it.
 
 ## For open source maintainers
 
-Brady set his standards once. How decisions get made. Which naming conventions to use. How the review process works. What patterns to follow. That all lives in `.squad/` — committed, versioned, part of the repo. Flight, the team lead, is the agent who holds those conventions. You don't have to ask Brady what Flight already knows.
+The repo owner set their standards once. How decisions get made. Which naming conventions to use. How the review process works. What patterns to follow. That all lives in `.squad/` — committed, versioned, part of the repo. Flight, the team lead, is the agent who holds those conventions. You don't have to ask the repo owner what Flight already knows.
 
 I cloned bradygaster/squad and ran `squad`. I was working with Flight's conventions and routing rules — the standards Flight set as lead. When I made changes, they aligned with those standards because the squad I was using already knew them. I didn't have to read a style guide. I didn't have to ask which agent handles what. The team I inherited had that context.
 
-My PR looked like it came from someone who already knew the project. Because the squad I used already did know it. Brady reviews a conforming contribution instead of explaining the same conventions again. The standards travel with the code. Skills work the same way. The [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) skill handles community response workflows — PAO wrote it and owns it. It ships in `.squad/`. Every contributor who clones inherits PAO's communication playbooks without having to ask.
+My PR looked like it came from someone who already knew the project. Because the squad I used already did know it. The repo owner reviews a conforming contribution instead of explaining the same conventions again. The standards travel with the code. Skills work the same way. The [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) skill handles community response workflows — PAO wrote it and owns it. It ships in `.squad/`. Every contributor who clones inherits PAO's communication playbooks without having to ask.
 
-![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing how Brady's standards and conventions automatically travel with cloned repos—contributors conform without friction](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
+![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing how the repo owner's standards and conventions automatically travel with cloned repos—contributors conform without friction](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
 
 ## For teams sharing codebases across groups
 
