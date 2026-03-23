@@ -48,17 +48,9 @@ Skills are community-contributed. When you commit `.squad/` to your repo, you're
 
 I'm writing this from the contributor's seat, not the repo owner's seat. Brady wrote about [building Squad](https://github.com/bradygaster/squad). Tamir Dresher wrote about [scaling it across an enterprise](https://tamirdresher.com/2026/03/12/scaling-ai-part2-collective). This is what it looks like to clone a repo that already has `.squad/` committed.
 
-You `git clone` a repo. You find a `.squad/` directory. Inside:
+You `git clone` a repo. You find the `.squad/` directory described above. You run `squad`. You have a team that already knows the codebase — and that context travels with the clone.
 
-- Agents with charters explaining what they do and why
-- `decisions.md` showing what the team has already figured out
-- `history.md` files showing what each agent has learned about this specific codebase
-- Ceremonies defined — no need to negotiate how design reviews work
-- Skills already set up for how this team communicates
-
-You run `squad`. You have a team that already knows the codebase.
-
-That context — such as why the auth flow works a particular way, what naming conventions to follow, which files the developer agent avoids — is the part that documentation almost never captures. It may be locked in the heads of whoever built the thing.
+That context — why the auth flow works a particular way, what naming conventions to follow, which files to avoid — is the part that documentation almost never captures. It may be locked in the heads of whoever built the thing. Here, it's committed to the repo.
 
 ## You don't have to read the docs to get started
 
@@ -82,19 +74,17 @@ Your first PR doesn't have to look like a first PR. It can look like a contribut
 
 ## Check your approach before you build it
 
-When you're planning a contribution, the hard part isn't writing the code. It's not knowing whether your approach fits the project's decisions and patterns. You can spend a day building something only to get a PR review that says "good work, wrong direction."
+When you're planning a contribution, the hard part isn't writing the code. It's knowing whether your approach fits the project's decisions and patterns. You can spend a day building something only to get a PR review that says "good work, wrong direction."
 
-With `.squad/` committed, `decisions.md` records what the team has already deliberated. Agent history knows the patterns. You can describe your approach to the squad before writing a line of code and find out if it holds up. You're validating against the project's actual history, not a README.
-
-The squad doesn't approve your PR. But it can tell you whether your plan is headed into a known dead end before you commit to it.
+With `.squad/` committed, you can describe your approach to the squad before writing a line of code and find out if it holds up — because `decisions.md` has already captured what the team deliberated, and the agents know the patterns. You're validating against the project's actual history, not a README.
 
 ## Experimenting with a squad already in place
 
-When a repo ships with `.squad/`, experimenting is cheap. You don't have to justify an idea from a blank slate. The agents already know the codebase, the patterns, the past decisions.
+When a repo ships with `.squad/`, experimenting is cheap. You don't have to justify an idea from a blank slate. The team is already loaded — conventions, patterns, past decisions all in place.
 
-You can throw an idea at the team and ask if it makes sense. You don't spend an hour loading context first. You just try it.
+You can throw an idea at the squad and ask if it makes sense. You don't spend an hour loading context first. You just try it.
 
-The barrier to "let me just try this" is lower. The team is already loaded. You ask them if an approach holds up. You iterate fast.
+The barrier to "let me just try this" is lower. You ask them if an approach holds up. You iterate fast.
 
 This is different from resuming interrupted work. This is starting something new, uncertain, exploratory — and having the team already there to help you pressure-test it.
 
@@ -112,11 +102,9 @@ The last time it was updated is the last time a real decision was made. That's t
 
 ## The playbooks are already there
 
-Every team discovers the same patterns. How to handle auth edge cases. How to structure tests. How to communicate breaking changes to downstream teams. That knowledge usually lives in one person's head and a Slack thread from 2023 that nobody can find.
+Every team discovers the same patterns. How to handle auth edge cases. How to structure tests. How to communicate breaking changes to downstream teams. That knowledge usually lives in one person's head and a chat thread that nobody can find.
 
 `.squad/skills/` is committed and versioned. Playbooks travel with the clone. When you clone a repo that has skills set up, you inherit everything the team has already figured out.
-
-Brady's [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) skill is a live example. It handles community response workflows — issue responses, PR feedback, breaking change announcements. It ships in `.squad/`. Anyone who clones gets it. You don't have to discover patterns the team already solved.
 
 Once a skill is committed, every contributor inherits it.
 
@@ -126,13 +114,13 @@ Cross-team contributions stall before a line of code is written. "How do you run
 
 `ceremonies.md` commits the process. Design reviews, retrospectives, approval checkpoints — all defined and inherited. When you clone, you know how the team works.
 
-No Slack messages asking about the review process. No waiting for someone to walk you through the workflow. You cloned it.
+No chat messages asking about the review process. No waiting for someone to walk you through the workflow. You cloned it.
 
 ## The guardrails are in the repo
 
 In regulated environments and large orgs, contributors don't always know what they're not allowed to do. Security patterns, compliance constraints, governance requirements — tribal knowledge. You find out about them in code review, after you've already built the thing the wrong way.
 
-`decisions.md` records governance decisions. Strict typing requirements. Security patterns. Constraints on external dependencies. The agents know them. When you work with the squad, you're working within the guardrails automatically.
+Because `decisions.md` captures governance decisions — strict typing requirements, security patterns, constraints on external dependencies — the agents already know the guardrails. When you work with the squad, you're working within them automatically.
 
 You find out before the PR, not during it.
 
@@ -158,7 +146,7 @@ When a team commits their `.squad/` to a shared project, a contributor cloning f
 
 The `.squad/` files travel with the repo through normal `git clone` and fork operations. No special Squad setup required. The team comes along with the code.
 
-READMEs and wikis go stale because nobody owns them. The `.squad/` files are version-controlled and updated as the team works — they stay current because they're part of the workflow, not separate from it.
+READMEs and wikis go stale because nobody owns them. The `.squad/` files don't — they're version-controlled and updated as part of the work.
 
 ## Every InnerSource contribution costs less than the last
 
@@ -196,9 +184,7 @@ You leave the project better than you found it. Not just the code — the team.
 
 ## A concrete example: committed `.squad/` in practice
 
-The value of Squad is that team context lives in the repo. When you commit `.squad/`, anyone who clones gets the team infrastructure. Not just the code — the team.
-
-My blog repo has a Squad team: Isabela (writer), Dolores (editor), Julieta (SEO), Luisa (publisher), and a developer agent. Each one has a charter and accumulated history about this blog — its Docusaurus setup, its structure, its audience. This post was drafted by Isabela. Julieta handled the SEO front matter. Dolores edited it. Luisa will open the PR.
+My blog repo has a Squad team: Mirabel (lead), Isabela (writer), Dolores (editor), Julieta (SEO), and Luisa (full-stack TS dev). Each one has a charter and accumulated history about this blog — its Docusaurus setup, its structure, its audience. This post was drafted by Isabela. Julieta handled the SEO front matter. Dolores edited it. Luisa will open the PR.
 
 The useful part isn't that AI drafted this. It's that the team's context is version-controlled and committed to the repo. If a guest author clones this blog repo someday, they run `squad` and get a team that already knows how this blog works — the conventions, the voice, the publishing workflow. They don't have to ask me.
 
