@@ -102,16 +102,6 @@ This is different from resuming interrupted work. This is starting something new
 
 ![A contributor exploring ideas freely in a luminous tropical workspace, representing the low barrier to experimentation when a Squad team is already in place](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
 
-## The documentation that doesn't go stale
-
-READMEs drift. Wikis drift. The doc says the service uses JWT, the codebase switched to session tokens eight months ago. Nobody updated it because nobody owns the documentation. It gets updated when someone remembers, which is after a new contributor gets confused by it.
-
-The problem isn't effort. It's coupling. Documentation that lives outside the workflow drifts because it's not part of the workflow. Nobody reviews the wiki when they merge a PR.
-
-`decisions.md` is version-controlled and lives in the repo. It gets updated when decisions are made, as part of the same PR. It doesn't drift because it's not separate from the work. It is the work. When you clone, you get documentation that reflects what the team actually decided, not what they intended to document.
-
-The last time it was updated is the last time a real decision was made. That's the only documentation that stays current.
-
 ## The playbooks are already there
 
 Every team discovers the same patterns. How to handle auth edge cases. How to structure tests. How to communicate breaking changes to downstream teams. That knowledge usually lives in one person's head and a chat thread that nobody can find.
