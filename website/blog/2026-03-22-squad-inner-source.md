@@ -29,9 +29,9 @@ When you clone a repo — to fix a bug, add a feature, or extend it for your own
 
 ## What Squad is
 
-Squad is an agentic virtual team that lives in your repo as a committed `.squad/` directory. Each agent has a role, a charter, and a persistent memory file (`history.md`). The team shares a `routing.md` that defines who handles what and a `decisions.md` that tracks what the team has deliberated.
+Squad is an agentic virtual team that lives in your repo as a committed `.squad/` directory. Each squad member (agent) has a charter (role description), and a history (persistent memory). The team knows who handles what and tracks what the team has deliberated.
 
-Brady's framing: "Not a chatbot wearing hats." What that means in practice: each agent has a bounded scope and a memory that persists across sessions — not a single prompt with personas bolted on.
+Brady's framing: "Not a chatbot wearing hats." What that means in practice: each squd agent has a specialization, bounded scope and a memory that persists across sessions — not a single prompt with personas bolted on.
 
 Here's what the `.squad/` directory contains:
 
@@ -43,6 +43,18 @@ Here's what the `.squad/` directory contains:
 - `.squad/skills/{name}/SKILL.md` — reusable playbooks for common tasks
 
 Skills are community-contributed. When you commit `.squad/` to your repo, you're sharing not just your team setup but any skills your team has built. Contributors who clone inherit those too.
+
+An squad member's directory starts with a charter. Over time the charter and history grows: 
+
+A charter can include:
+
+- **Identity** — the agent's role, expertise, and working style
+- **What I Own** — the specific concerns this agent is responsible for (architecture decisions, code review, release management, etc.)
+- **How I Work** — operating principles: proposal-first changes, reviewer lockout rules, what compounds over time
+- **Boundaries** — explicit list of what this agent handles and what it doesn't, so work routes correctly
+- **Model** — which AI model to use for this agent's tasks
+
+Brady's `flight` charter, for example, says Flight owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the contract any contributor gets when they clone — they know exactly what Flight will and won't take on before they ask.
 
 ## What you get when you clone
 
