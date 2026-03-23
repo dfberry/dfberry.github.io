@@ -43,7 +43,7 @@ Here's what the `.squad/` directory contains:
 - `.squad/skills/{name}/SKILL.md` — reusable playbooks for common tasks
 
 Skills are community-contributed. I've contributed one back to Squad from my own work with it:
-- `external-comms` — handles community workflows (issue triage, response templates, confidence flagging)
+- [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) — handles community workflows (issue triage, response templates, confidence flagging)
 
 When you commit `.squad/` to your repo, you're sharing not just your team setup but any skills you've built. Contributors who clone inherit those too.
 
@@ -96,7 +96,7 @@ Committing `.squad/` doesn't eliminate that, but it helps. I built the `external
 
 Same pattern works for frustrated bug reports or questions that are really feature requests. The maintainer reviews instead of drafts from scratch every time.
 
-Here's why `.squad/` being committed makes this actually work: the skill ships as `.squad/skills/external-comms/SKILL.md`. It travels with the repo. When you clone bradygaster/squad, you inherit the agent (PAO), its charter, the response templates, the tone patterns, and the audit workflow. Nothing to set up.
+Here's why `.squad/` being committed makes this actually work: the skill ships as [`.squad/skills/external-comms/SKILL.md`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms). It travels with the repo. When you clone bradygaster/squad, you inherit the agent (PAO), its charter, the response templates, the tone patterns, and the audit workflow. Nothing to set up.
 
 The full infrastructure lives in `.squad/comms/` — audit trail (append-only, committed), review state schema, tone validation tests. It's all version-controlled and accessible. Ralph detects unanswered items and adds `squad:needs-response` label. PAO picks them up automatically. The routing rules wire it together, also in `.squad/routing.md`. A contributor forking the repo gets the workflow, the templates, the tone, and the audit trail the moment they git clone.
 
