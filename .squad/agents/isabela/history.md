@@ -98,3 +98,13 @@ Geraldine has explicitly requested that all future posts be written in her docum
 - **Voice maintained:** Direct, practical, short sentences. First-person ("I built") grounded in action. No literary flourish.
 - **Mechanics preserved:** Numbered list untouched. Image tag untouched. Section transitions functional ("Here's why...").
 - **Why this matters:** Demonstrates that `.squad/` as a git-versioned system makes portable, inheritable collaboration infrastructure possible — the central thesis of the post.
+
+### 2026-03-24 — Restructured OSS section: contributor angle first, workflow detail to bottom
+
+- **Requested by:** Geraldine (Restructure task)
+- **Changes made:**
+  1. **Rewrote "For open source maintainers" section** — shifted from "maintainer burnout/workflow" opening to "I cloned bradygaster/squad and found external-comms already there" angle. Focus: contributor experience of inheriting a skill, not building one. 4 paragraphs, direct first-person ("I cloned", "I found", "I could use"). No numbered list in this section.
+  2. **Added new section at bottom: "How the external-comms skill works"** — placed after "When you come back" section, before "I'm using Squad on this blog". Contains the 6-step numbered workflow, infrastructure paragraph (`.squad/comms/`, Ralph, routing), Brady's constraint (`pao approve`, human review gate), both skill file links preserved.
+- **Rationale:** The original structure opened with maintainer pain and jumped into workflow mechanics. New structure leads with the insight that a contributor can improve a repo they don't own by using the squad infrastructure already committed. The "how it works" detail is still in the post, just moved to the bottom where readers who want the mechanics can find it.
+- **Voice:** Maintained Geraldine's direct style — short declarative sentences, first-person action, no em-dashes, functional transitions. Lists over prose where appropriate.
+- **Key lesson:** Post structure should match the differentiation angle. This post is written from a contributor's seat, not a maintainer's or creator's seat. Leading with "I found this already there and could use it immediately" is truer to that perspective than leading with "here's how to build this workflow."
