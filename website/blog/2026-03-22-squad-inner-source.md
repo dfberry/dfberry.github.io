@@ -19,7 +19,7 @@ updated: 2026-03-22 00:00 PST
 
 # Squad Gives Every Contributor a Team That Already Knows the Codebase
 
-When you clone a repo, you usually get code and a README. If you're lucky, there's a CONTRIBUTING.md. What you don't get is the context — why decisions were made, how the team works, what the conventions actually are in practice.
+When you clone a repo — to fix a bug, add a feature, or extend it for your own purposes — you usually get code and a README. If you're lucky, there's a CONTRIBUTING.md. What you don't get is the context — why decisions were made, how the team works, what the conventions actually are in practice.
 
 [Brady Gaster's Squad](https://github.com/bradygaster/squad) fixes that. It runs on GitHub Copilot CLI, and it commits the team's context directly into the repo.
 
