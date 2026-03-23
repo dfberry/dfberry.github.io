@@ -79,3 +79,22 @@ Geraldine has explicitly requested that all future posts be written in her docum
 **Primary style references in repo:**
 - `website/blog/2025-12-30-github-account-clean.md` — best single example of her voice
 - `website/blog/2023-10-27-cloud-native-001.md` — first-person narrative, personal framing
+
+### 2026-03-23 — Brady quote expanded in Squad inner source post
+
+- **Change:** Replaced the terse "Each agent has a defined scope and accumulates context over time. They aren't stateless prompts." with a plain-language translation: "What that means in practice: each agent has a bounded scope and a memory that persists across sessions — not a single prompt with personas bolted on."
+- **Rationale:** Geraldine chose option 4 — preserve Brady's voice ("Not a chatbot wearing hats") but add an accessible explanation for readers unfamiliar with the anti-pattern.
+- **Lesson:** Brady's coined phrases are worth keeping verbatim; follow-on sentence doing the translation work is the pattern to use.
+
+### 2026-03-24 — Expanded external-comms section with RFC #426 context
+
+- **Requested by:** Geraldine (Build task: explain WHY `.squad/` committed to repo made external-comms skill possible)
+- **Changes made:**
+  1. Tightened opening paragraph: changed "onboarding overhead / same questions / missing conventions" to concrete pain: "slow first response / issues sit unanswered for days / team heads-down"
+  2. Added 3 new paragraphs after the numbered list that explain the RFC #426 mechanism:
+     - **Para 1:** Skill ships as `.squad/skills/external-comms/SKILL.md` — travels with repo. Clone gets agent, charter, templates, tone patterns, audit workflow. No setup.
+     - **Para 2:** Full infrastructure in `.squad/comms/` — audit trail, review state, tone tests — all version-controlled. Ralph integration, routing rules in `.squad/routing.md`. Contributor gets workflow + templates + audit trail on git clone.
+     - **Para 3:** Brady's constraint (human review gate) is baked into workflow, not just policy. `pao approve` is maintainer sign-off. Reusable: maintainer can fork skill and adapt templates to their project's voice.
+- **Voice maintained:** Direct, practical, short sentences. First-person ("I built") grounded in action. No literary flourish.
+- **Mechanics preserved:** Numbered list untouched. Image tag untouched. Section transitions functional ("Here's why...").
+- **Why this matters:** Demonstrates that `.squad/` as a git-versioned system makes portable, inheritable collaboration infrastructure possible — the central thesis of the post.
