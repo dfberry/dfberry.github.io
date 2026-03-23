@@ -21,7 +21,7 @@ updated: 2026-03-22 00:00 PST
 
 Think about arriving in a foreign city for the first time. You have the map app. Maybe you grabbed a brochure at the airport. But neither tells you which neighborhoods locals actually eat in, which bus goes where on weekends, or why everyone avoids the shortcut through the park. That knowledge lives with people who know the place.
 
-When you clone a repo — to fix a bug, add a feature, or extend it for your own purposes — you usually get code and a README. If you're lucky, there's a CONTRIBUTING.md. What you don't get is the context — why decisions were made, how the team works, what the conventions actually are in practice.
+When you clone a repo — to fix a bug, add a feature, or extend it for your own purposes — you usually get code and a README. What you don't get is the context — why decisions were made, how the team works, what the conventions actually are in practice.
 
 [Brady Gaster's Squad](https://github.com/bradygaster/squad) provides the context for a contributor to be successful in open source or inner source projects. It runs on GitHub Copilot CLI, and it commits the team's context directly into the repo.
 
@@ -44,9 +44,9 @@ Here's what checks in with you when you clone:
 - `history.md` per agent — what each staff member has learned about this specific project
 - `.squad/skills/{name}/SKILL.md` — the hotel's service playbooks, written by staff who've done the work
 
-Skills are community-contributed. When `.squad/` is committed to a repo, you getnot just the team setup but the playbooks the team has built. Contributors who clone inherit those too.
+Skills are community-contributed. When `.squad/` is committed to a repo, you get the team setup, expertise, and playbooks the team has built. Contributors who clone, inherit those too.
 
-Each staff member's charter defines their role, responsibilities, operating principles, and boundaries — so requests route correctly and contributors know what each agent handles. The _Squad_ repo owner's `flight` charter, for example, owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the house policy any contributor gets when they clone.
+Each member's charter defines their role, responsibilities, operating principles, and boundaries — so requests route correctly and contributors know what each agent handles. The _Squad_ repo owner's `flight` charter, for example, owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the house policy any contributor gets when they clone.
 
 ## Validate before you build — and experiment freely
 
@@ -58,7 +58,7 @@ Experimenting in an unfamiliar repo without guidance is like wandering a foreign
 
 ### With squad
 
-Describe your approach to the squad before writing a line of code. The agents know `decisions.md`, the patterns, and what the team already tried. You validate against the project's actual history, not a README. Throw any idea at the squad and find out in minutes whether it holds up. The barrier to "let me just try this" is lower. You iterate fast.
+Describe your approach to the squad before writing a line of code. The agents know `decisions.md`, the patterns, and what the team already tried. You validate against the project's actual history, not a README. It's like asking a local instead of retracing the same wrong streets. Throw any idea at the squad and find out in minutes whether it holds up. The barrier to "let me just try this" is lower. You iterate fast.
 
 ![A cheerful traveler leaning over maps spread across a bright hotel lobby table surrounded by tropical plants and gold tilework, representing how contributors can plan and validate their approach with the squad team before writing a line of code](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
 
@@ -76,7 +76,7 @@ Your first PR doesn't have to look like a first PR.
 
 ## The guardrails are already there
 
-In regulated environments and large orgs, contributors don't always know what they're not allowed to do. Security patterns, compliance constraints, governance requirements — tribal knowledge. You find out about them in code review, after you've already built the thing the wrong way.
+In regulated environments and large orgs, contributors don't always know what they're not allowed to do. Security patterns, compliance constraints, governance requirements — tribal knowledge. You find out about them in code review, after you've already built the thing the wrong way. It's like discovering the beach is private property after you've already set up your towel.
 
 Because `decisions.md` captures governance decisions — strict typing requirements, security patterns, constraints on external dependencies — the agents already know the guardrails. When you work with the squad, you're working within them automatically.
 
@@ -86,13 +86,13 @@ You find out before the PR, not during it.
 
 Cross-team contributions stall before a line of code is written. "How do you run design reviews here?" "Who needs to sign off?" Legitimate questions — but you're spending contribution time on process the team already answered.
 
-`ceremonies.md` commits the process. Design reviews, retrospectives, approval checkpoints — all defined and inherited. `.squad/skills/` commits the playbooks. When you clone, you know how the team works and you have the team's reusable workflows. You cloned it.
+`ceremonies.md` commits the process. Design reviews, retrospectives, approval checkpoints — all defined and inherited. `.squad/skills/` commits the playbooks. When you clone, you know how the team works — like a hotel card that tells you breakfast hours and checkout time before you've even unpacked — and you have the team's reusable workflows. You cloned it.
 
 ## Who benefits most
 
-**Open source maintainers:** The repo owner's standards — naming conventions, review process, decision history — live in `.squad/`, committed and versioned. I cloned the Squad repo and ran `squad`. My changes aligned with Flight's conventions without reading a style guide. The repo owner reviews a conforming PR instead of explaining the same conventions again.
+**Open source maintainers:** The repo owner's standards — naming conventions, review process, decision history — live in `.squad/`, committed and versioned. The house rules travel with every clone. I cloned the Squad repo and ran `squad`. My changes aligned with Flight's conventions without reading a style guide. The repo owner reviews a conforming PR instead of explaining the same conventions again.
 
-**InnerSource and platform teams:** In larger orgs, institutional knowledge stays with the three people who built the original service. When a team commits `.squad/` to a shared project, contributors inherit the ceremonies, routing rules, and agent memory that already knows the edge cases. The team comes along with the code.
+**InnerSource and platform teams:** In larger orgs, institutional knowledge stays with the three people who built the original service. When a team commits `.squad/` to a shared project, contributors inherit the ceremonies, routing rules, and agent memory that already knows the edge cases. The lay of the land comes with the reservation. The team comes along with the code.
 
 ![A flower-covered arched footbridge connecting two colorful island resorts over bright turquoise water in golden morning light, representing how the repo owner's standards and patterns travel across team and org boundaries](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
 
