@@ -84,7 +84,7 @@ Brady set his standards once. How decisions get made. Which naming conventions t
 
 I cloned bradygaster/squad and ran `squad`. I was working with Brady's team, his conventions, his routing rules. When I made changes, they aligned with his standards because the squad I was using already knew them. I didn't have to read a style guide. I didn't have to ask which agent handles what. The team I inherited had that context.
 
-My PR looked like it came from someone who already knew the project. Because the squad I used already did know it. Brady reviews a conforming contribution instead of explaining the same conventions again. The standards travel with the code.
+My PR looked like it came from someone who already knew the project. Because the squad I used already did know it. Brady reviews a conforming contribution instead of explaining the same conventions again. The standards travel with the code. Skills work the same way. The [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) skill handles community response workflows. It ships in `.squad/`. Every contributor who clones inherits it.
 
 ![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
 
@@ -93,27 +93,6 @@ My PR looked like it came from someone who already knew the project. Because the
 Most contributions don't happen in one sitting. You open a PR, get feedback, come back three weeks later, and have to reconstruct everything — re-read the issue, re-read the diff, try to remember where you left off.
 
 Each agent's `history.md` is persistent state. When you come back, the agent remembers what it was working on, what decisions were made mid-contribution, and what was left open. You resume from where you stopped instead of starting from scratch.
-
-## How the external-comms skill works
-
-The `external-comms` skill addresses a common OSS maintainer problem: slow first response. Issues sit unanswered for days. The team is heads-down on code. New contributors don't know if they should wait or give up.
-
-Here's the workflow:
-
-1. A new contributor files an issue
-2. The skill scans for unanswered items and classifies the response type
-3. It drafts a reply using the matching template
-4. The maintainer reviews the draft and flags it: 🟢 high / 🟡 medium / 🔴 needs review
-5. The maintainer types `pao approve`
-6. The contributor gets a prompt, on-brand response
-
-Same pattern works for frustrated bug reports or questions that are really feature requests. The maintainer reviews instead of drafts from scratch every time.
-
-The skill ships as [`.squad/skills/external-comms/SKILL.md`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms). It travels with the repo. When you clone bradygaster/squad, you inherit the agent (PAO), its charter, the response templates, the tone patterns, and the audit workflow. Nothing to set up.
-
-The full infrastructure lives in `.squad/comms/` — audit trail (append-only, committed), review state schema, tone validation tests. It's all version-controlled and accessible. Ralph detects unanswered items and adds `squad:needs-response` label. PAO picks them up automatically. The routing rules wire it together, also in `.squad/routing.md`. A contributor forking the repo gets the workflow, the templates, the tone, and the audit trail the moment they git clone.
-
-Brady's constraint is strict: PAO never posts autonomously. Every draft goes through human review. The `pao approve` command is where the maintainer signs off — they review a table of draft responses with confidence flags, then approve specific ones. This isn't just a policy. It's baked into the workflow that ships with `.squad/`. A maintainer adopting Squad for their own OSS repo can fork this skill, adapt the templates to their project's voice, and get the same infrastructure.
 
 ## A concrete example: committed `.squad/` in practice
 
