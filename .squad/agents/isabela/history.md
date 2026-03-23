@@ -108,3 +108,24 @@ Geraldine has explicitly requested that all future posts be written in her docum
 - **Rationale:** The original structure opened with maintainer pain and jumped into workflow mechanics. New structure leads with the insight that a contributor can improve a repo they don't own by using the squad infrastructure already committed. The "how it works" detail is still in the post, just moved to the bottom where readers who want the mechanics can find it.
 - **Voice:** Maintained Geraldine's direct style — short declarative sentences, first-person action, no em-dashes, functional transitions. Lists over prose where appropriate.
 - **Key lesson:** Post structure should match the differentiation angle. This post is written from a contributor's seat, not a maintainer's or creator's seat. Leading with "I found this already there and could use it immediately" is truer to that perspective than leading with "here's how to build this workflow."
+
+### 2026-03-24 — Reframed personal examples as supporting context (de721c5)
+
+- **Requested by:** Geraldine (framing decision)
+- **Changes made:**
+  1. **Fix 1 — "What Squad is" section:** Removed personal contribution mention and external-comms bullet. Changed from "I've contributed one back to Squad... [bullet point link]... When you commit" to direct statement: "Skills are community-contributed. When you commit `.squad/` to your repo, you're sharing not just your team setup but any skills your team has built. Contributors who clone inherit those too." External-comms link already appears in the "How the external-comms skill works" section lower in the post.
+  2. **Fix 2 — Blog squad section:** Retitled from "I'm using Squad on this blog" to "A concrete example: committed `.squad/` in practice". Reframed opening to lead with the general principle (team context lives in repo, anyone who clones gets it), then use blog as first-person supporting example. Paragraph structure: general point → blog as concrete case → universal payoff (guest author scenario).
+- **Core framing principle learned:** Geraldine's personal examples (blog squad, external-comms contribution) are evidence for the broader narrative, not the headline. The post is ABOUT what Squad enables for repos and contributors — her experiences support that thesis but don't lead it.
+- **Voice maintained:** Short declarative sentences, direct first-person action ("My blog repo has a Squad team"), functional transitions ("The value of Squad is..."). No literary flourish.
+
+### 2026-03-24 — OSS maintainer section reframed: contributor conformance value
+
+- **Requested by:** Geraldine (rewrite task)
+- **Core insight corrected:** The value to an OSS maintainer like Brady isn't the external-comms workflow specifically. It's that contributors work within standards Brady already set. Brady defines conventions, routing, ceremonies, decisions — commits them to `.squad/`. Contributor clones, runs squad, works with Brady's team and standards. Their PR naturally conforms because the squad they used knows Brady's patterns.
+- **Section rewritten:** Replaced "For open source maintainers" section (previously focused on external-comms skill inheritance) with 3 tight paragraphs:
+  1. Brady sets standards once (decisions, conventions, review patterns) — lives in `.squad/`
+  2. I cloned, ran squad, inherited Brady's team and conventions — changes aligned automatically
+  3. My PR looked like I already knew the project — Brady reviews conforming work instead of repeating standards
+- **What moved:** External-comms detail still exists lower in post ("How the external-comms skill works" section). OSS maintainer section now focuses on conformance/alignment value, not comms workflow.
+- **Voice:** Direct declarative sentences. First-person ("I cloned", "I was working"). 3 paragraphs, no numbered list. No em-dashes.
+- **Key lesson:** OSS maintainer value = contributors conform to standards already set, not that they inherit a particular skill. Standards travel with code via committed `.squad/`.
