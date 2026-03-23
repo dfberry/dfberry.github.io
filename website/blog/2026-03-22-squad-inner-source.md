@@ -126,11 +126,11 @@ You find out before the PR, not during it.
 
 ## For open source maintainers
 
-Brady set his standards once. How decisions get made. Which naming conventions to use. How the review process works. What patterns to follow. That all lives in `.squad/` — committed, versioned, part of the repo.
+Brady set his standards once. How decisions get made. Which naming conventions to use. How the review process works. What patterns to follow. That all lives in `.squad/` — committed, versioned, part of the repo. Flight, the team lead, is the agent who holds those conventions. You don't have to ask Brady what Flight already knows.
 
-I cloned bradygaster/squad and ran `squad`. I was working with Brady's team, his conventions, his routing rules. When I made changes, they aligned with his standards because the squad I was using already knew them. I didn't have to read a style guide. I didn't have to ask which agent handles what. The team I inherited had that context.
+I cloned bradygaster/squad and ran `squad`. I was working with Flight's conventions and routing rules — the standards Flight set as lead. When I made changes, they aligned with those standards because the squad I was using already knew them. I didn't have to read a style guide. I didn't have to ask which agent handles what. The team I inherited had that context.
 
-My PR looked like it came from someone who already knew the project. Because the squad I used already did know it. Brady reviews a conforming contribution instead of explaining the same conventions again. The standards travel with the code. Skills work the same way. The [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) skill handles community response workflows. It ships in `.squad/`. Every contributor who clones inherits it.
+My PR looked like it came from someone who already knew the project. Because the squad I used already did know it. Brady reviews a conforming contribution instead of explaining the same conventions again. The standards travel with the code. Skills work the same way. The [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) skill handles community response workflows — PAO wrote it and owns it. It ships in `.squad/`. Every contributor who clones inherits PAO's communication playbooks without having to ask.
 
 ![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing how Brady's standards and conventions automatically travel with cloned repos—contributors conform without friction](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
 
