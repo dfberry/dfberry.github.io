@@ -2,14 +2,14 @@
 slug: /2025-squad-inner-source-collaboration
 canonical_url: https://dfberry.github.io/blog/2026-03-22-squad-inner-source
 custom_edit_url: null
-sidebar_label: "Squad: Inner Source Collaboration"
-title: "Squad: Accelerating Inner Source with Agentic Teams"
-description: "How Brady Gaster's Squad uses GitHub Copilot CLI agents to enable faster, broader inner source collaboration through team ceremonies and skills."
+sidebar_label: "Squad: Project Collaboration"
+title: "Squad: Accelerating Project Collaboration with Agentic Teams"
+description: "How Brady Gaster's Squad uses GitHub Copilot CLI agents to enable faster, broader project collaboration through team ceremonies and skills."
 published: false
 tags:
   - GitHub Copilot
   - GitHub Copilot CLI
-  - Inner Source
+  - Projects
   - Developer Experience
   - AI-Assisted Development
   - Agentic Workflows
@@ -19,7 +19,7 @@ updated: 2026-03-22 00:00 PST
 
 Contributing to a codebase you didn't build has friction. Not because the code is bad — because the collaboration infrastructure isn't there. There's no shared understanding of how work moves, what the rules are, or what's already been figured out. Every contributor reinvents the wheel: builds their own working style, negotiates their own understanding of scope, discovers the same hard-won lessons the last person already learned.
 
-That friction is what kills contributor momentum on both inner source platform libraries and open source projects. And [Brady Gaster's Squad](https://github.com/bradygaster/squad) is the first tool I've seen that addresses it directly.
+That friction is what kills contributor momentum on projects of any kind. And [Brady Gaster's Squad](https://github.com/bradygaster/squad) is the first tool I've seen that addresses it directly.
 
 <!-- truncate -->
 
@@ -61,33 +61,33 @@ You run `squad`. You have a team that already knows the codebase.
 
 That's the institutional knowledge transfer that normally takes weeks of meetings and tribal knowledge extraction — compressed into a `git clone`.
 
-## Inner source: friction at org scale
+## Projects: friction at org scale
 
-Inner source is the practice of applying open source contribution patterns inside an organization — platform teams publish libraries that consuming teams contribute back to. It works when knowledge flows upstream as freely as code does. It breaks when institutional knowledge is locked in the heads of the three people who built the original service.
+In large organizations, teams often share codebases across groups — platform teams publish projects that consuming teams contribute back to. It works when knowledge flows upstream as freely as code does. It breaks when institutional knowledge is locked in the heads of the three people who built the original service.
 
 Squad's `.squad/` directory maps directly onto this problem.
 
-When a platform team commits their Squad configuration to their inner source repo, consuming teams can clone and immediately understand not just *what* the codebase does but *how the team thinks about it*. The ceremonies are defined. The rules are explicit. The skills are captured. Contributing teams don't spend weeks figuring out the right way to file an issue or structure a PR — they follow the patterns that are already there.
+When a team commits their Squad configuration to a shared project, contributors can clone and immediately understand not just *what* the codebase does but *how the team thinks about it*. The ceremonies are defined. The rules are explicit. The skills are captured. Contributing teams don't spend weeks figuring out the right way to file an issue or structure a PR — they follow the patterns that are already there.
 
-Think of a mobile team cloning the identity platform's repo for the first time. Without Squad, they'd spend a sprint reading Confluence pages and pinging the platform team on Slack. With Squad, the agent memory already knows the auth flow, the edge cases, and the naming conventions. The first PR comes from someone who never met the platform team.
+Think of a mobile team cloning an identity platform project for the first time. Without Squad, they'd spend a sprint reading Confluence pages and pinging the platform team on Slack. With Squad, the agent memory already knows the auth flow, the edge cases, and the naming conventions. The first PR comes from someone who never met the platform team.
 
 Squad's upstream inheritance is git-native: the `.squad/` files travel with the repo through normal `git clone` and fork operations. No special Squad configuration required. The team comes along for free.
 
-The institutional knowledge travels with the code. That's exactly what inner source needs to work at scale, and it's something that READMEs and wikis consistently fail to deliver because they go stale and nobody owns them.
+The institutional knowledge travels with the code. That's exactly what any shared project needs to work at scale, and it's something that READMEs and wikis consistently fail to deliver because they go stale and nobody owns them.
 
-![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing inner source knowledge flow](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
+![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing project knowledge flow across teams](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
 
 ## Open source: friction at maintainer scale
 
-For open source maintainers, the problem is similar but the stakes are different.
+For open source maintainers, the stakes are different but the problem is the same.
 
-OSS projects die from maintainer burnout, and a large part of that burnout is the cost of onboarding contributors. You answer the same questions. You review PRs that miss the conventions. You close issues filed by people who didn't understand the project's scope.
+Projects die from maintainer burnout, and a large part of that burnout is the cost of onboarding contributors. You answer the same questions. You review PRs that miss the conventions. You close issues filed by people who didn't understand the project's scope.
 
 Committing your `.squad/` doesn't solve all of that. But it gives every contributor a team that already knows your project's ceremonies, rules, and accumulated skills. A motivated contributor can make a scoped, high-quality contribution faster — because the context they need isn't locked behind your calendar.
 
 Take community engagement: a new contributor files their first issue. Instead of the maintainer manually triaging it, the `external-comms` skill scans for unanswered items, classifies the response type, and drafts a reply using the matching template. The maintainer reviews the draft, flags it with a confidence level (🟢 high / 🟡 medium / 🔴 needs review), and types `pao approve`. The contributor gets a warm, prompt response — and the maintainer's voice is institutionalized, not burned out. Same pattern for a frustrated bug report or a question that's really a feature request: the skill already knows how to handle it. The maintainer reviews, not reinvents.
 
-The friction-reduction mechanism is the same as inner source. The stakes just shift from enterprise velocity to maintainer sanity.
+The friction-reduction mechanism is the same across any project. The stakes just shift from enterprise velocity to maintainer sanity.
 
 ![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
 
