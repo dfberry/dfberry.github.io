@@ -83,7 +83,7 @@ READMEs and wikis go stale because nobody owns them. The `.squad/` files are ver
 
 ## For open source maintainers
 
-A lot of OSS maintainer burnout comes from onboarding overhead. Same questions get answered over and over. PRs miss conventions. Issues get filed by people who didn't understand the project's scope.
+A lot of OSS maintainer burnout comes from slow first response. Issues sit unanswered for days. The team is heads-down on code. New contributors don't know if they should wait or give up.
 
 Committing `.squad/` doesn't eliminate that, but it helps. I built the `external-comms` skill for exactly this — here's how it works in practice:
 
@@ -95,6 +95,12 @@ Committing `.squad/` doesn't eliminate that, but it helps. I built the `external
 6. The contributor gets a prompt, on-brand response
 
 Same pattern works for frustrated bug reports or questions that are really feature requests. The maintainer reviews instead of drafts from scratch every time.
+
+Here's why `.squad/` being committed makes this actually work: the skill ships as `.squad/skills/external-comms/SKILL.md`. It travels with the repo. When you clone bradygaster/squad, you inherit the agent (PAO), its charter, the response templates, the tone patterns, and the audit workflow. Nothing to set up.
+
+The full infrastructure lives in `.squad/comms/` — audit trail (append-only, committed), review state schema, tone validation tests. It's all version-controlled and accessible. Ralph detects unanswered items and adds `squad:needs-response` label. PAO picks them up automatically. The routing rules wire it together, also in `.squad/routing.md`. A contributor forking the repo gets the workflow, the templates, the tone, and the audit trail the moment they git clone.
+
+Brady's constraint is strict: PAO never posts autonomously. Every draft goes through human review. The `pao approve` command is where the maintainer signs off — they review a table of draft responses with confidence flags, then approve specific ones. This isn't just a policy. It's baked into the workflow that ships with `.squad/`. A maintainer adopting Squad for their own OSS repo can fork this skill, adapt the templates to their project's voice, and get the same infrastructure.
 
 ![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
 
