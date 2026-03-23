@@ -60,13 +60,13 @@ Brady's `flight` charter, for example, says Flight owns architecture and code re
 
 I'm writing this from the contributor's seat, not the repo owner's seat. Brady wrote about [building Squad](https://github.com/bradygaster/squad). Tamir Dresher wrote about [scaling it across an enterprise](https://tamirdresher.com/2026/03/12/scaling-ai-part2-collective). This is what it looks like to clone a repo that already has `.squad/` committed.
 
-You `git clone` a repo. You find the `.squad/` directory described above. You run `squad`. You have a team that already knows the codebase — and that context travels with the clone.
+You `git clone` a repo. You find the `.squad/` directory described above. In a terminal, you run `squad` with `copilot --agent squad --yolo --autopilot`. You have a team that already knows the codebase — and that context travels with the clone.
 
-That context — why the auth flow works a particular way, what naming conventions to follow, which files to avoid — is the part that documentation almost never captures. It may be locked in the heads of whoever built the thing. Here, it's committed to the repo.
+That context — why the auth flow works a particular way, what naming conventions to follow, which files to avoid -- is committed to the repo.
 
 ## You don't have to read the docs to get started
 
-New contributors spend hours reading docs before they can ask the first useful question. They scan the README. They check issues. They post in Discord and wait two days for an answer that half-answers the question. By the time they have enough context to open a PR, they've spent more time on onboarding than on the actual contribution.
+New contributors spend hours reading docs before they can ask the first useful question. They scan the README. They check issues. They post in the right discussion and wait two days for an answer that half-answers the question. By the time they have enough context to open a PR, they've spent more time on onboarding than on the actual contribution.
 
 When `.squad/` is committed, you clone and ask. The agents already know the codebase. They know why the auth flow works the way it does, what naming conventions mean, which files to avoid. You're not querying a static document. You're talking to something that has accumulated knowledge about this specific project.
 
@@ -86,7 +86,7 @@ Your first PR doesn't have to look like a first PR. It can look like a contribut
 
 ## Check your approach before you build it
 
-When you're planning a contribution, the hard part isn't writing the code. It's knowing whether your approach fits the project's decisions and patterns. You can spend a day building something only to get a PR review that says "good work, wrong direction."
+When you're planning a contribution, the hard part isn't writing the code. It's knowing whether your approach fits the project's decisions and patterns before you're invested in it.
 
 With `.squad/` committed, you can describe your approach to the squad before writing a line of code and find out if it holds up — because `decisions.md` has already captured what the team deliberated, and the agents know the patterns. You're validating against the project's actual history, not a README.
 
@@ -157,8 +157,6 @@ When a team commits their `.squad/` to a shared project, a contributor cloning f
 - Agent memory that already knows the edge cases and naming conventions
 
 The `.squad/` files travel with the repo through normal `git clone` and fork operations. No special Squad setup required. The team comes along with the code.
-
-READMEs and wikis go stale because nobody owns them. The `.squad/` files don't — they're version-controlled and updated as part of the work.
 
 ## Every InnerSource contribution costs less than the last
 
