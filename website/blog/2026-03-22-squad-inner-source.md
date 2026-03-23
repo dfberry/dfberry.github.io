@@ -23,7 +23,7 @@ That friction is what kills contributor momentum on both inner source platform l
 
 <!-- truncate -->
 
-![A labyrinth of colorful doors and tangled vines representing contributor friction in an unfamiliar codebase](/img/squad-blog/01-friction-wall.png)
+![A labyrinth of colorful doors and tangled vines representing contributor friction in an unfamiliar codebase](./media/2026-03-22-squad-inner-source/01-friction-wall.png)
 
 ## What Squad actually is
 
@@ -47,7 +47,7 @@ When a maintainer commits their `.squad/`, contributors don't clone just code â€
 
 None of this replaces reading the code. But it gives you the *reasoning* behind the code â€” which is the part that documentation almost never captures.
 
-![A radiant community gathering where each figure glows with their unique skill, representing the squad gift cloned with every repo](/img/squad-blog/02-squad-gift.png)
+![A radiant community gathering where each figure glows with their unique skill, representing the squad gift cloned with every repo](./media/2026-03-22-squad-inner-source/02-squad-gift.png)
 
 ## The contributor's perspective
 
@@ -75,7 +75,7 @@ Squad's upstream inheritance is git-native: the `.squad/` files travel with the 
 
 The institutional knowledge travels with the code. That's exactly what inner source needs to work at scale, and it's something that READMEs and wikis consistently fail to deliver because they go stale and nobody owns them.
 
-![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing inner source knowledge flow](/img/squad-blog/03-inner-source-bridge.png)
+![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing inner source knowledge flow](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
 
 ## Open source: friction at maintainer scale
 
@@ -89,7 +89,7 @@ Take community engagement: a new contributor files their first issue. Instead of
 
 The friction-reduction mechanism is the same as inner source. The stakes just shift from enterprise velocity to maintainer sanity.
 
-![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](/img/squad-blog/04-contributor-success.png)
+![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
 
 ## The interrupted contributor problem
 
@@ -111,7 +111,7 @@ The meta-point isn't that AI wrote this. It's that the *team* has context about 
 
 The collaboration friction doesn't disappear. But it collapses.
 
-![An aerial view of a ceremonial circle in a tropical garden, representing the Squad team ceremonies that come with every clone](/img/squad-blog/05-ceremonies-circle.png)
+![An aerial view of a ceremonial circle in a tropical garden, representing the Squad team ceremonies that come with every clone](./media/2026-03-22-squad-inner-source/05-ceremonies-circle.png)
 
 ## What to do next
 
