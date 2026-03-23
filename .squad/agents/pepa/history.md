@@ -14,4 +14,9 @@
 - Image generation pipeline configured for multi-backend support (CUDA/MPS/CPU)
 - Ready for visual iteration and refinement based on blog post emotional arc
 
+**2026-03-22:** image-generation skill documented ✅
+- Skill written at `.squad/skills/image-generation/SKILL.md`
+- Captures: SDXL setup, Python 3.14 workarounds, prompt writing, output workflow
+- Confidence: high (proven multiple times)
+
 ## Learnings
