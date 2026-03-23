@@ -27,7 +27,7 @@ When you clone a repo — to fix a bug, add a feature, or extend it for your own
 
 <!-- truncate -->
 
-![A brightly painted seaplane gliding toward a colorful tropical dock over turquoise water with coral pennants, representing the excitement and uncertainty of approaching an unfamiliar codebase](./media/2026-03-22-squad-inner-source/01-friction-wall.png)
+![A brightly painted seaplane up in the sky gliding toward a colorful tropical dock over turquoise water with coral pennants, representing the excitement and uncertainty of approaching an unfamiliar codebase](./media/2026-03-22-squad-inner-source/01-friction-wall.png)
 
 ## What Squad is
 
@@ -64,11 +64,15 @@ Describe your approach to the squad before writing a line of code. The agents kn
 
 ## Your first PR fits the project by default
 
+### Without squad
+
 You spend a week building a feature. You open a PR. You get a wall of review comments — not about the code, but about the approach. Wrong naming convention. Decision reversed six months ago. Pattern the team doesn't use anymore. The code works. The direction was wrong. "Good work, wrong direction."
 
 That's the wrong-district problem. You walked confidently for an hour. Then you found out you were in the wrong part of town the whole time. The effort was real. The orientation wasn't.
 
 This happens because you were working without the project's context. You built something reasonable. You just didn't know what "reasonable" meant for this specific codebase.
+
+### With squad
 
 When you work with agents that already know `routing.md`, `decisions.md`, and the agent histories, your code ends up aligned with the project's patterns. Not because you read a style guide. Because the squad you used already knew those patterns. The PR fits because the squad you cloned already fits.
 
@@ -76,7 +80,11 @@ Your first PR doesn't have to look like a first PR.
 
 ## The guardrails are already there
 
+### Without squad
+
 In regulated environments and large orgs, contributors don't always know what they're not allowed to do. Security patterns, compliance constraints, governance requirements — tribal knowledge. You find out about them in code review, after you've already built the thing the wrong way. It's like discovering the beach is private property after you've already set up your towel.
+
+### With squad
 
 Because `decisions.md` captures governance decisions — strict typing requirements, security patterns, constraints on external dependencies — the agents already know the guardrails. When you work with the squad, you're working within them automatically.
 
@@ -84,7 +92,11 @@ You find out before the PR, not during it.
 
 ## What you inherit when you clone
 
+### Without squad
+
 Cross-team contributions stall before a line of code is written. "How do you run design reviews here?" "Who needs to sign off?" Legitimate questions — but you're spending contribution time on process the team already answered.
+
+### With squad
 
 `ceremonies.md` commits the process. Design reviews, retrospectives, approval checkpoints — all defined and inherited. `.squad/skills/` commits the playbooks. When you clone, you know how the team works — like a hotel card that tells you breakfast hours and checkout time before you've even unpacked — and you have the team's reusable workflows. You cloned it.
 
@@ -98,7 +110,11 @@ Cross-team contributions stall before a line of code is written. "How do you run
 
 ## Knowledge compounds over time
 
+### Without squad
+
 In InnerSource programs, contributing teams re-learn the same patterns every time they contribute to a platform repo. It's like a business traveler who stays at the same hotel four times a year but can never remember where the gym is. The knowledge just didn't carry over.
+
+### With squad
 
 When `.squad/` is committed, agent memory accumulates, decisions get recorded, and the squad gets better at knowing this specific codebase over time. A team that contributed once has a head start on the second contribution. Someone who clones the repo six months after the original contributors left still gets a working team with context. The knowledge isn't locked inside anyone's head. It's committed.
 
