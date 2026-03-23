@@ -104,6 +104,30 @@ The barrier to "let me just try this" is lower. The team is already loaded. You 
 
 This is different from resuming interrupted work. This is starting something new, uncertain, exploratory — and having the team already there to help you pressure-test it.
 
+## Check your approach before you build it
+
+When you're planning a contribution, the hard part isn't writing the code. It's not knowing whether your approach fits the project's decisions and patterns. You can spend a day building something only to get a PR review that says "good work, wrong direction."
+
+With `.squad/` committed, `decisions.md` records what the team has already deliberated. Agent history knows the patterns. You can describe your approach to the squad before writing a line of code and find out if it holds up. You're validating against the project's actual history, not a README.
+
+The squad doesn't approve your PR. But it can tell you whether your plan is headed into a known dead end before you commit to it.
+
+## Your PR can improve the squad, not just the code
+
+When you contribute to a repo with `.squad/`, your PR doesn't have to be code only. If you found a pattern that should be remembered, you can add it to an agent's `history.md`. If you ran into an edge case the team should know about, add it to `decisions.md`. If you built something reusable, write a skill.
+
+The `.squad/` files are part of the repo. They're versioned, they're reviewed in PRs, they travel with the codebase. A contribution that improves the team infrastructure is as valuable as a contribution that improves the code.
+
+You leave the project better than you found it. Not just the code — the team.
+
+## What stays when contributors leave
+
+Most open source projects lose knowledge when contributors move on. The person who knew why that decision was made is gone. The README is two years stale. The architecture makes sense to no one still active.
+
+When `.squad/` is committed, the team's accumulated knowledge stays in the repo. Decisions are recorded. Agent histories capture the edge cases and patterns. Someone new who clones the repo six months after the original contributors left still gets a working team with context about the project.
+
+The knowledge isn't locked inside anyone's head. It's committed.
+
 ## A concrete example: committed `.squad/` in practice
 
 The value of Squad is that team context lives in the repo. When you commit `.squad/`, anyone who clones gets the team infrastructure. Not just the code — the team.
