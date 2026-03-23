@@ -42,9 +42,11 @@ Here's what the `.squad/` directory contains:
 - `history.md` per agent — what each agent has learned about the project
 - `.squad/skills/{name}/SKILL.md` — reusable playbooks for common tasks
 
-Squad ships with two built-in skills:
+Skills are community-contributed. I've contributed two back to Squad from my own work with it:
 - `humanizer` — enforces communication tone (warm openings, active voice, empathy markers)
 - `external-comms` — handles community workflows (issue triage, response templates, confidence flagging)
+
+When you commit `.squad/` to your repo, you're sharing not just your team setup but any skills you've built. Contributors who clone inherit those too.
 
 ## What you get when you clone
 
@@ -84,7 +86,7 @@ READMEs and wikis go stale because nobody owns them. The `.squad/` files are ver
 
 A lot of OSS maintainer burnout comes from onboarding overhead. Same questions get answered over and over. PRs miss conventions. Issues get filed by people who didn't understand the project's scope.
 
-Committing `.squad/` doesn't eliminate that, but it helps. Here's how the `external-comms` skill works in practice:
+Committing `.squad/` doesn't eliminate that, but it helps. I built the `external-comms` skill for exactly this — here's how it works in practice:
 
 1. A new contributor files an issue
 2. The skill scans for unanswered items and classifies the response type
