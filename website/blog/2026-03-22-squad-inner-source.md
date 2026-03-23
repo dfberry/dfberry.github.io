@@ -31,7 +31,7 @@ When you clone a repo — to fix a bug, add a feature, or extend it for your own
 
 Squad is an agentic virtual team that lives in your repo as a committed `.squad/` directory. Each agent has a role, a charter, and a persistent memory file (`history.md`). The team shares a `routing.md` that defines who handles what and a `decisions.md` that tracks what the team has deliberated.
 
-Brady's framing: "Not a chatbot wearing hats." Each agent has a defined scope and accumulates context over time. They aren't stateless prompts.
+Brady's framing: "Not a chatbot wearing hats." What that means in practice: each agent has a bounded scope and a memory that persists across sessions — not a single prompt with personas bolted on.
 
 Here's what the `.squad/` directory contains:
 
