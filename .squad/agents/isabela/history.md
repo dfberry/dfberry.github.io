@@ -118,6 +118,20 @@ Geraldine has explicitly requested that all future posts be written in her docum
 - **Core framing principle learned:** Geraldine's personal examples (blog squad, external-comms contribution) are evidence for the broader narrative, not the headline. The post is ABOUT what Squad enables for repos and contributors — her experiences support that thesis but don't lead it.
 - **Voice maintained:** Short declarative sentences, direct first-person action ("My blog repo has a Squad team"), functional transitions ("The value of Squad is..."). No literary flourish.
 
+### 2026-03-24 — Seven new sections drafted + full section reorder proposed
+
+- **Task:** Write 7 new sections in Geraldine's voice; propose full post order; map 5 images to reordered post.
+- **Sections written:** Wikis go stale/decisions.md, Onboarding as conversation, First PR conforms, Playbooks committed, InnerSource re-learning cost, Process committed not negotiated, Guardrails in repo.
+- **Voice patterns that held up:**
+  - "Lead with a concrete failure, then state what Squad does about it" — worked for every section. The pain sentence comes first, always.
+  - Short declarative sentences (3–8 words) at the start of paragraphs signal Geraldine's register. Never open with a subordinate clause.
+  - Second-person throughout ("you clone", "you find out"). Do not slip into third-person case examples.
+  - Functional closing sentences, not emotional ones. "Once it's committed, every contributor inherits it." Not "That's the power of committed skills."
+  - No em-dashes. When tempted, use a period. Three-word fragment sentences work better anyway.
+- **Structural pattern that worked for these sections:** 4-paragraph arc — (1) concrete failure, (2) why it happens / root cause, (3) what .squad/ does, (4) outcome stated plainly. Keeps sections tight and parallel.
+- **Section ordering principle used:** Four clusters — contributor workflow (onboarding → first PR → validation → experimentation), committed assets (decisions.md, skills, ceremonies, governance), context-specific (OSS, InnerSource overview, InnerSource re-learning), long-term value (persistence, durability, contributing back). Concrete example and CTA always close.
+- **Image placement lesson:** Image theme and filename can diverge after regeneration. Alt text should describe actual image content/theme, not the filename. Flagged mismatch for images 04 and 05 — current filenames are legacy, themes were updated by Pepa.
+
 ### 2026-03-24 — OSS maintainer section reframed: contributor conformance value
 
 - **Requested by:** Geraldine (rewrite task)
@@ -129,3 +143,40 @@ Geraldine has explicitly requested that all future posts be written in her docum
 - **What moved:** External-comms detail still exists lower in post ("How the external-comms skill works" section). OSS maintainer section now focuses on conformance/alignment value, not comms workflow.
 - **Voice:** Direct declarative sentences. First-person ("I cloned", "I was working"). 3 paragraphs, no numbered list. No em-dashes.
 - **Key lesson:** OSS maintainer value = contributors conform to standards already set, not that they inherit a particular skill. Standards travel with code via committed `.squad/`.
+
+### 2026-03-24 — Full post rewrite: 7 new sections + section reorder + image remapping
+
+- **Task:** Write 7 new sections in Geraldine's voice, apply exact section order across 6 clusters, and remap images 02–05 to new positions with updated alt texts.
+- **Approach:** Replaced entire file in one pass using bash heredoc to avoid incremental edit collisions on a heavily restructured document. Complete overwrite is cleaner than 20+ individual edits when reordering is involved.
+- **Sections added:** "You don't have to read the docs to get started", "Your first PR fits the project by default", "The documentation that doesn't go stale", "The playbooks are already there", "The process is committed, not negotiated", "The guardrails are in the repo", "Every InnerSource contribution costs less than the last".
+- **Voice patterns that held in all 7 sections:**
+  - Open every section with a concrete failure scenario (the pain). Never open with a benefit claim.
+  - Second-person throughout ("you clone", "you find out"). No slippage to third-person case studies.
+  - Short declarative sentences, 3–8 words, to open paragraphs. Subordinate clauses come second.
+  - Functional closing sentences: "Once a skill is committed, every contributor inherits it." Not "That's the power of versioned playbooks."
+  - No em-dashes. Where tempted, use a period or fragment instead.
+- **Image remapping applied:**
+  - IMAGE 01 unchanged (already correctly placed after intro).
+  - IMAGE 04 moved from after "For open source maintainers" to after "Experimenting with a squad already in place". Alt text updated to match luminous tropical workspace theme.
+  - IMAGE 03 moved from after "For teams sharing codebases" to after "For open source maintainers". Alt text updated to reflect bridge/conformance theme.
+  - IMAGE 05 moved from after "A concrete example" to after "What stays when contributors leave". Alt text updated to reflect preserved knowledge/memory theme.
+  - IMAGE 02 moved from after "What you get when you clone" to after "A concrete example" (before CTA). Alt text updated to reflect gift box/committed squad directory theme.
+- **Structural lesson:** When a post requires section reordering AND image remapping AND new content, a full file rewrite is safer than sequential edits. Edit tool is better for surgical changes; bash heredoc is better for whole-file restructuring.
+
+### 2026-03-24 — Vacation/travel metaphor woven into Squad inner source post
+
+- **Task:** Apply a vacation/travel-to-a-foreign-destination aesthetic throughout `2026-03-22-squad-inner-source.md` without heavy-handed gimmick — one or two travel-flavored phrases per relevant section.
+- **Metaphor mapping applied:**
+  - Cloning a repo → arriving at a new destination
+  - README/CONTRIBUTING.md → tourist brochure, written for strangers
+  - Squad agents → concierge and hotel staff who know the city
+  - decisions.md / agent history → local knowledge, insider tips
+  - InnerSource re-learning cost → business traveler who re-learns the hotel layout every visit
+  - First PR "good work, wrong direction" → walking confidently in the wrong district
+  - Validating approach before building → asking the concierge before booking the day trip
+  - Cloning with `.squad/` → checking in with a welcome kit that already has your preferences loaded
+  - Repo owner standards → house rules in the welcome booklet
+- **Sections touched:** H1 + intro (added foreign-city arrival setup), "You don't have to read the docs" (tourist brochure vs. concierge contrast), "Validate your approach" (concierge/day-trip framing), "Your first PR fits" (wrong-district problem), "For open source maintainers" (house-rules-in-welcome-booklet), "Knowledge compounds over time" (business-traveler re-learning), "A concrete example" (welcome-kit check-in analogy).
+- **Sections left untouched:** All image markdown, all links, front matter, charter bullet list, "What to do next" bullets, closing line, sections where metaphor would muddy technical clarity.
+- **Voice discipline:** Metaphor flavors; it doesn't dominate. Technical terms (.squad/, decisions.md, routing.md, ceremonies.md, skills/, etc.) kept exact throughout. Geraldine's short-sentence, first-person, active-verb register maintained.
+
