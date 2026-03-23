@@ -21,7 +21,7 @@ updated: 2026-03-22 00:00 PST
 
 When you clone a repo — to fix a bug, add a feature, or extend it for your own purposes — you usually get code and a README. If you're lucky, there's a CONTRIBUTING.md. What you don't get is the context — why decisions were made, how the team works, what the conventions actually are in practice.
 
-[Brady Gaster's Squad](https://github.com/bradygaster/squad) fixes that. It runs on GitHub Copilot CLI, and it commits the team's context directly into the repo.
+[Brady Gaster's Squad](https://github.com/bradygaster/squad) provides the context for a contributor to be successful in open source or inner source projects. It runs on GitHub Copilot CLI, and it commits the team's context directly into the repo.
 
 <!-- truncate -->
 
@@ -58,7 +58,7 @@ You `git clone` a repo. You find a `.squad/` directory. Inside:
 
 You run `squad`. You have a team that already knows the codebase.
 
-That context — why the auth flow works that way, what naming conventions to follow, which files the developer agent avoids — is the part that documentation almost never captures. It's usually locked in the heads of whoever built the thing.
+That context — such as why the auth flow works a particular way, what naming conventions to follow, which files the developer agent avoids — is the part that documentation almost never captures. It may be locked in the heads of whoever built the thing.
 
 ![A radiant community gathering where each figure glows with their unique skill, representing the squad gift cloned with every repo](./media/2026-03-22-squad-inner-source/02-squad-gift.png)
 
@@ -80,13 +80,11 @@ READMEs and wikis go stale because nobody owns them. The `.squad/` files are ver
 
 ## For open source maintainers
 
-I cloned bradygaster/squad — a repo I don't own — and found the `.squad/` directory already set up. Inside was a skill called `external-comms`. It was already there. I didn't have to build it.
+Brady set his standards once. How decisions get made. Which naming conventions to use. How the review process works. What patterns to follow. That all lives in `.squad/` — committed, versioned, part of the repo.
 
-The skill handles community response workflows. Issue triage, response templates, confidence flagging. I could use it immediately because the repo's squad infrastructure invited me in. The agent (PAO), its charter, the tone patterns, the audit trail — all committed and ready to use.
+I cloned bradygaster/squad and ran `squad`. I was working with Brady's team, his conventions, his routing rules. When I made changes, they aligned with his standards because the squad I was using already knew them. I didn't have to read a style guide. I didn't have to ask which agent handles what. The team I inherited had that context.
 
-I could contribute back to Brady's repo by using the team and skill that was already in place. The squad came with the code. I didn't set anything up. I cloned and had access to the same collaboration infrastructure Brady's team uses.
-
-This is what `.squad/` makes possible for OSS repos. You commit your squad. Contributors inherit your team's institutional knowledge — ceremonies, skills, routing rules — the moment they clone. No wiki. No separate onboarding doc. The team infrastructure travels with the code.
+My PR looked like it came from someone who already knew the project. Because the squad I used already did know it. Brady reviews a conforming contribution instead of explaining the same conventions again. The standards travel with the code.
 
 ![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
 
