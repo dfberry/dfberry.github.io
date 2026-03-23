@@ -13,7 +13,7 @@ tags:
   - developer-tools
 updated: 2024-04-07 00:00 PST
 ---
-# Clean up my many GitHub account repositories
+# My GitHub Account Had 80+ Repos — Most Were Ghosts. Here's How I Cleaned It Up.
 
 My end of year project is a GitHub account repository-cleanup tool to provide safe, repeatable auditing and cleanup for my GitHub accounts. I also wanted to create a catalog of my active repos. This repo focuses on repository-level cleanup (archive/delete/catalog), but the same audit run can help you discover candidates for cloud-resource reclamation and CI/workflow maintenance.
 
