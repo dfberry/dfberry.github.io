@@ -83,9 +83,27 @@ READMEs and wikis go stale because nobody owns them. The `.squad/` files are ver
 
 ## For open source maintainers
 
-A lot of OSS maintainer burnout comes from slow first response. Issues sit unanswered for days. The team is heads-down on code. New contributors don't know if they should wait or give up.
+I cloned bradygaster/squad — a repo I don't own — and found the `.squad/` directory already set up. Inside was a skill called `external-comms`. It was already there. I didn't have to build it.
 
-Committing `.squad/` doesn't eliminate that, but it helps. I built the `external-comms` skill for exactly this — here's how it works in practice:
+The skill handles community response workflows. Issue triage, response templates, confidence flagging. I could use it immediately because the repo's squad infrastructure invited me in. The agent (PAO), its charter, the tone patterns, the audit trail — all committed and ready to use.
+
+I could contribute back to Brady's repo by using the team and skill that was already in place. The squad came with the code. I didn't set anything up. I cloned and had access to the same collaboration infrastructure Brady's team uses.
+
+This is what `.squad/` makes possible for OSS repos. You commit your squad. Contributors inherit your team's institutional knowledge — ceremonies, skills, routing rules — the moment they clone. No wiki. No separate onboarding doc. The team infrastructure travels with the code.
+
+![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
+
+## When you come back to a contribution after a break
+
+Most contributions don't happen in one sitting. You open a PR, get feedback, come back three weeks later, and have to reconstruct everything — re-read the issue, re-read the diff, try to remember where you left off.
+
+Each agent's `history.md` is persistent state. When you come back, the agent remembers what it was working on, what decisions were made mid-contribution, and what was left open. You resume from where you stopped instead of starting from scratch.
+
+## How the external-comms skill works
+
+The `external-comms` skill addresses a common OSS maintainer problem: slow first response. Issues sit unanswered for days. The team is heads-down on code. New contributors don't know if they should wait or give up.
+
+Here's the workflow:
 
 1. A new contributor files an issue
 2. The skill scans for unanswered items and classifies the response type
@@ -96,19 +114,11 @@ Committing `.squad/` doesn't eliminate that, but it helps. I built the `external
 
 Same pattern works for frustrated bug reports or questions that are really feature requests. The maintainer reviews instead of drafts from scratch every time.
 
-Here's why `.squad/` being committed makes this actually work: the skill ships as [`.squad/skills/external-comms/SKILL.md`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms). It travels with the repo. When you clone bradygaster/squad, you inherit the agent (PAO), its charter, the response templates, the tone patterns, and the audit workflow. Nothing to set up.
+The skill ships as [`.squad/skills/external-comms/SKILL.md`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms). It travels with the repo. When you clone bradygaster/squad, you inherit the agent (PAO), its charter, the response templates, the tone patterns, and the audit workflow. Nothing to set up.
 
 The full infrastructure lives in `.squad/comms/` — audit trail (append-only, committed), review state schema, tone validation tests. It's all version-controlled and accessible. Ralph detects unanswered items and adds `squad:needs-response` label. PAO picks them up automatically. The routing rules wire it together, also in `.squad/routing.md`. A contributor forking the repo gets the workflow, the templates, the tone, and the audit trail the moment they git clone.
 
 Brady's constraint is strict: PAO never posts autonomously. Every draft goes through human review. The `pao approve` command is where the maintainer signs off — they review a table of draft responses with confidence flags, then approve specific ones. This isn't just a policy. It's baked into the workflow that ships with `.squad/`. A maintainer adopting Squad for their own OSS repo can fork this skill, adapt the templates to their project's voice, and get the same infrastructure.
-
-![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
-
-## When you come back to a contribution after a break
-
-Most contributions don't happen in one sitting. You open a PR, get feedback, come back three weeks later, and have to reconstruct everything — re-read the issue, re-read the diff, try to remember where you left off.
-
-Each agent's `history.md` is persistent state. When you come back, the agent remembers what it was working on, what decisions were made mid-contribution, and what was left open. You resume from where you stopped instead of starting from scratch.
 
 ## I'm using Squad on this blog
 
