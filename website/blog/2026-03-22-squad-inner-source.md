@@ -33,7 +33,7 @@ When you clone a repo — to fix a bug, add a feature, or extend it for your own
 
 Think of Squad as the resort staff committed to the repo. Not a single chatbot wearing different hats — more like a concierge who knows the layout, a activities director who runs the itinerary, a front desk that remembers every returning guest. Each staff member has a specific role, a bounded area of responsibility, and a memory that carries over from one stay to the next.
 
-That staff lives in your repo as a committed `.squad/` directory. Each squad member (agent) has a charter — their job description — and a history — what they've learned about this particular property. The repo owner's framing: "Not a chatbot wearing hats." In practice, each agent has a specialization, bounded scope, and a memory that persists across sessions.
+That staff lives in your repo as a committed `.squad/` directory. Each squad member (agent) has a charter — their job description — and a history — what they've learned about this particular property. Each agent has a specialization, bounded scope, and a memory that persists across sessions.
 
 Here's what checks in with you when you clone:
 
@@ -44,7 +44,7 @@ Here's what checks in with you when you clone:
 - `history.md` per agent — what each staff member has learned about this specific project
 - `.squad/skills/{name}/SKILL.md` — the hotel's service playbooks, written by staff who've done the work
 
-Skills are community-contributed. When you commit `.squad/` to your repo, you're sharing not just your team setup but the playbooks your team has built. Contributors who clone inherit those too.
+Skills are community-contributed. When `.squad/` is committed to a repo, you getnot just the team setup but the playbooks the team has built. Contributors who clone inherit those too.
 
 Each staff member's charter grows over time. A charter can include:
 
@@ -54,33 +54,47 @@ Each staff member's charter grows over time. A charter can include:
 - **Boundaries** — what this agent handles and what it doesn't, so requests route correctly
 - **Model** — which AI model to use for this agent's tasks
 
-The repo owner's `flight` charter, for example, says Flight owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the house policy any contributor gets when they clone — they know exactly what Flight will and won't take on before they ask.
+The _Squad_ repo owner's `flight` charter, for example, says Flight owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the house policy any contributor gets when they clone — they know exactly what Flight will and won't take on before they ask.
 
 ## What you get when you clone
 
-I'm writing this from the contributor's seat, not the repo owner's seat. The repo owner wrote about [building Squad](https://github.com/bradygaster/squad). Tamir Dresher wrote about [scaling it across an enterprise](https://tamirdresher.com/2026/03/12/scaling-ai-part2-collective). This is what it looks like to clone a repo that already has `.squad/` committed.
-
 You `git clone` a repo. You find the `.squad/` directory described above. In a terminal, you run `squad` with `copilot --agent squad --yolo --autopilot`. You have a team that already knows the codebase — and that context travels with the clone.
 
-That context — why the auth flow works a particular way, what naming conventions to follow, which files to avoid -- is committed to the repo.
+### Without squad
 
-## You don't have to read the docs to get started
+The README is a tourist brochure — written for strangers, enough to get you oriented, not enough to get you anywhere useful. They scan it anyway. They check issues. They post in the right discussion and wait two days for an answer that half-answers the question. By the time they have enough context to open a PR, they've spent more time on onboarding than on the actual contribution.
 
-New contributors spend hours reading docs before they can ask the first useful question. The README is a tourist brochure — written for strangers, enough to get you oriented, not enough to get you anywhere useful. They scan it anyway. They check issues. They post in the right discussion and wait two days for an answer that half-answers the question. By the time they have enough context to open a PR, they've spent more time on onboarding than on the actual contribution.
+### With squad
 
 When `.squad/` is committed, you clone and ask. The agents aren't tourist brochures. They're the concierge who's been at the hotel for years — the one who knows which recommendations are actually good, not the ones on the laminated card in the drawer. They know why the auth flow works the way it does, what naming conventions mean, which files to avoid. You're not querying a static document. You're talking to something that has accumulated knowledge about this specific project.
 
-You clone. You run `squad`. You ask the agent your question. You get an answer from something that's actually worked in the repo — not from a README written two years ago. The back-and-forth that normally happens in issues or Slack happens inside your editor instead.
-
-The first hour of a contribution feels different. You're not looking for context. You already have it.
+The first contribution feels different. You're not looking for context. You already have it.
 
 ## Validate your approach before you build
 
 When you're planning a contribution, the hard part isn't writing the code. It's knowing whether your approach fits the project's decisions and patterns before you're invested in it.
 
-Ask the concierge before you book the day trip. You can go research it yourself — spend an hour reading reviews and then find out it's closed on Tuesdays. Or you ask someone who already knows the terrain. With `.squad/` committed, you describe your approach to the squad before writing a line of code and find out if it holds up — because `decisions.md` has already captured what the team deliberated, and the agents know the patterns. You're validating against the project's actual history, not a README.
+### Without squad
+
+Ask the concierge before you book the day trip. You can go research it yourself — spend an hour reading reviews and then find out it's closed on Tuesdays. Or you ask someone who already knows the terrain. 
+
+### With squad
+
+With `.squad/` committed, you describe your approach to the squad before writing a line of code and find out if it holds up — because `decisions.md` has already captured what the team deliberated, and the agents know the patterns. You're validating against the project's actual history, not a README.
+
+## Try new things
 
 When a repo ships with `.squad/`, experimenting is cheap. You don't have to justify an idea from a blank slate. The team is already loaded — conventions, patterns, past decisions all in place.
+
+### Without squad
+
+Experimenting in an unfamiliar repo without guidance is like wandering a foreign city without a local to ask. You want to try something — a new approach, a shortcut you think might work. But you don't know the neighborhood. You don't know if that street is a dead end or if it leads somewhere useful. You don't know if someone already tried this route and gave up.
+
+So you hedge. You spend an hour reading issues trying to figure out if your idea is reasonable. You post a question and wait two days for a reply that half-answers it. By the time you've loaded enough context to feel confident trying something, the curiosity has cooled. The idea felt cheaper before you knew how much it would cost to validate.
+
+Most experiments never start. Not because they were bad ideas — because the cost of finding out was too high.
+
+### With squad
 
 You can throw an idea at the squad and ask if it makes sense. You don't spend an hour loading context first. You just try it.
 
