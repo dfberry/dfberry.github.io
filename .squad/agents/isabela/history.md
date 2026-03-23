@@ -53,3 +53,29 @@
 3. **Repair 3 — Image prompts framing:** Inserted single sentence between italicized intro and first prompt that ties visual aesthetic to emotional journey: "The palette below mirrors the post's emotional arc: warm tropical colors for belonging and momentum, luminous particles for knowledge in motion, and deep magentas for the friction that dissolves when the right team shows up." Connects visual strategy to post's narrative spine.
 
 **Status:** All three repairs applied. Voice maintained (warm, technical, practical). No rewrites — pure targeted insertions.
+
+### 2026-03-23 — User voice directive: always write in Geraldine's voice
+
+Geraldine has explicitly requested that all future posts be written in her documented voice. This is a standing directive — applies to every post going forward.
+
+**Geraldine's voice (extracted from published posts — use this as primary style guide):**
+
+- **Direct and practical.** No narrative flourish, no literary ambition. Explains what she did, what she found, how to use it.
+- **First-person grounded in action.** "I use...", "I built...", "I found...". Experience-first, not storytelling.
+- **Short declarative sentences.** Informs, doesn't perform. Paragraphs: 2–4 sentences max.
+- **Structured over lyrical.** Lists, bullet points, numbered steps. Information architecture beats narrative flow.
+- **Personal but matter-of-fact.** Real personal context (actual tools, actual account names) stated plainly, without drama.
+- **Humble and collegial.** "Let me know how you would have proceeded." Never self-aggrandizing.
+- **No literary devices:** No em-dashes for dramatic effect. No poetic closes. No "Here's the one that doesn't get talked about enough." No cinematic transitions.
+- **Functional transitions.** "Here's how it works." "This is what I found." Not: "The collaboration friction doesn't disappear. But it collapses."
+
+**Voice anti-patterns to avoid:**
+- Long narrative paragraphs building to a dramatic reveal
+- Journalist-style lede paragraphs
+- Em-dash-heavy rhythm prose
+- Metaphors used for effect rather than clarity
+- Closing lines that try to land emotionally
+
+**Primary style references in repo:**
+- `website/blog/2025-12-30-github-account-clean.md` — best single example of her voice
+- `website/blog/2023-10-27-cloud-native-001.md` — first-person narrative, personal framing
