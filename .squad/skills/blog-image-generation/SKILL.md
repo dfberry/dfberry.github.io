@@ -122,45 +122,54 @@ python -u generate.py \
 
 **Key flag:** Use `python -u generate.py` (unbuffered output for live logging)
 
-### 4. Run Generation and Monitor
+### 4. Generate One at a Time — Await Approval Before Moving
 
+Generate images **one at a time**. Do NOT bulk-generate all images then move them. The workflow is:
+
+```
+generate → show to user → await approval → move → generate next
+```
+
+**Generate command (per image):**
 ```bash
 cd /Users/geraldinefberry/repos/my_repos/image-generation
 source venv/bin/activate
-
-# Start in background
-bash generate_blog_images.sh &
-
-# Monitor in separate terminal
-tail -f generation.log
+python -u generate.py \
+  --prompt "..." \
+  --output "outputs/NN-new.png" \
+  --seed NN \
+  --refine
 ```
 
-**Timing:** ~4-5 minutes per image on Apple Silicon MPS (after weights cached)
+- Use `--refine` for higher quality (adds ~7 min on Apple Silicon MPS with refiner)
+- Save as `NN-new.png` (not `NN.png`) to avoid overwriting originals until approved
+- Start seeds at 42, increment by 1 per image (42, 43, 44, ...)
+- Timing: ~7 min per image with `--refine` on Apple Silicon MPS
 
-**⚠️ Critical:** Use `bash script.sh &` NOT `nohup bash script.sh`
-- Python 3.14 + nohup triggers: "Fatal Python error: init_sys_streams"
-- Background bash handles I/O correctly
+**After generation:** Show the user the output path and await their approval before proceeding.
 
-**Monitoring expectations:**
-- First run takes longer (model weights load into VRAM)
-- Subsequent runs in same session are faster
-- Watch for GPU/MPS memory spikes in Activity Monitor
-- Safe to close monitoring; script continues running
+### 5. Move Approved Image to Blog Media Directory
 
-### 5. Copy Outputs to Blog Media Directory
-
-Once generation completes:
+**Immediately after the user approves each image**, copy it to the blog media folder with its final name. Do NOT wait until all images are done.
 
 ```bash
-# Create post media directory
-mkdir -p /Users/geraldinefberry/repos/my_repos/dfberry.github.io/website/blog/media/{post-slug}/
-
-# Copy and rename images
-cp /Users/geraldinefberry/repos/my_repos/image-generation/outputs/0*.png \
-   /Users/geraldinefberry/repos/my_repos/dfberry.github.io/website/blog/media/{post-slug}/
+cp /Users/geraldinefberry/repos/my_repos/image-generation/outputs/NN-new.png \
+   /Users/geraldinefberry/repos/my_repos/dfberry.github.io/website/blog/media/{post-slug}/{final-name}.png
 ```
 
-**Naming:** Keep outputs numbered sequentially: `01.png`, `02.png`, etc.
+**Naming convention:** `NN-descriptive-slug.png` (e.g., `01-friction-wall.png`, `02-squad-gift.png`)
+- Zero-padded number + hyphen + slug describing the image content
+- Final names are defined before generation begins (match what's referenced in the blog markdown)
+
+**Example seed table:**
+
+| # | Generate as | Move to |
+|---|-------------|---------|
+| 01 | `outputs/01-new.png` | `media/{post-slug}/01-friction-wall.png` |
+| 02 | `outputs/02-new.png` | `media/{post-slug}/02-squad-gift.png` |
+| 03 | `outputs/03-new.png` | `media/{post-slug}/03-inner-source-bridge.png` |
+
+**Then generate the next image.** Never get ahead of user approval.
 
 ### 6. Update Alt Text in Blog Post
 
