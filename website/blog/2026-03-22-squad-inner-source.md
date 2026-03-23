@@ -42,8 +42,7 @@ Here's what the `.squad/` directory contains:
 - `history.md` per agent — what each agent has learned about the project
 - `.squad/skills/{name}/SKILL.md` — reusable playbooks for common tasks
 
-Skills are community-contributed. I've contributed two back to Squad from my own work with it:
-- `humanizer` — enforces communication tone (warm openings, active voice, empathy markers)
+Skills are community-contributed. I've contributed one back to Squad from my own work with it:
 - `external-comms` — handles community workflows (issue triage, response templates, confidence flagging)
 
 When you commit `.squad/` to your repo, you're sharing not just your team setup but any skills you've built. Contributors who clone inherit those too.
