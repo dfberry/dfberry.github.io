@@ -64,6 +64,8 @@ Describe your approach to the squad before writing a line of code. The agents kn
 
 ## Your first PR fits the project by default
 
+The review comments that sting most aren't about bugs — they're about direction. Wrong pattern, reversed decision, convention nobody wrote down. Here's how that happens, and why it doesn't have to.
+
 ### Without squad
 
 You spend a week building a feature. You open a PR. You get a wall of review comments — not about the code, but about the approach. Wrong naming convention. Decision reversed six months ago. Pattern the team doesn't use anymore. The code works. The direction was wrong. "Good work, wrong direction."
@@ -80,6 +82,8 @@ Your first PR doesn't have to look like a first PR.
 
 ## The guardrails are already there
 
+Every project has rules that aren't in the README — compliance constraints, security patterns, governance requirements. You usually find out about them after you've already written the wrong thing.
+
 ### Without squad
 
 In regulated environments and large orgs, contributors don't always know what they're not allowed to do. Security patterns, compliance constraints, governance requirements — tribal knowledge. You find out about them in code review, after you've already built the thing the wrong way. It's like discovering the beach is private property after you've already set up your towel.
@@ -91,6 +95,8 @@ Because `decisions.md` captures governance decisions — strict typing requireme
 You find out before the PR, not during it.
 
 ## What you inherit when you clone
+
+Process knowledge — how the team works, who signs off, what ceremonies exist — rarely travels with the code. It stays in chat threads and people's heads.
 
 ### Without squad
 
@@ -109,6 +115,8 @@ Cross-team contributions stall before a line of code is written. "How do you run
 ![A flower-covered arched footbridge connecting two colorful island resorts over bright turquoise water in golden morning light, representing how the repo owner's standards and patterns travel across team and org boundaries](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
 
 ## Knowledge compounds over time
+
+The biggest hidden cost in InnerSource isn't the first contribution — it's the fourth one, where the team re-learns everything they figured out the first time.
 
 ### Without squad
 
