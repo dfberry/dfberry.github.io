@@ -19,4 +19,11 @@
 - Captures: SDXL setup, Python 3.14 workarounds, prompt writing, output workflow
 - Confidence: high (proven multiple times)
 
+**2026-03-22:** blog-image-generation skill documented ✅
+- Skill written at `.squad/skills/blog-image-generation/SKILL.md`
+- Full workflow: post mapping → prompts → generation script → placement → alt text → commit
+- Covers style constraints, known Python/nohup issues, monitoring, and prompt structure
+- Confidence: medium (guides agents through proven process with all edge cases)
+- Domain: image-generation, blog
+
 ## Learnings
