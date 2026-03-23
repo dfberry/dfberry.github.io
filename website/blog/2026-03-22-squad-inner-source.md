@@ -17,6 +17,8 @@ tags:
 updated: 2026-03-22 00:00 PST
 ---
 
+# Squad Gives Every Contributor a Team That Already Knows the Codebase
+
 Contributing to a codebase you didn't build has friction. Not because the code is bad — because the collaboration infrastructure isn't there. There's no shared understanding of how work moves, what the rules are, or what's already been figured out. Every contributor reinvents the wheel: builds their own working style, negotiates their own understanding of scope, discovers the same hard-won lessons the last person already learned.
 
 That friction is what kills contributor momentum on projects of any kind. And [Brady Gaster's Squad](https://github.com/bradygaster/squad) is the first tool I've seen that addresses it directly.
