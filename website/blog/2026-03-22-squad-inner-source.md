@@ -48,9 +48,11 @@ Skills are community-contributed. When `.squad/` is committed to a repo, you get
 
 Each member's charter defines their role, responsibilities, operating principles, and boundaries — so requests route correctly and contributors know what each agent handles. The _Squad_ repo owner's `flight` charter, for example, owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the house policy any contributor gets when they clone.
 
+![A vibrant resort welcome hamper overflowing with illustrated maps, golden keys, and tropical fruit at a painted hotel door, magenta and teal ribbons, representing the full team setup and playbooks that come with every clone](./media/2026-03-22-squad-inner-source/02-squad-gift.png)
+
 ## Validate before you build — and experiment freely
 
-When you're planning a contribution, the hard part isn't writing the code. It's knowing whether your approach fits the project before you're invested in it.
+When you're planning a contribution, the hard part isn't writing the code. It's knowing whether your approach fits the project before you're invested in it. Think of it as asking for directions before you book your trip, not halfway through.
 
 ### Without squad
 
@@ -64,11 +66,11 @@ Describe your approach to the squad before writing a line of code. The agents kn
 
 ## Your first PR fits the project by default
 
-The review comments that sting most aren't about bugs — they're about direction. Wrong pattern, reversed decision, convention nobody wrote down. Here's how that happens, and why it doesn't have to.
+The review comments that sting most aren't about bugs — they're about direction. Wrong pattern, reversed decision, convention nobody wrote down. Here's how that happens, and why it doesn't have to. With squad, it's like having the local map before you start wandering.
 
 ### Without squad
 
-You spend a week building a feature. You open a PR. You get a wall of review comments — not about the code, but about the approach. Wrong naming convention. Decision reversed six months ago. Pattern the team doesn't use anymore. The code works. The direction was wrong. "Good work, wrong direction."
+You spend a week building a feature. You open a PR. You get a wall of review comments — not about the code, but about the approach. The code works. The direction was wrong. 
 
 That's the wrong-district problem. You walked confidently for an hour. Then you found out you were in the wrong part of town the whole time. The effort was real. The orientation wasn't.
 
@@ -78,7 +80,7 @@ This happens because you were working without the project's context. You built s
 
 When you work with agents that already know `routing.md`, `decisions.md`, and the agent histories, your code ends up aligned with the project's patterns. Not because you read a style guide. Because the squad you used already knew those patterns. The PR fits because the squad you cloned already fits.
 
-Your first PR doesn't have to look like a first PR.
+![A smiling traveler whose illustrated map matches the colorful neighborhood perfectly, locals waving from painted doorways, teal and coral buildings in warm golden light, representing how squad aligns your first PR with the project's existing patterns](./media/2026-03-22-squad-inner-source/06-first-pr-fits.png)
 
 ## The guardrails are already there
 
@@ -86,13 +88,15 @@ Every project has rules that aren't in the README — compliance constraints, se
 
 ### Without squad
 
-In regulated environments and large orgs, contributors don't always know what they're not allowed to do. Security patterns, compliance constraints, governance requirements — tribal knowledge. You find out about them in code review, after you've already built the thing the wrong way. It's like discovering the beach is private property after you've already set up your towel.
+Security patterns, compliance constraints, governance requirements — tribal knowledge. You find out about them in code review, after you've already built the thing the wrong way. It's like discovering the beach is private property after you've already set up your towel.
 
 ### With squad
 
 Because `decisions.md` captures governance decisions — strict typing requirements, security patterns, constraints on external dependencies — the agents already know the guardrails. When you work with the squad, you're working within them automatically.
 
 You find out before the PR, not during it.
+
+![A painted beach entrance with cheerful boundary signs in magenta and gold, a traveler pausing to read before stepping forward, turquoise water and palm trees beyond, representing how squad surfaces guardrails before you build the wrong thing](./media/2026-03-22-squad-inner-source/07-guardrails.png)
 
 ## What you inherit when you clone
 
@@ -104,7 +108,9 @@ Cross-team contributions stall before a line of code is written. "How do you run
 
 ### With squad
 
-`ceremonies.md` commits the process. Design reviews, retrospectives, approval checkpoints — all defined and inherited. `.squad/skills/` commits the playbooks. When you clone, you know how the team works — like a hotel card that tells you breakfast hours and checkout time before you've even unpacked — and you have the team's reusable workflows. You cloned it.
+`ceremonies.md` commits the process. Design reviews, retrospectives, approval checkpoints — all defined and inherited. `.squad/skills/` commits the playbooks. When you clone, you know how the team works — like a hotel card that tells you breakfast hours and checkout time before you've even unpacked.
+
+![A traveler receiving an ornate illustrated welcome booklet at a golden hotel front desk, warm amber lobby glow and teal and coral tilework behind them, representing how ceremonies and process knowledge travel with every clone](./media/2026-03-22-squad-inner-source/08-what-you-inherit.png)
 
 ## Who benefits most
 
@@ -116,11 +122,11 @@ Cross-team contributions stall before a line of code is written. "How do you run
 
 ## Knowledge compounds over time
 
-The biggest hidden cost in InnerSource isn't the first contribution — it's the fourth one, where the team re-learns everything they figured out the first time.
+The biggest hidden cost isn't the first contribution — it's the fourth one, when someone has to re-learn everything they figured out the first time.
 
 ### Without squad
 
-In InnerSource programs, contributing teams re-learn the same patterns every time they contribute to a platform repo. It's like a business traveler who stays at the same hotel four times a year but can never remember where the gym is. The knowledge just didn't carry over.
+Contributors re-learn the same patterns every time they contribute to a repo. It's like a business traveler who stays at the same hotel four times a year but can never remember where the gym is. The knowledge just didn't carry over.
 
 ### With squad
 
@@ -128,19 +134,10 @@ When `.squad/` is committed, agent memory accumulates, decisions get recorded, a
 
 ![Three hotel staff in a sunlit lobby passing a golden key and journal to a smiling newcomer in magenta and emerald uniforms, representing how institutional knowledge is preserved and passed on rather than lost when contributors move on](./media/2026-03-22-squad-inner-source/05-ceremonies-circle.png)
 
-## A concrete example: committed `.squad/` in practice
-
-My blog repo has a Squad team: Mirabel (lead), Isabela (writer), Dolores (editor), Julieta (SEO), and Luisa (full-stack TS dev). Each one has a charter and accumulated history about this blog — its Docusaurus setup, its structure, its audience. This post was drafted by Isabela. Julieta handled the SEO front matter. Dolores edited it. Luisa will open the PR.
-
-The useful part isn't that AI drafted this. It's that the team's context is version-controlled and committed to the repo. If a guest author clones this blog repo someday, they run `squad` and get a team that already knows how this blog works. It's like checking in and being handed a welcome kit that already has your preferences loaded — not a generic brochure, but something that knows this specific place. The conventions, the voice, the publishing workflow are already there. They don't have to ask me.
-
-![A vibrant welcome hamper overflowing with maps and golden keys at a painted resort door with magenta ribbons, representing the Squad directory that greets every contributor at clone time](./media/2026-03-22-squad-inner-source/02-squad-gift.png)
-
 ## What to do next
 
 - **Try Squad:** [github.com/bradygaster/squad](https://github.com/bradygaster/squad)
-- **See a real example:** Look at the `.squad/` directory in [this blog's repo](https://github.com/dfberry/dfberry.github.io) — it's the actual team that drafted this post
-- **For OSS maintainers:** Consider committing your `.squad/` directory. Contributors get the team context along with the code.
+
 
 ---
 
