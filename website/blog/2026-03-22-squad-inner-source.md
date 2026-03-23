@@ -42,10 +42,7 @@ Here's what the `.squad/` directory contains:
 - `history.md` per agent — what each agent has learned about the project
 - `.squad/skills/{name}/SKILL.md` — reusable playbooks for common tasks
 
-Skills are community-contributed. I've contributed one back to Squad from my own work with it:
-- [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) — handles community workflows (issue triage, response templates, confidence flagging)
-
-When you commit `.squad/` to your repo, you're sharing not just your team setup but any skills you've built. Contributors who clone inherit those too.
+Skills are community-contributed. When you commit `.squad/` to your repo, you're sharing not just your team setup but any skills your team has built. Contributors who clone inherit those too.
 
 ## What you get when you clone
 
@@ -120,11 +117,11 @@ The full infrastructure lives in `.squad/comms/` — audit trail (append-only, c
 
 Brady's constraint is strict: PAO never posts autonomously. Every draft goes through human review. The `pao approve` command is where the maintainer signs off — they review a table of draft responses with confidence flags, then approve specific ones. This isn't just a policy. It's baked into the workflow that ships with `.squad/`. A maintainer adopting Squad for their own OSS repo can fork this skill, adapt the templates to their project's voice, and get the same infrastructure.
 
-## I'm using Squad on this blog
+## A concrete example: committed `.squad/` in practice
 
-My blog repo has a Squad team: Isabela (writer), Dolores (editor), Julieta (SEO), Luisa (publisher), and a developer agent. Each one has a charter and accumulated history about this blog — its Docusaurus setup, its structure, its audience.
+The value of Squad is that team context lives in the repo. When you commit `.squad/`, anyone who clones gets the team infrastructure. Not just the code — the team.
 
-This post was drafted by Isabela, my writer agent. Julieta handled the SEO front matter. Dolores edited it. Luisa will open the PR.
+My blog repo has a Squad team: Isabela (writer), Dolores (editor), Julieta (SEO), Luisa (publisher), and a developer agent. Each one has a charter and accumulated history about this blog — its Docusaurus setup, its structure, its audience. This post was drafted by Isabela. Julieta handled the SEO front matter. Dolores edited it. Luisa will open the PR.
 
 The useful part isn't that AI drafted this. It's that the team's context is version-controlled and committed to the repo. If a guest author clones this blog repo someday, they run `squad` and get a team that already knows how this blog works — the conventions, the voice, the publishing workflow. They don't have to ask me.
 
