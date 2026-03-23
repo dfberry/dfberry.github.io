@@ -31,32 +31,30 @@ When you clone a repo — to fix a bug, add a feature, or extend it for your own
 
 ## What Squad is
 
-Squad is an agentic virtual team that lives in your repo as a committed `.squad/` directory. Each squad member (agent) has a charter (role description), and a history (persistent memory). The team knows who handles what and tracks what the team has deliberated.
+Think of Squad as the resort staff committed to the repo. Not a single chatbot wearing different hats — more like a concierge who knows the layout, a activities director who runs the itinerary, a front desk that remembers every returning guest. Each staff member has a specific role, a bounded area of responsibility, and a memory that carries over from one stay to the next.
 
-The repo owner's framing: "Not a chatbot wearing hats." What that means in practice: each squd agent has a specialization, bounded scope and a memory that persists across sessions — not a single prompt with personas bolted on.
+That staff lives in your repo as a committed `.squad/` directory. Each squad member (agent) has a charter — their job description — and a history — what they've learned about this particular property. The repo owner's framing: "Not a chatbot wearing hats." In practice, each agent has a specialization, bounded scope, and a memory that persists across sessions.
 
-Here's what the `.squad/` directory contains:
+Here's what checks in with you when you clone:
 
-- **Agent charters** — each agent's role and scope
-- `routing.md` — who handles what
-- `decisions.md` — what the team has deliberated
-- `ceremonies.md` — structured checkpoints like design reviews and retrospectives
-- `history.md` per agent — what each agent has learned about the project
-- `.squad/skills/{name}/SKILL.md` — reusable playbooks for common tasks
+- **Agent charters** — each staff member's role, scope, and working style
+- `routing.md` — who handles what request
+- `decisions.md` — the house rules and decisions the team has already made
+- `ceremonies.md` — structured checkpoints: design reviews, retrospectives, approval rounds
+- `history.md` per agent — what each staff member has learned about this specific project
+- `.squad/skills/{name}/SKILL.md` — the hotel's service playbooks, written by staff who've done the work
 
-Skills are community-contributed. When you commit `.squad/` to your repo, you're sharing not just your team setup but any skills your team has built. Contributors who clone inherit those too.
+Skills are community-contributed. When you commit `.squad/` to your repo, you're sharing not just your team setup but the playbooks your team has built. Contributors who clone inherit those too.
 
-An squad member's directory starts with a charter. Over time the charter and history grows: 
-
-A charter can include:
+Each staff member's charter grows over time. A charter can include:
 
 - **Identity** — the agent's role, expertise, and working style
-- **What I Own** — the specific concerns this agent is responsible for (architecture decisions, code review, release management, etc.)
+- **What I Own** — specific responsibilities (architecture decisions, code review, release management)
 - **How I Work** — operating principles: proposal-first changes, reviewer lockout rules, what compounds over time
-- **Boundaries** — explicit list of what this agent handles and what it doesn't, so work routes correctly
+- **Boundaries** — what this agent handles and what it doesn't, so requests route correctly
 - **Model** — which AI model to use for this agent's tasks
 
-The repo owner's `flight` charter, for example, says Flight owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the contract any contributor gets when they clone — they know exactly what Flight will and won't take on before they ask.
+The repo owner's `flight` charter, for example, says Flight owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the house policy any contributor gets when they clone — they know exactly what Flight will and won't take on before they ask.
 
 ## What you get when you clone
 
