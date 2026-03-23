@@ -94,6 +94,16 @@ Most contributions don't happen in one sitting. You open a PR, get feedback, com
 
 Each agent's `history.md` is persistent state. When you come back, the agent remembers what it was working on, what decisions were made mid-contribution, and what was left open. You resume from where you stopped instead of starting from scratch.
 
+## Experimenting with a squad already in place
+
+When a repo ships with `.squad/`, experimenting is cheap. You don't have to justify an idea from a blank slate. The agents already know the codebase, the patterns, the past decisions.
+
+You can throw an idea at the team and ask if it makes sense. You don't spend an hour loading context first. You just try it.
+
+The barrier to "let me just try this" is lower. The team is already loaded. You ask them if an approach holds up. You iterate fast.
+
+This is different from resuming interrupted work. This is starting something new, uncertain, exploratory — and having the team already there to help you pressure-test it.
+
 ## A concrete example: committed `.squad/` in practice
 
 The value of Squad is that team context lives in the repo. When you commit `.squad/`, anyone who clones gets the team infrastructure. Not just the code — the team.
