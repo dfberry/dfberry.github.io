@@ -60,7 +60,91 @@ You run `squad`. You have a team that already knows the codebase.
 
 That context — such as why the auth flow works a particular way, what naming conventions to follow, which files the developer agent avoids — is the part that documentation almost never captures. It may be locked in the heads of whoever built the thing.
 
-![A radiant community gathering where each figure glows with their unique skill, representing the squad gift cloned with every repo](./media/2026-03-22-squad-inner-source/02-squad-gift.png)
+## You don't have to read the docs to get started
+
+New contributors spend hours reading docs before they can ask the first useful question. They scan the README. They check issues. They post in Discord and wait two days for an answer that half-answers the question. By the time they have enough context to open a PR, they've spent more time on onboarding than on the actual contribution.
+
+When `.squad/` is committed, you clone and ask. The agents already know the codebase. They know why the auth flow works the way it does, what naming conventions mean, which files to avoid. You're not querying a static document. You're talking to something that has accumulated knowledge about this specific project.
+
+You clone. You run `squad`. You ask the agent your question. You get an answer from something that's actually worked in the repo — not from a README written two years ago. The back-and-forth that normally happens in issues or Slack happens inside your editor instead.
+
+The first hour of a contribution feels different. You're not looking for context. You already have it.
+
+## Your first PR fits the project by default
+
+You spend a week building a feature. You open a PR. You get a wall of review comments — not about the code, but about the approach. Wrong naming convention. Decision reversed six months ago. Pattern the team doesn't use anymore. The code works. The direction was wrong. "Good work, wrong direction."
+
+This happens because you were working without the project's context. You built something reasonable. You just didn't know what "reasonable" meant for this specific codebase.
+
+When you work with agents that already know `routing.md`, `decisions.md`, and the agent histories, your code ends up aligned with the project's patterns. Not because you read a style guide. Because the squad you used already knew those patterns. The PR fits because the squad you cloned already fits.
+
+Your first PR doesn't have to look like a first PR. It can look like a contribution from someone who already knows the project. Because the team you used does.
+
+## Check your approach before you build it
+
+When you're planning a contribution, the hard part isn't writing the code. It's not knowing whether your approach fits the project's decisions and patterns. You can spend a day building something only to get a PR review that says "good work, wrong direction."
+
+With `.squad/` committed, `decisions.md` records what the team has already deliberated. Agent history knows the patterns. You can describe your approach to the squad before writing a line of code and find out if it holds up. You're validating against the project's actual history, not a README.
+
+The squad doesn't approve your PR. But it can tell you whether your plan is headed into a known dead end before you commit to it.
+
+## Experimenting with a squad already in place
+
+When a repo ships with `.squad/`, experimenting is cheap. You don't have to justify an idea from a blank slate. The agents already know the codebase, the patterns, the past decisions.
+
+You can throw an idea at the team and ask if it makes sense. You don't spend an hour loading context first. You just try it.
+
+The barrier to "let me just try this" is lower. The team is already loaded. You ask them if an approach holds up. You iterate fast.
+
+This is different from resuming interrupted work. This is starting something new, uncertain, exploratory — and having the team already there to help you pressure-test it.
+
+![A contributor exploring ideas freely in a luminous tropical workspace, representing the low barrier to experimentation when a Squad team is already in place](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
+
+## The documentation that doesn't go stale
+
+READMEs drift. Wikis drift. The doc says the service uses JWT, the codebase switched to session tokens eight months ago. Nobody updated it because nobody owns the documentation. It gets updated when someone remembers, which is after a new contributor gets confused by it.
+
+The problem isn't effort. It's coupling. Documentation that lives outside the workflow drifts because it's not part of the workflow. Nobody reviews the wiki when they merge a PR.
+
+`decisions.md` is version-controlled and lives in the repo. It gets updated when decisions are made, as part of the same PR. It doesn't drift because it's not separate from the work. It is the work. When you clone, you get documentation that reflects what the team actually decided, not what they intended to document.
+
+The last time it was updated is the last time a real decision was made. That's the only documentation that stays current.
+
+## The playbooks are already there
+
+Every team discovers the same patterns. How to handle auth edge cases. How to structure tests. How to communicate breaking changes to downstream teams. That knowledge usually lives in one person's head and a Slack thread from 2023 that nobody can find.
+
+`.squad/skills/` is committed and versioned. Playbooks travel with the clone. When you clone a repo that has skills set up, you inherit everything the team has already figured out.
+
+Brady's [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) skill is a live example. It handles community response workflows — issue responses, PR feedback, breaking change announcements. It ships in `.squad/`. Anyone who clones gets it. You don't have to discover patterns the team already solved.
+
+Once a skill is committed, every contributor inherits it.
+
+## The process is committed, not negotiated
+
+Cross-team contributions stall before a line of code is written. "How do you run design reviews here?" "Who needs to sign off before I submit?" "Do you do retrospectives, and if so, when?" Legitimate questions. But you're spending contribution time on process questions the team already answered.
+
+`ceremonies.md` commits the process. Design reviews, retrospectives, approval checkpoints — all defined and inherited. When you clone, you know how the team works.
+
+No Slack messages asking about the review process. No waiting for someone to walk you through the workflow. You cloned it.
+
+## The guardrails are in the repo
+
+In regulated environments and large orgs, contributors don't always know what they're not allowed to do. Security patterns, compliance constraints, governance requirements — tribal knowledge. You find out about them in code review, after you've already built the thing the wrong way.
+
+`decisions.md` records governance decisions. Strict typing requirements. Security patterns. Constraints on external dependencies. The agents know them. When you work with the squad, you're working within the guardrails automatically.
+
+You find out before the PR, not during it.
+
+## For open source maintainers
+
+Brady set his standards once. How decisions get made. Which naming conventions to use. How the review process works. What patterns to follow. That all lives in `.squad/` — committed, versioned, part of the repo.
+
+I cloned bradygaster/squad and ran `squad`. I was working with Brady's team, his conventions, his routing rules. When I made changes, they aligned with his standards because the squad I was using already knew them. I didn't have to read a style guide. I didn't have to ask which agent handles what. The team I inherited had that context.
+
+My PR looked like it came from someone who already knew the project. Because the squad I used already did know it. Brady reviews a conforming contribution instead of explaining the same conventions again. The standards travel with the code. Skills work the same way. The [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) skill handles community response workflows. It ships in `.squad/`. Every contributor who clones inherits it.
+
+![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing how Brady's standards and conventions automatically travel with cloned repos—contributors conform without friction](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
 
 ## For teams sharing codebases across groups
 
@@ -76,49 +160,21 @@ The `.squad/` files travel with the repo through normal `git clone` and fork ope
 
 READMEs and wikis go stale because nobody owns them. The `.squad/` files are version-controlled and updated as the team works — they stay current because they're part of the workflow, not separate from it.
 
-![A luminous bridge of tropical flowers and circuit patterns connecting two team villages, representing project knowledge flow across teams](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
+## Every InnerSource contribution costs less than the last
 
-## For open source maintainers
+In InnerSource programs, contributing teams re-learn the same patterns every time they contribute to a platform repo. Each contribution starts from scratch — reading docs, pinging the platform team on Slack, figuring out conventions that haven't changed since the last contribution. The overhead is constant regardless of how many times you've done it.
 
-Brady set his standards once. How decisions get made. Which naming conventions to use. How the review process works. What patterns to follow. That all lives in `.squad/` — committed, versioned, part of the repo.
+When `.squad/` is committed, that changes. Agent memory accumulates. Decisions get recorded. The squad gets better at knowing this specific codebase over time. A team that contributed once has a head start on the second contribution.
 
-I cloned bradygaster/squad and ran `squad`. I was working with Brady's team, his conventions, his routing rules. When I made changes, they aligned with his standards because the squad I was using already knew them. I didn't have to read a style guide. I didn't have to ask which agent handles what. The team I inherited had that context.
+The re-learning cost doesn't just go down for your team. It goes down for every team that clones. The knowledge compounds across contributors.
 
-My PR looked like it came from someone who already knew the project. Because the squad I used already did know it. Brady reviews a conforming contribution instead of explaining the same conventions again. The standards travel with the code. Skills work the same way. The [`external-comms`](https://github.com/bradygaster/squad/tree/main/.squad/skills/external-comms) skill handles community response workflows. It ships in `.squad/`. Every contributor who clones inherits it.
-
-![A contributor standing in a blooming garden surrounded by glowing skill badges, celebrating a successful first contribution](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
+Each contribution to a repo with a committed squad makes the next one cheaper. That's what version-controlled institutional knowledge actually means in practice.
 
 ## When you come back to a contribution after a break
 
 Most contributions don't happen in one sitting. You open a PR, get feedback, come back three weeks later, and have to reconstruct everything — re-read the issue, re-read the diff, try to remember where you left off.
 
 Each agent's `history.md` is persistent state. When you come back, the agent remembers what it was working on, what decisions were made mid-contribution, and what was left open. You resume from where you stopped instead of starting from scratch.
-
-## Experimenting with a squad already in place
-
-When a repo ships with `.squad/`, experimenting is cheap. You don't have to justify an idea from a blank slate. The agents already know the codebase, the patterns, the past decisions.
-
-You can throw an idea at the team and ask if it makes sense. You don't spend an hour loading context first. You just try it.
-
-The barrier to "let me just try this" is lower. The team is already loaded. You ask them if an approach holds up. You iterate fast.
-
-This is different from resuming interrupted work. This is starting something new, uncertain, exploratory — and having the team already there to help you pressure-test it.
-
-## Check your approach before you build it
-
-When you're planning a contribution, the hard part isn't writing the code. It's not knowing whether your approach fits the project's decisions and patterns. You can spend a day building something only to get a PR review that says "good work, wrong direction."
-
-With `.squad/` committed, `decisions.md` records what the team has already deliberated. Agent history knows the patterns. You can describe your approach to the squad before writing a line of code and find out if it holds up. You're validating against the project's actual history, not a README.
-
-The squad doesn't approve your PR. But it can tell you whether your plan is headed into a known dead end before you commit to it.
-
-## Your PR can improve the squad, not just the code
-
-When you contribute to a repo with `.squad/`, your PR doesn't have to be code only. If you found a pattern that should be remembered, you can add it to an agent's `history.md`. If you ran into an edge case the team should know about, add it to `decisions.md`. If you built something reusable, write a skill.
-
-The `.squad/` files are part of the repo. They're versioned, they're reviewed in PRs, they travel with the codebase. A contribution that improves the team infrastructure is as valuable as a contribution that improves the code.
-
-You leave the project better than you found it. Not just the code — the team.
 
 ## What stays when contributors leave
 
@@ -128,6 +184,16 @@ When `.squad/` is committed, the team's accumulated knowledge stays in the repo.
 
 The knowledge isn't locked inside anyone's head. It's committed.
 
+![A glowing record of knowledge preserved in a tropical garden setting, representing the institutional memory that stays in the repo when contributors move on](./media/2026-03-22-squad-inner-source/05-ceremonies-circle.png)
+
+## Your PR can improve the squad, not just the code
+
+When you contribute to a repo with `.squad/`, your PR doesn't have to be code only. If you found a pattern that should be remembered, you can add it to an agent's `history.md`. If you ran into an edge case the team should know about, add it to `decisions.md`. If you built something reusable, write a skill.
+
+The `.squad/` files are part of the repo. They're versioned, they're reviewed in PRs, they travel with the codebase. A contribution that improves the team infrastructure is as valuable as a contribution that improves the code.
+
+You leave the project better than you found it. Not just the code — the team.
+
 ## A concrete example: committed `.squad/` in practice
 
 The value of Squad is that team context lives in the repo. When you commit `.squad/`, anyone who clones gets the team infrastructure. Not just the code — the team.
@@ -136,7 +202,7 @@ My blog repo has a Squad team: Isabela (writer), Dolores (editor), Julieta (SEO)
 
 The useful part isn't that AI drafted this. It's that the team's context is version-controlled and committed to the repo. If a guest author clones this blog repo someday, they run `squad` and get a team that already knows how this blog works — the conventions, the voice, the publishing workflow. They don't have to ask me.
 
-![An aerial view of a ceremonial circle in a tropical garden, representing the Squad team ceremonies that come with every clone](./media/2026-03-22-squad-inner-source/05-ceremonies-circle.png)
+![A radiant gift box overflowing with scrolls, banners, and glowing crystals, symbolizing the committed Squad directory that travels with every cloned repo—conventions, routing, history, and skills all included](./media/2026-03-22-squad-inner-source/02-squad-gift.png)
 
 ## What to do next
 
