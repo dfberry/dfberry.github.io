@@ -1,0 +1,15 @@
+# Squad: ignore runtime state (logs, inbox, sessions)
+.squad/orchestration-log/
+.squad/log/
+.squad/decisions/inbox/
+.squad/sessions/
+# Squad: SubSquad activation file (local to this machine)
+.squad-workstream
+# macOS system files
+.DS_Store
+
+# Copilot CLI local state (temp session artifacts)
+.copilot/
+
+# Process ID files
+generation.pid

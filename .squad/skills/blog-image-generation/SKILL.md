@@ -67,6 +67,14 @@ Example mapping for a post about community resilience:
 - **Mood:** Warmth, community, luminous energy, wonder
 - **Resolution:** 1024×1024 (SDXL native size)
 - **Restrictions:** No text in images, no Disney/IP references, no photorealism
+- **No letters or text anywhere** — SDXL renders any text as garbled gibberish. If the scene calls for signage, menus, noticeboards, or labels, use "blank", "empty", or "unreadable" as modifiers. Add the explicit phrase `no letters or text anywhere` to any prompt involving signs, gates, boards, or written elements.
+- **Figures and representation** — Never describe skin tone. Use these techniques so SDXL never renders identifiable features:
+  - **Most reliable:** `dark silhouette figure backlit against [light source]` — backlighting forces SDXL into a true featureless silhouette. This is the safest approach.
+  - **Alternative:** `figure seen from behind` — works when combined with distance or a strong focal subject (e.g., a map board) occupying the frame. Without backlighting, SDXL may still render a side/profile view with visible features.
+  - **Small/distant figures:** `small lone figure in the distance` — figures at scale have no discernible features.
+  - **Groups:** `diverse figures seen from behind` or `silhouetted group` — SDXL interprets loosely but tends to vary output.
+  - **Avoid arm/hand action verbs** — words like `holding`, `extending`, `reaching`, `leaning`, `receiving`, `pointing` cause SDXL to render distorted or anatomically wrong arms. Instead, let props carry the action: place an object on a desk, mount a map on a board, put a key on a tray. The figure is present without needing arms described.
+  - The painterly/folk-art aesthetic already stylizes human forms; leaning into silhouette abstraction sidesteps representation concerns entirely without targeting anyone.
 
 **Prompt structure:**
 Each prompt should paint a specific visual scene:
@@ -237,6 +245,7 @@ warm luminous atmosphere suggesting hope and renewal
 **❌ Don't:**
 - Use generic or stock-photo-like prompts ("realistic photograph of...")
 - Include text, brand logos, or Disney characters
+- Use prompts with words like "sign", "label", "menu", "banner", or "banner text" without also adding `no letters or text anywhere` — SDXL will render garbled characters
 - Ignore the color palette in pursuit of photorealism
 - Run `nohup bash script.sh` (causes Python 3.14 fatal errors)
 - Place images randomly; map them to narrative moments first

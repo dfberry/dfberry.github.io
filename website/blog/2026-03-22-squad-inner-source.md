@@ -27,13 +27,13 @@ When you clone a repo — to fix a bug, add a feature, or extend it for your own
 
 <!-- truncate -->
 
-![A brightly painted seaplane up in the sky gliding toward a colorful tropical dock over turquoise water with coral pennants, representing the excitement and uncertainty of approaching an unfamiliar codebase](./media/2026-03-22-squad-inner-source/01-friction-wall.png)
+![Digital illustration in tropical magical-realism style. A brightly painted vintage seaplane banking low over turquoise water, approaching a colorful wooden dock adorned with coral and teal pennants, lush jungle coastline in the background, dappled golden sunlight, vivid saturated colors, painterly brushwork](./media/2026-03-22-squad-inner-source/01-friction-wall.png)
 
 ## What Squad is
 
 Think of Squad as the resort staff committed to the repo. Not a single chatbot wearing different hats — more like a concierge who knows the layout, a activities director who runs the itinerary, a front desk that remembers every returning guest. Each staff member has a specific role, a bounded area of responsibility, and a memory that carries over from one stay to the next.
 
-That staff lives in your repo as a committed `.squad/` directory. Each squad member (agent) has a charter — their job description — and a history — what they've learned about this particular property. Each agent has a specialization, bounded scope, and a memory that persists across sessions.
+That staff lives in your repo as a committed `.squad/` directory. Each squad member (agent) has a charter — their job description — and a history — what they've learned about this particular property.
 
 Here's what checks in with you when you clone:
 
@@ -48,7 +48,7 @@ Skills are community-contributed. When `.squad/` is committed to a repo, you get
 
 Each member's charter defines their role, responsibilities, operating principles, and boundaries — so requests route correctly and contributors know what each agent handles. The _Squad_ repo owner's `flight` charter, for example, owns architecture and code review, operates proposal-first for meaningful changes, and enforces reviewer rejection lockout. That's the house policy any contributor gets when they clone.
 
-![A vibrant resort welcome hamper overflowing with illustrated maps, golden keys, and tropical fruit at a painted hotel door, magenta and teal ribbons, representing the full team setup and playbooks that come with every clone](./media/2026-03-22-squad-inner-source/02-squad-gift.png)
+![Digital illustration in tropical magical-realism style. A lavish welcome hamper overflowing with hand-drawn maps, golden skeleton keys, ripe tropical fruit, and rolled scrolls tied with magenta and teal ribbons, placed on a painted hotel doorstep with bright floral tilework, warm afternoon light, lush and abundant composition, painterly](./media/2026-03-22-squad-inner-source/02-squad-gift.png)
 
 ## Validate before you build — and experiment freely
 
@@ -62,11 +62,11 @@ Experimenting in an unfamiliar repo without guidance is like wandering a foreign
 
 Describe your approach to the squad before writing a line of code. The agents know `decisions.md`, the patterns, and what the team already tried. You validate against the project's actual history, not a README. It's like asking a local instead of retracing the same wrong streets. Throw any idea at the squad and find out in minutes whether it holds up. The barrier to "let me just try this" is lower. You iterate fast.
 
-![A cheerful traveler leaning over maps spread across a bright hotel lobby table surrounded by tropical plants and gold tilework, representing how contributors can plan and validate their approach with the squad team before writing a line of code](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
+![Digital illustration in tropical magical-realism style. A dark silhouette figure seated at a large wooden table covered in colorful maps and open notebooks in a bright sunlit hotel lobby, figure backlit against tall windows, no facial features visible, surrounded by tall potted tropical palms and gold-tiled columns, warm amber light, no letters or text anywhere, painterly, lush](./media/2026-03-22-squad-inner-source/04-contributor-success.png)
 
 ## Your first PR fits the project by default
 
-The review comments that sting most aren't about bugs — they're about direction. Wrong pattern, reversed decision, convention nobody wrote down. Here's how that happens, and why it doesn't have to. With squad, it's like having the local map before you start wandering.
+The review comments that sting most aren't about bugs — they're about direction. Wrong pattern, reversed decision, convention nobody wrote down. Here's how that happens, and why it doesn't have to.
 
 ### Without squad
 
@@ -80,15 +80,15 @@ This happens because you were working without the project's context. You built s
 
 When you work with agents that already know `routing.md`, `decisions.md`, and the agent histories, your code ends up aligned with the project's patterns. Not because you read a style guide. Because the squad you used already knew those patterns. The PR fits because the squad you cloned already fits.
 
-![A smiling traveler whose illustrated map matches the colorful neighborhood perfectly, locals waving from painted doorways, teal and coral buildings in warm golden light, representing how squad aligns your first PR with the project's existing patterns](./media/2026-03-22-squad-inner-source/06-first-pr-fits.png)
+![Digital illustration in tropical magical-realism style. A large flat paper map with a thick solid red rectangular border pinned to a colorful building wall, cream-white map with simple black line drawings inside, a dark silhouette figure backlit standing before the wall-mounted map, vivid teal and coral street scene, warm golden afternoon light, locals visible in doorways, no letters or text anywhere, painterly, vivid](./media/2026-03-22-squad-inner-source/06-first-pr-fits.png)
 
 ## The guardrails are already there
 
-Every project has rules that aren't in the README — compliance constraints, security patterns, governance requirements. You usually find out about them after you've already written the wrong thing.
+Every project has rules that aren't in the README — compliance constraints, security patterns, governance requirements.
 
 ### Without squad
 
-Security patterns, compliance constraints, governance requirements — tribal knowledge. You find out about them in code review, after you've already built the thing the wrong way. It's like discovering the beach is private property after you've already set up your towel.
+You find out about them in code review, after you've already built the thing the wrong way. It's like discovering the beach is private property after you've already set up your towel.
 
 ### With squad
 
@@ -96,7 +96,7 @@ Because `decisions.md` captures governance decisions — strict typing requireme
 
 You find out before the PR, not during it.
 
-![A painted beach entrance with cheerful boundary signs in magenta and gold, a traveler pausing to read before stepping forward, turquoise water and palm trees beyond, representing how squad surfaces guardrails before you build the wrong thing](./media/2026-03-22-squad-inner-source/07-guardrails.png)
+![Digital illustration in tropical magical-realism style. An ornate beach entrance gate in magenta and gold decorated with colorful blank wooden arrow plaques and empty hanging boards, no letters or text anywhere, a small lone traveler figure seen from behind pausing before stepping through, framed by tall swaying palm trees with bright turquoise sea and white sand visible beyond, dappled light through the palms, welcoming yet clearly structured, painterly](./media/2026-03-22-squad-inner-source/07-guardrails.png)
 
 ## What you inherit when you clone
 
@@ -110,7 +110,7 @@ Cross-team contributions stall before a line of code is written. "How do you run
 
 `ceremonies.md` commits the process. Design reviews, retrospectives, approval checkpoints — all defined and inherited. `.squad/skills/` commits the playbooks. When you clone, you know how the team works — like a hotel card that tells you breakfast hours and checkout time before you've even unpacked.
 
-![A traveler receiving an ornate illustrated welcome booklet at a golden hotel front desk, warm amber lobby glow and teal and coral tilework behind them, representing how ceremonies and process knowledge travel with every clone](./media/2026-03-22-squad-inner-source/08-what-you-inherit.png)
+![Digital illustration in tropical magical-realism style. An ornate illustrated booklet bound in coral and gold resting on an elaborate carved wooden hotel front desk, two silhouetted figures seen from the side in warm amber lobby light, walls covered in teal and coral geometric tilework, ceiling fans overhead, tropical plants in corners, no letters or text anywhere, painterly, lush hotel interior](./media/2026-03-22-squad-inner-source/08-what-you-inherit.png)
 
 ## Who benefits most
 
@@ -118,7 +118,7 @@ Cross-team contributions stall before a line of code is written. "How do you run
 
 **InnerSource and platform teams:** In larger orgs, institutional knowledge stays with the three people who built the original service. When a team commits `.squad/` to a shared project, contributors inherit the ceremonies, routing rules, and agent memory that already knows the edge cases. The lay of the land comes with the reservation. The team comes along with the code.
 
-![A flower-covered arched footbridge connecting two colorful island resorts over bright turquoise water in golden morning light, representing how the repo owner's standards and patterns travel across team and org boundaries](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
+![Digital illustration in tropical magical-realism style. An arched footbridge draped in cascading bougainvillea and tropical flowers connecting two colorful island resort pavilions over bright turquoise water, golden morning light, magenta and orange blooms along the railings, small boats below, birds in flight, clear blue sky, wide painterly composition](./media/2026-03-22-squad-inner-source/03-inner-source-bridge.png)
 
 ## Knowledge compounds over time
 
@@ -132,7 +132,7 @@ Contributors re-learn the same patterns every time they contribute to a repo. It
 
 When `.squad/` is committed, agent memory accumulates, decisions get recorded, and the squad gets better at knowing this specific codebase over time. A team that contributed once has a head start on the second contribution. Someone who clones the repo six months after the original contributors left still gets a working team with context. The knowledge isn't locked inside anyone's head. It's committed.
 
-![Three hotel staff in a sunlit lobby passing a golden key and journal to a smiling newcomer in magenta and emerald uniforms, representing how institutional knowledge is preserved and passed on rather than lost when contributors move on](./media/2026-03-22-squad-inner-source/05-ceremonies-circle.png)
+![Digital illustration in tropical magical-realism style. Three hotel staff in matching magenta and emerald uniforms seen from behind gathered with a newcomer in a sunlit lobby, a golden key and leather-bound journal on a small presentation tray nearby, large arched windows with waving palm trees outside, polished mosaic tile floors reflecting warm light, no letters or text anywhere, painterly, warm and welcoming atmosphere](./media/2026-03-22-squad-inner-source/05-ceremonies-circle.png)
 
 ## What to do next
 

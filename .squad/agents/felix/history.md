@@ -17,3 +17,18 @@
 - Project ready for prompt refinement and image generation iterations
 
 ## Learnings
+
+### 2026-03-22: Image Generation Pipeline Setup
+- Set up image-generation venv on Apple Silicon (MPS)
+- pip install requires: diffusers, transformers, accelerate, safetensors, invisible-watermark, Pillow (torch already present)
+- Torch 2.10.0 with MPS support confirmed on Apple Silicon
+- Created generate_blog_images.sh for batch generation of all 5 blog post images
+- Launched as detached background process via bash with stdin redirection
+- First run downloads SDXL base model (~7GB) to ~/.cache/huggingface/hub/
+- MPS inference: ~30 steps at 1024x1024 takes approx 5-10 min per image (post-download)
+- generation.log tracks progress with timestamps for each of 5 images
+- generation.pid has the process ID for monitoring
+- All 5 outputs go to outputs/ folder: 01-friction-wall.png through 05-ceremonies-circle.png
+- nohup causes file descriptor issues with Python - use bash detached with stdin redirect instead
+- Batch script runs all 5 prompts sequentially with seed 42 for reproducibility
+- Tropical magical-realism color palette: magenta, teal, emerald, gold particles, warm lighting

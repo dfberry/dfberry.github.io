@@ -18,6 +18,18 @@
 - **Flags left for Book:**
   - `<!-- TODO: -->` near the inner source section: verify whether Squad has explicit upstream/inheritance config or if this is purely git inheritance. Brady's docs may clarify.
   - Confirm the GitHub repo URL for dfberry's blog is correct (`dfberry/dfberry.github.io`).
+
+### 2026-03-22 — Travel metaphor review pass
+
+- **What Squad is** — ✅ Strong. Resort staff metaphor is vivid and carries through into `.squad/` structure. Natural and grounded.
+- **Validate before you build** — ⚠️ Was weak opening. Added: "Think of it as asking for directions before you book your trip, not halfway through." Bridges into the "wrong district" analogy that follows.
+- **Your first PR fits** — ⚠️ Was bare opening. Added: "With squad, it's like having the local map before you start wandering." Lightens the tone and connects to wrong-neighborhood example below.
+- **Guardrails** — ✅ Strong. Private beach callback is apt and earned.
+- **What you inherit** — ✅ Strong. Hotel card metaphor for ceremonies is clear and functional.
+- **Who benefits most** — ✅ Strong. House rules, reservation, lay of the land — all travel coherent.
+- **Knowledge compounds** — ✅ Strong. Business traveler gym callback is specific and relatable.
+
+**Outcome:** Two minimal sentence additions to strengthen narrative flow where reader context was thin. No rewrites. Metaphor now lightly present in every section without forcing.
   - Check word count sits in 900–1400 range (draft is approximately 1,050 words body).
 - **Voice:** First person, practical, no hype. Follows dfberry's established register well.
 
@@ -180,3 +192,29 @@ Geraldine has explicitly requested that all future posts be written in her docum
 - **Sections left untouched:** All image markdown, all links, front matter, charter bullet list, "What to do next" bullets, closing line, sections where metaphor would muddy technical clarity.
 - **Voice discipline:** Metaphor flavors; it doesn't dominate. Technical terms (.squad/, decisions.md, routing.md, ceremonies.md, skills/, etc.) kept exact throughout. Geraldine's short-sentence, first-person, active-verb register maintained.
 
+
+### 2026-03-22 — Vacation metaphor light-touch pass on Squad inner source post
+
+## Learnings
+
+**Vacation/travel metaphor map for `2026-03-22-squad-inner-source.md`** — for future writing passes:
+- Cloning a repo = arriving in a foreign city / checking into a hotel
+- README = tourist brochure / airport map
+- Squad agents = resort staff (concierge, activities director, front desk)
+- Right approach = the right neighborhood / correct route
+- Wrong approach = wrong district, wrong part of town
+- `decisions.md` / house rules = house policy / rules posted in the room
+- Ceremonies/process = how the hotel works (checkout time, bag drop, breakfast)
+- Knowledge not carrying = business traveler who can't remember where the gym is
+- Skills = service playbooks / concierge recommendations
+- Clone with `.squad/` = checking in and getting a welcome kit with your preferences loaded
+- Guardrails discovered late = finding the beach is private property after you've set up your towel
+
+**Sections already using travel metaphor (do not re-touch):** H1 intro, "Without squad", "Your first PR fits", "Knowledge compounds", "A concrete example".
+
+**Light-touch edits applied 2026-03-22:**
+- "With squad": added "It's like asking a local instead of retracing the same wrong streets." — picks up the "wandering without a local" thread from the preceding "Without squad" subsection.
+- "The guardrails are already there": added beach/private-property sentence — marks the discovery-too-late pattern without lengthening the section.
+- "What you inherit when you clone": wove hotel-card/breakfast-checkout phrase into existing sentence — keeps process-speak concrete.
+- "Who benefits most" OSS: added "The house rules travel with every clone." — one sentence, makes the portability explicit.
+- "Who benefits most" InnerSource: added "The lay of the land comes with the reservation." — mirrors the OSS touch in register and length.
