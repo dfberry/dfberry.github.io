@@ -110,7 +110,7 @@ When you choose "repo" for Copilot's storage, both stores end up in the repo —
 - You want git-auditable session history (who ran what, when)
 - Your org restricts cloud storage but allows repo-based storage
 
-**Squad impact:** Sessions live alongside `.squad/` files in the repo working tree. Whether they're shared or auditable depends on your gitignore policy (see below), not just the storage choice. Note: `session_store_sql` behavior with repo-stored sessions hasn't been fully verified — test in your setup before relying on it.
+**Squad impact:** Sessions live alongside `.squad/` files in the repo working tree. Whether they're shared or auditable depends on your gitignore policy (see below), not just the storage choice. Note: `session_store_sql` is a cloud-backed feature — it queries cloud-synced session data, not local files. Choosing repo storage alone does not enable `session_store_sql`; you'd need cloud storage for that.
 
 ### Local Session Storage
 
