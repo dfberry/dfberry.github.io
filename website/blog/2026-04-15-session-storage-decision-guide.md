@@ -3,7 +3,7 @@ slug: /2026-04-15-session-storage-decision-guide
 canonical_url: https://dfberry.github.io/blog/2026-04-15-session-storage-decision-guide
 custom_edit_url: null
 sidebar_label: "2026-04-15 Copilot CLI session storage guide"
-title: "Where Should Your AI Agent Sessions Live? A Decision Guide for Copilot CLI Session Storage"
+title: "Where Should Your AI Agent Sessions Live? Session Storage for Copilot CLI and Squad"
 description: "Compare cloud, local, and repo session storage options for GitHub Copilot CLI. Find the right fit for your AI agent workflow and Squad memory system."
 published: false
 tags:
@@ -22,7 +22,7 @@ keywords:
 updated: 2026-04-15 00:00 PST
 ---
 
-# Where Should Your AI Agent Sessions Live? A Decision Guide for Copilot CLI Session Storage
+# Where Should Your AI Agent Sessions Live? Session Storage for Copilot CLI and Squad
 
 When you set up Copilot CLI, it asks you a question that seems simple: **where do you want to store your sessions?** The three choices are cloud, local, or repo. For most developers, this is a quick pick-and-move-on moment. But if you're running Squad, this decision has real consequences for how your team remembers, recovers, and collaborates.
 
