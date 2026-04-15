@@ -3,8 +3,8 @@ slug: /2026-04-15-session-storage-decision-guide
 canonical_url: https://dfberry.github.io/blog/2026-04-15-session-storage-decision-guide
 custom_edit_url: null
 sidebar_label: "2026-04-15 Copilot CLI session storage guide"
-title: "Where Should Your AI Agent Sessions Live? Session Storage for Copilot CLI and Squad"
-description: "Compare cloud, local, and repo session storage options for GitHub Copilot CLI. Find the right fit for your AI agent workflow and Squad memory system."
+title: "How Copilot CLI Session Storage Actually Works — and What It Means for Squad"
+description: "Copilot CLI stores sessions locally and syncs metadata to the cloud. Learn how this interacts with Squad's memory system and when to commit vs. gitignore session files."
 published: false
 tags:
   - GitHub Copilot
@@ -22,29 +22,44 @@ keywords:
 updated: 2026-04-15 00:00 PST
 ---
 
-# Where Should Your AI Agent Sessions Live? Session Storage for Copilot CLI and Squad
+# How Copilot CLI Session Storage Actually Works — and What It Means for Squad
 
-When you set up Copilot CLI, it asks you a question that seems simple: **where do you want to store your sessions?** The three choices are cloud, local, or repo. For most developers, this is a quick pick-and-move-on moment. But if you're running Squad, this decision has real consequences for how your team remembers, recovers, and collaborates.
+If you've used Copilot CLI and Squad together, you've probably noticed that agents can query your session history across sessions — asking things like "what did I work on last week?" and getting real answers back. But how does that actually work? Where does the data live? And how does it interact with Squad's own memory system?
 
-This post breaks down what each option actually means for Squad users, when to commit session files vs. gitignore them, and how Copilot's session storage interacts with Squad's own memory system.
+This post breaks down what's actually happening under the hood, based on the [official GitHub docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/chronicle) and hands-on investigation.
 
-## The Three Storage Options
+## How Copilot CLI Stores Sessions
 
-### Cloud
+Copilot CLI stores session data in **two local structures** on your machine:
 
-Copilot syncs your session history to GitHub's cloud. Sessions persist across machines. The `session_store_sql` tool (DuckDB queries over your session history) is enabled in this mode.
+### Session Files
 
-### Local
+Every session is persisted as a set of files in `~/.copilot/session-state/{session-id}/`. This is a complete record — your prompts, Copilot's responses, tool invocations, file modifications, and checkpoints. This powers the `/resume` command and session recovery.
 
-Sessions stay in `~/.copilot/` on your machine. Private and fast — not synced to cloud or repo, though local backup and sync tools may still access the files. But `session_store_sql` returns empty results — agents querying your session history get nothing back.
+### Session Store (SQLite)
 
-### Repo
+Copilot CLI also maintains a local SQLite database at `~/.copilot/session-store.db`. This is a structured subset of the session files, with tables for sessions, turns, checkpoints, file references, and commit/PR/issue links. This powers the `/chronicle` slash command and lets Copilot answer questions about your past work.
 
-Sessions are stored inside the repository working tree. If committed, they travel with the code and are visible to anyone who clones. If gitignored (the default), they stay local despite living in the repo directory. The distinction between storage location and git policy matters — see "The Gitignore Decision" below.
+### Cloud Session Metadata
 
-## Why This Matters for Squad
+Behind the scenes, Copilot CLI also syncs session metadata to a cloud store. This is what powers the `session_store_sql` tool — a DuckDB-based query interface that agents (and Squad) use to search your session history. The cloud store contains tables like `sessions`, `turns`, `checkpoints`, `session_files`, `session_refs`, `events`, and `tool_requests`.
 
-Squad has its own memory system — and it's entirely repo-based:
+This cloud sync is **not a user-configurable setting** — it's a platform capability that happens automatically. The [official docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/chronicle) describe session data as "local and private," and state that "nothing is uploaded or shared beyond the normal AI model interactions." The cloud metadata store appears to operate as part of those normal interactions rather than as a separate upload.
+
+> **Key takeaway:** You don't choose between cloud, local, or repo storage. Copilot CLI stores sessions locally and syncs metadata to the cloud automatically. There's no setting to change.
+
+## What `session_store_sql` Actually Queries
+
+When an agent calls `session_store_sql`, it's querying the cloud DuckDB store — not your local SQLite database. This has practical implications:
+
+- **It works across devices.** If you use Copilot CLI on your laptop and then switch to your desktop, agents can query sessions from both.
+- **It has a "personal" and "repository" scope.** Personal queries return your sessions; repository queries return all users' sessions in a repo.
+- **The `repository` field is often NULL.** In my testing, 14 of 15 sessions had `repository: NULL` — even sessions run inside a git repo. Only Copilot coding agent sessions (triggered via GitHub issue assignment) reliably populate the repository field.
+- **It's a metadata subset.** The cloud store doesn't contain full conversation transcripts — it has structured metadata, turns, and file references. The full session data stays local.
+
+## Where Squad's Memory Fits In
+
+Squad has its own memory system that's completely independent of Copilot's session store. It's entirely repo-based:
 
 | Squad Memory | File | Committed to Git? |
 |-------------|------|-------------------|
@@ -55,15 +70,27 @@ Squad has its own memory system — and it's entirely repo-based:
 | Scribe logs | `.squad/log/*.md` | ❌ Gitignored by default |
 | Orchestration logs | `.squad/orchestration-log/*.md` | ❌ Gitignored by default |
 
-Wait — Squad gitignores its own session files? Yes. And this is a deliberate design choice that tells you something important about how Squad thinks about sessions vs. knowledge.
+### The Two Memory Systems
+
+| | Copilot CLI Store | Squad Memory |
+|---|---|---|
+| **What's stored** | Full conversation history, tool calls, file refs | Decisions, agent learnings, skills, session state |
+| **Where** | `~/.copilot/` (local) + cloud metadata | `.squad/` in the repo |
+| **Queryable by agents** | Yes, via `session_store_sql` | Yes, via file read |
+| **Persists across repos** | Yes (it's per-user, not per-repo) | No (it's per-repo) |
+| **Controlled by you** | Partially (can delete local files) | Fully (it's markdown in your repo) |
+
+These systems complement each other. Copilot's store tells agents "what happened in past sessions." Squad's store tells agents "what the team decided, learned, and knows how to do."
 
 ## The Key Distinction: Sessions vs. Knowledge
 
-Squad draws a sharp line:
+Squad draws a deliberate line between these:
 
-**Knowledge** (decisions, history, skills) is **committed**. It's the team's institutional memory. It compounds. It's portable. When you clone the repo, you get the team's distilled knowledge — though operational context from session transcripts won't be there unless you commit those too.
+**Knowledge** (decisions, history, skills) is **committed**. It's the team's institutional memory. It compounds over time. When you clone the repo, you get the team's distilled knowledge.
 
-**Sessions** (conversation transcripts, orchestration logs, checkpoints) are **gitignored**. They're runtime state — useful for resume, debugging, and auditing the process that led to a result. They're large and may contain sensitive content, so Squad treats them as local by default. That said, this is a design tradeoff, not a universal truth: for some teams, raw transcripts are first-class artifacts (audit evidence, training material, prompt evaluation data). Squad's defaults optimize for low-noise repos and durable extracted knowledge — your team may value different things.
+**Sessions** (conversation transcripts, orchestration logs, checkpoints) are **gitignored by default**. They're runtime state — useful for resume, debugging, and auditing the process that led to a result. They're large and may contain sensitive content.
+
+This is a design tradeoff, not a universal truth. For some teams, raw transcripts are first-class artifacts — audit evidence, training material, prompt evaluation data. Squad's defaults optimize for low-noise repos and durable extracted knowledge. Your team may value different things.
 
 This is why `squad init` automatically adds these to `.gitignore`:
 
@@ -76,71 +103,25 @@ This is why `squad init` automatically adds these to `.gitignore`:
 
 The important outputs of a session — decisions made, learnings captured, skills extracted — get promoted to committed files. The raw session data stays local.
 
-## How Copilot's Storage Interacts with Squad's Memory
-
-Here's where it gets interesting. Copilot CLI has its own session store (`~/.copilot/session-store.db`) that's completely independent of Squad's `.squad/sessions/`. They serve different purposes:
-
-| | Copilot CLI Store | Squad Session Store |
-|---|---|---|
-| **What's stored** | Full conversation (every turn, checkpoint, file refs) | Shell message history (for resume) |
-| **Where** | `~/.copilot/` or cloud or repo | `.squad/sessions/` |
-| **Queryable by agents** | Yes, via `session_store_sql` | Yes, via file read |
-| **Used for** | Cross-session queries, session recovery skill | Squad shell `/resume` command |
-| **Compaction recovery** | Checkpoints in Copilot's store | `.squad/sessions/{id}.json` checkpoint |
-
-When you choose "repo" for Copilot's storage, both stores end up in the repo — but in different directories with different purposes.
-
-## Decision Guide: Which Storage Option to Choose
-
-### Cloud Session Storage
-
-- You work across multiple machines (laptop, desktop, codespace)
-- You want `session_store_sql` to work (agents can query "what did I do last week?")
-- You want Squad's `session-recovery` skill to find interrupted sessions
-- Your org allows sending conversation content to GitHub's cloud
-- You're a solo developer who values convenience
-
-**Squad impact:** Best option for cross-device workflows. Enables `session_store_sql`, session recovery, and cross-device resume. Squad's committed artifacts (decisions, history, skills) work the same regardless of storage choice — they're always in the repo.
-
-### Repo Session Storage
-
-- You want everything in one place — code, squad state, and session history
-- You're working on a team and want session history to be shared or auditable
-- You want session data to be portable via `git push` without cloud dependency
-- You want git-auditable session history (who ran what, when)
-- Your org restricts cloud storage but allows repo-based storage
-
-**Squad impact:** Sessions live alongside `.squad/` files in the repo working tree. Whether they're shared or auditable depends on your gitignore policy (see below), not just the storage choice. Note: `session_store_sql` is a cloud-backed feature — it queries cloud-synced session data, not local files. Choosing repo storage alone does not enable `session_store_sql`; you'd need cloud storage for that.
-
-### Local Session Storage
-
-- Security policy prohibits both cloud and repo storage of conversation content
-- You're on a single machine and don't need cross-device resume
-- You don't need `session_store_sql` queries
-- You're working on a public repo and don't want session transcripts exposed
-
-**Squad impact:** Squad's committed artifacts (decisions, history, skills) work normally. You lose `session_store_sql` queries and the session-recovery skill — those are real workflow features, not just nice-to-haves, so weigh that tradeoff. Squad's own `.squad/sessions/` still works for resume (it's independent of Copilot's store).
-
 ## The Gitignore Decision
 
-If you choose repo storage, you face a second question: **should session files be committed or gitignored?**
+The one storage decision you actually make is: **should Squad's session-related files be committed or gitignored?**
 
-### Gitignore Sessions (Default — Start Here)
+### Gitignore (Default — Start Here)
 
-This is Squad's default behavior. `squad init` gitignores `.squad/sessions/` automatically.
+This is Squad's default behavior and the right choice for most setups.
 
 **Why this is the default:**
 - Session files are large (full conversation transcripts)
-- They contain the messy process, not the clean result
 - They may contain sensitive content (API keys in error messages, file contents, personal preferences)
 - They create noisy git diffs on every session
-- The valuable outputs (decisions, history, skills) are already committed separately
+- The valuable outputs are already committed separately (decisions, history, skills)
 
 **When to keep the default:**
 - Public repos (never commit sessions to public repos)
-- Repos with many contributors (session noise drowns signal in diffs)
+- Repos with many contributors
 - When sessions contain sensitive data
-- When you're not sure (start gitignored, relax later if needed)
+- When you're not sure
 
 ### Commit Sessions (Intentional Choice)
 
@@ -152,9 +133,8 @@ Remove `.squad/sessions/` from `.gitignore` if you want session transcripts in g
 - Research projects where the process matters as much as the result
 
 **What to watch for:**
-- Repo size grows fast — each session is a full conversation transcript
-- Review your sessions before committing — they may contain content you don't want in git history permanently
-- Consider a `.squad/sessions/.gitkeep` with a README explaining why sessions are tracked
+- Repo size grows fast
+- Review sessions before committing — they may contain content you don't want in git history permanently
 - Set up a cleanup policy — archive sessions older than N days
 
 > ⚠️ **Compliance note:** If your org requires audit trails of AI interactions, committing sessions to git may seem like an obvious fit — but git is not designed for compliance record-keeping. It lacks retention controls, redaction support, access-control granularity, and legal hold capabilities. Check your compliance requirements before treating git as your system of record for AI transcripts.
@@ -174,27 +154,23 @@ A middle ground that works well for many teams:
 
 This gives you:
 - Clean, human-readable session summaries in git (Scribe's logs)
-- Raw session data stays local (not committed)
+- Raw session data stays local
 - Audit trail without the noise
 
-To do this, remove `.squad/log/` and `.squad/orchestration-log/` from your `.gitignore`. Scribe's logs are concise markdown summaries — much smaller and cleaner than raw session files.
+## Summary
 
-## Summary: The Decision Matrix
-
-| Scenario | Copilot Storage | Gitignore Sessions? |
-|----------|----------------|-------------------|
-| Solo dev, multiple machines | Cloud | Yes (default) |
-| Solo dev, single machine | Repo or Local | Yes (default) |
-| Private team, transparency needed | Repo | No — commit them |
-| Private team, compliance required | Repo + dedicated audit tool | Consult compliance team — git alone may not meet retention/redaction requirements |
-| Public repo | Cloud or Local | Yes — never commit sessions to public repos |
-| Enterprise, security-restricted | Local | Yes (default) |
-| Hybrid (recommended for most teams) | Cloud or Repo | Gitignore sessions, commit Scribe logs |
+| Layer | What | Where | You control it? |
+|-------|------|-------|----------------|
+| Copilot session files | Full conversation history | `~/.copilot/session-state/` (local) | Delete files to remove |
+| Copilot session store | Structured metadata (SQLite) | `~/.copilot/session-store.db` (local) | `/chronicle reindex` to rebuild |
+| Copilot cloud metadata | Session metadata (DuckDB) | GitHub cloud (automatic sync) | Not directly configurable |
+| Squad committed memory | Decisions, history, skills | `.squad/` in repo (committed) | Full control — it's your markdown |
+| Squad session state | Session transcripts, logs | `.squad/` in repo (gitignored by default) | Gitignore policy is your choice |
 
 ## The Bottom Line
 
-Squad's memory system extracts the signal (decisions, history, skills) from the noise (raw sessions) and commits only the signal. That's why sessions are gitignored by default. This is one valid design tradeoff — it optimizes for low-noise repos and durable extracted knowledge. Teams that need raw transcripts for auditing, training, or reproducibility should adjust the defaults.
+Copilot CLI handles session persistence automatically — local files for full fidelity, cloud metadata for cross-session queries. You don't need to configure this.
 
-Copilot's session storage adds a convenience layer on top: cross-device resume, session queries, recovery from interruptions. Choose the storage option that fits your workflow, knowing that Squad's committed artifacts work the same regardless.
+The decision you actually make is about **Squad's gitignore policy**: what squad-generated files (logs, orchestration traces, session state) should be committed vs. kept local. Start with the default (gitignore everything except decisions, history, and skills). Relax it later if you need committed session trails.
 
-If you're unsure: **start with cloud storage and the default gitignore.** You get the broadest Copilot feature support, Squad's committed memory works as expected, and sessions stay out of your git history. Relax the gitignore later if you need committed session trails.
+Both systems work together: Copilot's `session_store_sql` gives agents memory across sessions. Squad's `.squad/` files give agents memory across the team.
