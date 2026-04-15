@@ -3,8 +3,8 @@ slug: /2026-04-15-session-storage-decision-guide
 canonical_url: https://dfberry.github.io/blog/2026-04-15-session-storage-decision-guide
 custom_edit_url: null
 sidebar_label: "2026-04-15 Copilot CLI session storage guide"
-title: "How Copilot CLI Session Storage Actually Works — and What It Means for Squad"
-description: "Copilot CLI stores sessions locally and syncs metadata to the cloud. Learn how this interacts with Squad's memory system and when to commit vs. gitignore session files."
+title: "How Copilot CLI Session Storage Actually Works — What I Found in the Source Code"
+description: "I dug into the Copilot CLI source to understand session storage. Here's what the feature flags, config keys, and undocumented prompts actually do."
 published: false
 tags:
   - GitHub Copilot
@@ -22,40 +22,75 @@ keywords:
 updated: 2026-04-15 00:00 PST
 ---
 
-# How Copilot CLI Session Storage Actually Works — and What It Means for Squad
+# How Copilot CLI Session Storage Actually Works — What I Found in the Source Code
 
-If you've used Copilot CLI and Squad together, you've probably noticed that agents can query your session history across sessions — asking things like "what did I work on last week?" and getting real answers back. But how does that actually work? Where does the data live? And how does it interact with Squad's own memory system?
+When I first set up Copilot CLI, it asked me where I wanted to store my session data. I picked an option and moved on. Later, when I tried to understand what that choice actually did, I couldn't find any documentation — not in the [official docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/chronicle), not in the CLI help, not anywhere online.
 
-This post breaks down what's actually happening under the hood, based on the [official GitHub docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/chronicle) and hands-on investigation.
+So I read the source code. Here's what I found.
 
-## How Copilot CLI Stores Sessions
+## What the Docs Say
 
-Copilot CLI stores session data in **two local structures** on your machine:
+The [official GitHub docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/chronicle) describe session storage as straightforward:
 
-### Session Files
+- Sessions are stored locally in `~/.copilot/session-state/`
+- A local SQLite database (`session-store.db`) powers `/chronicle` and session queries
+- *"All session data is stored locally... Nothing is uploaded or shared beyond the normal AI model interactions."*
 
-Every session is persisted as a set of files in `~/.copilot/session-state/{session-id}/`. This is a complete record — your prompts, Copilot's responses, tool invocations, file modifications, and checkpoints. This powers the `/resume` command and session recovery.
+That's it. No mention of cloud storage. No mention of a startup prompt asking where to store data. No mention of the `session_store_sql` tool that agents use to query your history.
 
-### Session Store (SQLite)
+## What the Source Code Reveals
 
-Copilot CLI also maintains a local SQLite database at `~/.copilot/session-store.db`. This is a structured subset of the session files, with tables for sessions, turns, checkpoints, file references, and commit/PR/issue links. This powers the `/chronicle` slash command and lets Copilot answer questions about your past work.
+I dug into the minified source at the Copilot CLI npm package (`@github/copilot`). Here's what's actually going on.
 
-### Cloud Session Metadata
+### Three Feature Flags
 
-Behind the scenes, Copilot CLI also syncs session metadata to a cloud store. This is what powers the `session_store_sql` tool — a DuckDB-based query interface that agents (and Squad) use to search your session history. The cloud store contains tables like `sessions`, `turns`, `checkpoints`, `session_files`, `session_refs`, `events`, and `tool_requests`.
+Session storage is controlled by three feature flags with different rollout states:
 
-This cloud sync is **not a user-configurable setting** — it's a platform capability that happens automatically. The [official docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/chronicle) describe session data as "local and private," and state that "nothing is uploaded or shared beyond the normal AI model interactions." The cloud metadata store appears to operate as part of those normal interactions rather than as a separate upload.
+| Flag | Default | What it does |
+|------|---------|-------------|
+| `SESSION_STORE` | `"staff-or-experimental"` | Enables the local SQLite session store for cross-session history, file tracking, and search |
+| `CLOUD_SESSION_STORE` | `"off"` | Routes session store queries to a cloud DuckDB API instead of local SQLite, with local fallback |
+| `REMOTE_SESSION_EXPORT` | (gated) | Enables syncing session data to GitHub's cloud for cross-device access and `/remote` steering |
 
-> **Key takeaway:** You don't choose between cloud, local, or repo storage. Copilot CLI stores sessions locally and syncs metadata to the cloud automatically. There's no setting to change.
+### The Config Key: `storeSessionsRemotely`
 
-## What `session_store_sql` Actually Queries
+In `config.json`, there's an optional boolean field: `storeSessionsRemotely`. This controls whether sessions are exported to GitHub's cloud. The startup prompt you see on first launch likely sets this value — but it doesn't appear in the config after you answer it, and the field isn't documented anywhere.
 
-When an agent calls `session_store_sql`, it's querying the cloud DuckDB store — not your local SQLite database. This has practical implications:
+Related config fields include `exportSessions` and `steerableSessions`, which control whether sessions can be shared to GitHub and steered remotely.
 
-- **It works across devices.** If you use Copilot CLI on your laptop and then switch to your desktop, agents can query sessions from both.
-- **It has a "personal" and "repository" scope.** Personal queries return your sessions; repository queries return all users' sessions in a repo.
-- **The `repository` field is often NULL.** In my testing, 14 of 15 sessions had `repository: NULL` — even sessions run inside a git repo. Only Copilot coding agent sessions (triggered via GitHub issue assignment) reliably populate the repository field.
-- **It's a metadata subset.** The cloud store doesn't contain full conversation transcripts — it has structured metadata, turns, and file references. The full session data stays local.
+### How It All Connects
+
+Here's the chain:
+
+1. **Local session files** (`~/.copilot/session-state/`) — always created. Full conversation record. Powers `/resume`.
+
+2. **Local SQLite store** (`session-store.db`) — enabled by `SESSION_STORE` flag (staff + experimental users). Powers `/chronicle`, cross-session queries, and search. If you're not staff or experimental, this may not exist.
+
+3. **Cloud DuckDB store** — enabled by `CLOUD_SESSION_STORE` flag (**off by default**). When active, `session_store_sql` queries go to a cloud analytics API instead of local SQLite, with local fallback. This is what lets agents ask "what did I do last week?" across sessions.
+
+4. **Remote session export** — controlled by `storeSessionsRemotely` config + `REMOTE_SESSION_EXPORT` flag. Syncs session data to GitHub for cross-device access and the `/remote` slash command.
+
+### Why It Works for Me (and Maybe Not for You)
+
+My `config.json` has `"staff": true`. That means:
+- `SESSION_STORE` is enabled (staff-or-experimental)
+- The cloud features are likely enabled via server-side flag overrides
+- The `session_store_sql` tool works because my sessions are being synced
+
+If you're a regular Copilot user without staff access, you may have a different experience:
+- `SESSION_STORE` requires experimental mode (`/experimental on`)
+- `CLOUD_SESSION_STORE` is off by default
+- `session_store_sql` may query local SQLite or return nothing
+
+### The Undocumented Startup Prompt
+
+When Copilot CLI first launches, it may ask where you want to store session data. This prompt:
+- Is not documented in the official docs
+- Sets `storeSessionsRemotely` and/or related config fields
+- The impact depends on which feature flags are enabled for your account
+- Your answer may enable `REMOTE_SESSION_EXPORT`, which controls cloud sync
+
+The docs say everything is local because, for most users, it is. The cloud features exist but are gated behind feature flags that most users don't have yet.
 
 ## Where Squad's Memory Fits In
 
@@ -159,18 +194,21 @@ This gives you:
 
 ## Summary
 
-| Layer | What | Where | You control it? |
-|-------|------|-------|----------------|
-| Copilot session files | Full conversation history | `~/.copilot/session-state/` (local) | Delete files to remove |
-| Copilot session store | Structured metadata (SQLite) | `~/.copilot/session-store.db` (local) | `/chronicle reindex` to rebuild |
-| Copilot cloud metadata | Session metadata (DuckDB) | GitHub cloud (automatic sync) | Not directly configurable |
-| Squad committed memory | Decisions, history, skills | `.squad/` in repo (committed) | Full control — it's your markdown |
-| Squad session state | Session transcripts, logs | `.squad/` in repo (gitignored by default) | Gitignore policy is your choice |
+| Layer | What | Where | Gated by |
+|-------|------|-------|----------|
+| Session files | Full conversation record | `~/.copilot/session-state/` (local) | Always on |
+| Local session store | Structured metadata (SQLite) | `~/.copilot/session-store.db` | `SESSION_STORE` flag (staff/experimental) |
+| Cloud session store | Session metadata (DuckDB) | GitHub cloud API | `CLOUD_SESSION_STORE` flag (off by default) |
+| Remote export | Cross-device sync | GitHub cloud | `storeSessionsRemotely` config + `REMOTE_SESSION_EXPORT` flag |
+| Squad committed memory | Decisions, history, skills | `.squad/` in repo (committed) | Always on (it's your markdown) |
+| Squad session state | Session transcripts, logs | `.squad/` in repo (gitignored) | Always on (gitignore policy is your choice) |
 
 ## The Bottom Line
 
-Copilot CLI handles session persistence automatically — local files for full fidelity, cloud metadata for cross-session queries. You don't need to configure this.
+Copilot CLI's session storage is more complex than the docs suggest — and less configurable than the startup prompt implies. The actual behavior depends on feature flags that vary by account type (staff, experimental, or general availability).
 
-The decision you actually make is about **Squad's gitignore policy**: what squad-generated files (logs, orchestration traces, session state) should be committed vs. kept local. Start with the default (gitignore everything except decisions, history, and skills). Relax it later if you need committed session trails.
+If you're a staff or experimental user, you're getting cloud-synced session queries via `session_store_sql` and possibly cross-device session access. If you're a regular user, your sessions are local-only and `/chronicle` may be your only cross-session tool.
 
-Both systems work together: Copilot's `session_store_sql` gives agents memory across sessions. Squad's `.squad/` files give agents memory across the team.
+The one decision that's fully in your control is **Squad's gitignore policy**: which squad-generated files should be committed vs. kept local. Start with the default. Relax it later if you need committed session trails.
+
+Both systems work together when cloud features are enabled: Copilot's `session_store_sql` gives agents memory across sessions. Squad's `.squad/` files give agents memory across the team. When cloud features aren't available, Squad's repo-based memory becomes even more important — it's the only cross-session persistence your agents have.
