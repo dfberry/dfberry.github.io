@@ -4,11 +4,229 @@
         <title>Dina Berry RSS feed</title>
         <link>http://dfberry.github.io</link>
         <description>Dina Berry developer and technical writer RSS feed</description>
-        <lastBuildDate>Tue, 30 Dec 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 16 Apr 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>Copyright © 2026 Dina Berry.</copyright>
+        <item>
+            <title><![CDATA[Exploring Copilot CLI Session Management to Improve Squad]]></title>
+            <link>http://dfberry.github.io/2026-04-16-session-storage-decision-guide</link>
+            <guid>http://dfberry.github.io/2026-04-16-session-storage-decision-guide</guid>
+            <pubDate>Thu, 16 Apr 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[I dug into how Copilot CLI manages sessions to see what Squad could learn from it. Here's what I found and where I think the opportunities are.]]></description>
+            <content:encoded><![CDATA[<p>I've been using <a href="https://github.com/bradygaster/squad" target="_blank" rel="noopener noreferrer" class="">Squad</a>, an AI team framework built on top of Copilot CLI, and I kept wondering: Copilot CLI already tracks everything that happens in a session — could that data make Squad's agents smarter? I spent some time digging into how both systems manage session data, and I think there's an untapped opportunity.</p>
+<p>This post is my investigation notes — what I found, how the two systems compare, and where I think they could be combined for more value.</p>
+<p><strong>My working theory: Copilot is your diary (what happened). Squad is your playbook (what to do about it). Right now they're like two lighthouses on opposite shores of Bellingham Bay — both useful, but no bridge between them.</strong></p>
+<p><img decoding="async" loading="lazy" alt="Two lighthouses on opposite shores of Bellingham Bay, their beams not quite connecting" src="http://dfberry.github.io/assets/images/bellingham-bay-two-lighthouses-2f37ee596279e144b837ec62b5e6b386.png" width="1024" height="1024" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-i-found-two-memory-systems">What I Found: Two Memory Systems<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#what-i-found-two-memory-systems" class="hash-link" aria-label="Direct link to What I Found: Two Memory Systems" title="Direct link to What I Found: Two Memory Systems" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="copilot-cli-the-raw-record">Copilot CLI: The Raw Record<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#copilot-cli-the-raw-record" class="hash-link" aria-label="Direct link to Copilot CLI: The Raw Record" title="Direct link to Copilot CLI: The Raw Record" translate="no">​</a></h3>
+<p>Copilot CLI records every session — prompts, responses, tool calls, file changes, and checkpoints. I discovered it powers:</p>
+<ul>
+<li class=""><strong><code>/resume</code></strong> — pick up where you left off in any previous session</li>
+<li class=""><strong><code>/chronicle</code></strong> — generate standup reports, get personalized tips, improve your custom instructions</li>
+<li class=""><strong><code>/session</code></strong> — view and manage your sessions directly from the CLI</li>
+</ul>
+<p>Session data lives in <code>~/.copilot/session-state/</code> as files and in <code>~/.copilot/session-store.db</code> as a structured SQLite database.</p>
+<p><strong>What Copilot remembers:</strong> Everything that happened in every session — the full transcript.</p>
+<p><strong>What it doesn't do:</strong> Extract meaning. Copilot stores the raw conversation, not the conclusions you drew from it.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="squad-the-distilled-knowledge">Squad: The Distilled Knowledge<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#squad-the-distilled-knowledge" class="hash-link" aria-label="Direct link to Squad: The Distilled Knowledge" title="Direct link to Squad: The Distilled Knowledge" translate="no">​</a></h3>
+<p>Squad's memory is different — and this is where I see the gap. It's not a transcript — it's distilled knowledge, stored as markdown files in your repo:</p>
+<table><thead><tr><th>What</th><th>File</th><th>Purpose</th></tr></thead><tbody><tr><td>Team decisions</td><td><code>.squad/decisions.md</code></td><td>Shared brain — every agent reads this</td></tr><tr><td>Agent memory</td><td><code>.squad/agents/{name}/history.md</code></td><td>Personal learnings per agent</td></tr><tr><td>Skills</td><td><code>.copilot/skills/{name}/SKILL.md</code></td><td>Repeatable tasks with everything needed to execute</td></tr><tr><td>Session state</td><td><code>.squad/sessions/*.json</code></td><td>Resume data (gitignored by default)</td></tr><tr><td>Scribe logs</td><td><code>.squad/log/*.md</code></td><td>Session summaries (gitignored by default)</td></tr></tbody></table>
+<p><strong>What Squad remembers:</strong> Decisions, patterns, preferences, and skills — the things that should change how agents behave next time.</p>
+<p><strong>What it doesn't do:</strong> Record the full conversation. That's Copilot's job.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-gap-i-see">The Gap I See<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#the-gap-i-see" class="hash-link" aria-label="Direct link to The Gap I See" title="Direct link to The Gap I See" translate="no">​</a></h2>
+<p>The two systems complement each other, but right now they're completely disconnected — like looking across Deception Pass and seeing the other side but having no way to cross.</p>
+<p><img decoding="async" loading="lazy" alt="Water rushing through a rocky gorge at Deception Pass — two cliff faces close together with no bridge between them" src="http://dfberry.github.io/assets/images/deception-pass-no-bridge-e6ef32260d097fd417789949ec8e32bf.png" width="1024" height="1024" class="img_ev3q"></p>
+<p>Here's where each system shines:</p>
+<table><thead><tr><th>Question</th><th>Where to look</th></tr></thead><tbody><tr><td>"What did I do last Tuesday?"</td><td>Copilot — <code>/session</code> or <code>/chronicle standup</code></td></tr><tr><td>"What did the team decide about auth?"</td><td>Squad — <code>.squad/decisions.md</code></td></tr><tr><td>"Have I worked on this file before?"</td><td>Copilot — <code>/session</code> to browse past sessions</td></tr><tr><td>"How do we run a content audit?"</td><td>Squad — <code>.copilot/skills/content-audit/SKILL.md</code></td></tr><tr><td>"What went wrong last time I tried this?"</td><td>Copilot — session transcript via <code>/resume</code></td></tr><tr><td>"What does this agent know about TypeSpec?"</td><td>Squad — <code>.squad/agents/{name}/history.md</code></td></tr></tbody></table>
+<p>This separation works, but it's manual. You have to be the bridge — ferrying insights across the water yourself. That's the opportunity I'm investigating.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="where-i-think-session-data-could-improve-squad">Where I Think Session Data Could Improve Squad<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#where-i-think-session-data-could-improve-squad" class="hash-link" aria-label="Direct link to Where I Think Session Data Could Improve Squad" title="Direct link to Where I Think Session Data Could Improve Squad" translate="no">​</a></h2>
+<p>Squad has a built-in skill called <strong>reskill</strong> (<code>"team, reskill"</code>) that audits agent charters and histories, extracts shared patterns into skills, and compresses bloated files. Think of it as sorting the morning catch on a Bellingham dock — keeping what's valuable, tossing the rest back.</p>
+<p><img decoding="async" loading="lazy" alt="Fisherman on a Bellingham dock sorting the morning catch into labeled crates" src="http://dfberry.github.io/assets/images/bellingham-dock-sorting-catch-5333b56a678473318fdd971368fd1cb8.png" width="1024" height="1024" class="img_ev3q"></p>
+<p>But reskill today is purely file-based — it reads <code>.squad/</code> markdown and looks for textual duplication. It has no idea what actually happened in sessions.</p>
+<p>Here's what I think session data could add:</p>
+<table><thead><tr><th>Signal from Copilot sessions</th><th>What Squad could do with it</th></tr></thead><tbody><tr><td>Agent X was spawned 40 times but only useful 25 times</td><td>Refine charter to reduce misfires</td></tr><tr><td>Agent Y always gets the same 3 files as input</td><td>Bake those into charter's "What I Own"</td></tr><tr><td>Users keep correcting the same mistake</td><td>Extract as anti-pattern in a skill</td></tr><tr><td>An agent never gets spawned</td><td>Flag for removal during reskill</td></tr><tr><td>Two agents always get spawned together</td><td>Suggest merging or formalizing the pairing</td></tr><tr><td>Certain skills are read but never applied</td><td>Deprecate during reskill</td></tr><tr><td>Session durations spike after charter changes</td><td>Detect regressions from past reskills</td></tr></tbody></table>
+<p>There are two existing proposals in the Squad repo that go in this direction — <strong>tiered memory</strong> (<a href="https://github.com/bradygaster/squad/issues/600" target="_blank" rel="noopener noreferrer" class="">#600</a>, open) for hot/cold/wiki context layers, and <strong>reflect</strong> (<a href="https://github.com/bradygaster/squad/pull/621" target="_blank" rel="noopener noreferrer" class="">#621</a>, closed PR — not merged) for in-session learning capture. Neither one references Copilot CLI session data though. They're both Squad-internal. The bridge between Copilot's behavioral data and Squad's knowledge system doesn't exist yet.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ideas-im-exploring">Ideas I'm Exploring<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#ideas-im-exploring" class="hash-link" aria-label="Direct link to Ideas I'm Exploring" title="Direct link to Ideas I'm Exploring" translate="no">​</a></h2>
+<p>The theme here is a feedback loop — raw session data flows downstream, gets refined into knowledge, and that knowledge shapes the next session. Like the Nooksack River circling back toward the mountains that feed it.</p>
+<p><img decoding="async" loading="lazy" alt="The Nooksack River looping back toward Mount Baker, papers transforming into books at the bend" src="http://dfberry.github.io/assets/images/nooksack-river-feedback-loop-2b3cf80529436788388f5f0ea4d8ac33.png" width="1024" height="1024" class="img_ev3q"></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-feed-chronicle-into-reskill">1. Feed <code>/chronicle</code> into Reskill<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#1-feed-chronicle-into-reskill" class="hash-link" aria-label="Direct link to 1-feed-chronicle-into-reskill" title="Direct link to 1-feed-chronicle-into-reskill" translate="no">​</a></h3>
+<p>After a productive session, Squad agents already extract the important parts:</p>
+<ul>
+<li class=""><strong>Decisions</strong> go to <code>.squad/decisions.md</code></li>
+<li class=""><strong>Learnings</strong> go to <code>agents/{name}/history.md</code></li>
+<li class=""><strong>Reusable patterns</strong> become skills</li>
+</ul>
+<p>But what if reskill could also query Copilot's session store to find patterns agents missed? <code>/chronicle improve</code> already analyzes session history to suggest custom instruction improvements. That same analysis could feed into Squad's skill extraction pipeline — Copilot finds the behavioral pattern, Squad encodes it permanently.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-use-chronicle-for-behavioral-analysis">2. Use <code>/chronicle</code> for Behavioral Analysis<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#2-use-chronicle-for-behavioral-analysis" class="hash-link" aria-label="Direct link to 2-use-chronicle-for-behavioral-analysis" title="Direct link to 2-use-chronicle-for-behavioral-analysis" translate="no">​</a></h3>
+<p>Copilot's <code>/chronicle improve</code> analyzes session history to find where agents struggled or needed correction. I'm thinking about how to make this a systematic input to Squad:</p>
+<ul>
+<li class="">Run <code>/chronicle improve</code> periodically</li>
+<li class="">Take the suggestions and apply them to agent charters or team directives</li>
+<li class="">This creates a feedback loop: Copilot finds the pattern, Squad encodes it permanently</li>
+</ul>
+<p>Today this is manual. I'd love to see a <code>squad reskill --from-chronicle</code> that automates the loop.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-use-session-for-context">3. Use <code>/session</code> for Context<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#3-use-session-for-context" class="hash-link" aria-label="Direct link to 3-use-session-for-context" title="Direct link to 3-use-session-for-context" translate="no">​</a></h3>
+<p>When starting work on something you've touched before, use <code>/session</code> to browse previous sessions and find relevant context:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">"Before starting, check /session for any previous sessions </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">that touched these files. Summarize what was done and any issues."</span><br></span></code></pre></div></div>
+<p>This gives agents a head start without you having to remember and re-explain.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-use-squad-for-cross-agent-memory">4. Use Squad for Cross-Agent Memory<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#4-use-squad-for-cross-agent-memory" class="hash-link" aria-label="Direct link to 4. Use Squad for Cross-Agent Memory" title="Direct link to 4. Use Squad for Cross-Agent Memory" translate="no">​</a></h3>
+<p>Copilot's session history is per-user. Squad's memory is per-team. When Agent A discovers something that Agent B needs to know, Squad's shared files make that happen:</p>
+<ul>
+<li class="">Scribe writes cross-agent updates to affected agents' <code>history.md</code></li>
+<li class="">Decisions in <code>decisions.md</code> are read by every agent at spawn time</li>
+<li class="">Skills are shared — any agent can use any skill</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-gitignore-decision">The Gitignore Decision<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#the-gitignore-decision" class="hash-link" aria-label="Direct link to The Gitignore Decision" title="Direct link to The Gitignore Decision" translate="no">​</a></h2>
+<p>Squad gitignores session-related files by default. Here's what that means and when to change it:</p>
+<table><thead><tr><th>File</th><th>Default</th><th>Change when</th></tr></thead><tbody><tr><td><code>.squad/sessions/</code></td><td>Gitignored</td><td>Commit if you need session transcripts in git (training repos, research)</td></tr><tr><td><code>.squad/log/</code></td><td>Gitignored</td><td>Commit if you want Scribe's summaries as an audit trail</td></tr><tr><td><code>.squad/orchestration-log/</code></td><td>Gitignored</td><td>Commit if you want agent routing history preserved</td></tr><tr><td><code>.squad/decisions.md</code></td><td><strong>Committed</strong></td><td>Never gitignore — this is the team's shared brain</td></tr><tr><td><code>.squad/agents/*/history.md</code></td><td><strong>Committed</strong></td><td>Never gitignore — this is each agent's knowledge</td></tr><tr><td><code>.copilot/skills/</code></td><td><strong>Committed</strong></td><td>Never gitignore — these are your reusable patterns</td></tr></tbody></table>
+<p><strong>The recommended hybrid:</strong> Keep sessions gitignored, but commit Scribe's logs for a lightweight audit trail. Remove <code>.squad/log/</code> and <code>.squad/orchestration-log/</code> from <code>.gitignore</code> to enable this.</p>
+<blockquote>
+<p>⚠️ <strong>One caveat:</strong> If your org requires audit trails of AI interactions, git probably isn't the right system of record — no retention policies, no redaction, no legal hold. Worth checking before treating committed sessions as a compliance solution.</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="under-the-hood-skip-unless-debugging">Under the Hood (Skip Unless Debugging)<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#under-the-hood-skip-unless-debugging" class="hash-link" aria-label="Direct link to Under the Hood (Skip Unless Debugging)" title="Direct link to Under the Hood (Skip Unless Debugging)" translate="no">​</a></h2>
+<p>Copilot CLI stores session data in two places: file-based events in <code>~/.copilot/session-state/{session-id}/events.jsonl</code> and a searchable SQLite database at <code>~/.copilot/session-store.db</code>. The database powers <code>/chronicle</code> and <code>/session</code> — you need <code>"experimental": true</code> in <code>~/.copilot/config.json</code> to enable these features. Without experimental mode, <code>/chronicle</code> won't be available — enable it with <code>/experimental on</code> in any session.</p>
+<p>Each session folder contains the event stream (every tool call, message, and model metric), workspace metadata, and checkpoint snapshots that <code>/resume</code> uses to reconstruct context. The <code>session.shutdown</code> event in <code>events.jsonl</code> is worth finding — it shows your token usage, cache hit rates, and code changes in one place.</p>
+<p>The SQLite database (~59 MB after ~770 sessions in my case) holds structured records across seven tables: sessions, turns, checkpoints, session_files, session_refs, and an FTS5 search index. Records persist even after session directories are cleaned up. Don't delete the <code>.db-wal</code> file while Copilot is running — you'll lose recent writes.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-in-the-squad-session-files">What's in the <code>.squad</code> Session Files<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#whats-in-the-squad-session-files" class="hash-link" aria-label="Direct link to whats-in-the-squad-session-files" title="Direct link to whats-in-the-squad-session-files" translate="no">​</a></h2>
+<p>If you're using <a href="https://github.com/bradygaster/squad" target="_blank" rel="noopener noreferrer" class="">Squad</a> to orchestrate AI agents, there's a parallel session storage layer inside <code>.squad/</code> in your repo. While <code>.copilot/</code> tracks <em>platform sessions</em>, <code>.squad/</code> accumulates <em>session-by-session team memory</em>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="session-scoped-files-created-per-session">Session-Scoped Files (Created Per Session)<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#session-scoped-files-created-per-session" class="hash-link" aria-label="Direct link to Session-Scoped Files (Created Per Session)" title="Direct link to Session-Scoped Files (Created Per Session)" translate="no">​</a></h3>
+<p>These files can be traced back to a specific session:</p>
+<table><thead><tr><th>File</th><th>What It Contains</th></tr></thead><tbody><tr><td><code>orchestration-log/{timestamp}-{agent}.md</code></td><td>Who was spawned, why, what they did. Append-only audit trail.</td></tr><tr><td><code>log/{timestamp}-{topic}.md</code></td><td>Scribe's session summary.</td></tr><tr><td><code>decisions/inbox/{agent}-{slug}.md</code></td><td>Ephemeral drop-box — agents write decisions here during a session. Scribe merges them into <code>decisions.md</code> afterward.</td></tr><tr><td><code>identity/now.md</code></td><td>Updated each session with current focus. Every agent reads this at spawn so they hit the ground running.</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="running-state-files-modified-across-sessions">Running-State Files (Modified Across Sessions)<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#running-state-files-modified-across-sessions" class="hash-link" aria-label="Direct link to Running-State Files (Modified Across Sessions)" title="Direct link to Running-State Files (Modified Across Sessions)" translate="no">​</a></h3>
+<p>These files accumulate changes but don't track which session changed them:</p>
+<table><thead><tr><th>File</th><th>How It Changes</th></tr></thead><tbody><tr><td><code>agents/*/history.md</code></td><td>Grows each session as agents record learnings. Scribe summarizes when it exceeds ~15 KB.</td></tr><tr><td><code>agents/*/charter.md</code></td><td>Updated if an agent's role evolves. No session linkage.</td></tr><tr><td><code>skills/{name}/SKILL.md</code></td><td>Created or updated when agents discover reusable patterns.</td></tr><tr><td><code>decisions.md</code></td><td>The canonical decision ledger — grows each session, entries are dated.</td></tr><tr><td><code>team.md</code>, <code>routing.md</code></td><td>Updated when members join or leave.</td></tr><tr><td><code>casting/registry.json</code></td><td>New agent names registered here. Persistent.</td></tr></tbody></table>
+<p>The distinction matters: session files are <em>created per session</em> and disposable. Running-state files are your team's accumulated intelligence — they compound over time.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-two-layer-model">The Two-Layer Model<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#the-two-layer-model" class="hash-link" aria-label="Direct link to The Two-Layer Model" title="Direct link to The Two-Layer Model" translate="no">​</a></h3>
+<p>Together, <code>.copilot/</code> and <code>.squad/</code> form a complete session memory system — like Whatcom County's geology, where buildings sit on the visible surface but the real water supply flows through the aquifer below.</p>
+<p><img decoding="async" loading="lazy" alt="Cross-section of Whatcom County geology — buildings on the surface, aquifer below, a well connecting them" src="http://dfberry.github.io/assets/images/whatcom-county-surface-and-aquifer-e0961012827c8c69a2dc01e723c4f093.png" width="1024" height="1024" class="img_ev3q"></p>
+<table><thead><tr><th>Layer</th><th>Location</th><th>Scope</th><th>What it tracks per session</th></tr></thead><tbody><tr><td><strong>Platform</strong></td><td><code>~/.copilot/</code></td><td>Per-user, cross-project</td><td>Events, turns, tool calls, model metrics</td></tr><tr><td><strong>Team</strong></td><td><code>.squad/</code> (in repo)</td><td>Per-project, cross-session</td><td>Orchestration logs, agent memory, decisions, focus</td></tr></tbody></table>
+<p>The platform layer is invisible infrastructure — you don't commit it, you query it. The team layer is committed to the repo — it travels with the code and survives across machines, sessions, and team members. Surface and aquifer, both feeding the same ecosystem.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-this">Try This<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#try-this" class="hash-link" aria-label="Direct link to Try This" title="Direct link to Try This" translate="no">​</a></h2>
+<p>Ready to explore your own session data? Here are three things you can do right now:</p>
+<ol>
+<li class="">
+<p><strong>Browse your sessions:</strong> Open <code>~/.copilot/session-state/</code> and look at the <code>events.jsonl</code> from your most recent session. Search for <code>session.shutdown</code> to see your token usage and cache hit rates.</p>
+</li>
+<li class="">
+<p><strong>Query your history:</strong> In any Copilot CLI session, try <code>/session</code> to browse your past sessions. Use <code>/resume</code> to jump back into a previous session with full context.</p>
+</li>
+<li class="">
+<p><strong>Feed Copilot into Squad:</strong> Run <code>/chronicle improve</code> and review the suggestions. Pick one that matches a recurring pattern and say: <em>"Make that a skill"</em> or <em>"Add that to decisions."</em></p>
+</li>
+</ol>
+<p>If you're not using Squad yet, #1 and #2 still work — they're pure Copilot CLI. The session data is there whether you browse it or not.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="if-youre-building-an-agent-on-top-of-copilot">If You're Building an Agent on Top of Copilot<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#if-youre-building-an-agent-on-top-of-copilot" class="hash-link" aria-label="Direct link to If You're Building an Agent on Top of Copilot" title="Direct link to If You're Building an Agent on Top of Copilot" translate="no">​</a></h2>
+<p>This investigation was Squad-specific, but the underlying insight applies to anyone building on Copilot CLI: <strong>there's a lake of session data sitting right there in <code>~/.copilot/</code></strong> — and most agents ignore it completely.</p>
+<p>The good news is the plumbing already exists. The Copilot SDK (<code>@github/copilot-sdk</code>) exposes session listing, full event history, and real-time event subscriptions. You can filter sessions by repo or branch, pull every tool call and assistant response, and subscribe to events as they happen. The data access is there — what's missing is the intelligence layer on top.</p>
+<p>Here are three ideas I keep coming back to — none of them Squad-specific:</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-adaptive-prompt-tuning-based-on-tool-failure-rates">1. Adaptive Prompt Tuning Based on Tool Failure Rates<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#1-adaptive-prompt-tuning-based-on-tool-failure-rates" class="hash-link" aria-label="Direct link to 1. Adaptive Prompt Tuning Based on Tool Failure Rates" title="Direct link to 1. Adaptive Prompt Tuning Based on Tool Failure Rates" translate="no">​</a></h3>
+<p>I noticed in my own session data that certain tool calls fail repeatedly — <code>grep</code> with regex that doesn't match the codebase's naming conventions, for example. An agent could watch for these patterns and silently adjust its strategy — switching to glob patterns, broadening search terms, adding fallback chains — without me ever asking. Like a fishing guide who notices you keep casting into the wrong current and quietly repositions the boat.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-cross-session-onboarding-for-new-repos">2. Cross-Session Onboarding for New Repos<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#2-cross-session-onboarding-for-new-repos" class="hash-link" aria-label="Direct link to 2. Cross-Session Onboarding for New Repos" title="Direct link to 2. Cross-Session Onboarding for New Repos" translate="no">​</a></h3>
+<p>When I open a new repository for the first time, the agent has zero context about how I work. But my session history from <em>other</em> repos is right there — it shows whether I prefer TypeScript or JavaScript, whether I write tests first, which frameworks I reach for. An agent could mine that cross-project session data to bootstrap a developer profile, skipping the cold-start problem. First day in a new codebase, but the agent already knows your habits.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-drift-detection-between-intent-and-outcome">3. Drift Detection Between Intent and Outcome<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#3-drift-detection-between-intent-and-outcome" class="hash-link" aria-label="Direct link to 3. Drift Detection Between Intent and Outcome" title="Direct link to 3. Drift Detection Between Intent and Outcome" translate="no">​</a></h3>
+<p>Session data captures both what I <em>asked for</em> and what the agent <em>actually did</em> — tool calls, file edits, test results. Over time, an agent could spot drift: I keep correcting the same kind of CSS suggestion, or certain requests consistently take multiple follow-up turns. Imagine the agent saying, "You frequently adjust my styling — want me to follow a specific style guide?" That turns passive logs into active self-improvement.</p>
+<p>The common thread: <strong>session data isn't just a transcript — it's telemetry.</strong> Any agent that treats it as a feedback signal rather than a static log has a real advantage, like reading the tides instead of just watching the water.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-bottom-line">The Bottom Line<a href="http://dfberry.github.io/2026-04-16-session-storage-decision-guide#the-bottom-line" class="hash-link" aria-label="Direct link to The Bottom Line" title="Direct link to The Bottom Line" translate="no">​</a></h2>
+<p>Use both memory systems intentionally:</p>
+<ul>
+<li class=""><strong>Copilot</strong> handles the raw history. Let it. Don't try to replicate session transcripts in Squad files.</li>
+<li class=""><strong>Squad</strong> handles the distilled knowledge. Invest here — decisions, history, and skills are what compound.</li>
+<li class=""><strong>Feed insights from Copilot back into Squad</strong> via <code>/chronicle improve</code>, directives, and skill creation.</li>
+<li class=""><strong>Start with the default gitignore.</strong> The valuable stuff is already being committed. Relax later if you need session trails.</li>
+</ul>
+<p>Your agents get smarter not because they remember every conversation, but because the important conclusions persist in the right place. The river keeps flowing — what matters is what settles into the riverbed.</p>]]></content:encoded>
+            <category>GitHub Copilot</category>
+            <category>AI agents</category>
+            <category>session management</category>
+            <category>developer workflow</category>
+            <category>Squad</category>
+            <category>Copilot CLI</category>
+        </item>
+        <item>
+            <title><![CDATA[Image Prompts — Session Storage Decision Guide]]></title>
+            <link>http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/image-prompts</link>
+            <guid>http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/image-prompts</guid>
+            <pubDate>Thu, 16 Apr 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Shared Spec (all 5 images)]]></description>
+            <content:encoded><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="shared-spec-all-5-images">Shared Spec (all 5 images)<a href="http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/image-prompts#shared-spec-all-5-images" class="hash-link" aria-label="Direct link to Shared Spec (all 5 images)" title="Direct link to Shared Spec (all 5 images)" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>Dimensions:</strong> 1200×630px (blog hero / OG image ratio)</li>
+<li class=""><strong>Format:</strong> PNG, white background</li>
+<li class=""><strong>Style:</strong> Pen-and-ink line drawing with limited watercolor wash</li>
+<li class=""><strong>Palette (3 colors):</strong>
+<ul>
+<li class="">Slate blue <code>#4A6FA5</code> — water, sky, beams</li>
+<li class="">Warm sage <code>#7A9A7B</code> — vegetation, wood, buildings</li>
+<li class="">Charcoal <code>#3C3C3C</code> — ink lines, figures, geology</li>
+</ul>
+</li>
+<li class=""><strong>Detail level:</strong> Medium — interesting at full width, clean at mobile</li>
+<li class=""><strong>No text in any image</strong></li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-bellingham-bay-two-lighthousespng">1. <code>bellingham-bay-two-lighthouses.png</code><a href="http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/image-prompts#1-bellingham-bay-two-lighthousespng" class="hash-link" aria-label="Direct link to 1-bellingham-bay-two-lighthousespng" title="Direct link to 1-bellingham-bay-two-lighthousespng" translate="no">​</a></h2>
+<p><strong>Section:</strong> Hero (title)
+<strong>Metaphor:</strong> Two memory systems that don't connect</p>
+<blockquote>
+<p>Pen-and-ink illustration, 1200×630px, landscape orientation. Bellingham Bay at dusk with two lighthouses on opposite shores. Left lighthouse shines a broad, scattered beam (representing raw session data). Right lighthouse shines a tight, focused beam (representing distilled knowledge). The beams reach toward each other but don't connect — a visible gap over the water. Pacific Northwest treeline silhouette along both shores. 3-color palette: slate blue (#4A6FA5) for water and beams, warm sage (#7A9A7B) for trees, charcoal (#3C3C3C) for ink lines. Light watercolor wash, white background. No text.</p>
+</blockquote>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-deception-pass-no-bridgepng">2. <code>deception-pass-no-bridge.png</code><a href="http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/image-prompts#2-deception-pass-no-bridgepng" class="hash-link" aria-label="Direct link to 2-deception-pass-no-bridgepng" title="Direct link to 2-deception-pass-no-bridgepng" translate="no">​</a></h2>
+<p><strong>Section:</strong> The Gap I See
+<strong>Metaphor:</strong> Raw sessions on one side, distilled knowledge on the other — no bridge</p>
+<blockquote>
+<p>Pen-and-ink illustration, 1200×630px, landscape orientation. Two rocky cliff faces close together, inspired by Deception Pass — no bridge between them. On the left cliff, scattered notebooks, loose papers, and journals (raw sessions). On the right cliff, a neat stack of field guides and folded maps (skills and decisions). A person stands on the left side looking across. 3-color palette: slate blue (#4A6FA5) for sky and water below, warm sage (#7A9A7B) for cliff vegetation, charcoal (#3C3C3C) for ink lines and rocks. Light watercolor wash, white background. No text.</p>
+</blockquote>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-bellingham-dock-sorting-catchpng">3. <code>bellingham-dock-sorting-catch.png</code><a href="http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/image-prompts#3-bellingham-dock-sorting-catchpng" class="hash-link" aria-label="Direct link to 3-bellingham-dock-sorting-catchpng" title="Direct link to 3-bellingham-dock-sorting-catchpng" translate="no">​</a></h2>
+<p><strong>Section:</strong> Where I Think Session Data Could Improve Squad
+<strong>Metaphor:</strong> Reskill as sorting the catch — keeping what's valuable, tossing the rest</p>
+<blockquote>
+<p>Pen-and-ink illustration, 1200×630px, landscape orientation. A fisherman on a wooden dock in Bellingham Bay sorting a morning catch. Fish being separated into labeled wooden crates (keepers) while smaller ones tossed back into the water. Early morning fog over the bay in the background, faint outline of Lummi Island. 3-color palette: slate blue (#4A6FA5) for water and fog, warm sage (#7A9A7B) for dock wood and crates, charcoal (#3C3C3C) for ink lines and figure. Light watercolor wash, white background. No text.</p>
+</blockquote>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-nooksack-river-feedback-looppng">4. <code>nooksack-river-feedback-loop.png</code><a href="http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/image-prompts#4-nooksack-river-feedback-looppng" class="hash-link" aria-label="Direct link to 4-nooksack-river-feedback-looppng" title="Direct link to 4-nooksack-river-feedback-looppng" translate="no">​</a></h2>
+<p><strong>Section:</strong> Ideas I'm Exploring
+<strong>Metaphor:</strong> Feedback loop — raw notes flow downstream and return as bound knowledge</p>
+<blockquote>
+<p>Pen-and-ink illustration, 1200×630px, landscape orientation. The Nooksack River curving in a wide loop with Mount Baker visible in the background. Along the upstream portion, small loose papers and notes float on the water's surface. At the bend where the river turns back, the papers transform into small bound books. Pacific Northwest forest (Douglas fir, cedar) lining both banks. 3-color palette: slate blue (#4A6FA5) for water and mountain, warm sage (#7A9A7B) for forest, charcoal (#3C3C3C) for ink lines. Light watercolor wash, white background. No text.</p>
+</blockquote>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-whatcom-county-surface-and-aquiferpng">5. <code>whatcom-county-surface-and-aquifer.png</code><a href="http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/image-prompts#5-whatcom-county-surface-and-aquiferpng" class="hash-link" aria-label="Direct link to 5-whatcom-county-surface-and-aquiferpng" title="Direct link to 5-whatcom-county-surface-and-aquiferpng" translate="no">​</a></h2>
+<p><strong>Section:</strong> The Two-Layer Model
+<strong>Metaphor:</strong> Visible team knowledge on the surface, invisible platform data underground</p>
+<blockquote>
+<p>Pen-and-ink illustration, 1200×630px, landscape orientation. Cross-section view of Whatcom County. Upper half: Bellingham streets, small buildings, and trees on the surface (visible team knowledge). Lower half: underground aquifer, root systems, and water channels (invisible platform data). A single well shaft connects the two layers, with water visibly flowing between them. Scientific illustration style. 3-color palette: slate blue (#4A6FA5) for water and aquifer, warm sage (#7A9A7B) for surface vegetation and buildings, charcoal (#3C3C3C) for ink lines and geology cross-hatching. Light watercolor wash, white background. No text.</p>
+</blockquote>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[session-storage-decision-guide/prompts]]></title>
+            <link>http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/prompts</link>
+            <guid>http://dfberry.github.io/2026/04/16/media/session-storage-decision-guide/prompts</guid>
+            <pubDate>Thu, 16 Apr 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Hero Image — "Two Systems, One Workflow"]]></description>
+            <content:encoded><![CDATA[<p>Hero Image — "Two Systems, One Workflow"</p>
+<p>Pen-and-ink illustration of Bellingham Bay at dusk, with two lighthouses on opposite shores — one shining a broad beam across the water (raw data), the other
+focused tightly on a single boat (distilled knowledge). A thin bridge of light connects them across the water. Pacific Northwest style, detailed line work, muted
+watercolor wash.</p>
+<p>"The Gap" — No Bridge Yet</p>
+<p>Sketch of the old Deception Pass area with two cliff faces close together but no bridge between them. On one cliff, scattered notebooks and journals (sessions).
+On
+the other, a neat stack of field guides and maps (skills/decisions). A person stands on one side looking across. Pen-and-ink with light watercolor, Whatcom County
+landscape style.</p>
+<p>"Reskill" — Extracting Signal from Noise</p>
+<p>Illustration of a fisherman on a Bellingham dock sorting the morning catch — separating keeper fish into labeled crates while tossing the rest back. Crates
+labeled
+with small tags. Early morning fog over Bellingham Bay in the background. Detailed pen-and-ink, warm watercolor tones.</p>
+<p>"The Feedback Loop" — Chronicle Feeding Back</p>
+<p>Drawing of the Nooksack River flowing in a loop back toward Mount Baker. Along the river, small notes and papers float downstream, and at the bend where the water
+turns back, they transform into bound books. Pacific Northwest forest lining both banks. Pen-and-ink with green and blue watercolor wash.</p>
+<p>"Two Layers" — Platform vs Team Memory</p>
+<p>Cross-section illustration of Whatcom County geology — surface layer showing Bellingham streets and buildings (visible team knowledge), underground layer showing
+the aquifer and root systems (invisible platform data). A well connects the two layers. Scientific illustration style, pen-and-ink with earth-tone watercolor.</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[GitHub Account Cleanup: Audit, Archive & Remove Stale Repos]]></title>
             <link>http://dfberry.github.io/2025-12-30-github-account-clean.md</link>
