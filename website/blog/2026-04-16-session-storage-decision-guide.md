@@ -1,11 +1,11 @@
 ---
 slug: /2026-04-16-session-storage-decision-guide
-canonical_url: https://dfberry.github.io/blog/2026-04-16-session-storage-decision-guide
+canonical_url: https://dfberry.github.io/2026-04-16-session-storage-decision-guide
 custom_edit_url: null
 sidebar_label: "2026-04-16 Copilot CLI + Squad session management"
 title: "Exploring Copilot CLI Session Management to Improve Squad"
 description: "I dug into how Copilot CLI manages sessions to see what Squad could learn from it. Here's what I found and where I think the opportunities are."
-published: false
+published: true
 tags:
   - GitHub Copilot
   - AI agents
