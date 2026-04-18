@@ -33,7 +33,7 @@ I've been using [Squad](https://github.com/bradygaster/squad), a human-led AI ag
 
 Both ways work. But I keep running into the same question: **when I review what the team did, can I understand _why_ they did it?**
 
-This post is my investigation into that question — not a conclusion. I'm exploring what observability looks like for custom Copilot CLI agent teams, what the platform gives you today, and what you might need to build yourself. It's a snapshot in time. Things are moving fast and I may have gotten details wrong.
+This post is my investigation into that question — not a conclusion. I'm exploring what observability looks like for custom Copilot CLI agent teams, what the platform gives you today, and what you might need to build yourself. It's a snapshot in time. Things are moving fast.
 
 ## The question that started this
 
