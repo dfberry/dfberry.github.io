@@ -3,7 +3,7 @@ slug: /2026-04-18-observability-for-custom-copilot-agents
 canonical_url: https://dfberry.github.io/2026-04-18-observability-for-custom-copilot-agents
 custom_edit_url: null
 sidebar_label: "2026-04-18 Observability for custom Copilot CLI agents"
-title: "Knowing What Your AI Team Did and Why: Observability for Custom Copilot CLI Agents"
+title: "Knowing What Your Agent Team Did and Why: Observability for Custom Copilot CLI Agents"
 description: "When you use a human-led AI agent team on Copilot CLI, you need to understand their reasoning — whether you're in a live session or reviewing a PR the next morning. Here's what I found about making that work."
 published: false
 tags:
@@ -23,7 +23,7 @@ keywords:
 updated: 2026-04-18 00:00 PST
 ---
 
-# Knowing What Your AI Team Did and Why
+# Knowing What Your Agent Team Did and Why
 
 <!-- IMAGE PROMPT (Hero): Watercolor illustration of a person standing on the Bellingham Bay boardwalk at dawn, looking out at a fleet of small fishing boats returning to harbor. Each boat has a faintly glowing logbook on its deck. Soft fog on the water, Mount Baker in the background with alpenglow. Muted blues, greens, and warm amber. Pacific Northwest atmosphere. Clean, editorial style. -->
 
@@ -59,9 +59,9 @@ I think the answer is probably yes, but only if you design for it.
 
 ## Two ways to work with your agent team
 
-<!-- IMAGE PROMPT (Live vs. Delegated): Split watercolor illustration — left side shows a kayaker paddling alongside orcas in the San Juan Islands, close enough to observe every movement. Right side shows the same person on the Whatcom County shoreline watching through binoculars as the orcas surface in the distance. Same ocean, same whales, different proximity. Muted PNW palette of slate blue and evergreen. -->
+<!-- IMAGE PROMPT (Live vs. Delegated): Split watercolor — left panel shows mushroom forager kneeling in Whatcom County forest examining chanterelle with hand lens up close, ferns and moss around them. Right panel shows same forager at cabin table studying collected specimens with field notes beside them. Dense PNW forest with filtered light on left, warm cabin interior on right. Slate blue, warm sage, charcoal palette. -->
 
-![A kayaker beside orcas in the San Juans on the left, and the same person watching from the Whatcom County shore with binoculars on the right](./media/2026-04-18-observability-for-custom-copilot-agents/san-juan-orcas-two-perspectives.png)
+![A mushroom forager examining a chanterelle up close in the forest on the left, and studying collected specimens with field notes at a cabin table on the right](./media/2026-04-18-observability-for-custom-copilot-agents/whatcom-forager-two-modes.png)
 
 When you set up a custom agent team on Copilot CLI, there are two natural patterns:
 
@@ -234,21 +234,21 @@ If your agent team produces orchestration logs (structured summaries of what hap
 
 ## The feedback loop
 
-<!-- IMAGE PROMPT (Feedback Loop): Overhead watercolor illustration of the salmon lifecycle in a Whatcom County creek — salmon swimming upstream past fallen logs, spawning, young salmon heading back downstream, eventually returning as adults. The creek winds through evergreen forest. Circular composition emphasizing the loop. Soft watercolor, earth tones and river blues. -->
+<!-- IMAGE PROMPT (Feedback Loop): Close-up cross section of old growth cedar tree trunk from Whatcom County forest showing detailed tree rings. A forestry researcher's hand holds a pencil making small annotations beside specific rings. Magnifying glass rests on the wood surface. Each ring is a distinct record. Warm wood tones, scientific field study aesthetic. Slate blue, warm sage, charcoal palette. -->
 
-![Salmon lifecycle in a Whatcom County creek — swimming upstream, spawning, young heading downstream, returning as adults](./media/2026-04-18-observability-for-custom-copilot-agents/whatcom-creek-salmon-lifecycle.png)
+![Cross section of an old-growth cedar trunk with tree rings, a researcher's hand annotating specific rings with a pencil](./media/2026-04-18-observability-for-custom-copilot-agents/cedar-tree-rings-history.png)
 
 The real power isn't any single artifact — it's the loop between them.
 
 ```mermaid
 flowchart TD
-    L[Live Session] -->|human corrects agent| D[decisions.md updated]
-    D -->|agent reads at session start| DW[Delegated Work]
-    DW -->|produces PR with reasoning| R[Human Reviews]
+    L[Live Session] -->|corrects agent| D[decisions.md]
+    D -->|reads at start| DW[Delegated Work]
+    DW -->|PR + reasoning| R[Human Reviews]
     R -->|spots issue| L
-    R -->|approves, no change needed| Done[✓ Done]
-    H[history.md] -->|agent remembers past learnings| DW
-    DW -->|new learning captured| H
+    R -->|approves| Done[✓ Done]
+    H[history.md] -->|recalls| DW
+    DW -->|learns| H
 ```
 
 1. In a live session, you notice an agent making a choice you disagree with. You correct them. That correction becomes a decision in `decisions.md`.
