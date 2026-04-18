@@ -112,10 +112,6 @@ OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
 
 This gives you traces for agent sessions, LLM calls, and tool executions — token usage metrics, operation durations, and OTLP HTTP export with enterprise auth headers. Run `copilot help monitoring` for the full reference.
 
-### Session store (queryable)
-
-Session data is also available in a structured SQLite database. If you're building tooling, you can query sessions, turns, checkpoints, file changes, and references (commits, PRs, issues) programmatically.
-
 ### What's still missing
 
 Two open issues on [github/copilot-cli](https://github.com/github/copilot-cli) highlight gaps:
@@ -144,7 +140,7 @@ Consider these questions:
 
 The platform can tell you the agent called 12 tools and used 50K tokens. It can even summarize the session. But it doesn't know about your team's decisions, your project's constraints, or your agents' specific mandates.
 
-Squad's design philosophy — recently [reframed explicitly](https://github.com/bradygaster/squad/pull/989) around human-led productivity — is that people stay accountable for priorities, approvals, and final changes while agents handle coordination and repetition. The work stays inspectable because it lives in your repo as files: charters, decisions, history, orchestration logs.
+Squad's design philosophy is that people stay accountable for priorities, approvals, and final changes while agents handle coordination and repetition. The work stays inspectable because it lives in your repo as files: charters, decisions, history, orchestration logs.
 
 ## What you can build into a custom agent team
 
