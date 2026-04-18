@@ -45,7 +45,7 @@ The code was correct. But I couldn't trace the reasoning.
 
 And here's the thing: if I'd been in a live session, I could have just asked. The reasoning would have been right there in the conversation. But because I'd delegated the work, the reasoning was... somewhere. Not lost — but not connected to the PR I was reviewing.
 
-That's the gap I wanted to understand. The more I dig into it, the more I think it's not just a tooling problem — it's a strategic one. Tools can record what happened. Strategy determines whether you can still course-correct when the reasoning behind a change doesn't match your intent.
+That's the gap I wanted to understand. The more I dig into it, the more I think it's not just a tooling problem — it's a design problem. Tools can record what happened. But whether you can actually course-correct depends on how you set up your agents to explain themselves.
 
 ## Why this matters beyond my workflow
 
