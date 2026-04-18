@@ -35,7 +35,7 @@ I've been using [Squad](https://github.com/bradygaster/squad), a human-led AI ag
 
 Both ways work. But I keep running into the same question: **when I review what the team did, can I understand _why_ they did it?**
 
-This post is my investigation into that question — not a conclusion. I'm exploring what observability looks like for custom Copilot CLI agent teams, what the platform gives you today, and what you might need to build yourself. It's a snapshot in time. Things are moving fast.
+This post is my investigation into that question — not a conclusion. It breaks down into three layers: what any team using AI agents needs to think about, what Copilot CLI provides as a platform, and what I see in Squad as a custom agent framework built on top. Things are moving fast.
 
 ## The question that started this
 
@@ -47,19 +47,7 @@ And here's the thing: if I'd been in a live session, I could have just asked. Th
 
 That's the gap I wanted to understand. The more I dig into it, the more I think it's not just a tooling problem — it's a design problem. Tools can record what happened. But whether you can actually course-correct depends on how you set up your agents to explain themselves.
 
-## Why this matters beyond my workflow
-
-If you're a developer using AI agents for real work — or a team lead deciding whether to adopt them — this question isn't academic. It's the difference between:
-
-- **"I can use AI agents and stay accountable"** vs. **"I shipped code I can't fully explain"**
-- **"I can scale my team's output with agents"** vs. **"I scaled output but lost the ability to course-correct"**
-- **"I can onboard someone new and they can follow the reasoning trail"** vs. **"Only I know why things are the way they are, and even I'm not sure"**
-
-As AI agents move from experimental tools to production workflows, the ability to trace reasoning becomes a governance question. Not in the heavy compliance sense — in the practical sense of: can you maintain confidence in a system that makes decisions on your behalf?
-
-I think the answer is probably yes, but only if you design for it.
-
-## Two ways to work with your agent team
+## The observability question — for any AI agent
 
 <!-- IMAGE PROMPT (Live vs. Delegated): Split watercolor — left panel shows mushroom forager kneeling in Whatcom County forest examining chanterelle with hand lens up close, ferns and moss around them. Right panel shows same forager at cabin table studying collected specimens with field notes beside them. Dense PNW forest with filtered light on left, warm cabin interior on right. Slate blue, warm sage, charcoal palette. -->
 
@@ -67,13 +55,15 @@ I think the answer is probably yes, but only if you design for it.
 
 *Hands in the dirt, or studying what you collected — both require knowing what you're looking at.*
 
-When you set up a custom agent team on Copilot CLI, there are two natural patterns:
+This isn't specific to any platform or framework. Any system where AI agents make decisions on a developer's behalf faces the same question — whether it's a custom agent team, a CI pipeline with AI steps, or a coding assistant with increasing scope.
+
+Two natural patterns emerge when you work with agents:
 
 **Live sessions** — you're at the terminal, talking to the team. You see every decision as it happens. You can ask "why did you do that?" and get an answer immediately. You're steering.
 
-**Delegated work** — you set direction through an issue or a prompt, the team executes, and you review the output later. You're governing — setting goals, reviewing results, course-correcting.
+**Delegated work** — you set direction through an issue or a prompt, the team executes, and you review the output later. You're setting goals, reviewing results, course-correcting.
 
-Both are human-directed. In live sessions, you're hands-on. In delegated work, you're setting direction and reviewing results. People stay accountable for priorities, approvals, and final changes — the agents handle coordination and execution.
+Both are human-directed. The observability question is the same in both cases: **can you reconstruct why the team made those decisions and changed that code?** But the answer is very different depending on which pattern you used. In a live session, missing rationale is recoverable — you can ask. In delegated work, missing rationale means you're reading code without context.
 
 ```mermaid
 flowchart LR
@@ -84,9 +74,23 @@ flowchart LR
     O -->|review| H
 ```
 
-The observability question is the same in both cases: **can you reconstruct why the team made those decisions and changed that code?** But the answer is very different depending on which pattern you used.
+If you're a developer using AI agents for real work — or a team lead deciding whether to adopt them — this question isn't academic. It's the difference between:
 
-## What the platform gives you today
+- **"I can use AI agents and stay accountable"** vs. **"I shipped code I can't fully explain"**
+- **"I can scale my team's output with agents"** vs. **"I scaled output but lost the ability to course-correct"**
+- **"I can onboard someone new and they can follow the reasoning trail"** vs. **"Only I know why things are the way they are, and even I'm not sure"**
+
+**For developers**, this is about code quality and review confidence. If you can't trace why an agent restructured a function, you're approving code on faith. That might work for trivial changes. It doesn't scale to anything complex.
+
+**For team leads**, the concerns compound:
+
+- **Review scalability.** Without reasoning trails, every delegated PR becomes expensive senior-review work. If delegation saves coding time but increases review time, you haven't scaled — you've moved the labor.
+- **Incident response.** When an agent causes a regression, observability is how you reconstruct what happened. Without it, your postmortem is: "the AI did something and we're not sure why."
+- **Drift detection.** Agent teams don't just fail once — they drift. Models update, prompts evolve, context shifts. Observability is how you notice when behavior changes incrementally, before it becomes a production issue.
+
+The answer is probably yes — you can use AI agents and stay accountable. But only if you design for it. That design happens at two levels: what the platform gives you, and what you build on top.
+
+## What Copilot CLI gives you
 
 <!-- IMAGE PROMPT (Platform Telemetry): Illustrated aerial view of the Nooksack River winding through Whatcom County farmland, with small sensor stations along the riverbank glowing softly — measuring water level, flow rate, temperature. The river is data flowing through the landscape. Fog in the valleys, evergreen ridgelines. Clean cartographic style with watercolor texture. -->
 
@@ -94,7 +98,7 @@ The observability question is the same in both cases: **can you reconstruct why 
 
 *Sensor stations measure what flows past them — water level, temperature, speed. Platform telemetry works the same way: it captures the signal, not the meaning.*
 
-Copilot CLI has been adding observability features. Here's what I can see as a user, as of mid-April 2026:
+I use Copilot CLI as my platform. Here's what it provides as of mid-April 2026:
 
 ### Session persistence
 
@@ -120,9 +124,9 @@ Two open issues on [github/copilot-cli](https://github.com/github/copilot-cli) h
 
 - **[#1791](https://github.com/github/copilot-cli/issues/1791) — Session history.** There's no cross-session audit view without starting the agent. The issue proposes a `copilot --history` flag for querying session history directly from the shell — spend no tokens, launch no agent.
 
-These are platform-level improvements that, based on the issue discussions, should help with the "what happened" and "which session did it" questions. But even when they ship, there's a layer they won't fully cover.
+These help with "what happened" and "which session did it." But the platform captures sessions and telemetry — not your team's project-specific intent. That's the next layer.
 
-## The layer the platform can't fully solve
+## What I see in Squad
 
 <!-- IMAGE PROMPT (Project-Specific Why): A hiker on the Chain Lakes trail near Mount Baker, standing at a fork where two paths diverge into fog. One path has a hand-carved wooden trail sign with specific directions. The other path has only a generic "Trail" marker. Dense Pacific Northwest old growth — moss, ferns, cedar. Watercolor, moody greens and grays. -->
 
@@ -130,21 +134,19 @@ These are platform-level improvements that, based on the issue discussions, shou
 
 *A generic "Trail" sign tells you a path exists. A hand-carved one tells you where it goes and why you'd take it.*
 
-Here's where my thinking is landing so far: platforms are getting better at capturing **what happened**, **which session did it**, and even **generic rationale** (plans, tool-call sequences, diff summaries). But they can't tell you which rationale is **project-relevant**.
+[Squad](https://github.com/bradygaster/squad) is the custom agent framework I use on top of Copilot CLI. Its design philosophy is that people stay accountable for priorities, approvals, and final changes while agents handle coordination and repetition. The work stays inspectable because it lives in your repo as files.
+
+This is where project-specific reasoning lives — the layer no platform can ship for you. Platforms capture **what happened**. They can't tell you which rationale is **project-relevant**.
 
 Consider these questions:
 
 - "Why did the agent pick Redis over a file cache?" → That depends on your team's standing decision to prefer managed services.
 - "Why did the agent restructure the function?" → That depends on your charter's rule about separating API contracts from implementation.
-- "Why did the agent skip the edge case in the test?"→ That depends on your skill's instruction to focus on the happy path first and file follow-up issues for edge cases.
+- "Why did the agent skip the edge case in the test?" → That depends on your skill's instruction to focus on the happy path first and file follow-up issues for edge cases.
 
 The platform can tell you the agent called 12 tools and used 50K tokens. It can even summarize the session. But it doesn't know about your team's decisions, your project's constraints, or your agents' specific mandates.
 
-Squad's design philosophy is that people stay accountable for priorities, approvals, and final changes while agents handle coordination and repetition. The work stays inspectable because it lives in your repo as files: charters, decisions, history, orchestration logs.
-
-## What you can build into a custom agent team
-
-If you're using a framework like Squad (or any custom agent setup with scoped personas), you have configuration surfaces that I think serve double duty: they shape agent behavior AND create a reasoning trail. Here's what I see in Squad right now — the same patterns apply with system prompts, ADRs, policy files, or whatever mechanism your framework uses to scope agent behavior.
+Here's what I see in Squad right now. The same patterns apply with system prompts, ADRs, policy files, or whatever mechanism your framework uses to scope agent behavior.
 
 ### Charters — scope + accountability
 
@@ -246,7 +248,7 @@ If your agent team produces orchestration logs (structured summaries of what hap
 **Standing decisions referenced:** "Prefer managed services", "CI must pass before review"
 ```
 
-## The feedback loop
+### The feedback loop
 
 <!-- IMAGE PROMPT (Feedback Loop): Close-up cross section of old growth cedar tree trunk from Whatcom County forest showing detailed tree rings. A forestry researcher's hand holds a pencil making small annotations beside specific rings. Magnifying glass rests on the wood surface. Each ring is a distinct record. Warm wood tones, scientific field study aesthetic. Slate blue, warm sage, charcoal palette. -->
 
@@ -274,39 +276,6 @@ flowchart TD
 
 **The human is always directing the work.** Charters, decisions, history, and skills are the mechanisms. The question is whether those mechanisms produce enough signal for you to know _when_ to course-correct — so you spend less time re-investigating and more time deciding.
 
-## Where my investigation is landing
-
-After digging into this, here's my current understanding — still forming, not final:
-
-**I'm starting to see this less as a gap and more as a design discipline.** You're building a provenance layer — charters, decisions, skills, orchestration logs — that complements platform telemetry. The platform tells you what happened. Your configuration tells agents why things should happen a certain way — and creates the trail to verify that they did.
-
-**And it matters more when you're reviewing delegated work.** In a live session, missing rationale is recoverable — you can ask. In delegated work, missing rationale means you're reading code without context. Both modes need reasoning capture, but delegated work makes missing rationale much costlier.
-
-## The bigger picture: why this matters strategically
-
-I keep coming back to this: the value of AI agents isn't just that they produce code. It's that they can produce code _you trust enough to ship_.
-
-Trust requires the ability to course-correct. Course-correction requires understanding what happened and why. That's observability.
-
-**For developers**, this is about code quality and review confidence. If you can't trace why an agent restructured a function, you're approving code on faith. That might work for trivial changes. It doesn't scale to anything complex.
-
-**For team leads and AI owners**, the stakes are higher:
-
-- **Review scalability.** Without reasoning trails, every delegated PR becomes expensive senior-review work. If delegation saves coding time but increases review time, you haven't actually scaled — you've moved the labor.
-- **Incident response.** When an agent causes a regression, observability is how you reconstruct what happened. Without it, your postmortem is: "the AI did something and we're not sure why."
-- **Drift detection.** Agent teams don't just fail once — they drift. Models update, prompts evolve, context shifts. Observability is how you notice when behavior changes incrementally, before it becomes a production issue.
-- **Safe scope expansion.** You can only delegate more to agents you can verify. Observability is the prerequisite for saying "I trust this agent enough to handle this without me watching."
-
-As more developers and teams adopt AI agents for real production work, I think this becomes a dividing line:
-
-**Teams that design for observability** can scale their use of agents and catch reasoning drift early. They can onboard new team members who can follow the trail. They can maintain accountability even as agent capabilities grow.
-
-**Teams that don't** risk hitting a ceiling. The agents produce output, but reviewing that output becomes a black-box exercise. You end up approving PRs you don't fully understand because the alternative is re-doing the work yourself.
-
-I don't think this is unique to Squad or even to Copilot CLI. Any system where AI agents make decisions on a developer's behalf faces this same question — whether it's a custom agent team, a CI pipeline with AI steps, or a coding assistant with increasing scope. The mechanisms might differ (charters vs. system prompts vs. policy files), but the discipline is the same: **design your agents and workflows so reasoning is inspectable where review actually happens.**
-
-The platform appears to be moving in this direction. OTel is already there. Session attribution and history seem to be coming. But the project-specific reasoning layer — what decisions matter, what constraints apply, what "good" looks like for _this_ project — that's yours to build.
-
 ## What I'd do on Monday
 
 <!-- IMAGE PROMPT (Actionable Steps): A person sitting at a weathered wooden table on a covered porch overlooking Chuckanut Bay, with a field journal open, a cup of coffee, and a simple checklist being written by hand. Rain falling gently outside. Fir trees framing the view. Warm, inviting, practical. Watercolor illustration, cozy PNW cabin aesthetic. -->
@@ -315,21 +284,27 @@ The platform appears to be moving in this direction. OTel is already there. Sess
 
 *The best time to start a field journal is before you need to look something up.*
 
-If you're setting up a custom agent team and want observability from day one, here's where I'd start:
+If you're setting up a custom agent team and want observability from day one, here's where I'd start — organized by layer:
 
-1. **Add observability expectations to every agent's scope definition.** Tell agents to explain their reasoning in PR descriptions, reference relevant decisions, and note what alternatives they considered. This is free — it's just configuration text.
+**Any agent setup:**
 
-2. **Write a standing decision requiring reasoning in outputs.** Make it team policy, not per-agent hope. "Every PR from delegated work must include a Reasoning section."
+1. **Decide what "good reasoning" looks like for your project.** Before you pick tools or frameworks, know what you'd want to see when reviewing agent work. That's the bar everything else gets measured against.
 
-3. **Link outputs to inputs.** Every PR should reference its source issue. Every commit should trace to a task. The goal is: from any output, you can walk backward to the intent.
+**Copilot CLI platform:**
 
-4. **Use orchestration logs.** Even a simple markdown summary after each work session creates a queryable trail for later review.
+2. **Enable OTel now.** `COPILOT_OTEL_ENABLED=true` gets you traces immediately. Watch for session attribution ([#2396](https://github.com/github/copilot-cli/issues/2396)) and session history ([#1791](https://github.com/github/copilot-cli/issues/1791)) as they ship.
 
-5. **Enable OTel now.** `COPILOT_OTEL_ENABLED=true` gets you traces immediately. Watch for session attribution ([#2396](https://github.com/github/copilot-cli/issues/2396)) and session history ([#1791](https://github.com/github/copilot-cli/issues/1791)) as they ship.
+**Custom agent layer (Squad or equivalent):**
+
+3. **Add observability expectations to every agent's scope definition.** Tell agents to explain their reasoning in PR descriptions, reference relevant decisions, and note what alternatives they considered. This is free — it's just configuration text.
+
+4. **Write a standing decision requiring reasoning in outputs.** Make it team policy, not per-agent hope. "Every PR from delegated work must include a Reasoning section."
+
+5. **Link outputs to inputs.** Every PR should reference its source issue. Every commit should trace to a task. The goal is: from any output, you can walk backward to the intent.
 
 6. **Build the feedback loop.** When you spot a reasoning gap during review, don't just fix the code — update the decision file or charter so the next session benefits. That's how the system gets smarter.
 
-The agents are doing the work. The platform is recording the telemetry. But the human defines what "good reasoning" looks like for this project. That's the part no platform can ship for you. I'm still figuring out the best patterns, but I'm increasingly convinced this is one of the first disciplines to get right.
+The agents do the work. The platform records the telemetry. The custom layer captures the project-specific why. But the human defines what "good reasoning" looks like — and that's the part no platform can ship for you.
 
 ---
 
