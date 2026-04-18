@@ -144,7 +144,7 @@ Squad's design philosophy is that people stay accountable for priorities, approv
 
 ## What you can build into a custom agent team
 
-If you're using a framework like Squad (or any custom agent setup with scoped personas), you have configuration surfaces that I think serve double duty: they shape agent behavior AND create a reasoning trail. I experiment with this in my own setup, but the same patterns apply with system prompts, ADRs, policy files, or whatever mechanism your framework uses to scope agent behavior.
+If you're using a framework like Squad (or any custom agent setup with scoped personas), you have configuration surfaces that I think serve double duty: they shape agent behavior AND create a reasoning trail. Here's what I see in Squad right now — the same patterns apply with system prompts, ADRs, policy files, or whatever mechanism your framework uses to scope agent behavior.
 
 ### Charters — scope + accountability
 
