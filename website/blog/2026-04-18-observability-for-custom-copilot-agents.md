@@ -37,7 +37,7 @@ This post is my investigation into that question — not a conclusion. I'm explo
 
 ## The question that started this
 
-I had delegated a task through an issue: "update the content pipeline for the new API version." The next morning I had a clean PR with the right changes. But one function had been restructured in a way I didn't expect. I wanted to know: why this approach? What did the agent consider? What constraints drove the decision?
+I had delegated a task through an issue: "update the content pipeline for the new API version." The next morning I had a clean PR with the right changes. But the agent had restructured one function in a way I didn't expect. I wanted to know: why this approach? What did the agent consider? What constraints drove the decision?
 
 The code was correct. But I couldn't trace the reasoning.
 
@@ -80,7 +80,7 @@ flowchart LR
     O -->|review| H
 ```
 
-The observability question is the same in both cases: **can you reconstruct why decisions were made and code changed?** But the answer is very different depending on which pattern you used.
+The observability question is the same in both cases: **can you reconstruct why the team made those decisions and changed that code?** But the answer is very different depending on which pattern you used.
 
 ## What the platform gives you today
 
@@ -92,7 +92,7 @@ Copilot CLI has been adding observability features. Here's what I can see as a u
 
 ### Session persistence
 
-Every Copilot CLI session — live or delegated — gets recorded in `~/.copilot/session-state/`. The full transcript: prompts, responses, tool calls, file changes, checkpoints. You can browse sessions with `/session` and resume any past session with `/resume`.
+Every Copilot CLI session — live or delegated — lands in `~/.copilot/session-state/`. The full transcript: prompts, responses, tool calls, file changes, checkpoints. You can browse sessions with `/session` and resume any past session with `/resume`.
 
 ### OpenTelemetry (shipped in v1.0.4)
 
@@ -114,9 +114,9 @@ Session data is also available in a structured SQLite database. If you're buildi
 
 Two open issues on [github/copilot-cli](https://github.com/github/copilot-cli) highlight gaps:
 
-- **[#2396](https://github.com/github/copilot-cli/issues/2396) — Session attribution.** Sessions don't currently record _how_ they were launched — interactive vs SDK vs headless — or which custom tool created them. If you run three different agent tools, their sessions all look identical. The issue proposes persisting `client_type` and `clientName` in session-state files.
+- **[#2396](https://github.com/github/copilot-cli/issues/2396) — Session attribution.** Sessions don't currently record _how_ you launched them — interactive vs SDK vs headless — or which custom tool created them. If you run three different agent tools, their sessions all look identical. The issue proposes persisting `client_type` and `clientName` in session-state files.
 
-- **[#1791](https://github.com/github/copilot-cli/issues/1791) — Session history.** There's no cross-session audit view without starting the agent. The issue proposes a `copilot --history` flag for querying session history directly from the shell — no tokens spent, no agent launched.
+- **[#1791](https://github.com/github/copilot-cli/issues/1791) — Session history.** There's no cross-session audit view without starting the agent. The issue proposes a `copilot --history` flag for querying session history directly from the shell — spend no tokens, launch no agent.
 
 These are platform-level improvements that, based on the issue discussions, should help with the "what happened" and "which session did it" questions. But even when they ship, there's a layer they won't fully cover.
 
@@ -131,8 +131,8 @@ Here's where my thinking is landing so far: platforms are getting better at capt
 Consider these questions:
 
 - "Why did the agent pick Redis over a file cache?" → That depends on your team's standing decision to prefer managed services.
-- "Why was the function restructured?" → That depends on your charter's rule about separating API contracts from implementation.
-- "Why was the edge case skipped in the test?" → That depends on your skill's instruction to focus on the happy path first and file follow-up issues for edge cases.
+- "Why did the agent restructure the function?" → That depends on your charter's rule about separating API contracts from implementation.
+- "Why did the agent skip the edge case in the test?"→ That depends on your skill's instruction to focus on the happy path first and file follow-up issues for edge cases.
 
 The platform can tell you the agent called 12 tools and used 50K tokens. It can even summarize the session. But it doesn't know about your team's decisions, your project's constraints, or your agents' specific mandates.
 
@@ -140,13 +140,13 @@ Squad's design philosophy — recently [reframed explicitly](https://github.com/
 
 ## What you can build into a custom agent team
 
-If you're using a framework like Squad (or any custom agent setup with scoped personas), you have configuration surfaces that I think serve double duty: they shape agent behavior AND create a reasoning trail. I've been experimenting with this in my own setup, but the same patterns apply with system prompts, ADRs, policy files, or whatever mechanism your framework uses to scope agent behavior.
+If you're using a framework like Squad (or any custom agent setup with scoped personas), you have configuration surfaces that I think serve double duty: they shape agent behavior AND create a reasoning trail. I experiment with this in my own setup, but the same patterns apply with system prompts, ADRs, policy files, or whatever mechanism your framework uses to scope agent behavior.
 
 ### Charters — scope + accountability
 
 When something goes wrong, the first question is "who was supposed to own this?" Charters answer that before anyone has to ask.
 
-Each agent has a charterthat defines what they own, how they work, and their boundaries. In my setup, charters look like this:
+Each agent has a charter that defines what they own, how they work, and their boundaries. In my setup, charters look like this:
 
 ```markdown
 # Gonzo — Infrastructure Charter
@@ -179,7 +179,7 @@ This is just charter text. No code change. The agent reads it and follows it.
 
 Individual agents forget between sessions. Standing decisions don't — they're the one file every agent reads at startup.
 
-`decisions.md` is the team's institutional memory.Every agent reads it at session start. Standing decisions shape behavior across all sessions:
+`decisions.md` is the team's institutional memory. Every agent reads it at session start. Standing decisions shape behavior across all sessions:
 
 ```markdown
 ## Prefer managed services over self-hosted
@@ -204,7 +204,7 @@ section explaining key decisions and what alternatives were considered.
 
 Charters define what an agent *should* do. History captures what they *learned* doing it.
 
-Each agent accumulates a `history.md`— learnings from past sessions that shape future behavior. When Gonzo learns that a specific GitHub Action syntax causes failures in this repo, that goes in Gonzo's history. Next time Gonzo works on Actions, they know.
+Each agent accumulates a `history.md` — learnings from past sessions that shape future behavior. When Gonzo learns that a specific GitHub Action syntax causes failures in this repo, that goes in Gonzo's history. Next time Gonzo works on Actions, they know.
 
 History files serve observability because they're the answer to "has this agent dealt with this before, and what did they learn?"
 
@@ -212,7 +212,7 @@ History files serve observability because they're the answer to "has this agent 
 
 If charters define who does what and decisions define why, skills define *how* — including what the output should look like.
 
-Skills encode how to do specific tasks— including quality gates and output standards. A well-written skill includes what the output should look like:
+Skills encode how to do specific tasks — including quality gates and output standards. A well-written skill includes what the output should look like:
 
 ```markdown
 ## PR Description Format
@@ -228,7 +228,7 @@ Skills are instructions AND observability policy in one file. They tell the agen
 
 Raw session data tells you everything that happened. Orchestration logs tell you what *mattered*.
 
-If your agent team produces orchestration logs(structured summaries of what happened during a work session), those become the bridge between raw session data and human understanding:
+If your agent team produces orchestration logs (structured summaries of what happened during a work session), those become the bridge between raw session data and human understanding:
 
 ```markdown
 ## Orchestration Log — 2026-04-18T14:30:00
