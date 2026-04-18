@@ -4,7 +4,7 @@ canonical_url: https://dfberry.github.io/2026-04-18-observability-for-custom-cop
 custom_edit_url: null
 sidebar_label: "2026-04-18 Observability for custom Copilot CLI agents"
 title: "Knowing What Your Agent Team Did and Why: Observability for Custom Copilot CLI Agents"
-description: "When you use a human-led AI agent team on Copilot CLI, you need to understand their reasoning — whether you're in a live session or reviewing a PR the next morning. Here's what I found about making that work."
+description: "I investigated how to trace agent reasoning in custom Copilot CLI agent teams — whether you're in a live session or reviewing a PR the next morning."
 published: false
 tags:
   - GitHub Copilot
@@ -37,13 +37,13 @@ This post is my investigation into that question — not a conclusion. I'm explo
 
 ## The question that started this
 
-I had delegated a task through an issue — "update the content pipeline for the new API version." The next morning I had a clean PR with the right changes. But one function had been restructured in a way I didn't expect. I wanted to know: why this approach? What did the agent consider? What constraints drove the decision?
+I had delegated a task through an issue: "update the content pipeline for the new API version." The next morning I had a clean PR with the right changes. But one function had been restructured in a way I didn't expect. I wanted to know: why this approach? What did the agent consider? What constraints drove the decision?
 
 The code was correct. But I couldn't trace the reasoning.
 
 And here's the thing: if I'd been in a live session, I could have just asked. The reasoning would have been right there in the conversation. But because I'd delegated the work, the reasoning was... somewhere. Not lost — but not connected to the PR I was reviewing.
 
-That's the gap I wanted to understand. And the more I dug into it, the more I think it's not just a tooling problem — it's a strategic one.
+That's the gap I wanted to understand. The more I dig into it, the more I think it's not just a tooling problem — it's a strategic one.
 
 ## Why this matters beyond my workflow
 
@@ -69,7 +69,7 @@ When you set up a custom agent team on Copilot CLI, there are two natural patter
 
 **Delegated work** — you set direction through an issue or a prompt, the team executes, and you review the output later. You're governing — setting goals, reviewing results, course-correcting.
 
-Both are human-directed. In live sessions you're hands-on. In delegated work you're setting direction and reviewing results. People stay accountable for priorities, approvals, and final changes — the agents handle coordination and execution.
+Both are human-directed. In live sessions, you're hands-on. In delegated work, you're setting direction and reviewing results. People stay accountable for priorities, approvals, and final changes — the agents handle coordination and execution.
 
 ```mermaid
 flowchart LR
@@ -104,7 +104,7 @@ COPILOT_OTEL_ENABLED=true
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
 ```
 
-This gives you traces for agent sessions, LLM calls, and tool executions. Token usage metrics. Operation durations. OTLP HTTP export with enterprise auth headers. Run `copilot help monitoring` for the full reference.
+This gives you traces for agent sessions, LLM calls, and tool executions — token usage metrics, operation durations, and OTLP HTTP export with enterprise auth headers. Run `copilot help monitoring` for the full reference.
 
 ### Session store (queryable)
 
@@ -126,7 +126,7 @@ These are platform-level improvements that, based on the issue discussions, shou
 
 ![A hiker at a trail fork near Mount Baker — one path with a detailed hand-carved sign, the other with only a generic marker](./media/2026-04-18-observability-for-custom-copilot-agents/chain-lakes-trail-fork.png)
 
-Here's where my thinking is landing so far:platforms are getting better at capturing **what happened**, **which session did it**, and even **generic rationale** (plans, tool-call sequences, diff summaries). But they can't tell you which rationale is **project-relevant**.
+Here's where my thinking is landing so far: platforms are getting better at capturing **what happened**, **which session did it**, and even **generic rationale** (plans, tool-call sequences, diff summaries). But they can't tell you which rationale is **project-relevant**.
 
 Consider these questions:
 
@@ -144,7 +144,9 @@ If you're using a framework like Squad (or any custom agent setup with scoped pe
 
 ### Charters — scope + accountability
 
-Each agent has a charter that defines what they own, how they work, and their boundaries. In my setup, charters look like this:
+When something goes wrong, the first question is "who was supposed to own this?" Charters answer that before anyone has to ask.
+
+Each agent has a charterthat defines what they own, how they work, and their boundaries. In my setup, charters look like this:
 
 ```markdown
 # Gonzo — Infrastructure Charter
@@ -175,7 +177,9 @@ This is just charter text. No code change. The agent reads it and follows it.
 
 ### Decisions — the shared brain
 
-`decisions.md` is the team's institutional memory. Every agent reads it at session start. Standing decisions shape behavior across all sessions:
+Individual agents forget between sessions. Standing decisions don't — they're the one file every agent reads at startup.
+
+`decisions.md` is the team's institutional memory.Every agent reads it at session start. Standing decisions shape behavior across all sessions:
 
 ```markdown
 ## Prefer managed services over self-hosted
@@ -198,13 +202,17 @@ section explaining key decisions and what alternatives were considered.
 
 ### Agent history — per-persona memory
 
-Each agent accumulates a `history.md` — learnings from past sessions that shape future behavior. When Gonzo learns that a specific GitHub Action syntax causes failures in this repo, that goes in Gonzo's history. Next time Gonzo works on Actions, they know.
+Charters define what an agent *should* do. History captures what they *learned* doing it.
+
+Each agent accumulates a `history.md`— learnings from past sessions that shape future behavior. When Gonzo learns that a specific GitHub Action syntax causes failures in this repo, that goes in Gonzo's history. Next time Gonzo works on Actions, they know.
 
 History files serve observability because they're the answer to "has this agent dealt with this before, and what did they learn?"
 
 ### Skills — repeatable tasks with built-in standards
 
-Skills encode how to do specific tasks — including quality gates and output standards. A well-written skill includes what the output should look like:
+If charters define who does what and decisions define why, skills define *how* — including what the output should look like.
+
+Skills encode how to do specific tasks— including quality gates and output standards. A well-written skill includes what the output should look like:
 
 ```markdown
 ## PR Description Format
@@ -218,7 +226,9 @@ Skills are instructions AND observability policy in one file. They tell the agen
 
 ### Orchestration logs — the narrative bridge
 
-If your agent team produces orchestration logs (structured summaries of what happened during a work session), those become the bridge between raw session data and human understanding:
+Raw session data tells you everything that happened. Orchestration logs tell you what *mattered*.
+
+If your agent team produces orchestration logs(structured summaries of what happened during a work session), those become the bridge between raw session data and human understanding:
 
 ```markdown
 ## Orchestration Log — 2026-04-18T14:30:00
@@ -262,13 +272,9 @@ flowchart TD
 
 After digging into this, here's my current understanding — still forming, not final:
 
-**Platforms are getting better at capturing what happened, which session did it, and even generic rationale.** OTel traces, session persistence, and (eventually) session attribution will make it easier to find the right session and see what tools were called.
-
-**But I think humans still need to define which rationale is project-relevant.** The platform doesn't know about your team's standing decisions, your agents' scope boundaries, or your project's constraints. That context — the project-specific "why" — seems to live in the agent team's configuration files.
-
 **I'm starting to see this less as a gap and more as a design discipline.** You're building a provenance layer — charters, decisions, skills, orchestration logs — that complements platform telemetry. The platform tells you what happened. Your configuration tells agents why things should happen a certain way — and creates the trail to verify that they did.
 
-**And it seems to matter more when you're reviewing delegated work.** In a live session, missing rationale is recoverable — you can ask. In delegated work, missing rationale means you're reading code without context. Both modes need reasoning capture, but delegated work makes missing rationale much costlier.
+**And it matters more when you're reviewing delegated work.** In a live session, missing rationale is recoverable — you can ask. In delegated work, missing rationale means you're reading code without context. Both modes need reasoning capture, but delegated work makes missing rationale much costlier.
 
 ## The bigger picture: why this matters strategically
 
@@ -291,7 +297,7 @@ As more developers and teams adopt AI agents for real production work, I think t
 
 **Teams that don't** risk hitting a ceiling. The agents produce output, but reviewing that output becomes a black-box exercise. You end up approving PRs you don't fully understand because the alternative is re-doing the work yourself.
 
-I don't think this is unique to Squad or even to Copilot CLI. Any system where AI agents make decisions on a developer's behalf — whether it's a custom agent team, a CI pipeline with AI steps, or a coding assistant with increasing scope — faces this same question. The mechanisms might differ (charters vs. system prompts vs. policy files), but the discipline is the same: **design your agents and workflows so reasoning is inspectable where review actually happens.**
+I don't think this is unique to Squad or even to Copilot CLI. Any system where AI agents make decisions on a developer's behalf faces this same question — whether it's a custom agent team, a CI pipeline with AI steps, or a coding assistant with increasing scope. The mechanisms might differ (charters vs. system prompts vs. policy files), but the discipline is the same: **design your agents and workflows so reasoning is inspectable where review actually happens.**
 
 The platform appears to be moving in this direction. OTel is already there. Session attribution and history seem to be coming. But the project-specific reasoning layer — what decisions matter, what constraints apply, what "good" looks like for _this_ project — that's yours to build.
 
@@ -315,7 +321,7 @@ If you're setting up a custom agent team and want observability from day one, he
 
 6. **Build the feedback loop.** When you spot a reasoning gap during review, don't just fix the code — update the decision file or charter so the next session benefits. That's how the system gets smarter.
 
-The agents are doing the work. The platform is recording the telemetry. But the human defines what "good reasoning" looks like for this project — and that's the part no platform can ship for you. I'm still figuring out the best patterns, but I'm increasingly convinced this is one of the first disciplines to get right.
+The agents are doing the work. The platform is recording the telemetry. But the human defines what "good reasoning" looks like for this project. That's the part no platform can ship for you. I'm still figuring out the best patterns, but I'm increasingly convinced this is one of the first disciplines to get right.
 
 ---
 
