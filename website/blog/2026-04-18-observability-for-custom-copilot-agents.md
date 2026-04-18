@@ -29,6 +29,8 @@ updated: 2026-04-18 00:00 PST
 
 ![A person on the Bellingham Bay boardwalk at dawn, watching fishing boats return to harbor with glowing logbooks on deck](./media/2026-04-18-observability-for-custom-copilot-agents/bellingham-bay-boardwalk-fleet.png)
 
+*Every boat comes back with a catch — but only the ones with logbooks can tell you where they went and why.*
+
 I've been using [Squad](https://github.com/bradygaster/squad), a human-led AI agent team framework built on [Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli), for a few months now. I set up ten agents — each with a charter, a history file, and specific skills. Some days I'm sitting at the terminal directing them. Other days I delegate work through issues and review the PRs later.
 
 Both ways work. But I keep running into the same question: **when I review what the team did, can I understand _why_ they did it?**
@@ -63,6 +65,8 @@ I think the answer is probably yes, but only if you design for it.
 
 ![A mushroom forager examining a chanterelle up close in the forest on the left, and studying collected specimens with field notes at a cabin table on the right](./media/2026-04-18-observability-for-custom-copilot-agents/whatcom-forager-two-modes.png)
 
+*Hands in the dirt, or studying what you collected — both require knowing what you're looking at.*
+
 When you set up a custom agent team on Copilot CLI, there are two natural patterns:
 
 **Live sessions** — you're at the terminal, talking to the team. You see every decision as it happens. You can ask "why did you do that?" and get an answer immediately. You're steering.
@@ -87,6 +91,8 @@ The observability question is the same in both cases: **can you reconstruct why 
 <!-- IMAGE PROMPT (Platform Telemetry): Illustrated aerial view of the Nooksack River winding through Whatcom County farmland, with small sensor stations along the riverbank glowing softly — measuring water level, flow rate, temperature. The river is data flowing through the landscape. Fog in the valleys, evergreen ridgelines. Clean cartographic style with watercolor texture. -->
 
 ![Aerial view of the Nooksack River through Whatcom County farmland with glowing sensor stations along the banks](./media/2026-04-18-observability-for-custom-copilot-agents/nooksack-river-sensor-stations.png)
+
+*Sensor stations measure what flows past them — water level, temperature, speed. Platform telemetry works the same way: it captures the signal, not the meaning.*
 
 Copilot CLI has been adding observability features. Here's what I can see as a user, as of mid-April 2026:
 
@@ -125,6 +131,8 @@ These are platform-level improvements that, based on the issue discussions, shou
 <!-- IMAGE PROMPT (Project-Specific Why): A hiker on the Chain Lakes trail near Mount Baker, standing at a fork where two paths diverge into fog. One path has a hand-carved wooden trail sign with specific directions. The other path has only a generic "Trail" marker. Dense Pacific Northwest old growth — moss, ferns, cedar. Watercolor, moody greens and grays. -->
 
 ![A hiker at a trail fork near Mount Baker — one path with a detailed hand-carved sign, the other with only a generic marker](./media/2026-04-18-observability-for-custom-copilot-agents/chain-lakes-trail-fork.png)
+
+*A generic "Trail" sign tells you a path exists. A hand-carved one tells you where it goes and why you'd take it.*
 
 Here's where my thinking is landing so far: platforms are getting better at capturing **what happened**, **which session did it**, and even **generic rationale** (plans, tool-call sequences, diff summaries). But they can't tell you which rationale is **project-relevant**.
 
@@ -248,6 +256,8 @@ If your agent team produces orchestration logs (structured summaries of what hap
 
 ![Cross section of an old-growth cedar trunk with tree rings, a researcher's hand annotating specific rings with a pencil](./media/2026-04-18-observability-for-custom-copilot-agents/cedar-tree-rings-history.png)
 
+*Every ring is a season. The annotations are what turn raw growth into a story you can read.*
+
 The real power isn't any single artifact — it's the loop between them.
 
 ```mermaid
@@ -306,6 +316,8 @@ The platform appears to be moving in this direction. OTel is already there. Sess
 <!-- IMAGE PROMPT (Actionable Steps): A person sitting at a weathered wooden table on a covered porch overlooking Chuckanut Bay, with a field journal open, a cup of coffee, and a simple checklist being written by hand. Rain falling gently outside. Fir trees framing the view. Warm, inviting, practical. Watercolor illustration, cozy PNW cabin aesthetic. -->
 
 ![A person on a covered porch overlooking Chuckanut Bay, writing a checklist in a field journal with coffee beside them](./media/2026-04-18-observability-for-custom-copilot-agents/chuckanut-bay-field-journal.png)
+
+*The best time to start a field journal is before you need to look something up.*
 
 If you're setting up a custom agent team and want observability from day one, here's where I'd start:
 
