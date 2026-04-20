@@ -57,7 +57,7 @@ It's an easy habit to fall into, and it quietly gives up most of what makes an a
 
 **Routing looked like overhead.** I could see the work in front of me. I knew what needed to happen. Telling the coordinator "figure out who handles this" felt slower than just asking Cedar directly — even when it wasn't.
 
-**The casting ceremony was the high point.** I named agents after PNW trees. I confirmed the roster. I got the "✅ Team hired" message. Then the energy shifted to actual work, and the team structure faded into the background.
+**The casting ceremony was the high point.** I ran `npx squad hire`, named my agents after PNW trees — your team names will come from whatever universe Squad picks during casting. I confirmed the roster, got the "✅ Team hired" message. Then the energy shifted to actual work, and the team structure faded into the background.
 
 **The cost was invisible.** One agent still produced output. The things I missed weren't obvious: the PR that skipped quality review, the decision nobody logged, the stuck issue that sat unnoticed for three days.
 
@@ -98,11 +98,15 @@ Individual agents forget between sessions. Standing decisions don't.
 Scribe (the silent agent) maintains `.squad/decisions.md` — an append-only log of why your team chose what it chose. Here's a real entry:
 
 ```markdown
-## Decision: Fork-and-Pull is Standard Open Source (2026-03-31)
-**By:** Squad Coordinator
+## Decision: Fork-and-Pull is Standard Open Source
+
+**Date:** 2026-03-31
+**By:** Squad Coordinator (answering Dina's question)
+
 Dina's fork workflow (work on diberry/ fork, PR upstream when ready) is the standard
 "fork and pull" model. Filing issues on the fork for squad task tracking is a reasonable
 extension that keeps the workspace self-contained.
+
 **Status:** ✅ Validated
 ```
 
@@ -150,15 +154,15 @@ Cedar reads routing.md, sees that infrastructure goes to Alder (Backend Dev), do
 
 ### 2. Let routing.md handle assignment
 
-My routing table already maps work types to agents:
+My routing table maps work types to agents. Here's a simplified version — the real table includes secondary owners and notes:
 
 ```markdown
-| Work Type              | Primary                | Reviewer               |
-|------------------------|------------------------|------------------------|
-| Infrastructure/CI      | Alder (Backend Dev)    | Cedar (Coordinator)    |
-| Requirements/Specs     | Madrone (Docs/Specs)   | Cedar (Coordinator)    |
-| Quality/Testing        | Salal (Tester)         | Madrone (Docs/Specs)   |
-| Cross-repo coordination| Cedar (Coordinator)    | —                      |
+| Work Type                | Primary Owner          | Secondary              |
+|--------------------------|------------------------|------------------------|
+| Infrastructure/CI        | Alder (Backend Dev)    | Cedar (Coordinator)    |
+| Requirements/Specs       | Madrone (Docs/Specs)   | Cedar (Coordinator)    |
+| Quality/Testing          | Salal (Tester)         | Madrone (Docs/Specs)   |
+| Cross-repo coordination  | Cedar (Coordinator)    | —                      |
 ```
 
 When I tell Cedar "route this," the coordinator uses this table. I don't need to remember who does what — that's the coordinator's job.
@@ -195,7 +199,7 @@ Before I open a session, I glance at `.squad/decisions.md`. It takes 30 seconds.
 
 Skills compound. One-off prompts don't. The difference between a team that gets better over time and one that starts fresh every session is whether I capture patterns as reusable skills.
 
-Squad ships with 40+ SKILL.md files — portable, reusable capabilities any agent can run. When I need a PR quality check, I don't write a custom prompt. I invoke the `pr-quality-checkpoint` skill:
+Squad ships with ~46 SKILL.md files — portable, reusable capabilities any agent can run. When I need a PR quality check, I don't write a custom prompt. I invoke the `pr-quality-checkpoint` skill:
 
 ```
 "Salal (Tester), run the pr-quality-checkpoint skill on PR #42"
