@@ -81,15 +81,13 @@ Nothing slows a dinner service like running every station one at a time. I found
 
 In a restaurant, the salmon, the dessert, and the inventory happen at the same time — different people, different stations. Hand it all to one person, and your dinner service takes three times as long.
 
-Squad's dispatch system can launch agents in parallel:
+Squad's triage system launches agents in parallel:
 
-```powershell
-.\tasks\dispatch.ps1 -TargetRepo "repos/frontend" -Prompt "Build login UI" -Parallel
-.\tasks\dispatch.ps1 -TargetRepo "repos/backend" -Prompt "Add auth endpoint" -Parallel
-.\tasks\dispatch.ps1 -TargetRepo "repos/docs" -Prompt "Draft auth quickstart" -Parallel
+```bash
+npx squad triage --execute --max-concurrent 3
 ```
 
-Three agents, three repos, running at the same time. With one agent, those same tasks ran back-to-back — slower, and each one got less focus because the context window was packed with everything at once.
+Triage scans your issues, routes each to the right agent via `routing.md`, and runs them concurrently. Three agents, three repos, running at the same time. With one agent, those same tasks ran back-to-back — slower, and each one got less focus because the context window was packed with everything at once.
 
 ### Decisions got made and then forgotten
 
@@ -181,11 +179,11 @@ They might feel like overhead. I found they tend to save more time than they cos
 
 Ralph's (Work Monitor) background scan gives the team ambient awareness without requiring me to check anything manually:
 
-```powershell
-.\ralph-watch.ps1 -IntervalMinutes 10
+```bash
+npx squad triage --two-pass --interval 10
 ```
 
-Ralph scans for actionable work on a regular interval. When Ralph finds an untriaged issue, it flags it for the coordinator. When Ralph spots a stale PR, the team knows before the author has to ask.
+Ralph scans for actionable work on a regular interval using a two-pass approach — lightweight list first, then hydrate only actionable items. When Ralph finds an untriaged issue, it flags it for the coordinator. When Ralph spots a stale PR, the team knows before the author has to ask.
 
 If I only ever ran agents on demand, I missed the quiet awareness that makes a team feel like a team.
 
@@ -268,7 +266,7 @@ If this sounds familiar, here's what worked for me:
 1. I opened `.squad/routing.md` and actually read it. Remembering it exists was half the battle.
 2. I started my next session by describing a problem to the coordinator, not handing it a task list.
 3. When the coordinator proposed a plan, I checked whether it involved more than one agent. If it didn't, I asked: "Which agents should own parts of this?"
-4. I ran `.\ralph-watch.ps1 -IntervalMinutes 10` in a second terminal and left it running.
+4. I ran `npx squad triage --two-pass --interval 10` in a second terminal and left it running.
 5. At the end of the session, I checked `.squad/decisions.md`. If Scribe logged something, the team was working. If it was empty, I was probably still doing it alone.
 
 The team is already hired. Let them work.
