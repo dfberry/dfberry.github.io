@@ -4,7 +4,7 @@ canonical_url: https://dfberry.github.io/blog/2026-05-03-tuning-up-copilot-conte
 custom_edit_url: null
 sidebar_label: "2026.05.03 Tuning Up Copilot Context"
 title: "Tuning Up Context: How I Got My Copilot CLI Context Window from 52% to 13%"
-description: "I was burning 52% of my context window before typing a word. Here's how I found the real culprit, fixed it surgically, and got to 13%."
+description: "I was burning 52% of my context window before typing a word. Here's how I found the biggest consumer, scoped it down, and got to 13%."
 published: true
 tags:
   - GitHub Copilot
@@ -20,7 +20,7 @@ keywords: copilot context window, azure mcp namespace, context optimization, cop
 
 I'll be honest: I started this whole investigation backwards. I had 117 skills consuming 413K tokens on disk and assumed *that* was the problem. I spent two hours optimizing them before I thought to actually measure what was in my context window. Turns out, skills are on-demand — they never touch the context window at all.
 
-The real bottleneck was something I never would have guessed: a single plugin silently injecting ~27K tokens into every message. This is the story of how I found it, fixed it, and — importantly — how you can scope it down surgically instead of ripping it out entirely.
+The biggest consumer was something I never would have guessed: a single plugin loading ~27K tokens of tool definitions into every message. This is the story of how I found it, scoped it down, and — importantly — how you can configure it to match your workflow without losing functionality.
 
 > **What makes this different?** There are already several great articles about MCP context optimization ([devbolt.dev](https://devbolt.dev), [The New Stack](https://thenewstack.io), [StackOne](https://stackone.com), [blog.pamelafox.org](https://blog.pamelafox.org)). This one adds: real measured token numbers from a production setup, the `/context` command as a diagnostic tool, the Azure MCP namespace scoping solution, and the Squad orchestration overhead angle.
 
@@ -80,7 +80,7 @@ MCP servers inject their tool schemas into every message. I had:
 
 These are real — about 47–55 tools across all servers. But they're only ~6–10K tokens total. Where's the other 50K?
 
-### The Azure Plugin (~27K tokens) — The Bottleneck
+### The Azure Plugin (~27K tokens) — The Biggest Consumer
 
 I checked `~/.copilot/settings.json` and found the Azure plugin enabled:
 
@@ -138,7 +138,7 @@ The server supports 4 modes that control how tools are exposed:
 | **namespace** (default) | One tool per service namespace | Copilot — good balance |
 | **consolidated** | Groups operations by user intent | Natural language workflows |
 | **single** | One routing tool for everything | Maximum simplicity |
-| **all** | Every operation as a separate tool (261!) | Massive context bloat — avoid |
+| **all** | Every operation as a separate tool (261!) | Maximum granularity — high context cost |
 
 #### Pick Your Stack
 
@@ -220,7 +220,7 @@ The remaining ~10K drop from 35.2K → 25.5K came from **upgrading my agent coor
 
 | Action | Tokens Freed | Effort | Context Impact |
 |--------|-------------|--------|----------------|
-| Scope Azure plugin | ~27K | Config change | **Massive** — always loaded |
+| Scope Azure plugin | ~27K | Config change | **Significant** — always loaded |
 | Upgrade agent coordinator file | ~10K | 1 command | **Significant** — always loaded |
 | Optimize 117 skills | ~270K on disk | 2 hours, 106 files | **Zero** on context — but faster agent spawns |
 
@@ -270,6 +270,6 @@ That said, if you have hooks that reference large config files or trigger MCP ca
 
 ---
 
-*Investigation: May 3, 2026. The key lesson: measurement comes before optimization. Run `/context` and let the data guide your effort, not your intuition about file sizes. And when you find a bloated MCP — scope it down before you rip it out.*
+*Investigation: May 3, 2026. The key lesson: measurement comes before optimization. Run `/context` and let the data guide your effort, not your intuition about file sizes. And when you find an MCP consuming more than you need — scope it down to match how you actually work.*
 
 *The skills optimization ran same session — 117 skills reduced by 65% (413K → 143K tokens on disk) using waza tools.*
