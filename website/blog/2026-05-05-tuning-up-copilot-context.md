@@ -5,7 +5,7 @@ custom_edit_url: null
 sidebar_label: "2026.05.05 Tuning Up Copilot Context"
 title: "Copilot CLI Context Window: How I Cut Token Usage from 52% to 13%"
 description: "My context window was at 52% before typing a word. Here's how I found the biggest consumer, scoped it down, and got to 13%."
-published: true
+published: false
 tags:
   - GitHub Copilot
   - Context Window
