@@ -5,7 +5,7 @@ custom_edit_url: null
 sidebar_label: "2026.05.09 Tuning Up Copilot Skills"
 title: "Optimizing Copilot Skills: 65% Token Reduction Across 117 Skills"
 description: "I had 413K tokens of unoptimized skills and a waza toolkit to diagnose them. Here's what I found, what surprised me, and what actually worked."
-published: false
+draft: true
 tags:
   - GitHub Copilot
   - Skills
