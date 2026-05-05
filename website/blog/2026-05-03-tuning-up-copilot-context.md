@@ -88,9 +88,11 @@ I checked `~/.copilot/settings.json` and found the Azure plugin enabled:
 |--------|--------|--------|
 | **azure** | microsoft/azure-skills | **50+ tools, ~27K tokens** |
 
-Here's the thing about the Azure MCP Server: it's **massive**. Version 3.0.0-beta.6 has **261 tools across 57 namespaces** — covering everything from ACR to Virtual Desktop to Well-Architected Framework. In its default "namespace" mode, it groups these into one tool per service, but even that injects 50+ tool schemas into every single message. Even when I wasn't doing any Azure work.
+Here's the thing about the Azure MCP Server: it's **comprehensive**. Version 3.0.0-beta.6 has **261 tools across 57 namespaces** — covering everything from ACR to Virtual Desktop to Well-Architected Framework. That breadth is genuinely impressive, and the team clearly designed it to be a one-stop shop for Azure developers.
 
-This was the invisible offender.
+The good news: the team also thought carefully about how developers actually work. They built in **namespace scoping** and **mode selection** so you don't have to load the entire surface area. In its default "namespace" mode, it groups tools by service — but if you're only using a few services, you can filter down to just those. More on that in a moment.
+
+In my case, the default configuration was injecting 50+ tool schemas into every message — even when I wasn't doing Azure work in that session. Not a bug, just a configuration I hadn't tuned yet.
 
 ![Azure plugin details: 4 plugins consuming context, 50+ tools at 30-40K tokens](./media/2026-05-03-tuning-up-copilot-context/image43.png)
 
@@ -98,9 +100,9 @@ This was the invisible offender.
 
 My agent governance file — `.github/copilot-instructions.md` at the repo root — is 80KB. It loads on every turn. This is the ongoing cost of a sophisticated agent setup: the orchestration rules are comprehensive, and they load unconditionally whether I need them or not.
 
-## Step 4: Fix the Plugin Bloat (Without Losing Azure)
+## Step 4: Scope the Azure Plugin to Match How You Work
 
-Once the problem was identified, I had options. The nuclear approach — disable the plugin entirely — works but throws out the baby with the bathwater. The better approach: **scope the Azure MCP down to only the services you actually use.**
+Once I understood the breakdown, the fix was straightforward. The Azure MCP team built exactly the right lever for this — **namespace scoping** lets you declare which services matter for your project and ignore the rest. No functionality lost, just a tighter fit.
 
 ### Option A: Disable Entirely (Nuclear)
 
@@ -117,7 +119,7 @@ This is what I did initially — it dropped System/Tools from 62.5K → 35.2K, f
 
 ### Option B: Namespace Scoping (Surgical — Recommended)
 
-The Azure MCP Server supports **namespace filtering**, which lets you load only the service namespaces you need. Instead of all 57 namespaces (~261 tools), you pick just the ones relevant to your stack.
+This is where the Azure MCP Server's design really shines. The team built **namespace filtering** specifically for this use case — you declare the services relevant to your project, and only those tool schemas load into context.
 
 Configure it in your MCP settings with the `--namespace` flag:
 
