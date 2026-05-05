@@ -218,9 +218,9 @@ The planning phase is cheap; the execution phase is expensive. I skipped the pla
 
 For reference, here's what I was running:
 
-- **GitHub Copilot CLI** v1.0.40
+- **[GitHub Copilot CLI](https://github.com/github/copilot-cli)** v1.0.40
 - **[Squad](https://github.com/bradygaster/squad)** v0.9.4-insider.1 for multi-agent orchestration
-- **microsoft/waza** for skill quality analysis
+- **[microsoft/waza](https://github.com/microsoft/waza)** for skill quality analysis
 - **Model:** Claude Opus 4.6 with 200K context window
 
 ## Where to Go From Here
