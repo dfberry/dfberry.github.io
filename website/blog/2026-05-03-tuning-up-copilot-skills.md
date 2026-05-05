@@ -25,7 +25,7 @@ Then I actually counted.
 
 Skills are different from context — they're loaded on demand, not held open. Optimizing them doesn't free your active context window. But it makes agent spawns faster and skill loading cheaper. Different lever, different win. I wanted both.
 
-The optimization patterns I found — reference extraction, checklist compression, shared references — work with any approach, manual or AI-assisted. I used an AI assistant to help parallelize the refactoring work, but the techniques are the story here, not the tooling.
+The optimization patterns I found — reference extraction, checklist compression, shared references — work whether you're editing skills by hand or using Copilot CLI to batch the refactoring. I used GitHub Copilot CLI with Squad orchestration to process multiple skills in parallel, but the techniques themselves are tool-agnostic. You could apply them manually in any editor.
 
 ## Finding the Biggest Consumers: microsoft/waza
 
