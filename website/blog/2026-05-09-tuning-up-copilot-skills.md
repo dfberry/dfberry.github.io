@@ -69,7 +69,7 @@ I analyzed the skills directory and decomposed the work into phases, ordered by 
 | 2. Refactor giants | 6 SDK review skills (140K!) | ~120K tokens |
 | 3. Optimize large | 14 skills (5K–10K each) | ~30–50K tokens |
 | 4. Optimize medium | 60 skills (1K–5K each) | ~10–20K tokens |
-| 5. Trim small | 20 skills (<1K each) | minimal |
+| 5. Trim small | 20 skills (under 1K each) | minimal |
 | 6. Audit references | Large reference files | ~10–15K tokens |
 
 ![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-09-tuning-up-copilot-skills/image6.png)
