@@ -26,7 +26,7 @@ The real bottleneck was something I never would have guessed: a single plugin si
 
 ## Step 1: Measure First — Check Your Token Breakdown
 
-I run [GitHub Copilot CLI](https://githubnext.com/projects/copilot-cli) with a multi-agent orchestration setup — half a dozen MCP servers, several plugins, and 117 skills. Before touching anything, I ran `/context` to see my actual token budget:
+I run [GitHub Copilot CLI](https://githubnext.com/projects/copilot-cli) with a multi-agent orchestration setup — half a dozen MCP servers, several plugins, and 117 skills. Mid-session, I got curious about what my context window actually looked like and ran `/context`:
 
 ![Before optimization: /context showing 52% usage and compaction to 40%](./media/2026-05-03-tuning-up-copilot-context/image3.png)
 
@@ -96,7 +96,7 @@ This was the invisible offender.
 
 ### Agent Instructions (~20K tokens)
 
-My agent governance file — the instructions that tell the AI how to coordinate and dispatch work — is 80KB. It loads on every turn. This is the ongoing cost of a sophisticated agent setup: the orchestration rules are comprehensive, and they load unconditionally whether I need them or not.
+My agent governance file — `.github/copilot-instructions.md` at the repo root — is 80KB. It loads on every turn. This is the ongoing cost of a sophisticated agent setup: the orchestration rules are comprehensive, and they load unconditionally whether I need them or not.
 
 ## Step 4: Fix the Plugin Bloat (Without Losing Azure)
 
@@ -153,24 +153,27 @@ Here's a quick reference for common developer personas:
 
 For the curious, here's the full list with tool counts. Use this to build your own `--namespace` filter:
 
-```
-acr: 2          advisor: 1       aks: 2           appconfig: 5
-applens: 1      applicationinsights: 1             appservice: 7
-azurebackup: 16 azuremigrate: 2  azureterraform: 10
-azureterraformbestpractices: 1   bicepschema: 1   cloudarchitect: 1
-communication: 2 compute: 12     confidentialledger: 2
-containerapps: 1 cosmos: 2       datadog: 1       deploy: 5
-deviceregistry: 1 eventgrid: 3   eventhubs: 9     extension: 3
-fileshares: 14  foundryextensions: 7               functionapp: 1
-functions: 3    grafana: 1       group: 2         keyvault: 8
-kusto: 7        loadtesting: 6   managedlustre: 18 marketplace: 2
-monitor: 16     mysql: 6         policy: 1        postgres: 6
-pricing: 1      quota: 2         redis: 2         resourcehealth: 2
-role: 1         search: 6        servicebus: 3    servicefabric: 2
-signalr: 1      speech: 2        sql: 13          storage: 7
-storagesync: 18 subscription: 1  virtualdesktop: 3
-wellarchitectedframework: 1      workbooks: 5
-```
+| Namespace | Tools | Namespace | Tools | Namespace | Tools |
+|-----------|-------|-----------|-------|-----------|-------|
+| acr | 2 | advisor | 1 | aks | 2 |
+| appconfig | 5 | applens | 1 | applicationinsights | 1 |
+| appservice | 7 | azurebackup | 16 | azuremigrate | 2 |
+| azureterraform | 10 | azureterraformbestpractices | 1 | bicepschema | 1 |
+| cloudarchitect | 1 | communication | 2 | compute | 12 |
+| confidentialledger | 2 | containerapps | 1 | cosmos | 2 |
+| datadog | 1 | deploy | 5 | deviceregistry | 1 |
+| eventgrid | 3 | eventhubs | 9 | extension | 3 |
+| fileshares | 14 | foundryextensions | 7 | functionapp | 1 |
+| functions | 3 | grafana | 1 | group | 2 |
+| keyvault | 8 | kusto | 7 | loadtesting | 6 |
+| managedlustre | 18 | marketplace | 2 | monitor | 16 |
+| mysql | 6 | policy | 1 | postgres | 6 |
+| pricing | 1 | quota | 2 | redis | 2 |
+| resourcehealth | 2 | role | 1 | search | 6 |
+| servicebus | 3 | servicefabric | 2 | signalr | 1 |
+| speech | 2 | sql | 13 | storage | 7 |
+| storagesync | 18 | subscription | 1 | virtualdesktop | 3 |
+| wellarchitectedframework | 1 | workbooks | 5 | | |
 
 #### VS Code Users
 
@@ -247,6 +250,12 @@ This is the methodology. Use it whenever context runs tight:
 7. **Start fresh sessions** — conversation history accumulates; don't run marathon sessions
 
 The biggest wins are almost always in steps 2–3. Scoping one plugin can save more context than hours of file optimization.
+
+## What About Hooks?
+
+One thing I haven't tested yet: **Copilot hooks** (commit hooks, pre-push hooks, custom event hooks). These are lightweight by design — they're shell scripts or short instructions, not loaded into the context window the way MCP tool definitions are. They fire on specific events rather than sitting in the always-loaded bucket.
+
+That said, if you have hooks that reference large config files or trigger MCP calls, those downstream effects *could* impact context during execution. Worth running `/context` before and after adding hooks to verify. My expectation is minimal impact, but I'll update this post once I've measured it directly.
 
 ## The Setup
 
