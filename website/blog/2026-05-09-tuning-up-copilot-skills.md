@@ -1,8 +1,8 @@
 ---
-slug: /2026-05-03-tuning-up-copilot-skills
-canonical_url: https://dfberry.github.io/blog/2026-05-03-tuning-up-copilot-skills
+slug: /2026-05-09-tuning-up-copilot-skills
+canonical_url: https://dfberry.github.io/blog/2026-05-09-tuning-up-copilot-skills
 custom_edit_url: null
-sidebar_label: "2026.05.03 Tuning Up Copilot Skills"
+sidebar_label: "2026.05.09 Tuning Up Copilot Skills"
 title: "Tuning Up Copilot Skills: How I Optimized 117 Skills by 65%"
 description: "I had 413K tokens of unoptimized skills and a waza toolkit to diagnose them. Here's what I found, what surprised me, and what actually worked."
 published: true
@@ -11,7 +11,7 @@ tags:
   - Skills
   - AI assisted
   - Tutorial
-updated: 2026-05-03 18:00 PST
+updated: 2026-05-09 18:00 PST
 keywords: copilot skills optimization, waza tokens, skill refactoring, token reduction, copilot cli
 ---
 
@@ -62,7 +62,7 @@ I analyzed the skills directory and decomposed the work into phases, ordered by 
 | 5. Trim small | 20 skills (<1K each) | minimal |
 | 6. Audit references | Large reference files | ~10–15K tokens |
 
-![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-03-tuning-up-copilot-skills/image6.png)
+![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-09-tuning-up-copilot-skills/image6.png)
 
 The key insight: start with the biggest consumers. Phases 1–3 were going to capture roughly 90% of the savings. Phases 4 and 5 were nice-to-haves — we'd do them if there was time and energy.
 
@@ -98,7 +98,7 @@ I ran all six in parallel, one per language:
 
 Zero content removed from the skill suite. Every rule, every code example — preserved in reference files. This is the trade-off worth naming: agents now navigate a two-tier structure (SKILL.md → references/) instead of having everything in one place. Discoverability costs something. I decided it was worth it here because these skills are used frequently enough that agents will learn the pattern.
 
-![Phase 2 complete: SDK skills before/after showing 94%+ reduction per language](./media/2026-05-03-tuning-up-copilot-skills/image11.png)
+![Phase 2 complete: SDK skills before/after showing 94%+ reduction per language](./media/2026-05-09-tuning-up-copilot-skills/image11.png)
 
 ## Phase 3: Large Skills
 
@@ -118,7 +118,7 @@ Phase 3 (large):  −68,084 tokens
 Total saved:      ~199,490 tokens
 ```
 
-![Phase 3 complete with running totals: ~199K tokens saved, 214K remaining](./media/2026-05-03-tuning-up-copilot-skills/image14.png)
+![Phase 3 complete with running totals: ~199K tokens saved, 214K remaining](./media/2026-05-09-tuning-up-copilot-skills/image14.png)
 
 About halfway through the session I started feeling good about the numbers. That's usually when something goes sideways.
 
@@ -126,7 +126,7 @@ About halfway through the session I started feeling good about the numbers. That
 
 PR #147: **106 files changed, 12,176 insertions, 18,571 deletions.**
 
-![PR #147 created: 65% reduction, 106 files changed](./media/2026-05-03-tuning-up-copilot-skills/image15.png)
+![PR #147 created: 65% reduction, 106 files changed](./media/2026-05-09-tuning-up-copilot-skills/image15.png)
 
 I ran four automated review passes — structural integrity, waza_quality scores, trigger precision, and an adversarial over-trimming check. Three passed or passed with notes. The adversarial pass caught two real blockers: a reference file with a broken relative path, and a skill trimmed past the point of usefulness — the `SKILL.md` was essentially just a title and a pointer, with no routing context left to tell an agent when or how to use it.
 
@@ -142,7 +142,7 @@ After:   143,354 tokens (114 skills)
 Saved:   270,237 tokens (65.3% reduction)
 ```
 
-![Final summary: 413K → 143K tokens, 65.3% reduction](./media/2026-05-03-tuning-up-copilot-skills/image17.png)
+![Final summary: 413K → 143K tokens, 65.3% reduction](./media/2026-05-09-tuning-up-copilot-skills/image17.png)
 
 The 143K figure is pre-deduplication. The shared reference extraction in the next section further reduced maintenance overhead but didn't significantly change the token count — it consolidated duplicates rather than removing content.
 
@@ -156,7 +156,7 @@ That's six copies of the same thing I'd now have to update every time the guidan
 
 The fix: create a shared reference directory (`shared-sdk-sample-review-references/`) with 14 files of generic prose. Each per-language skill keeps only its language-specific code examples, with a link to the shared counterpart at the top of each file.
 
-![SDK reference consolidation: before/after, single source of truth](./media/2026-05-03-tuning-up-copilot-skills/image21.png)
+![SDK reference consolidation: before/after, single source of truth](./media/2026-05-09-tuning-up-copilot-skills/image21.png)
 
 Updating a best practice now means editing 1 file instead of 6. That's the kind of maintenance win that doesn't show up in token counts but pays back over time.
 
@@ -229,7 +229,7 @@ If you're curious whether your own skills directory needs this treatment, `waza_
 
 I'm not going to hand you a checklist and call it a day — everyone's skill architecture is different, and the interesting work is figuring out which patterns actually fit your setup. But if you do try this and discover something that works or something that breaks badly, I'd genuinely be curious to hear what you found.
 
-Full session ran on May 3, 2026. 8 user messages, about 2 hours, 270K tokens saved.
+Full session ran on May 9, 2026. 8 user messages, about 2 hours, 270K tokens saved.
 
 ---
 

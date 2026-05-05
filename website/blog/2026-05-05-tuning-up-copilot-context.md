@@ -1,8 +1,8 @@
 ---
-slug: /2026-05-03-tuning-up-copilot-context
-canonical_url: https://dfberry.github.io/blog/2026-05-03-tuning-up-copilot-context
+slug: /2026-05-05-tuning-up-copilot-context
+canonical_url: https://dfberry.github.io/blog/2026-05-05-tuning-up-copilot-context
 custom_edit_url: null
-sidebar_label: "2026.05.03 Tuning Up Copilot Context"
+sidebar_label: "2026.05.05 Tuning Up Copilot Context"
 title: "Tuning Up Context: How I Got My Copilot CLI Context Window from 52% to 13%"
 description: "My context window was at 52% before typing a word. Here's how I found the biggest consumer, scoped it down, and got to 13%."
 published: true
@@ -12,7 +12,7 @@ tags:
   - Azure MCP
   - AI assisted
   - Tutorial
-updated: 2026-05-03 18:00 PST
+updated: 2026-05-05 18:00 PST
 keywords: copilot context window, azure mcp namespace, context optimization, copilot cli, system tokens, mcp scoping
 ---
 
@@ -28,7 +28,7 @@ The biggest consumer was something I never would have guessed: a single plugin l
 
 I run [GitHub Copilot CLI](https://githubnext.com/projects/copilot-cli) with a multi-agent orchestration setup — half a dozen MCP servers, several plugins, and 117 skills. Mid-session, I got curious about what my context window actually looked like and ran `/context`:
 
-![Before optimization: /context showing 52% usage and compaction to 40%](./media/2026-05-03-tuning-up-copilot-context/image3.png)
+![Before optimization: /context showing 52% usage and compaction to 40%](./media/2026-05-05-tuning-up-copilot-context/image3.png)
 
 ```
 Context Usage
@@ -62,7 +62,7 @@ I built a breakdown:
 
 **Key insight: Skills sit on disk until an agent explicitly requests one. They are never in the context window.** Optimizing them makes individual agent spawns cheaper and faster — valuable for performance — but they don't contribute to `System/Tools` at all. (I learned this *after* spending two hours optimizing them. Do as I say, not as I did.)
 
-![Context consumers breakdown: MCP tools 30-40K, agent instructions 20K, skills on-demand](./media/2026-05-03-tuning-up-copilot-context/image37.png)
+![Context consumers breakdown: MCP tools 30-40K, agent instructions 20K, skills on-demand](./media/2026-05-05-tuning-up-copilot-context/image37.png)
 
 ## Step 3: Audit What's Always-Loaded
 
@@ -94,7 +94,7 @@ The good news: the team also thought carefully about how developers actually wor
 
 In my case, the default configuration was loading 50+ tool schemas into every message — even when I wasn't doing Azure work in that session. Not a bug, just a configuration I hadn't tuned yet.
 
-![Azure plugin details: 4 plugins consuming context, 50+ tools at 30-40K tokens](./media/2026-05-03-tuning-up-copilot-context/image43.png)
+![Azure plugin details: 4 plugins consuming context, 50+ tools at 30-40K tokens](./media/2026-05-05-tuning-up-copilot-context/image43.png)
 
 ### Agent Instructions (~20K tokens)
 
@@ -115,7 +115,7 @@ If you genuinely don't use Azure, just turn it off:
 
 This is what I did initially — it dropped System/Tools from 62.5K → 35.2K, freeing ~27K tokens instantly.
 
-![Azure plugin disabled: azure@azure-skills set to false](./media/2026-05-03-tuning-up-copilot-context/image44.png)
+![Azure plugin disabled: azure@azure-skills set to false](./media/2026-05-05-tuning-up-copilot-context/image44.png)
 
 ### Option B: Namespace Scoping (Surgical — Recommended)
 
@@ -196,7 +196,7 @@ This didn't move the `System/Tools` percentage. But it made agent spawns faster 
 
 ## Step 6: Measure Results
 
-![Fresh session after Azure disabled: context at 35K/200K (18%)](./media/2026-05-03-tuning-up-copilot-context/image45.png)
+![Fresh session after Azure disabled: context at 35K/200K (18%)](./media/2026-05-05-tuning-up-copilot-context/image45.png)
 
 **After scoping the Azure plugin:**
 ```
@@ -214,7 +214,7 @@ Free Space:    134.1k (67%)
 
 The remaining ~10K drop from 35.2K → 25.5K came from **upgrading my agent coordinator file** — the new version replaced the old 80KB governance prompt with a leaner one. Skill optimization (270K saved on disk) didn't affect this number because skills are on-demand and never in the context window.
 
-![Final state: context at 26K/200K (13%), 67% free space](./media/2026-05-03-tuning-up-copilot-context/image47.png)
+![Final state: context at 26K/200K (13%), 67% free space](./media/2026-05-05-tuning-up-copilot-context/image47.png)
 
 ### The Scorecard
 
@@ -241,7 +241,7 @@ Without checking `/context`, I would have spent all my time optimizing the wrong
 
 This is the methodology. Use it whenever context runs tight:
 
-![MCP config file layers: user vs repo level, what you can control](./media/2026-05-03-tuning-up-copilot-context/image41.png)
+![MCP config file layers: user vs repo level, what you can control](./media/2026-05-05-tuning-up-copilot-context/image41.png)
 
 1. **Run `/context`** — see your actual breakdown
 2. **Check plugins** — `~/.copilot/settings.json` — scope or disable unused ones (biggest wins are usually here)
@@ -270,6 +270,6 @@ That said, if you have hooks that reference large config files or trigger MCP ca
 
 ---
 
-*Investigation: May 3, 2026. The key lesson: measurement comes before optimization. Run `/context` and let the data guide your effort, not your intuition about file sizes. And when you find an MCP consuming more than you need — scope it down to match how you actually work.*
+*Investigation: May 5, 2026. The key lesson: measurement comes before optimization. Run `/context` and let the data guide your effort, not your intuition about file sizes. And when you find an MCP consuming more than you need — scope it down to match how you actually work.*
 
 *The skills optimization ran same session — 117 skills reduced by 65% (413K → 143K tokens on disk) using waza tools.*
