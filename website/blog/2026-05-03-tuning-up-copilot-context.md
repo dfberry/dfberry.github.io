@@ -92,7 +92,7 @@ Here's the thing about the Azure MCP Server: it's **comprehensive**. Version 3.0
 
 The good news: the team also thought carefully about how developers actually work. They built in **namespace scoping** and **mode selection** so you don't have to load the entire surface area. In its default "namespace" mode, it groups tools by service — but if you're only using a few services, you can filter down to just those. More on that in a moment.
 
-In my case, the default configuration was injecting 50+ tool schemas into every message — even when I wasn't doing Azure work in that session. Not a bug, just a configuration I hadn't tuned yet.
+In my case, the default configuration was loading 50+ tool schemas into every message — even when I wasn't doing Azure work in that session. Not a bug, just a configuration I hadn't tuned yet.
 
 ![Azure plugin details: 4 plugins consuming context, 50+ tools at 30-40K tokens](./media/2026-05-03-tuning-up-copilot-context/image43.png)
 
