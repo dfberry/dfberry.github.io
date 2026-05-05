@@ -62,7 +62,7 @@ I built a breakdown:
 
 **Key insight: Skills sit on disk until an agent explicitly requests one. They are never in the context window.** Optimizing them makes individual agent spawns cheaper and faster — valuable for performance — but they don't contribute to `System/Tools` at all. (I learned this *after* spending two hours optimizing them. Do as I say, not as I did.)
 
-![Context hogs breakdown: MCP tools 30-40K, agent instructions 20K, skills on-demand](./media/2026-05-03-tuning-up-copilot-context/image37.png)
+![Context consumers breakdown: MCP tools 30-40K, agent instructions 20K, skills on-demand](./media/2026-05-03-tuning-up-copilot-context/image37.png)
 
 ## Step 3: Audit What's Always-Loaded
 

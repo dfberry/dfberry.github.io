@@ -4,7 +4,7 @@ canonical_url: https://dfberry.github.io/blog/2026-05-03-tuning-up-copilot-skill
 custom_edit_url: null
 sidebar_label: "2026.05.03 Tuning Up Copilot Skills"
 title: "Tuning Up Copilot Skills: How I Optimized 117 Skills by 65%"
-description: "I had 413K tokens of unoptimized skills and a waza toolkit to diagnose them. Here's what I found, what broke, and what actually worked."
+description: "I had 413K tokens of unoptimized skills and a waza toolkit to diagnose them. Here's what I found, what surprised me, and what actually worked."
 published: true
 tags:
   - GitHub Copilot
@@ -27,7 +27,7 @@ Skills are different from context — they're loaded on demand, not held open. O
 
 The optimization patterns I found — reference extraction, checklist compression, shared references — work with any approach, manual or AI-assisted. I used an AI assistant to help parallelize the refactoring work, but the techniques are the story here, not the tooling.
 
-## Finding the Offenders: microsoft/waza
+## Finding the Biggest Consumers: microsoft/waza
 
 I'd been meaning to look at [Waza](https://github.com/microsoft/waza) for a while. It's a skill quality toolkit, and `waza_tokens count` is exactly what I needed — it scans your skills directory and gives you a sorted breakdown of token usage. No guessing, no eyeballing file sizes.
 
@@ -64,7 +64,7 @@ I analyzed the skills directory and decomposed the work into phases, ordered by 
 
 ![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-03-tuning-up-copilot-skills/image6.png)
 
-The key insight: start with the biggest offenders. Phases 1–3 were going to capture roughly 90% of the savings. Phases 4 and 5 were nice-to-haves — we'd do them if there was time and energy.
+The key insight: start with the biggest consumers. Phases 1–3 were going to capture roughly 90% of the savings. Phases 4 and 5 were nice-to-haves — we'd do them if there was time and energy.
 
 Spoiler: we didn't finish Phase 4. More on that in the lessons section.
 
