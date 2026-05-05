@@ -3,20 +3,21 @@ slug: /2026-05-05-tuning-up-copilot-context
 canonical_url: https://dfberry.github.io/blog/2026-05-05-tuning-up-copilot-context
 custom_edit_url: null
 sidebar_label: "2026.05.05 Tuning Up Copilot Context"
-title: "Tuning Up Context: How I Got My Copilot CLI Context Window from 52% to 13%"
+title: "Copilot CLI Context Window: How I Cut Token Usage from 52% to 13%"
 description: "My context window was at 52% before typing a word. Here's how I found the biggest consumer, scoped it down, and got to 13%."
 published: true
 tags:
   - GitHub Copilot
   - Context Window
   - Azure MCP
+  - MCP
   - AI assisted
   - Tutorial
 updated: 2026-05-05 18:00 PST
-keywords: copilot context window, azure mcp namespace, context optimization, copilot cli, system tokens, mcp scoping
+keywords: copilot context window, azure mcp namespace, context optimization, copilot cli, system tokens, mcp scoping, reduce copilot token usage, mcp tools tokens, copilot context optimization tutorial
 ---
 
-# Tuning Up Context: How I Got My Copilot CLI Context Window from 52% to 13%
+# Copilot CLI Context Window: How I Cut Token Usage from 52% to 13%
 
 I'll be honest: I started this whole investigation backwards. I had 117 skills consuming 413K tokens on disk and assumed *that* was the problem. I spent two hours optimizing them before I thought to actually measure what was in my context window. Turns out, skills are on-demand — they never touch the context window at all.
 

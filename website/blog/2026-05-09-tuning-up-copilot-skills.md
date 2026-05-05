@@ -3,19 +3,21 @@ slug: /2026-05-09-tuning-up-copilot-skills
 canonical_url: https://dfberry.github.io/blog/2026-05-09-tuning-up-copilot-skills
 custom_edit_url: null
 sidebar_label: "2026.05.09 Tuning Up Copilot Skills"
-title: "Tuning Up Copilot Skills: How I Optimized 117 Skills by 65%"
+title: "Optimizing Copilot Skills: 65% Token Reduction Across 117 Skills"
 description: "I had 413K tokens of unoptimized skills and a waza toolkit to diagnose them. Here's what I found, what surprised me, and what actually worked."
 published: true
 tags:
   - GitHub Copilot
   - Skills
+  - Waza
+  - Token Optimization
   - AI assisted
   - Tutorial
 updated: 2026-05-09 18:00 PST
-keywords: copilot skills optimization, waza tokens, skill refactoring, token reduction, copilot cli
+keywords: copilot skills optimization, waza tokens, skill refactoring, token reduction, copilot cli, copilot token budget, skill.md optimization, copilot skills tutorial
 ---
 
-# Tuning Up Copilot Skills: How I Optimized 117 Skills by 65%
+# Optimizing Copilot Skills: 65% Token Reduction Across 117 Skills
 
 I'd been ignoring the `.copilot/skills/` directoryfor a while. I knew it was growing. Every time I built a new feature or onboarded a new domain, I'd add a skill. Sometimes three. My thinking was: more skills = more capability. And for a while, that was true.
 
@@ -126,7 +128,7 @@ About halfway through the session I started feeling good about the numbers. That
 
 PR #147: **106 files changed, 12,176 insertions, 18,571 deletions.**
 
-![PR #147 created: 65% reduction, 106 files changed](./media/2026-05-09-tuning-up-copilot-skills/image15.png)
+![Pull request showing 65% Copilot skills token reduction across 106 files](./media/2026-05-09-tuning-up-copilot-skills/image15.png)
 
 I ran four automated review passes — structural integrity, waza_quality scores, trigger precision, and an adversarial over-trimming check. Three passed or passed with notes. The adversarial pass caught two real blockers: a reference file with a broken relative path, and a skill trimmed past the point of usefulness — the `SKILL.md` was essentially just a title and a pointer, with no routing context left to tell an agent when or how to use it.
 
