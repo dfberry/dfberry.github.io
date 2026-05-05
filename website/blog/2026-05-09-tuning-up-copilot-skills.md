@@ -14,7 +14,15 @@ tags:
   - AI assisted
   - Tutorial
 updated: 2026-05-09 18:00 PST
-keywords: copilot skills optimization, waza tokens, skill refactoring, token reduction, copilot cli, copilot token budget, skill.md optimization, copilot skills tutorial
+keywords:
+  - copilot skills optimization
+  - waza tokens
+  - skill refactoring
+  - token reduction
+  - copilot cli
+  - copilot token budget
+  - skill.md optimization
+  - copilot skills tutorial
 ---
 
 # Optimizing Copilot Skills: 65% Token Reduction Across 117 Skills

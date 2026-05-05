@@ -14,7 +14,16 @@ tags:
   - AI assisted
   - Tutorial
 updated: 2026-05-05 18:00 PST
-keywords: copilot context window, azure mcp namespace, context optimization, copilot cli, system tokens, mcp scoping, reduce copilot token usage, mcp tools tokens, copilot context optimization tutorial
+keywords:
+  - copilot context window
+  - azure mcp namespace
+  - context optimization
+  - copilot cli
+  - system tokens
+  - mcp scoping
+  - reduce copilot token usage
+  - mcp tools tokens
+  - copilot context optimization tutorial
 ---
 
 # Copilot CLI Context Window: How I Cut Token Usage from 52% to 13%
