@@ -23,7 +23,7 @@ Then I actually counted.
 
 **413,591 tokens across 136 files.** Six SDK sample review skills alone were consuming 140K tokens — 34% of the total budget — and I hadn't even noticed. Dead stub skills sitting around redirecting to nothing. Duplicated prose across six language variants. It was the kind of bloat that creeps in when you're building fast and not auditing.
 
-This is the companion to [Tuning Up Context](./tuning-up-copilot-context.md), which covers context window optimization. Skills are different from context — they're loaded on demand, not held open. Optimizing them doesn't free your active context window. But it makes agent spawns faster and skill loading cheaper. Different lever, different win. I wanted both.
+Skills are different from context — they're loaded on demand, not held open. Optimizing them doesn't free your active context window. But it makes agent spawns faster and skill loading cheaper. Different lever, different win. I wanted both.
 
 The optimization patterns I found — reference extraction, checklist compression, shared references — work with any approach, manual or AI-assisted. I used an AI assistant to help parallelize the refactoring work, but the techniques are the story here, not the tooling.
 

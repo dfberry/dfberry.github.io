@@ -185,7 +185,7 @@ You can also scope Azure MCP visually: click the **gear icon** next to the chat 
 
 Now that the always-loaded problem was solved, it was the *right time* to optimize skills — not because they consume context window (they don't), but because they improve individual agent spawn performance.
 
-I spent two hours optimizing 117 Copilot CLI skills — reducing them from 413K to 143K tokens on disk, a 65% reduction. That's a separate deep dive: [Tuning Up Copilot Skills](./tuning-up-copilot-skills.md) covers the full process — using `waza_tokens` to find bloated skills and patterns like reference extraction and checklist compression.
+I spent two hours optimizing 117 Copilot CLI skills — reducing them from 413K to 143K tokens on disk, a 65% reduction. The process used `waza_tokens` to find bloated skills and patterns like reference extraction and checklist compression.
 
 This didn't move the `System/Tools` percentage. But it made agent spawns faster and cheaper to run. Both wins are real — you just optimize them for different reasons.
 
@@ -261,4 +261,4 @@ The biggest wins are almost always in steps 2–3. Scoping one plugin can save m
 
 *Investigation: May 3, 2026. The key lesson: measurement comes before optimization. Run `/context` and let the data guide your effort, not your intuition about file sizes. And when you find a bloated MCP — scope it down before you rip it out.*
 
-*Companion article: [Tuning Up Copilot Skills](./tuning-up-copilot-skills.md) — how I used waza tools to reduce 117 skills by 65% (413K → 143K tokens on disk).*
+*The skills optimization ran same session — 117 skills reduced by 65% (413K → 143K tokens on disk) using waza tools.*
