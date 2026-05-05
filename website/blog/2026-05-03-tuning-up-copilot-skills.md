@@ -4,7 +4,7 @@ canonical_url: https://dfberry.github.io/blog/2026-05-03-tuning-up-copilot-skill
 custom_edit_url: null
 sidebar_label: "2026.05.03 Tuning Up Copilot Skills"
 title: "Tuning Up Copilot Skills: How I Optimized 117 Skills by 65%"
-description: "I had 413K tokens of bloated skills and a waza toolkit to diagnose them. Here's what I found, what broke, and what actually worked."
+description: "I had 413K tokens of unoptimized skills and a waza toolkit to diagnose them. Here's what I found, what broke, and what actually worked."
 published: true
 tags:
   - GitHub Copilot
@@ -21,7 +21,7 @@ I'd been ignoring the `.copilot/skills/` directoryfor a while. I knew it was gro
 
 Then I actually counted.
 
-**413,591 tokens across 136 files.** Six SDK sample review skills alone were consuming 140K tokens — 34% of the total budget — and I hadn't even noticed. Dead stub skills sitting around redirecting to nothing. Duplicated prose across six language variants. It was the kind of bloat that creeps in when you're building fast and not auditing.
+**413,591 tokens across 136 files.** Six SDK sample review skills alone were consuming 140K tokens — 34% of the total budget — and I hadn't even noticed. Dead stub skills sitting around redirecting to nothing. Duplicated prose across six language variants. It was the kind of growth that creeps in when you're building fast and not auditing.
 
 Skills are different from context — they're loaded on demand, not held open. Optimizing them doesn't free your active context window. But it makes agent spawns faster and skill loading cheaper. Different lever, different win. I wanted both.
 

@@ -4,7 +4,7 @@ canonical_url: https://dfberry.github.io/blog/2026-05-03-tuning-up-copilot-conte
 custom_edit_url: null
 sidebar_label: "2026.05.03 Tuning Up Copilot Context"
 title: "Tuning Up Context: How I Got My Copilot CLI Context Window from 52% to 13%"
-description: "I was burning 52% of my context window before typing a word. Here's how I found the biggest consumer, scoped it down, and got to 13%."
+description: "My context window was at 52% before typing a word. Here's how I found the biggest consumer, scoped it down, and got to 13%."
 published: true
 tags:
   - GitHub Copilot
@@ -22,7 +22,7 @@ I'll be honest: I started this whole investigation backwards. I had 117 skills c
 
 The biggest consumer was something I never would have guessed: a single plugin loading ~27K tokens of tool definitions into every message. This is the story of how I found it, scoped it down, and — importantly — how you can configure it to match your workflow without losing functionality.
 
-> **What makes this different?** There are already several great articles about MCP context optimization ([devbolt.dev](https://devbolt.dev), [The New Stack](https://thenewstack.io), [StackOne](https://stackone.com), [blog.pamelafox.org](https://blog.pamelafox.org)). This one adds: real measured token numbers from a production setup, the `/context` command as a diagnostic tool, the Azure MCP namespace scoping solution, and the Squad orchestration overhead angle.
+> **What makes this different?** There are already several great articles about MCP context optimization ([devbolt.dev](https://devbolt.dev), [The New Stack](https://thenewstack.io), [StackOne](https://stackone.com), [blog.pamelafox.org](https://blog.pamelafox.org)). This one adds: real measured token numbers from a production setup, the `/context` command as a diagnostic tool, the Azure MCP namespace scoping solution, and the Squad orchestration angle.
 
 ## Step 1: Measure First — Check Your Token Breakdown
 
@@ -40,7 +40,7 @@ Context Usage
   Buffer:        40.4k (20%)
 ```
 
-**52% consumed before typing a single message.** The `System/Tools` bucket alone was 62.5K tokens — 31% of my 200K window. That's the platform overhead: agent instructions, MCP tool definitions, system prompt, memories.
+**52% consumed before typing a single message.** The `System/Tools` bucket alone was 62.5K tokens — 31% of my 200K window. That's the baseline cost of my setup: agent instructions, MCP tool definitions, system prompt, memories.
 
 With only 28% free space, complex multi-agent tasks would trigger compaction mid-session. I needed to find what was actually consuming those 62.5K tokens — and the only way to know for sure was to audit what's always-loaded vs. what lives on disk.
 
@@ -104,7 +104,7 @@ My agent governance file — `.github/copilot-instructions.md` at the repo root 
 
 Once I understood the breakdown, the fix was straightforward. The Azure MCP team built exactly the right lever for this — **namespace scoping** lets you declare which services matter for your project and ignore the rest. No functionality lost, just a tighter fit.
 
-### Option A: Disable Entirely (Nuclear)
+### Option A: Disable Entirely (Full removal)
 
 If you genuinely don't use Azure, just turn it off:
 
@@ -127,7 +127,7 @@ Configure it in your MCP settings with the `--namespace` flag:
 --namespace appservice --namespace cosmos --namespace keyvault --namespace storage
 ```
 
-This gives you **4 namespaces (~24 tools)** instead of 57 namespaces (~261 tools) — a dramatic reduction in context overhead while keeping the Azure tools you actually use.
+This gives you **4 namespaces (~24 tools)** instead of 57 namespaces (~261 tools) — a significant reduction in context usage while keeping the Azure tools you actually use.
 
 #### Azure MCP Modes
 
