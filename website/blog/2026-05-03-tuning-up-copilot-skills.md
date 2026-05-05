@@ -27,7 +27,7 @@ Skills are different from context — they're loaded on demand, not held open. O
 
 The optimization patterns I found — reference extraction, checklist compression, shared references — work whether you're editing skills by hand or using Copilot CLI to batch the refactoring. I used GitHub Copilot CLI with Squad orchestration to process multiple skills in parallel, but the techniques themselves are tool-agnostic. You could apply them manually in any editor.
 
-## Finding the Biggest Consumers: microsoft/waza
+## Measuring Token Usage with microsoft/waza
 
 I'd been meaning to look at [Waza](https://github.com/microsoft/waza) for a while. It's a skill quality toolkit, and `waza_tokens count` is exactly what I needed — it scans your skills directory and gives you a sorted breakdown of token usage. No guessing, no eyeballing file sizes.
 
