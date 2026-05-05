@@ -88,7 +88,7 @@ I checked `~/.copilot/settings.json` and found the Azure plugin enabled:
 |--------|--------|--------|
 | **azure** | microsoft/azure-skills | **50+ tools, ~27K tokens** |
 
-Here's the thing about the Azure MCP Server: it's **comprehensive**. Version 3.0.0-beta.6 has **261 tools across 57 namespaces** — covering everything from ACR to Virtual Desktop to Well-Architected Framework. That breadth is genuinely impressive, and the team clearly designed it to be a one-stop shop for Azure developers.
+Here's the thing about the Azure MCP Server: it's **comprehensive**. Version 3.0.0-beta.6 has **259 tools across 56 namespaces** — covering everything from ACR to Virtual Desktop to Well-Architected Framework. That breadth is genuinely impressive, and the team clearly designed it to be a one-stop shop for Azure developers.
 
 The good news: the team also thought carefully about how developers actually work. They built in **namespace scoping** and **mode selection** so you don't have to load the entire surface area. In its default "namespace" mode, it groups tools by service — but if you're only using a few services, you can filter down to just those. More on that in a moment.
 
@@ -127,7 +127,7 @@ Configure it in your MCP settings with the `--namespace` flag:
 --namespace appservice --namespace cosmos --namespace keyvault --namespace storage
 ```
 
-This gives you **4 namespaces (~24 tools)** instead of 57 namespaces (~261 tools) — a significant reduction in context usage while keeping the Azure tools you actually use.
+This gives you **4 namespaces (~24 tools)** instead of 56 namespaces (~259 tools) — a significant reduction in context usage while keeping the Azure tools you actually use.
 
 #### Azure MCP Modes
 
@@ -138,7 +138,7 @@ The server supports 4 modes that control how tools are exposed:
 | **namespace** (default) | One tool per service namespace | Copilot — good balance |
 | **consolidated** | Groups operations by user intent | Natural language workflows |
 | **single** | One routing tool for everything | Maximum simplicity |
-| **all** | Every operation as a separate tool (261!) | Maximum granularity — high context cost |
+| **all** | Every operation as a separate tool (259!) | Maximum granularity — high context cost |
 
 #### Pick Your Stack
 
@@ -151,7 +151,7 @@ Here's a quick reference for common developer personas:
 | DevOps/Infra | `compute`, `aks`, `azureterraform`, `deploy`, `monitor` |
 | AI/ML | `foundryextensions`, `search`, `speech`, `applicationinsights` |
 
-#### All 57 Namespaces (Reference)
+#### All 56 Namespaces (Reference)
 
 For the curious, here's the full list with tool counts. Use this to build your own `--namespace` filter:
 
@@ -262,7 +262,7 @@ That said, if you have hooks that reference large config files or trigger MCP ca
 ## The Setup
 
 - **GitHub Copilot CLI** v1.0.40
-- **[Squad](https://github.com/bradygaster/squad-cli)** v0.9.4-insider.1 for multi-agent orchestration
+- **[Squad](https://github.com/bradygaster/squad)** v0.9.4-insider.1 for multi-agent orchestration
 - **117 skills** in `.copilot/skills/` — now ~143K tokens (optimized)
 - **5 MCP servers** (GitHub, Mail, PowerBI, M365 Agents Toolkit, IDE)
 - **Azure plugin: scoped to needed namespaces** (the one that mattered)

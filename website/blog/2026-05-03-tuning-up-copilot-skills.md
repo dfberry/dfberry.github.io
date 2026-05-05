@@ -57,7 +57,7 @@ I analyzed the skills directory and decomposed the work into phases, ordered by 
 |-------|--------|-------------|
 | 1. Kill stubs | 3 empty redirect skills | ~73 tokens |
 | 2. Refactor giants | 6 SDK review skills (140K!) | ~120K tokens |
-| 3. Optimize large | 15 skills (5K–10K each) | ~30–50K tokens |
+| 3. Optimize large | 14 skills (5K–10K each) | ~30–50K tokens |
 | 4. Optimize medium | 60 skills (1K–5K each) | ~10–20K tokens |
 | 5. Trim small | 20 skills (<1K each) | minimal |
 | 6. Audit references | Large reference files | ~10–15K tokens |
@@ -219,7 +219,7 @@ The planning phase is cheap; the execution phase is expensive. I skipped the pla
 For reference, here's what I was running:
 
 - **GitHub Copilot CLI** v1.0.40
-- **[Squad](https://github.com/bradygaster/squad-cli)** v0.9.4-insider.1 for multi-agent orchestration
+- **[Squad](https://github.com/bradygaster/squad)** v0.9.4-insider.1 for multi-agent orchestration
 - **microsoft/waza** for skill quality analysis
 - **Model:** Claude Opus 4.6 with 200K context window
 
