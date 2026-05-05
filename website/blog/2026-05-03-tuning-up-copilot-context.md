@@ -75,11 +75,10 @@ MCP servers inject their tool schemas into every message. I had:
 - **GitHub MCP** — ~15 tools (issues, PRs, code search, actions)
 - **Mail MCP** — ~20 tools (search, send, reply, forward, attachments)
 - **PowerBI MCP** — ~6 tools (execute query, generate query, get schema)
-- **WorkIQ** — ~3 tools (ask, debug link, accept EULA)
 - **M365 Agents Toolkit** — ~4 tools (knowledge, snippets, schema, troubleshoot)
 - **IDE** — ~2 tools (diagnostics, selection)
 
-These are real — about 50–60 tools across all servers. But they're only ~6–10K tokens total. Where's the other 50K?
+These are real — about 47–55 tools across all servers. But they're only ~6–10K tokens total. Where's the other 50K?
 
 ### The Azure Plugin (~27K tokens) — The Bottleneck
 
@@ -88,9 +87,6 @@ I checked `~/.copilot/settings.json` and found the Azure plugin enabled:
 | Plugin | Source | Impact |
 |--------|--------|--------|
 | **azure** | microsoft/azure-skills | **50+ tools, ~27K tokens** |
-| doc-authoring | agency-playground | Moderate (write-doc, copy-edit, etc.) |
-| pr-lifecycle | agency-playground | Moderate (PR review, walkthrough) |
-| workiq | copilot-plugins | Light (M365 queries) |
 
 Here's the thing about the Azure MCP Server: it's **massive**. Version 3.0.0-beta.6 has **261 tools across 57 namespaces** — covering everything from ACR to Virtual Desktop to Well-Architected Framework. In its default "namespace" mode, it groups these into one tool per service, but even that injects 50+ tool schemas into every single message. Even when I wasn't doing any Azure work.
 
@@ -257,7 +253,7 @@ The biggest wins are almost always in steps 2–3. Scoping one plugin can save m
 - **GitHub Copilot CLI** v1.0.40
 - **[Squad](https://github.com/bradygaster/squad-cli)** v0.9.4-insider.1 for multi-agent orchestration
 - **117 skills** in `.copilot/skills/` — now ~143K tokens (optimized)
-- **6 MCP servers** (GitHub, Mail, PowerBI, WorkIQ, M365 Agents Toolkit, IDE)
+- **5 MCP servers** (GitHub, Mail, PowerBI, M365 Agents Toolkit, IDE)
 - **Azure plugin: scoped to needed namespaces** (the one that mattered)
 - **Model:** Claude Opus 4.6 with 200K context window
 
