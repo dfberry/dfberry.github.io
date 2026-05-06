@@ -1,11 +1,11 @@
 ---
-slug: /2026-05-05-tuning-up-copilot-context
-canonical_url: https://dfberry.github.io/blog/2026-05-05-tuning-up-copilot-context
+slug: /2026-05-06-tuning-up-copilot-context
+canonical_url: https://dfberry.github.io/blog/2026-05-06-tuning-up-copilot-context
 custom_edit_url: null
-sidebar_label: "2026.05.05 Tuning Up Copilot Context"
+sidebar_label: "2026.05.06 Tuning Up Copilot Context"
 title: "Copilot CLI Context Window: How I Cut Token Usage from 52% to 13%"
 description: "My context window was at 52% before typing a word. Here's how I found the biggest consumer, scoped it down, and got to 13%."
-draft: true
+draft: false
 tags:
   - GitHub Copilot
   - Context Window
@@ -13,7 +13,7 @@ tags:
   - MCP
   - AI assisted
   - Tutorial
-updated: 2026-05-05 18:00 PST
+updated: 2026-05-06 00:00 PST
 keywords:
   - copilot context window
   - azure mcp namespace
