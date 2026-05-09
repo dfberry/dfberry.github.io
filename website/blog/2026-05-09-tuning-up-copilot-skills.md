@@ -158,19 +158,38 @@ Saved:   270,237 tokens (65.3% reduction)
 
 The 143K figure is pre-deduplication. The shared reference extraction in the next section further reduced maintenance overhead but didn't significantly change the token count — it consolidated duplicates rather than removing content.
 
-## Bonus Round: Something I Didn't Plan For
+## Bonus Round: From Shared References to Unified Skills
 
-After the optimization was done, I noticed something I'd missed in the planning phase.
+After the PR merged and the dust settled, I was running `waza_quality` checks on the six SDK skills and noticed something in the scoring: **isolation violation**. Each skill had its own `SKILL.md`, its own routing logic, its own boilerplate duplicated across six files. That was flagged as a pattern violation — the waza toolkit prefers skills to be atomic and self-contained, but what I had was six micro-instances of the same thing, all within the waza boundary.
 
-The 6 SDK skills had each independently created similar reference files during the refactoring. When I looked at them side by side: 86 files across 6 skills, with about 45% duplicated prose — generic best practices that apply to any language. TypeScript and Java both had essentially identical sections on error handling conventions, documentation standards, test coverage requirements. Written separately, maintained separately.
+So I reconsidered the architecture. Three options:
 
-That's six copies of the same thing I'd now have to update every time the guidance changed.
+1. **Accept the low score** — good-enough is fine for a domain-specific exception
+2. **Inline the shared content** — copy the 14 shared reference files into each skill, duplicate the maintenance burden
+3. **Single skill with language dispatch** — collapse all 7 skills (6 SDK languages + 1 quickstart template) into one unified skill with language auto-detection
 
-The fix: create a shared reference directory (`shared-sdk-sample-review-references/`) with 14 files of generic prose. Each per-language skill keeps only its language-specific code examples, with a link to the shared counterpart at the top of each file.
+I picked option 3. Not because it was the obvious choice, but because it forced me to think about the actual use case: agents almost never need to review samples in *all* languages simultaneously. They review one language at a time, selected based on the codebase they're analyzing. A single skill with smart routing was actually more correct than the multi-skill pretense.
 
-![SDK reference consolidation: before/after, single source of truth](./media/2026-05-09-tuning-up-copilot-skills/shared-references-architecture.png)
+The result: `azure-sdk-sample-review/` — one skill, 469 tokens in `SKILL.md` (under the 500-token soft limit), with language auto-detection using prompt analysis. The structure is now:
 
-Updating a best practice now means editing 1 file instead of 6. That's the kind of maintenance win that doesn't show up in token counts but pays back over time.
+```
+azure-sdk-sample-review/
+├── SKILL.md (469 tokens)
+├── evals/ (7 tasks, 100% passing)
+├── references/
+│   ├── shared/ (14 files: generic best practices)
+│   ├── dotnet/
+│   ├── go/
+│   ├── java/
+│   ├── python/
+│   ├── rust/
+│   ├── typescript/
+│   └── quickstart/
+```
+
+This eliminated six duplicated routing SKILL.md files (which were contributing nothing but bulk) and consolidated all the language-specific logic into a single dispatch mechanism. Waza compliance achieved — no more isolation violations. All 7 behavioral evals running at 100%, checking that language detection actually works and that each language's review rules fire correctly.
+
+It's a third evolution: **reference extraction → shared references → unified skill with internal routing**. Each step felt logical at the time, but stepping back, the final architecture is actually simpler and more correct. I wish I'd seen it from the start. (PR #188 captured the work.)
 
 ## Dogfooding: The Reskill Skill
 
@@ -186,6 +205,8 @@ Total:     5,401 → 4,288 (21% reduction)
 Three review passes: two clean approvals, one note flagged and fixed.
 
 The skill practices what it preaches. 🐕
+
+**Note:** The SDK skills themselves went through a third iteration after this optimization pass (described in the Bonus Round section) — from six separate skills with shared references down to a single unified skill. So while `dina-reskill` captured the second-pass improvements here, the SDK consolidation shows how those patterns can evolve further as you live with them.
 
 ## What Actually Worked: The Patterns
 
@@ -203,9 +224,9 @@ Turn paragraph-style guidance into concise checklists. "When reviewing error han
 
 One good example per pattern. If your skill has 3 examples of the same concept, pick the clearest one and reference-extract the rest.
 
-### 4. Shared References
+### 4. Shared References → Unified Skill Routing
 
-If multiple skills share common guidance, extract it once and link. The `shared-sdk-sample-review-references/` pattern is the one I wish I'd designed from the start — it's a classic case of noticing the duplication only after you've already duplicated it everywhere.
+If multiple skills share common guidance, the first instinct is to extract it once and link (classic `shared-references/` pattern). That works, but I discovered it's often a stepping stone toward something better: collapsing the multi-skill pseudo-duplication into a single skill with internal language or domain dispatch. The shared references pattern is useful when you genuinely have separate skills with independent concerns; when you have N near-identical skills differing only by one dimension (language, framework, etc.), a unified skill with auto-detection is cleaner. One `SKILL.md`, one set of evaluations, one routing boundary. Zero isolation violations.
 
 ### 5. Stub Elimination
 
