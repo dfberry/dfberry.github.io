@@ -1,0 +1,18 @@
+flowchart TD
+    baseline["🎯 Baseline: 413,591 tokens<br/>117 skills across 136 files"]
+    p1["Phase 1: Kill Stubs<br/>3 empty redirect skills<br/>~73 tokens saved"]
+    p2["Phase 2: Refactor SDK Giants<br/>6 SDK review skills (140K!)<br/>~120K tokens saved"]
+    p3["Phase 3: Optimize Large Skills<br/>14 skills (5K–10K each)<br/>~50K tokens saved"]
+    p4["Phase 4: Optimize Medium Skills<br/>60 skills (1K–5K each)<br/>~20K tokens saved"]
+    p5["Phase 5: Trim Small Skills<br/>20 skills (under 1K)<br/>Minimal savings"]
+    p6["Phase 6: Audit References<br/>Large reference files<br/>~15K tokens saved"]
+
+    baseline --> p1 --> p2 --> p3 --> p4 --> p5 --> p6
+
+    style baseline fill:#334155,stroke:#94a3b8,color:#f1f5f9
+    style p1 fill:#1e3a5f,stroke:#60a5fa,color:#e0f2fe
+    style p2 fill:#7f1d1d,stroke:#f87171,color:#fef2f2
+    style p3 fill:#3b2f0a,stroke:#facc15,color:#fefce8
+    style p4 fill:#1a3a2a,stroke:#4ade80,color:#f0fdf4
+    style p5 fill:#1e293b,stroke:#64748b,color:#e2e8f0
+    style p6 fill:#1e293b,stroke:#64748b,color:#e2e8f0

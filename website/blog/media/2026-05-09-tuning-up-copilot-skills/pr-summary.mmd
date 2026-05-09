@@ -1,0 +1,23 @@
+flowchart TD
+    pr["🔀 PR #147<br/>Copilot Skills Token Optimization"]
+    stats["📁 106 files changed<br/>+12,176 insertions / −18,571 deletions"]
+    
+    subgraph reviews["4 Review Passes"]
+        r1["✅ Structural Integrity"]
+        r2["✅ waza_quality Scores"]
+        r3["✅ Trigger Precision"]
+        r4["⚠️→✅ Adversarial Check<br/>2 blockers found and fixed"]
+    end
+
+    result["🚀 SHIP<br/>65% token reduction achieved"]
+
+    pr --> stats --> reviews --> result
+
+    style pr fill:#1e3a5f,stroke:#60a5fa,color:#e0f2fe
+    style stats fill:#334155,stroke:#94a3b8,color:#f1f5f9
+    style reviews fill:#1a1a2e,stroke:#64748b,color:#e2e8f0
+    style r1 fill:#052e16,stroke:#22c55e,color:#bbf7d0
+    style r2 fill:#052e16,stroke:#22c55e,color:#bbf7d0
+    style r3 fill:#052e16,stroke:#22c55e,color:#bbf7d0
+    style r4 fill:#3b2f0a,stroke:#facc15,color:#fefce8
+    style result fill:#0a3b1a,stroke:#4ade80,color:#f0fdf4
