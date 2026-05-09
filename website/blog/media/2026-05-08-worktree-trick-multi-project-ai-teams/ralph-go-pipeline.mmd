@@ -1,0 +1,23 @@
+flowchart LR
+    H1["👤 Human\nsays 'go'"] --> T["Issue triage"]
+    T --> R["Agent routing"]
+    R --> E["Execution"]
+    E --> PR["PR created"]
+    PR --> H2["👤 Human\nreview"]
+    H2 --> M["Merge"]
+
+    subgraph Auto["The gap to close"]
+        T
+        R
+        E
+        PR
+    end
+
+    style H1 fill:#1a73e8,color:#fff
+    style H2 fill:#1a73e8,color:#fff
+    style M fill:#28a745,color:#fff
+    style Auto fill:none,stroke:#ff6b6b,stroke-width:2px,stroke-dasharray: 5 5
+    style T fill:#ffc107,color:#000
+    style R fill:#ffc107,color:#000
+    style E fill:#ffc107,color:#000
+    style PR fill:#ffc107,color:#000

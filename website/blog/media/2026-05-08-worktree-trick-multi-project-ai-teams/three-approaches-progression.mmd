@@ -1,0 +1,15 @@
+flowchart TD
+    Start["Multi-project AI agents"] --> A1["Approach 1: Same directory"]
+    A1 --> F1["❌ Context bleed, branch chaos"]
+    F1 --> D1{"Try isolation?"}
+    D1 --> A2["Approach 2: Per-project squads"]
+    A2 --> F2["❌ Skill duplication, no shared brain"]
+    F2 --> D2{"Combine strengths?"}
+    D2 --> A3["Approach 3: Hub + worktrees"]
+    A3 --> S1["✅ Shared brain + isolated workspaces"]
+
+    style F1 fill:#dc3545,color:#fff
+    style F2 fill:#dc3545,color:#fff
+    style S1 fill:#28a745,color:#fff
+    style D1 fill:#ffc107,color:#000
+    style D2 fill:#ffc107,color:#000

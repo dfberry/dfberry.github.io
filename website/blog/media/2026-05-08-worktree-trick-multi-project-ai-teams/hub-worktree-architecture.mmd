@@ -1,0 +1,25 @@
+flowchart TB
+    subgraph Hub["🧠 project-dina Hub"]
+        SA["squad.agent.md"]
+        DM["decisions.md"]
+        SK["skills/"]
+    end
+
+    Hub -->|"shared config"| W1["📂 blog-requirements\nproject: dina"]
+    Hub -->|"shared config"| W2["📂 docdb-article\nproject: data-plus-ai"]
+    Hub -->|"shared config"| W3["📂 azure-mcp\nproject: azure-ai-tools"]
+    Hub -->|"shared config"| W4["📂 content-gen-cli\nproject: content"]
+
+    RJ["repos.json\nRouting Table"] -->|"routing"| R1["internal-repo-1"]
+    RJ -->|"routing"| R2["internal-repo-2"]
+    RJ -->|"routing"| R3["internal-repo-3"]
+    RJ -->|"routing"| R4["personal-repo-1"]
+
+    Hub --- RJ
+
+    style Hub fill:#1a73e8,color:#fff
+    style W1 fill:#34a853,color:#fff
+    style W2 fill:#34a853,color:#fff
+    style W3 fill:#34a853,color:#fff
+    style W4 fill:#34a853,color:#fff
+    style RJ fill:#fbbc04,color:#000

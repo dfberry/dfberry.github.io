@@ -1,0 +1,12 @@
+stateDiagram-v2
+    [*] --> Low: Pattern observed
+    Low --> Medium: Repeated successful use
+    Medium --> High: Human review + cross-project validation
+    High --> Medium: Context drift / edge case found
+    Medium --> Low: Repeated failures
+
+    Low: 🟡 Low Confidence (new / untested)
+    Medium: 🟠 Medium Confidence (validated in 2-3 contexts)
+    High: 🟢 High Confidence (reliable across projects)
+
+    note right of High: Nobody else is going to do it.

@@ -1,0 +1,36 @@
+flowchart LR
+    subgraph Before["🔴 Before: Babysitting Loop"]
+        direction TB
+        B1["Start session"] --> B2["Agent picks\nwrong branch"]
+        B2 --> B3["Human redirects"]
+        B3 --> B4["Agent picks\nwrong repo"]
+        B4 --> B5["Human redirects"]
+        B5 --> B6["Agent commits\nto main"]
+        B6 --> B7["Human redirects"]
+        B7 --> B1
+    end
+
+    subgraph After["🟢 After: Worktree Flow"]
+        direction TB
+        A1["Create worktree"] --> A2["cd into directory"]
+        A2 --> A3["Start Copilot CLI"]
+        A3 --> A4["Assign agent"]
+        A4 --> A5["Review PR"]
+        A5 --> A6["✅ Done"]
+    end
+
+    style Before fill:#fff0f0
+    style After fill:#f0fff0
+    style B1 fill:#dc3545,color:#fff
+    style B2 fill:#dc3545,color:#fff
+    style B3 fill:#ff6b6b,color:#fff
+    style B4 fill:#dc3545,color:#fff
+    style B5 fill:#ff6b6b,color:#fff
+    style B6 fill:#dc3545,color:#fff
+    style B7 fill:#ff6b6b,color:#fff
+    style A1 fill:#28a745,color:#fff
+    style A2 fill:#28a745,color:#fff
+    style A3 fill:#28a745,color:#fff
+    style A4 fill:#28a745,color:#fff
+    style A5 fill:#28a745,color:#fff
+    style A6 fill:#1b5e20,color:#fff
