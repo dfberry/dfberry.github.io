@@ -29,7 +29,9 @@ Purpose: Visual metaphor connecting the centralized-brain-distributed-execution 
 Suggested placement: before the opening paragraph
 -->
 
-I stopped asking the AI to manage workspace state. That's the whole trick.
+![PNW river delta metaphor — one main channel splitting into distributaries representing worktrees](media/2026-05-08-worktree-trick-multi-project-ai-teams/pnw-river-delta-hub-worktrees.png)
+
+I stopped asking the AI to manage workspace state.That's the whole trick.
 
 For two months I tried architecturally ambitious approaches — unified squads, per-project squads, sub-coordinators, distributed skill systems — all trying to teach LLMs how to switch branches, route work, and stay on task. None of it worked reliably. Here's what I discovered: the thing that actually solved it was removing that burden entirely. I create a git worktree *before* I launch Copilot CLI. One command, in my regular terminal. The session starts already in the right place, with the right branch, and no decisions left to make about where to work.
 
@@ -51,7 +53,9 @@ Purpose: Give readers the full journey at a glance so they understand this post 
 Suggested placement: before Approach 1 section
 -->
 
-## Approach 1: Put everything in one directory (Early April 2026)
+![Flowchart showing progression from same-directory approach through per-project squads to hub plus worktrees solution](media/2026-05-08-worktree-trick-multi-project-ai-teams/three-approaches-progression.png)
+
+## Approach 1: Put everything in one directory(Early April 2026)
 
 The simplest approach reveals the core problem fastest. I started here because I thought the AI could handle branch management. It can't — at least not reliably.
 
@@ -95,7 +99,9 @@ Purpose: Show how the hub serves as the central brain while worktrees provide is
 Suggested placement: before the worktree layout code block
 -->
 
-One central Squad in `project-dina` — the same single brain from Approach 1 — but with a critical difference: I create git worktrees *before* entering Copilot CLI.
+![Architecture diagram showing hub as central brain with worktrees branching to isolated workspaces and repos.json routing to downstream repos](media/2026-05-08-worktree-trick-multi-project-ai-teams/hub-worktree-architecture.png)
+
+One central Squad in `project-dina`— the same single brain from Approach 1 — but with a critical difference: I create git worktrees *before* entering Copilot CLI.
 
 Here's my actual worktree layout right now:
 
@@ -123,7 +129,9 @@ Purpose: Make the daily workflow improvement visceral — show the babysitting l
 Suggested placement: after the "key insight" paragraph
 -->
 
-The daily workflow change was immediate. Before: "No, wrong repo. No, switch branches first. No, don't commit there." After: create worktree, `cd` into it, start Copilot CLI, assign agent, review PR. Four steps, no redirecting.
+![Side-by-side comparison of babysitting loop with constant human redirects versus clean worktree flow ending in PR review](media/2026-05-08-worktree-trick-multi-project-ai-teams/before-after-workflow.png)
+
+The daily workflow change was immediate.Before: "No, wrong repo. No, switch branches first. No, don't commit there." After: create worktree, `cd` into it, start Copilot CLI, assign agent, review PR. Four steps, no redirecting.
 
 ## Face the real effort: managing the framework itself
 
@@ -145,7 +153,9 @@ Purpose: Show that skill maturity isn't automatic — it requires deliberate hum
 Suggested placement: before the paragraph about skill curation
 -->
 
-Skills pile up naturally as agents learn patterns, but I started encoding the project name in the skill folder to separate project-specific patterns from generic ones. Even then, there's a confidence lifecycle — a skill starts at low confidence, gets validated through repeated use, and eventually earns high confidence. Advancing a skill through that lifecycle takes human judgment. Nobody else is going to do it.
+![State diagram showing skill confidence transitions from low to medium to high with feedback loops](media/2026-05-08-worktree-trick-multi-project-ai-teams/skill-confidence-lifecycle.png)
+
+Skills pile up naturallyas agents learn patterns, but I started encoding the project name in the skill folder to separate project-specific patterns from generic ones. Even then, there's a confidence lifecycle — a skill starts at low confidence, gets validated through repeated use, and eventually earns high confidence. Advancing a skill through that lifecycle takes human judgment. Nobody else is going to do it.
 
 ### Keep the routing table honest
 
@@ -167,7 +177,9 @@ Purpose: Visualize the end-state automation goal and make clear where the human 
 Suggested placement: before the "Ralph, go" paragraph
 -->
 
-The ultimate goal is one command → auto-triage → route to the right agent → execute → open PR → review → merge. Getting there requires meaningful issue labels, triage rules in routing, auto-assignment patterns, and agents that genuinely know their scope without being told. Each iteration gets closer. But the gap between "I have agents" and "agents do work without me" is filled with exactly this kind of infrastructure. The "Ralph, go" aspiration is still aspirational.
+![Left-to-right pipeline showing human trigger through automated triage routing and execution to PR review and merge](media/2026-05-08-worktree-trick-multi-project-ai-teams/ralph-go-pipeline.png)
+
+The ultimate goal is one command→ auto-triage → route to the right agent → execute → open PR → review → merge. Getting there requires meaningful issue labels, triage rules in routing, auto-assignment patterns, and agents that genuinely know their scope without being told. Each iteration gets closer. But the gap between "I have agents" and "agents do work without me" is filled with exactly this kind of infrastructure. The "Ralph, go" aspiration is still aspirational.
 
 ### Accept that cross-project awareness is unsolved
 
