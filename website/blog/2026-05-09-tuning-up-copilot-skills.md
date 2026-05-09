@@ -29,11 +29,11 @@ keywords:
 
 ![Watercolor illustration of a craftsperson's workbench being tidied and organized](./media/2026-05-09-tuning-up-copilot-skills/hero-skill-workshop.png)
 
-I'd been ignoringthe `.copilot/skills/` directoryfor a while. I knew it was growing. Every time I built a new feature or onboarded a new domain, I'd add a skill. Sometimes three. My thinking was: more skills = more capability. And for a while, that was true.
+I'd been ignoring the `.copilot/skills/` directory for a while. I knew it was growing. Every time I built a new feature or onboarded a new domain, I'd add a skill. Sometimes three. My thinking was: more skills = more capability. And for a while, that was true.
 
 Then I actually counted.
 
-**413,591 tokens across 136 files.** Six SDK sample review skills alone were consuming 140K tokens — 34% of the total budget — and I hadn't even noticed. Dead stub skills sitting around redirecting to nothing. Duplicated prose across six language variants. It was the kind of growth that creeps in when you're building fast and not auditing.
+**413,591 tokens across 136 skill and reference files (117 distinct skills).** Six SDK sample review skills alone were consuming 140K tokens — 34% of the total budget — and I hadn't even noticed. Dead stub skills sitting around redirecting to nothing. Duplicated prose across six language variants. It was the kind of growth that creeps in when you're building fast and not auditing.
 
 Skills are different from context — they're loaded on demand, not held open. Optimizing them doesn't free your active context window. But it makes agent spawns faster and skill loading cheaper. Different lever, different win. I wanted both.
 
@@ -76,7 +76,7 @@ I analyzed the skills directory and decomposed the work into phases, ordered by 
 
 ![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-09-tuning-up-copilot-skills/optimization-phases-plan.png)
 
-The key insight: start with the biggest consumers. Phases 1–3 were going to capture roughly 90% of the savings. Phases 4 and 5 were nice-to-haves — we'd do them if there was time and energy.
+The key insight: start with the biggest consumers. Phases 1–3 were going to capture roughly three-quarters of the savings. Phases 4 and 5 were nice-to-haves — we'd do them if there was time and energy.
 
 Spoiler: we didn't finish Phase 4. More on that in the lessons section.
 
@@ -146,6 +146,12 @@ Both issues were fixed and re-reviewed. Second pass: ✅ SHIP.
 
 The lesson from those blockers: don't reduce a `SKILL.md` below ~800 tokens. Below that, you risk losing enough routing context that agents can't determine when or how to use the skill. If your `SKILL.md` is just a title and a link to references, you've gone too far.
 
+The exception: skills with strong internal routing (like the unified SDK skill at 469 tokens) can go lower because their dispatch logic plus behavioral evals compensate for the reduced routing context. The ~800-token floor applies to standalone skills without that scaffolding.
+
+## Phases 4–6: The Gap Closer
+
+Phases 4–6 added another ~70K in savings — medium skills got checklist compression, and the reference audit caught oversized files. We didn't finish all of Phase 4, but what we did complete closed the gap to the final 270K number.
+
 ### Final Numbers
 
 ```
@@ -155,6 +161,8 @@ Saved:   270,237 tokens (65.3% reduction)
 ```
 
 ![Final summary: 413K → 143K tokens, 65.3% reduction](./media/2026-05-09-tuning-up-copilot-skills/final-token-reduction.png)
+
+These numbers reflect the main optimization pass (PR #147). The Bonus Round consolidation described next happened in a separate follow-up session.
 
 The 143K figure is pre-deduplication. The shared reference extraction in the next section further reduced maintenance overhead but didn't significantly change the token count — it consolidated duplicates rather than removing content.
 
@@ -242,6 +250,7 @@ I ran this over 8 user messages. Here's what that actually looked like, and what
 | "keep going" × 2 | "Run all phases, don't stop between them" |
 | SDK dedup discovered late (turn 6–8) | Mention "deduplicate shared content" upfront |
 | Asking about PR + review + results separately | Bundle deliverables: "PR, team review, results file" |
+| Stopped at Phase 4 halfway through | Front-load scope: "all phases including medium skills" would have kept momentum |
 
 The pattern I should have followed: front-load three things — (1) the tool or technique, (2) the full scope with known edge cases, (3) all the deliverables I want at the end. One prompt, not eight.
 
@@ -262,7 +271,7 @@ If you're curious whether your own skills directory needs this treatment, `waza_
 
 I'm not going to hand you a checklist and call it a day — everyone's skill architecture is different, and the interesting work is figuring out which patterns actually fit your setup. But if you do try this and discover something that works or something that breaks badly, I'd genuinely be curious to hear what you found.
 
-Full session ran on May 9, 2026. 8 user messages, about 2 hours, 270K tokens saved.
+Main optimization session ran on May 9, 2026. 8 user messages, about 2 hours, 270K tokens saved. The Bonus Round consolidation (PR #188) happened in a follow-up session.
 
 ---
 
