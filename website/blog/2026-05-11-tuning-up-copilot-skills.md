@@ -85,7 +85,7 @@ The strategy: decompose into phases, ordered by savings potential. **Clear the b
 
 ## Phase 1: Killing the Stubs
 
-**Problem:** Three skills were redirect stubs — they pointed to other skills and had <50 tokens of actual content. No routing logic, no value.
+**Problem:** Three skills were redirect stubs — they pointed to other skills and had fewer than 50 tokens of actual content. No routing logic, no value.
 
 **Action:** Deleted them.
 
