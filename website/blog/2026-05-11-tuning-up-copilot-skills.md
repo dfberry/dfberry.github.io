@@ -229,7 +229,7 @@ azure-sdk-sample-review/
 │   └── quickstart/
 ```
 
-![SDK reference consolidation: before/after, single source of truth](./media/2026-05-11-tuning-up-copilot-skills/shared-references-architecture.png)
+<img src={require('./media/2026-05-11-tuning-up-copilot-skills/shared-references-architecture.png').default} alt="SDK reference consolidation: before/after, single source of truth" style={{width: '100%', maxWidth: '900px'}} />
 
 Eliminated six duplicated routing SKILL.md files. One dispatch mechanism instead of six. Waza compliance achieved — no more isolation violations. All 7 behavioral evals running at 100%.
 
