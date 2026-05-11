@@ -79,7 +79,7 @@ The strategy: decompose into phases, ordered by savings potential. **Clear the b
 
 
 
-**Why this order matters:** Phases 1–3 capture ~75% of savings. Phases 4–5 are diminishing returns per skill, but we completed them efficiently by applying the same patterns we'd already proven in Phases 1–3.
+**Why this order matters:** I started with stubs not because they saved much, but because they reduced noise before the real work. Phases 2–3 capture the bulk of savings. Phases 4–5 are diminishing returns per skill, but we completed them efficiently by applying the same patterns we'd already proven earlier.
 
 ## Phase 1: Killing the Stubs
 
@@ -177,32 +177,21 @@ At this point, the curve was clear. Phases 4–5 (medium and small skills) would
 
 ![Pull request showing 65% Copilot skills token reduction across 106 files](./media/2026-05-11-tuning-up-copilot-skills/pr-summary.png)
 
-**Key finding:**Don't reduce a `SKILL.md` below ~800 tokens for standalone skills. Below that threshold, you lose enough routing context that agents can't determine when or how to use the skill. **Exception:** Skills with strong internal routing logic (like the unified SDK skill at 469 tokens) can go lower because their dispatch logic compensates.
+**Key finding:** Don't reduce a `SKILL.md` below ~800 tokens for standalone skills. Below that threshold, you lose enough routing context that agents can't determine when or how to use the skill. **Exception:** Skills with strong internal routing logic (like the unified SDK skill at 469 tokens) can go lower because their dispatch logic compensates.
 
 The ~800-token floor is a practical boundary, discovered through testing.
 
 ## Phases 4–6: The Curve Flattens
 
-Phases 4–6 added another ~70K in savings — medium and small skills got checklist compression, reference audit caught oversized files. **We completed Phases 4 and 5** by applying the techniques proven in earlier phases. Here's what the effort looked like:
+After Phase 3, ~214K tokens remained. Phases 4–6 brought that down to 143K — another ~70K saved by applying the same patterns (checklist compression, reference extraction, deduplication) at smaller scale:
 
-```
-Phase 4 (medium): 60 skills (1K–5K tokens each)
-  Estimated savings: ~10–20K tokens
-  Estimated effort: 3–4 hours of parallel batching
-  ROI: $1 savings per 10–20 minutes effort
+| Phase | Skills | Technique | Savings |
+|-------|--------|-----------|---------|
+| 4. Medium | 60 skills (1K–5K each) | Checklist compression, dedup | ~45K |
+| 5. Small | 20 skills (under 1K each) | Light trimming | ~10K |
+| 6. Reference audit | Large reference files | Consolidation | ~15K |
 
-Phase 5 (small): 20 skills (<1K each)
-  Estimated savings: minimal (< 5K total)
-  Estimated effort: 2+ hours
-  ROI: marginal
-
-Phase 6 (reference audit): large reference files
-  Estimated savings: ~10–15K tokens
-  Estimated effort: manual review, high variance
-  ROI: unknown until started
-```
-
-We completed Phases 4 and 5 by reusing the patterns from earlier phases — checklist compression, reference extraction, and deduplication worked at every scale. The remaining ~214K tokens after Phase 6 is sustainable for the current usage pattern.
+The per-skill ROI drops in later phases, but having proven the techniques in Phases 1–3, the work was mechanical — same patterns, smaller targets. The current 143K total is sustainable for the usage pattern.
 
 ### Final Numbers
 
