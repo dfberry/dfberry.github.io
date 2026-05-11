@@ -229,7 +229,25 @@ azure-sdk-sample-review/
 │   └── quickstart/
 ```
 
-<img src={require('./media/2026-05-11-tuning-up-copilot-skills/shared-references-architecture.png').default} alt="SDK reference consolidation: before/after, single source of truth" style={{width: '100%', maxWidth: '900px'}} />
+**Before:** 86 files across 6 language folders, 45% duplicated content.
+
+| ☕ Java | 🐍 Python | 🔷 Go | 🟣 .NET | 📘 TypeScript | 🦀 Rust |
+|---------|-----------|-------|---------|---------------|---------|
+| `references/` | `references/` | `references/` | `references/` | `references/` | `references/` |
+| *14 generic + specific* | *14 generic + specific* | *14 generic + specific* | *14 generic + specific* | *14 generic + specific* | *14 generic + specific* |
+
+**After:** Single source of truth — 14 shared files, language folders hold only what's unique.
+
+```
+references/
+├── shared/          ← 14 generic files (update once, not six times)
+├── java/            ← Java-specific only
+├── python/          ← Python-specific only
+├── go/              ← Go-specific only
+├── dotnet/          ← .NET-specific only
+├── typescript/      ← TypeScript-specific only
+└── rust/            ← Rust-specific only
+```
 
 Eliminated six duplicated routing SKILL.md files. One dispatch mechanism instead of six. Waza compliance achieved — no more isolation violations. All 7 behavioral evals running at 100%.
 
