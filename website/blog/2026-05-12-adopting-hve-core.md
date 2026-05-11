@@ -53,7 +53,26 @@ I stumbled across hve-core while investigating context engineering patterns for 
 
 The breakthrough came when I realized hve-core and Squad operate at **different abstraction layers**: hve-core addresses how a single agent approaches a task (research before acting, carry context through files, manage the conversation window), while Squad addresses how multiple agents coordinate (who owns what, how decisions propagate, how to parallelize work). These aren't competing systems — they're complementary. Hve-core doesn't address multi-agent orchestration; Squad doesn't prescribe individual work methodology. Neither does what the other does. That's the opportunity.
 
-<!-- Architecture diagram: Two-layer system. Bottom layer shows an individual agent following RPI workflow (research → plan → implement → review with /clear between phases). Top layer shows Squad's team orchestration (PM agent fanning out to 5 specialized agents, results converging back). Layers connected by dotted line labeled "CLI plugin inheritance". PNW color palette: evergreen, slate blue, fog gray. -->
+```mermaid
+graph TB
+    subgraph "Squad Orchestration Layer"
+        C[Coordinator] --> A1[Content Agent]
+        C --> A2[DevOps Agent]
+        C --> A3[Research Agent]
+        C --> A4[QA Agent]
+        C --> A5[Docs Agent]
+    end
+
+    subgraph "Individual Discipline Layer (per agent)"
+        R[Research] -->|"/clear"| P[Plan]
+        P -->|"/clear"| I[Implement]
+        I -->|"/clear"| Rev[Review]
+    end
+
+    A1 -.->|"CLI plugin inheritance"| R
+    A2 -.->|"CLI plugin inheritance"| R
+    A3 -.->|"CLI plugin inheritance"| R
+```
 
 *Individual discipline (hve-core) flows up into team orchestration (Squad) without friction. The CLI plugin makes it automatic.*
 
@@ -71,7 +90,29 @@ Let me dig into the core methodology difference, because this is where I initial
 
 **Where They Complement** — Squad tells you who does the work. RPI tells each agent how to do it. When Squad spawns an agent, that agent can follow RPI internally: research what files it owns, plan the smallest change, implement, review for edge cases. The coordinator doesn't need to know the agent is following RPI — the agent just does better work.
 
-<!-- Before/after diagram: LEFT SIDE shows Squad spawning 3 agents → all three immediately start implementing (chaos, conflicting changes). RIGHT SIDE shows same 3 agents, but each internally follows RPI (research → plan → implement → review). Clean, parallel execution with better outcomes. -->
+```mermaid
+graph LR
+    subgraph "WITHOUT RPI"
+        S1[Squad] --> X1[Agent 1: Implement immediately]
+        S1 --> X2[Agent 2: Implement immediately]
+        S1 --> X3[Agent 3: Implement immediately]
+        X1 --> CHAOS[Conflicts & rework]
+        X2 --> CHAOS
+        X3 --> CHAOS
+    end
+
+    subgraph "WITH RPI"
+        S2[Squad] --> Y1[Agent 1]
+        S2 --> Y2[Agent 2]
+        S2 --> Y3[Agent 3]
+        Y1 --> R1[R → P → I → Rev]
+        Y2 --> R2[R → P → I → Rev]
+        Y3 --> R3[R → P → I → Rev]
+        R1 --> CLEAN[Clean parallel results]
+        R2 --> CLEAN
+        R3 --> CLEAN
+    end
+```
 
 *Adding individual discipline doesn't slow down parallel execution — it improves the quality of what each thread produces.*
 
@@ -100,11 +141,13 @@ I installed the full hve-core plugin three weeks ago. Here's what stuck and what
 
 ### What's Valuable
 
-**The RPI discipline is the killer feature.** Everything else is negotiable, but the Research → Plan → Implement → Review structure with explicit `/clear` between phases has measurably improved the quality of agent output. I'm getting fewer "this implementation ignores constraints" moments. I'm spending less time backtracking to explain context the agent already saw 50 turns ago.
+**The RPI discipline is the killer feature.** Everything else is negotiable, but the Research → Plan → Implement → Review structure with explicit `/clear` between phases has noticeably improved the quality of agent output. I'm getting fewer "this implementation ignores constraints" moments. I'm spending less time backtracking to explain context the agent already saw 50 turns ago.
 
 **Auto-applied instructions reduce cognitive load.** I no longer think "did I load the TypeScript conventions?" when opening a `.ts` file. They just apply. Small win, but it compounds over dozens of daily agent spawns.
 
 **Collections as plugins = zero repo bloat.** I can experiment with hve-core across all my projects without committing infrastructure. If it doesn't fit, I uninstall cleanly. No residue.
+
+**Decision guidance:** If you take one thing from hve-core, make it the RPI discipline. Everything else — the 49 agents, the collections, the auto-applied conventions — is optional. RPI is the core value proposition because it addresses the fundamental LLM failure mode: acting before understanding. The collections are nice-to-have accelerators, but the phase discipline is what changes outcomes. And adoption is genuinely low-commitment: `copilot plugin install` adds it, `copilot plugin uninstall` removes it. No repo changes, no config files, no team coordination needed. You can try it for a day, decide it's not for you, and uninstall with zero residue. That's rare for methodology tooling.
 
 ### What's Missing
 
@@ -141,5 +184,7 @@ If you're exploring similar territory:
 - [Squad CLI GitHub repo](https://github.com/bradygaster/squad) — multi-agent orchestration framework
 
 ---
+
+The payoff: individual agents work better, parallel execution stays fast, and infrastructure stays unchanged.
 
 *How do you structure multi-agent workflows? Have you tried layering individual methodology onto team orchestration? I'm always curious how others approach this. Reach out if you're experimenting with similar patterns.*
