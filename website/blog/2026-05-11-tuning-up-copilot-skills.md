@@ -295,8 +295,6 @@ The work happened over 8 user messages and 2 hours. Here's what went sideways an
 
 | What Happened | What Would Have Been Better |
 |---------------|---------------------------|
-| "get ready" + "can you plan" (2 turns) | State the goal upfront with the tool name and scope |
-| "keep going" × 2 | "Run all phases, don't stop between them" in the first prompt |
 | SDK dedup discovered late (turn 6–8) | Mention "deduplicate shared content" upfront as a known phase |
 | Asking about PR + review + results separately | Bundle deliverables: "PR, team review, results file" in one request |
 | Phases 4–5 required separate prompts | Front-load scope: "all phases including medium skills" keeps momentum |
