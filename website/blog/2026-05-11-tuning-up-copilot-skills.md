@@ -77,7 +77,7 @@ The strategy: decompose into phases, ordered by savings potential. **Clear the b
 | 5. Trim small | 20 skills (under 1K each) | minimal |
 | 6. Audit references | Large reference files | ~10–15K tokens |
 
-![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-11-tuning-up-copilot-skills/optimization-phases-plan.png)
+
 
 **Why this order matters:** Phases 1–3 capture ~75% of savings. Phases 4–5 are diminishing returns per skill, but we completed them efficiently by applying the same patterns we'd already proven in Phases 1–3.
 
