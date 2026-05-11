@@ -29,21 +29,24 @@ keywords:
 
 ![Watercolor illustration of a craftsperson's workbench being tidied and organized](./media/2026-05-11-tuning-up-copilot-skills/hero-skill-workshop.png)
 
-I'd been ignoring the `.copilot/skills/` directory for a while. I knew it was growing. Every time I built a new feature or onboarded a new domain, I'd add a skill. Sometimes three. My thinking was: more skills = more capability. And for a while, that was true.
+I'd been adding to the `.copilot/skills/` directory for a while without taking inventory. Every feature or domain onboarding meant a new skill — sometimes three. The assumption was obvious: more skills = more capability. For the first few dozen, that was true.
 
-Then I actually counted.
+Here's what's weird: I had no actual count.
 
-**413,591 tokens across 136 skill and reference files (117 distinct skills).** Six SDK sample review skills alone were consuming 140K tokens — 34% of the total budget — and I hadn't even noticed. Dead stub skills sitting around redirecting to nothing. Duplicated prose across six language variants. It was the kind of growth that creeps in when you're building fast and not auditing.
+When I finally looked: **413,591 tokens across 136 skill and reference files (117 distinct skills).** Just measuring it revealed the bloat:
+- 6 SDK sample review skills: 140K tokens (34% of total budget)
+- Dead redirect stubs: consuming tokens for no routing purpose
+- Duplicated prose: same guidance repeated across language variants
 
-Skills are different from context — they're loaded on demand, not held open. Optimizing them doesn't free your active context window. But it makes agent spawns faster and skill loading cheaper. Different lever, different win. I wanted both.
+Not a disaster, but the kind of creeping growth that happens when you build fast and don't audit.
 
-The optimization patterns I found — reference extraction, checklist compression, shared references — work whether you're editing skills by hand or using Copilot CLI to batch the refactoring. I used GitHub Copilot CLI with Squad orchestration to process multiple skills in parallel, but the techniques themselves are tool-agnostic. You could apply them manually in any editor.
+**Why this matters:** Skills load on demand, so optimizing them doesn't free your active context window. But faster agent spawns and cheaper skill loading? That's a different lever, and I wanted to pull it.
+
+The patterns I found — reference extraction, checklist compression, shared references — work with any tool. I used GitHub Copilot CLI with Squad orchestration to run them in parallel, but you could apply them manually in any editor. The techniques are the point, not the tooling.
 
 ## Measuring Token Usage with microsoft/waza
 
-I'd been meaning to look at [Waza](https://github.com/microsoft/waza) for a while. It's a skill quality toolkit, and `waza_tokens count` is exactly what I needed — it scans your skills directory and gives you a sorted breakdown of token usage. No guessing, no eyeballing file sizes.
-
-Here's what the output looked like on my directory:
+The first move: measure. [Waza](https://github.com/microsoft/waza) is a skill quality toolkit, and `waza_tokens count` does exactly that — scans your skills directory and gives you sorted token usage. No guessing. Here's the breakdown:
 
 ```
 $ waza_tokens count .copilot/skills/
@@ -59,11 +62,11 @@ $ waza_tokens count .copilot/skills/
 └─────────────────────────────────┴────────┘
 ```
 
-That top number hit hard. 25K tokens for a single skill. Waza has a few other useful tools too — `waza_tokens suggest` for optimization ideas, `waza_quality` to verify I hadn't broken anything post-optimization, and `waza_dev --copilot` for frontmatter work on new skills. But for this cleanup, the tokens count was the starting gun.
+25K tokens for a single skill. That's the starting point. Waza has other tools too — `waza_tokens suggest` for optimization ideas, `waza_quality` to verify post-changes, and `waza_dev --copilot` for frontmatter — but for this work, `count` was the diagnostic tool.
 
 ## Planning the Work
 
-I analyzed the skills directory and decomposed the work into phases, ordered by expected savings. The logic was simple: don't spend time on small wins until you've cleared the big ones.
+The strategy: decompose into phases, ordered by savings potential. **Clear the big ones first; small wins come after.**
 
 | Phase | Target | Est. Savings |
 |-------|--------|-------------|
@@ -76,27 +79,47 @@ I analyzed the skills directory and decomposed the work into phases, ordered by 
 
 ![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-11-tuning-up-copilot-skills/optimization-phases-plan.png)
 
-The key insight: start with the biggest consumers. Phases 1–3 were going to capture roughly three-quarters of the savings. Phases 4 and 5 were nice-to-haves — we'd do them if there was time and energy.
-
-Spoiler: we didn't finish Phase 4. More on that in the lessons section.
+**Why this order matters:** Phases 1–3 capture ~75% of savings. Phases 4–5 are diminishing returns. We didn't complete Phase 4 — the lessons section explains why that trade-off made sense.
 
 ## Phase 1: Killing the Stubs
 
-Three skills turned out to be redirect stubs — they pointed to other skills and contained under 50 tokens of actual content. No routing logic, no checklist, no value.
+**Problem:** Three skills were redirect stubs — they pointed to other skills and had <50 tokens of actual content. No routing logic, no value.
 
-Deleted instantly.
+**Action:** Deleted them.
 
-**Savings: −73 tokens.** Barely worth counting, but this is the boring-is-good part of the work — a clean directory is easier to reason about, and stubs are just future confusion waiting to happen.
+**Result:** −73 tokens. Barely registers numerically, but this is the "boring is good" work. A clean directory is easier to maintain, and stubs confuse future maintainers.
 
 ## Phase 2: The Giants
 
-This is where things got interesting.
+**Problem:** Six SDK sample review skills (Java, Python, Go, .NET, TypeScript, Rust) had identical structure: 15–16 detailed rule sections + full code examples inline. Total: 140K tokens (34% of budget). Agents loaded everything every time, even when they only needed one language's rules.
 
-Six SDK sample review skills — one per language (Java, Python, Go, .NET, TypeScript, Rust) — were enormous. Each one had been built with the same template: 15–16 detailed rule sections, full code examples inline, everything an agent could possibly need to review a code sample in that language. The problem was that *everything* meant every token, every time.
+**Technique: Reference Extraction.** Move verbose rules and examples to `references/` files. Keep `SKILL.md` slim — just routing info, a quick checklist, and blockers. Agents load the overview immediately, fetch detailed rules on demand.
 
-The technique here is what I'd call reference extraction. Instead of keeping all those detailed rules inline in `SKILL.md`, you move them into `references/` files and keep the `SKILL.md` slim — just routing info, a quick checklist, and the blocker-level issues. When an agent loads the skill, it gets the overview. If it needs the deep rules, it reads the reference files on demand. Two-tier architecture, essentially.
+**Before:**
+```
+java-sdk-review/SKILL.md (25,841 tokens)
+├── Routing info (2K)
+├── Error handling rules (8K + full examples)
+├── Concurrency rules (7K + full examples)
+├── Async patterns (6K + full examples)
+└── ... 12 more sections ...
+```
 
-I ran all six in parallel, one per language:
+**After:**
+```
+java-sdk-review/SKILL.md (1,541 tokens)
+├── Routing: detect Java SDK samples
+├── Quick checklist
+│   ├── Error handling: caught, logged, meaningful messages
+│   ├── Concurrency: thread-safe, no race conditions
+│   ├── Async patterns: proper callback/future chaining
+│   └── ... 5 more items
+└── Reference files in references/java/ (loaded on demand)
+```
+
+Two-tier architecture. Same content, loaded smarter.
+
+**Execution:** Ran all six in parallel:
 
 | Skill | Before | After | Reduction |
 |-------|--------|-------|-----------|
@@ -108,153 +131,182 @@ I ran all six in parallel, one per language:
 | Rust | 21,303 | 1,643 | **92%** |
 | **Total** | **140,318** | **8,985** | **~131K saved** |
 
-Zero content removed from the skill suite. Every rule, every code example — preserved in reference files. This is the trade-off worth naming: agents now navigate a two-tier structure (SKILL.md → references/) instead of having everything in one place. Discoverability costs something. I decided it was worth it here because these skills are used frequently enough that agents will learn the pattern.
+**Trade-off:** Agents now navigate a two-tier structure (SKILL.md → references/) instead of one flat file. Discoverability costs something. But these skills are used frequently enough that agents will learn the pattern. Zero content was removed — every rule and example is still there, just reference-extracted.
 
 ![Phase 2 complete: SDK skills before/after showing 94%+ reduction per language](./media/2026-05-11-tuning-up-copilot-skills/sdk-skills-before-after.png)
 
 ## Phase 3: Large Skills
 
-14 more skills in the 5K–10K range, processed in 4 parallel batches. `azure-mcp-content-generation`, `dina-reskill`, `context-diagnostics` — all optimization targets, all following the same pattern as Phase 2. Extract the verbose sections, keep the core routing slim.
+**Problem:** 14 more skills in the 5K–10K range had the same structure: verbose sections that could be extracted. Examples: `azure-mcp-content-generation`, `dina-reskill`, `context-diagnostics`.
 
-**Savings: −68,084 tokens (76% reduction)**
+**Action:** Applied the same reference extraction pattern in 4 parallel batches.
 
-## Running Totals After 3 Phases
+**Result:** −68,084 tokens (76% reduction)
 
-By this point we'd done the heavy lifting:
-
+**Running total:**
 ```
-Phase 1 (stubs):  −73 tokens
-Phase 2 (giants): −131,333 tokens  
-Phase 3 (large):  −68,084 tokens
+Phase 1 (stubs):   −73 tokens
+Phase 2 (giants):  −131,333 tokens
+Phase 3 (large):   −68,084 tokens
 ────────────────────────────────
-Total saved:      ~199,490 tokens
+Subtotal saved:    ~199,490 tokens (48% of starting budget)
+Remaining:         ~214,101 tokens
 ```
 
-![Phase 3 complete with running totals: ~199K tokens saved, 214K remaining](./media/2026-05-11-tuning-up-copilot-skills/cumulative-savings.png)
-
-About halfway through the session I started feeling good about the numbers. That's usually when something goes sideways.
+At this point, the curve was clear. Phases 4–5 (medium and small skills) would yield diminishing returns per unit effort. Could we optimize further? Yes. Was it worth the time? That's the tradeoff we addressed in Phase 4.
 
 ## The PR and the Review
 
-PR #147: **106 files changed, 12,176 insertions, 18,571 deletions.**
+**Problem:** PR #147 touched 106 files, 18,571 deletions, 12,176 insertions. Before shipping, we needed to verify:
+- Structural integrity (paths, syntax, references valid)
+- Quality didn't regress (waza_quality scores)
+- Routing logic still precise
+- Didn't over-trim skills below usefulness
 
-![Pull request showing 65% Copilot skills token reduction across 106 files](./media/2026-05-11-tuning-up-copilot-skills/pr-summary.png)
+**Action:** Ran four automated review passes:
+1. Structural integrity check — passed
+2. Waza quality verification — passed with notes
+3. Trigger precision validation — passed with notes
+4. Adversarial over-trimming check — **caught 2 real issues**
 
-I ran four automated review passes — structural integrity, waza_quality scores, trigger precision, and an adversarial over-trimming check. Three passed or passed with notes. The adversarial pass caught two real blockers: a reference file with a broken relative path, and a skill trimmed past the point of usefulness — the `SKILL.md` was essentially just a title and a pointer, with no routing context left to tell an agent when or how to use it.
+**Issues found and fixed:**
+1. Reference file with broken relative path (in Phase 2)
+2. Skill trimmed below ~800 tokens (lost routing context entirely)
 
-Both issues were fixed and re-reviewed. Second pass: ✅ SHIP.
+**Second pass:** ✅ SHIP
 
-The lesson from those blockers: don't reduce a `SKILL.md` below ~800 tokens. Below that, you risk losing enough routing context that agents can't determine when or how to use the skill. If your `SKILL.md` is just a title and a link to references, you've gone too far.
+**Key finding:** Don't reduce a `SKILL.md` below ~800 tokens for standalone skills. Below that threshold, you lose enough routing context that agents can't determine when or how to use the skill. **Exception:** Skills with strong internal routing logic (like the unified SDK skill at 469 tokens) can go lower because their dispatch logic compensates.
 
-The exception: skills with strong internal routing (like the unified SDK skill at 469 tokens) can go lower because their dispatch logic plus behavioral evals compensate for the reduced routing context. The ~800-token floor applies to standalone skills without that scaffolding.
+The ~800-token floor is a practical boundary, discovered through testing.
 
-## Phases 4–6: The Gap Closer
+## Phases 4–6: The Curve Flattens
 
-Phases 4–6 added another ~70K in savings — medium skills got checklist compression, and the reference audit caught oversized files. We didn't finish all of Phase 4, but what we did complete closed the gap to the final 270K number.
+Phases 4–6 added another ~70K in savings — medium and small skills got checklist compression, reference audit caught oversized files. **We didn't finish all of Phase 4.** Here's why that decision made sense:
+
+```
+Phase 4 (medium): 60 skills (1K–5K tokens each)
+  Estimated savings: ~10–20K tokens
+  Estimated effort: 3–4 hours of parallel batching
+  ROI: $1 savings per 10–20 minutes effort
+
+Phase 5 (small): 20 skills (<1K each)
+  Estimated savings: minimal (< 5K total)
+  Estimated effort: 2+ hours
+  ROI: marginal
+
+Phase 6 (reference audit): large reference files
+  Estimated savings: ~10–15K tokens
+  Estimated effort: manual review, high variance
+  ROI: unknown until started
+```
+
+We chose to do part of Phase 4 (6 hours total work) and stop. The remaining ~214K tokens is sustainable for the current usage pattern.
 
 ### Final Numbers
 
 ```
-Before:  413,591 tokens (117 skills)
-After:   143,354 tokens (114 skills)
+Before:  413,591 tokens (117 skills, 136 files)
+After:   143,354 tokens (114 skills, 130 files)
 Saved:   270,237 tokens (65.3% reduction)
 ```
 
-![Final summary: 413K → 143K tokens, 65.3% reduction](./media/2026-05-11-tuning-up-copilot-skills/final-token-reduction.png)
-
-These numbers reflect the main optimization pass (PR #147). The Bonus Round consolidation described next happened in a separate follow-up session.
-
-The 143K figure is pre-deduplication. The shared reference extraction in the next section further reduced maintenance overhead but didn't significantly change the token count — it consolidated duplicates rather than removing content.
+This reflects PR #147. The Bonus Round consolidation (PR #188) happened in a separate session and is described next.
 
 ## Bonus Round: From Shared References to Unified Skills
 
-After the PR merged and the dust settled, I was running `waza_quality` checks on the six SDK skills and noticed something in the scoring: **isolation violation**. Each skill had its own `SKILL.md`, its own routing logic, its own boilerplate duplicated across six files. That was flagged as a pattern violation — the waza toolkit prefers skills to be atomic and self-contained, but what I had was six micro-instances of the same thing, all within the waza boundary.
+After PR #147 shipped, I ran `waza_quality` on the six SDK skills and noticed: **isolation violation**. Each skill had its own `SKILL.md`, its own routing, its own boilerplate duplicated across six files. That's a pattern violation — not atomic, not clean.
 
-So I reconsidered the architecture. Three options:
+So I rethought it. Three options existed:
 
-1. **Accept the low score** — good-enough is fine for a domain-specific exception
-2. **Inline the shared content** — copy the 14 shared reference files into each skill, duplicate the maintenance burden
-3. **Single skill with language dispatch** — collapse all 7 skills (6 SDK languages + 1 quickstart template) into one unified skill with language auto-detection
+1. **Accept the low score** — good-enough for a domain-specific exception
+2. **Inline shared content** — copy the 14 shared reference files into each skill, double the maintenance burden
+3. **Single skill with language dispatch** — collapse all 7 (6 SDK languages + 1 quickstart) into one unified skill with language auto-detection
 
-I picked option 3. Not because it was the obvious choice, but because it forced me to think about the actual use case: agents almost never need to review samples in *all* languages simultaneously. They review one language at a time, selected based on the codebase they're analyzing. A single skill with smart routing was actually more correct than the multi-skill pretense.
+I went with option 3. Not because it was obvious, but because it matched the actual use case: agents almost never review samples in *all* languages simultaneously. They review one language based on the codebase. A single skill with smart routing was actually more correct than the multi-skill pretense.
 
-The result: `azure-sdk-sample-review/` — one skill, 469 tokens in `SKILL.md` (under the 500-token soft limit), with language auto-detection using prompt analysis. The structure is now:
+Result: `azure-sdk-sample-review/` — one skill, 469 tokens in `SKILL.md`, language auto-detection via prompt analysis. Structure:
 
 ```
 azure-sdk-sample-review/
-├── SKILL.md (469 tokens)
+├── SKILL.md (469 tokens) — routing + dispatch logic
 ├── evals/ (7 tasks, 100% passing)
 ├── references/
 │   ├── shared/ (14 files: generic best practices)
-│   ├── dotnet/
-│   ├── go/
-│   ├── java/
-│   ├── python/
-│   ├── rust/
-│   ├── typescript/
+│   ├── dotnet/, go/, java/, python/, rust/, typescript/
 │   └── quickstart/
 ```
 
-This eliminated six duplicated routing SKILL.md files (which were contributing nothing but bulk) and consolidated all the language-specific logic into a single dispatch mechanism. Waza compliance achieved — no more isolation violations. All 7 behavioral evals running at 100%, checking that language detection actually works and that each language's review rules fire correctly.
+Eliminated six duplicated routing SKILL.md files. One dispatch mechanism instead of six. Waza compliance achieved — no more isolation violations. All 7 behavioral evals running at 100%.
 
-It's a third evolution: **reference extraction → shared references → unified skill with internal routing**. Each step felt logical at the time, but stepping back, the final architecture is actually simpler and more correct. I wish I'd seen it from the start. (PR #188 captured the work.)
+This is the evolution: **reference extraction → shared references → unified skill with internal routing.** Each step felt right at the time. Looking back, the final architecture is simpler and more correct. Wish I'd seen it from the start. (Work captured in PR #188.)
 
 ## Dogfooding: The Reskill Skill
 
-The optimization pipeline worked well enough that I captured it as a skill — `dina-reskill` — documenting the 8-pattern optimization workflow (reference extraction, checklist compression, example pruning, and so on).
+I captured the optimization pipeline as a skill — `dina-reskill` — documenting the 8-pattern workflow (reference extraction, checklist compression, example pruning, and so on).
 
-Then, because I'm apparently incapable of leaving well enough alone, I ran `dina-reskill` on itself:
+Then I ran it on itself, because apparently I can't leave well enough alone:
 
 ```
-SKILL.md:  2,085 → 1,163 (44% reduction)
-Total:     5,401 → 4,288 (21% reduction)
+SKILL.md:  2,085 → 1,163 tokens (44% reduction)
+Total:     5,401 → 4,288 tokens (21% reduction)
 ```
 
-Three review passes: two clean approvals, one note flagged and fixed.
-
-The skill practices what it preaches. 🐕
-
-**Note:** The SDK skills themselves went through a third iteration after this optimization pass (described in the Bonus Round section) — from six separate skills with shared references down to a single unified skill. So while `dina-reskill` captured the second-pass improvements here, the SDK consolidation shows how those patterns can evolve further as you live with them.
+Three review passes: two approvals, one note flagged and fixed. The skill practices what it documents. The SDK skills themselves evolved further after this (described in Bonus Round) — from six separate skills down to a single unified skill. So while `dina-reskill` captures the second-pass improvements here, the SDK consolidation shows how those patterns continue to evolve as you live with them.
 
 ## What Actually Worked: The Patterns
 
-My perspective on what to reach for first, ranked by impact:
+If you're building a skills optimization workflow, here are the patterns ranked by impact:
 
 ### 1. Reference Extraction
 
-This was the biggest single win by far. Move detailed rules, code examples, and verbose explanations into `references/` files. The `SKILL.md` becomes a routing layer — overview, quick checklist, blocker list. Agents load references on demand. For any skill over 5K tokens, this should be your first move.
+**Principle:** Move detailed rules, code examples, and verbose explanations into `references/` files. The `SKILL.md` becomes a slim routing layer — overview, quick checklist, blocker list. Agents load references on demand.
+
+**When to use:** For any skill over 5K tokens, this should be your first move. Start here, not somewhere else.
+
+**Example:** The Java SDK skill went from 25,841 tokens (inline rules + examples) to 1,541 tokens (routing + checklist) by extracting ~24K into `references/java/`.
 
 ### 2. Checklist Compression
 
-Turn paragraph-style guidance into concise checklists. "When reviewing error handling, ensure that all errors are properly caught, logged with appropriate context, and returned with meaningful messages to the caller" becomes "✅ Errors: caught, logged with context, meaningful messages." Same information, fraction of the tokens.
+**Principle:** Turn paragraph-style guidance into concise checklists. Same information, fraction of the tokens.
+
+**Example:** 
+- Before: "When reviewing error handling, ensure that all errors are properly caught, logged with appropriate context, and returned with meaningful messages to the caller"
+- After: "✅ Errors: caught, logged with context, meaningful messages"
 
 ### 3. Example Pruning
 
-One good example per pattern. If your skill has 3 examples of the same concept, pick the clearest one and reference-extract the rest.
+**Principle:** One good example per pattern. If your skill has 3 examples of the same concept, keep the clearest one and move the others to references.
 
 ### 4. Shared References → Unified Skill Routing
 
-If multiple skills share common guidance, the first instinct is to extract it once and link (classic `shared-references/` pattern). That works, but I discovered it's often a stepping stone toward something better: collapsing the multi-skill pseudo-duplication into a single skill with internal language or domain dispatch. The shared references pattern is useful when you genuinely have separate skills with independent concerns; when you have N near-identical skills differing only by one dimension (language, framework, etc.), a unified skill with auto-detection is cleaner. One `SKILL.md`, one set of evaluations, one routing boundary. Zero isolation violations.
+**Principle:** If multiple skills share common guidance, the first instinct is to extract it once and link. That works, but it's often a stepping stone to something better: collapsing near-identical skills into one skill with internal dispatch logic.
+
+**When this works:** When you have N near-identical skills differing only by one dimension (language, framework, etc.), a unified skill with auto-detection is cleaner than N separate skills with shared references.
+
+**Trade-off:** One `SKILL.md`, one set of evals, one routing boundary. Zero isolation violations. But your `SKILL.md` becomes more complex.
 
 ### 5. Stub Elimination
 
-If a skill just redirects to another skill, delete it. The router doesn't need a placeholder, and stubs will confuse future agents trying to decide what to use.
+**Principle:** If a skill just redirects to another skill, delete it. The router doesn't need a placeholder, and stubs confuse future agents trying to decide what to use.
 
 ## Honest Lessons: How I Should Have Run This
 
-I ran this over 8 user messages. Here's what that actually looked like, and what I'd do differently:
+The work happened over 8 user messages and 2 hours. Here's what went sideways and what would have prevented it:
 
 | What Happened | What Would Have Been Better |
 |---------------|---------------------------|
-| "get ready" + "can you plan" (2 turns) | State the goal upfront with the tool name |
-| "keep going" × 2 | "Run all phases, don't stop between them" |
-| SDK dedup discovered late (turn 6–8) | Mention "deduplicate shared content" upfront |
-| Asking about PR + review + results separately | Bundle deliverables: "PR, team review, results file" |
-| Stopped at Phase 4 halfway through | Front-load scope: "all phases including medium skills" would have kept momentum |
+| "get ready" + "can you plan" (2 turns) | State the goal upfront with the tool name and scope |
+| "keep going" × 2 | "Run all phases, don't stop between them" in the first prompt |
+| SDK dedup discovered late (turn 6–8) | Mention "deduplicate shared content" upfront as a known phase |
+| Asking about PR + review + results separately | Bundle deliverables: "PR, team review, results file" in one request |
+| Stopped at Phase 4 halfway through | Front-load scope: "all phases including medium skills" keeps momentum |
 
-The pattern I should have followed: front-load three things — (1) the tool or technique, (2) the full scope with known edge cases, (3) all the deliverables I want at the end. One prompt, not eight.
+**The pattern that would have worked:** Front-load three things upfront:
+1. The technique or tool (`waza_tokens`, reference extraction, etc.)
+2. Full scope with known edge cases (all 6 phases, ~800-token floor, etc.)
+3. All deliverables you want at the end
 
-The planning phase is cheap; the execution phase is expensive. I skipped the planning phase because I was impatient. I paid for it in "keep going" messages.
+**One prompt, not eight.** Planning phase is cheap; execution phase is expensive. I skipped planning because I was impatient and paid for it in "keep going" messages.
 
 ## The Setup
 
@@ -267,12 +319,10 @@ For reference, here's what I was running:
 
 ## Where to Go From Here
 
-If you're curious whether your own skills directory needs this treatment, `waza_tokens count` is the quick answer. If your total is over 100K tokens, you probably have meaningful room to optimize. If you have skills over 5K tokens, reference extraction is almost always worth it.
+To determine if your own skills directory needs this treatment: run `waza_tokens count` and see the total. **If it's over 100K tokens, you have meaningful room to optimize.** If you have skills over 5K tokens, reference extraction is almost always worth it.
 
-I'm not going to hand you a checklist and call it a day — everyone's skill architecture is different, and the interesting work is figuring out which patterns actually fit your setup. But if you do try this and discover something that works or something that breaks badly, I'd genuinely be curious to hear what you found.
+Everyone's skill architecture is different — the interesting work is figuring out which patterns actually fit your setup. If you try these and discover something that works or something that breaks, I'd be curious to hear what you found.
 
-Main optimization session ran on May 11, 2026. 8 user messages, about 2 hours, 270K tokens saved. The Bonus Round consolidation (PR #188) happened in a follow-up session.
+Main optimization session: May 11, 2026. 8 user messages, ~2 hours, 270K tokens saved. The Bonus Round consolidation (PR #188) happened in a follow-up session.
 
----
-
-*Fun stuff!* The repo is at [github.com/diberry/project-dina](https://github.com/diberry/project-dina) if you want to dig into the skill structure directly.
+The repo is at [github.com/diberry/project-dina](https://github.com/diberry/project-dina) if you want to dig into the skill structure.
