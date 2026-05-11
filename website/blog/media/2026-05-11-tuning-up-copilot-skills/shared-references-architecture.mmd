@@ -1,0 +1,45 @@
+flowchart LR
+    subgraph before_state["BEFORE: 86 files, 45% duplicated"]
+        b_java["☕ Java<br/>references/"]
+        b_python["🐍 Python<br/>references/"]
+        b_go["🔷 Go<br/>references/"]
+        b_dotnet["🟣 .NET<br/>references/"]
+        b_ts["📘 TypeScript<br/>references/"]
+        b_rust["🦀 Rust<br/>references/"]
+    end
+
+    subgraph after_state["AFTER: Single source of truth"]
+        shared["📦 shared-sdk-references/<br/>14 generic files"]
+        a_java["☕ Java-specific only"]
+        a_python["🐍 Python-specific only"]
+        a_go["🔷 Go-specific only"]
+        a_dotnet["🟣 .NET-specific only"]
+        a_ts["📘 TS-specific only"]
+        a_rust["🦀 Rust-specific only"]
+        
+        a_java --> shared
+        a_python --> shared
+        a_go --> shared
+        a_dotnet --> shared
+        a_ts --> shared
+        a_rust --> shared
+    end
+
+    update["✏️ Update 1 file, not 6"]
+
+    style before_state fill:#3b1010,stroke:#f87171,color:#fef2f2
+    style after_state fill:#0a3b1a,stroke:#4ade80,color:#f0fdf4
+    style shared fill:#1a1a3b,stroke:#a78bfa,color:#ede9fe
+    style update fill:#3b2f0a,stroke:#facc15,color:#fefce8
+    style b_java fill:#4a1515,stroke:#ef4444,color:#fecaca
+    style b_python fill:#4a1515,stroke:#ef4444,color:#fecaca
+    style b_go fill:#4a1515,stroke:#ef4444,color:#fecaca
+    style b_dotnet fill:#4a1515,stroke:#ef4444,color:#fecaca
+    style b_ts fill:#4a1515,stroke:#ef4444,color:#fecaca
+    style b_rust fill:#4a1515,stroke:#ef4444,color:#fecaca
+    style a_java fill:#0a3b1a,stroke:#22c55e,color:#bbf7d0
+    style a_python fill:#0a3b1a,stroke:#22c55e,color:#bbf7d0
+    style a_go fill:#0a3b1a,stroke:#22c55e,color:#bbf7d0
+    style a_dotnet fill:#0a3b1a,stroke:#22c55e,color:#bbf7d0
+    style a_ts fill:#0a3b1a,stroke:#22c55e,color:#bbf7d0
+    style a_rust fill:#0a3b1a,stroke:#22c55e,color:#bbf7d0
