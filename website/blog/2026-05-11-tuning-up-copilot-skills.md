@@ -157,7 +157,7 @@ At this point, the curve was clear. Phases 4–5 (medium and small skills) would
 
 ## The PR and the Review
 
-**Problem:** PR #147 touched 106 files, 18,571 deletions, 12,176 insertions. Before shipping, we needed to verify:
+**Problem:** The PR touched 106 files, 18,571 deletions, 12,176 insertions. Before shipping, we needed to verify:
 - Structural integrity (paths, syntax, references valid)
 - Quality didn't regress (waza_quality scores)
 - Routing logic still precise
@@ -201,11 +201,11 @@ After:   143,354 tokens (114 skills, 130 files)
 Saved:   270,237 tokens (65.3% reduction)
 ```
 
-This reflects PR #147. The Bonus Round consolidation (PR #188) happened in a separate session and is described next.
+This reflects the main optimization PR. The Bonus Round consolidation happened in a separate session and is described next.
 
 ## Bonus Round: From Shared References to Unified Skills
 
-After PR #147 shipped, I ran `waza_quality` on the six SDK skills and noticed: **isolation violation**. Each skill had its own `SKILL.md`, its own routing, its own boilerplate duplicated across six files. That's a pattern violation — not atomic, not clean.
+After the optimization PR shipped, I ran `waza_quality` on the six SDK skills and noticed: **isolation violation**. Each skill had its own `SKILL.md`, its own routing, its own boilerplate duplicated across six files. That's a pattern violation — not atomic, not clean.
 
 So I rethought it. Three options existed:
 
@@ -231,7 +231,7 @@ azure-sdk-sample-review/
 
 Eliminated six duplicated routing SKILL.md files. One dispatch mechanism instead of six. Waza compliance achieved — no more isolation violations. All 7 behavioral evals running at 100%.
 
-This is the evolution: **reference extraction → shared references → unified skill with internal routing.** Each step felt right at the time. Looking back, the final architecture is simpler and more correct. Wish I'd seen it from the start. (Work captured in PR #188.)
+This is the evolution: **reference extraction → shared references → unified skill with internal routing.** Each step felt right at the time. Looking back, the final architecture is simpler and more correct. Wish I'd seen it from the start. (Work captured in a follow-up PR.)
 
 ## Dogfooding: The Reskill Skill
 
@@ -314,6 +314,4 @@ To determine if your own skills directory needs this treatment: run `waza_tokens
 
 Everyone's skill architecture is different — the interesting work is figuring out which patterns actually fit your setup. If you try these and discover something that works or something that breaks, I'd be curious to hear what you found.
 
-Main optimization session: May 11, 2026. 8 user messages, ~2 hours, 270K tokens saved. The Bonus Round consolidation (PR #188) happened in a follow-up session.
-
-The repo is at [github.com/diberry/project-dina](https://github.com/diberry/project-dina) if you want to dig into the skill structure.
+Main optimization session: May 11, 2026. 8 user messages, ~2 hours, 270K tokens saved. The Bonus Round consolidation happened in a follow-up session.
