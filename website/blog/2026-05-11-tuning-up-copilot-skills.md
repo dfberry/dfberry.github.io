@@ -29,7 +29,7 @@ keywords:
 
 ![Watercolor illustration of a craftsperson's workbench being tidied and organized](./media/2026-05-11-tuning-up-copilot-skills/hero-skill-workshop.png)
 
-I'd been adding to the `.copilot/skills/` directory for a while without taking inventory. Every feature or domain onboarding meant a new skill — sometimes three. The assumption was obvious: more skills = more capability. For the first few dozen, that was true.
+I'd been adding to the `.copilot/skills/` directory for a while without taking inventory. Every feature or domain onboarding meant a new skill — sometimes three. The assumption was obvious: more skills = more consistency. For the first few dozen, that was true.
 
 Here's what's weird: I had no actual count.
 
