@@ -308,7 +308,7 @@ The work happened over 8 user messages and 2 hours. Here's what went sideways an
 2. Full scope with known edge cases (all 6 phases, ~800-token floor, etc.)
 3. All deliverables you want at the end
 
-**One prompt, not eight.** Planning phase is cheap; execution phase is expensive. I skipped planning because I was impatient and paid for it in "keep going" messages.
+Front-load scope, technique, and deliverables in one message. The AI doesn't lose patience — you do. Every "keep going" prompt is a planning failure you're paying for at execution prices.
 
 ## The Setup
 
