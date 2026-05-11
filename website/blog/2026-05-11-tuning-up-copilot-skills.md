@@ -1,8 +1,8 @@
 ---
-slug: /2026-05-09-tuning-up-copilot-skills
-canonical_url: https://dfberry.github.io/blog/2026-05-09-tuning-up-copilot-skills
+slug: /2026-05-11-tuning-up-copilot-skills
+canonical_url: https://dfberry.github.io/blog/2026-05-11-tuning-up-copilot-skills
 custom_edit_url: null
-sidebar_label: "2026.05.09 Tuning Up Copilot Skills"
+sidebar_label: "2026.05.11 Tuning Up Copilot Skills"
 title: "Optimizing Copilot Skills: 65% Token Reduction Across 117 Skills"
 description: "I had 413K tokens of unoptimized skills and a waza toolkit to diagnose them. Here's what I found, what surprised me, and what actually worked."
 draft: true
@@ -13,7 +13,7 @@ tags:
   - Token Optimization
   - AI assisted
   - Tutorial
-updated: 2026-05-09 18:00 PST
+updated: 2026-05-11 18:00 PST
 keywords:
   - copilot skills optimization
   - waza tokens
@@ -27,7 +27,7 @@ keywords:
 
 # Optimizing Copilot Skills: 65% Token Reduction Across 117 Skills
 
-![Watercolor illustration of a craftsperson's workbench being tidied and organized](./media/2026-05-09-tuning-up-copilot-skills/hero-skill-workshop.png)
+![Watercolor illustration of a craftsperson's workbench being tidied and organized](./media/2026-05-11-tuning-up-copilot-skills/hero-skill-workshop.png)
 
 I'd been ignoring the `.copilot/skills/` directory for a while. I knew it was growing. Every time I built a new feature or onboarded a new domain, I'd add a skill. Sometimes three. My thinking was: more skills = more capability. And for a while, that was true.
 
@@ -74,7 +74,7 @@ I analyzed the skills directory and decomposed the work into phases, ordered by 
 | 5. Trim small | 20 skills (under 1K each) | minimal |
 | 6. Audit references | Large reference files | ~10–15K tokens |
 
-![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-09-tuning-up-copilot-skills/optimization-phases-plan.png)
+![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-11-tuning-up-copilot-skills/optimization-phases-plan.png)
 
 The key insight: start with the biggest consumers. Phases 1–3 were going to capture roughly three-quarters of the savings. Phases 4 and 5 were nice-to-haves — we'd do them if there was time and energy.
 
@@ -110,7 +110,7 @@ I ran all six in parallel, one per language:
 
 Zero content removed from the skill suite. Every rule, every code example — preserved in reference files. This is the trade-off worth naming: agents now navigate a two-tier structure (SKILL.md → references/) instead of having everything in one place. Discoverability costs something. I decided it was worth it here because these skills are used frequently enough that agents will learn the pattern.
 
-![Phase 2 complete: SDK skills before/after showing 94%+ reduction per language](./media/2026-05-09-tuning-up-copilot-skills/sdk-skills-before-after.png)
+![Phase 2 complete: SDK skills before/after showing 94%+ reduction per language](./media/2026-05-11-tuning-up-copilot-skills/sdk-skills-before-after.png)
 
 ## Phase 3: Large Skills
 
@@ -130,7 +130,7 @@ Phase 3 (large):  −68,084 tokens
 Total saved:      ~199,490 tokens
 ```
 
-![Phase 3 complete with running totals: ~199K tokens saved, 214K remaining](./media/2026-05-09-tuning-up-copilot-skills/cumulative-savings.png)
+![Phase 3 complete with running totals: ~199K tokens saved, 214K remaining](./media/2026-05-11-tuning-up-copilot-skills/cumulative-savings.png)
 
 About halfway through the session I started feeling good about the numbers. That's usually when something goes sideways.
 
@@ -138,7 +138,7 @@ About halfway through the session I started feeling good about the numbers. That
 
 PR #147: **106 files changed, 12,176 insertions, 18,571 deletions.**
 
-![Pull request showing 65% Copilot skills token reduction across 106 files](./media/2026-05-09-tuning-up-copilot-skills/pr-summary.png)
+![Pull request showing 65% Copilot skills token reduction across 106 files](./media/2026-05-11-tuning-up-copilot-skills/pr-summary.png)
 
 I ran four automated review passes — structural integrity, waza_quality scores, trigger precision, and an adversarial over-trimming check. Three passed or passed with notes. The adversarial pass caught two real blockers: a reference file with a broken relative path, and a skill trimmed past the point of usefulness — the `SKILL.md` was essentially just a title and a pointer, with no routing context left to tell an agent when or how to use it.
 
@@ -160,7 +160,7 @@ After:   143,354 tokens (114 skills)
 Saved:   270,237 tokens (65.3% reduction)
 ```
 
-![Final summary: 413K → 143K tokens, 65.3% reduction](./media/2026-05-09-tuning-up-copilot-skills/final-token-reduction.png)
+![Final summary: 413K → 143K tokens, 65.3% reduction](./media/2026-05-11-tuning-up-copilot-skills/final-token-reduction.png)
 
 These numbers reflect the main optimization pass (PR #147). The Bonus Round consolidation described next happened in a separate follow-up session.
 
