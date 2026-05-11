@@ -175,7 +175,9 @@ At this point, the curve was clear. Phases 4–5 (medium and small skills) would
 
 **Second pass:** ✅ SHIP
 
-**Key finding:** Don't reduce a `SKILL.md` below ~800 tokens for standalone skills. Below that threshold, you lose enough routing context that agents can't determine when or how to use the skill. **Exception:** Skills with strong internal routing logic (like the unified SDK skill at 469 tokens) can go lower because their dispatch logic compensates.
+![Pull request showing 65% Copilot skills token reduction across 106 files](./media/2026-05-11-tuning-up-copilot-skills/pr-summary.png)
+
+**Key finding:**Don't reduce a `SKILL.md` below ~800 tokens for standalone skills. Below that threshold, you lose enough routing context that agents can't determine when or how to use the skill. **Exception:** Skills with strong internal routing logic (like the unified SDK skill at 469 tokens) can go lower because their dispatch logic compensates.
 
 The ~800-token floor is a practical boundary, discovered through testing.
 
@@ -235,6 +237,8 @@ azure-sdk-sample-review/
 │   ├── dotnet/, go/, java/, python/, rust/, typescript/
 │   └── quickstart/
 ```
+
+![SDK reference consolidation: before/after, single source of truth](./media/2026-05-11-tuning-up-copilot-skills/shared-references-architecture.png)
 
 Eliminated six duplicated routing SKILL.md files. One dispatch mechanism instead of six. Waza compliance achieved — no more isolation violations. All 7 behavioral evals running at 100%.
 
