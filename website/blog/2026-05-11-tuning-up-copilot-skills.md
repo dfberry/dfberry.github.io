@@ -271,7 +271,7 @@ If you're curious whether your own skills directory needs this treatment, `waza_
 
 I'm not going to hand you a checklist and call it a day — everyone's skill architecture is different, and the interesting work is figuring out which patterns actually fit your setup. But if you do try this and discover something that works or something that breaks badly, I'd genuinely be curious to hear what you found.
 
-Main optimization session ran on May 9, 2026. 8 user messages, about 2 hours, 270K tokens saved. The Bonus Round consolidation (PR #188) happened in a follow-up session.
+Main optimization session ran on May 11, 2026. 8 user messages, about 2 hours, 270K tokens saved. The Bonus Round consolidation (PR #188) happened in a follow-up session.
 
 ---
 
