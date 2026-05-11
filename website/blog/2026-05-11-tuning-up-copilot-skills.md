@@ -133,6 +133,8 @@ Two-tier architecture. Same content, loaded smarter.
 
 **Trade-off:** Agents now navigate a two-tier structure (SKILL.md → references/) instead of one flat file. Discoverability costs something. But these skills are used frequently enough that agents will learn the pattern. Zero content was removed — every rule and example is still there, just reference-extracted.
 
+![Phase 2 complete: SDK skills before/after showing 94%+ reduction per language](./media/2026-05-11-tuning-up-copilot-skills/sdk-skills-before-after.png)
+
 ## Phase 3: Large Skills
 
 **Problem:** 14 more skills in the 5K–10K range had the same structure: verbose sections that could be extracted. Examples: `azure-mcp-content-generation`, `dina-reskill`, `context-diagnostics`.
