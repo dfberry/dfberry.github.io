@@ -31,7 +31,7 @@ keywords:
 
 Optimizing skills felt less like deleting content and more like reorganizing a workshop — same tools, better drawers.
 
-I'd been adding to the `.copilot/skills/` directory for a while without taking inventory.Every feature or domain onboarding meant a new skill — sometimes three. The assumption was obvious: more skills = more consistency. For the first few dozen, that was true.
+I'd been adding to the `.copilot/skills/` directory for a while without taking inventory. Every feature or domain onboarding meant a new skill — sometimes three. The assumption was obvious: more skills = more consistency. For the first few dozen, that was true.
 
 Here's what's weird: I had no actual count.
 
