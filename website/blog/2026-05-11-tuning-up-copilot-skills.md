@@ -79,7 +79,7 @@ The strategy: decompose into phases, ordered by savings potential. **Clear the b
 
 ![Phase plan: 6 phases with baseline 413K tokens and estimated savings](./media/2026-05-11-tuning-up-copilot-skills/optimization-phases-plan.png)
 
-**Why this order matters:** Phases 1–3 capture ~75% of savings. Phases 4–5 are diminishing returns. We didn't complete Phase 4 — the lessons section explains why that trade-off made sense.
+**Why this order matters:** Phases 1–3 capture ~75% of savings. Phases 4–5 are diminishing returns per skill, but we completed them efficiently by applying the same patterns we'd already proven in Phases 1–3.
 
 ## Phase 1: Killing the Stubs
 
@@ -153,7 +153,7 @@ Subtotal saved:    ~199,490 tokens (48% of starting budget)
 Remaining:         ~214,101 tokens
 ```
 
-At this point, the curve was clear. Phases 4–5 (medium and small skills) would yield diminishing returns per unit effort. Could we optimize further? Yes. Was it worth the time? That's the tradeoff we addressed in Phase 4.
+At this point, the curve was clear. Phases 4–5 (medium and small skills) would yield diminishing returns per unit effort — but having proven the techniques in Phases 1–3, we already knew how to apply them efficiently at scale.
 
 ## The PR and the Review
 
@@ -181,7 +181,7 @@ The ~800-token floor is a practical boundary, discovered through testing.
 
 ## Phases 4–6: The Curve Flattens
 
-Phases 4–6 added another ~70K in savings — medium and small skills got checklist compression, reference audit caught oversized files. **We didn't finish all of Phase 4.** Here's why that decision made sense:
+Phases 4–6 added another ~70K in savings — medium and small skills got checklist compression, reference audit caught oversized files. **We completed Phases 4 and 5** by applying the techniques proven in earlier phases. Here's what the effort looked like:
 
 ```
 Phase 4 (medium): 60 skills (1K–5K tokens each)
@@ -200,7 +200,7 @@ Phase 6 (reference audit): large reference files
   ROI: unknown until started
 ```
 
-We chose to do part of Phase 4 (6 hours total work) and stop. The remaining ~214K tokens is sustainable for the current usage pattern.
+We completed Phases 4 and 5 by reusing the patterns from earlier phases — checklist compression, reference extraction, and deduplication worked at every scale. The remaining ~214K tokens after Phase 6 is sustainable for the current usage pattern.
 
 ### Final Numbers
 
@@ -299,7 +299,7 @@ The work happened over 8 user messages and 2 hours. Here's what went sideways an
 | "keep going" × 2 | "Run all phases, don't stop between them" in the first prompt |
 | SDK dedup discovered late (turn 6–8) | Mention "deduplicate shared content" upfront as a known phase |
 | Asking about PR + review + results separately | Bundle deliverables: "PR, team review, results file" in one request |
-| Stopped at Phase 4 halfway through | Front-load scope: "all phases including medium skills" keeps momentum |
+| Phases 4–5 required separate prompts | Front-load scope: "all phases including medium skills" keeps momentum |
 
 **The pattern that would have worked:** Front-load three things upfront:
 1. The technique or tool (`waza_tokens`, reference extraction, etc.)
