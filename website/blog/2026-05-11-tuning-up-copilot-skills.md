@@ -29,7 +29,9 @@ keywords:
 
 ![Watercolor illustration of a craftsperson's workbench being tidied and organized](./media/2026-05-11-tuning-up-copilot-skills/hero-skill-workshop.png)
 
-I'd been adding to the `.copilot/skills/` directory for a while without taking inventory. Every feature or domain onboarding meant a new skill — sometimes three. The assumption was obvious: more skills = more consistency. For the first few dozen, that was true.
+Optimizing skills felt less like deleting content and more like reorganizing a workshop — same tools, better drawers.
+
+I'd been adding to the `.copilot/skills/` directory for a while without taking inventory.Every feature or domain onboarding meant a new skill — sometimes three. The assumption was obvious: more skills = more consistency. For the first few dozen, that was true.
 
 Here's what's weird: I had no actual count.
 
@@ -201,7 +203,7 @@ After:   143,354 tokens (114 skills, 130 files)
 Saved:   270,237 tokens (65.3% reduction)
 ```
 
-This reflects the main optimization PR. The Bonus Round consolidation happened in a separate session and is described next.
+This reflects the main optimization PR. The workbench is cleaner — every tool is still there, but they're in labeled drawers instead of piled on the surface. The Bonus Round consolidation happened in a separate session and is described next.
 
 ## Bonus Round: From Shared References to Unified Skills
 
@@ -313,5 +315,11 @@ For reference, here's what I was running:
 To determine if your own skills directory needs this treatment: run `waza_tokens count` and see the total. **If it's over 100K tokens, you have meaningful room to optimize.** If you have skills over 5K tokens, reference extraction is almost always worth it.
 
 Everyone's skill architecture is different — the interesting work is figuring out which patterns actually fit your setup. If you try these and discover something that works or something that breaks, I'd be curious to hear what you found.
+
+<!-- IMAGE PROMPT: hero-skill-workshop-after.png - Watercolor illustration of the SAME craftsperson's workbench from the hero image, but now fully organized — tools hung on pegboard, labeled drawers, clean work surface, warm lighting suggesting satisfaction. Same color palette and art style as hero-skill-workshop.png. Companion bookend to the opening image. -->
+
+![The same workbench, now organized — tools on pegboard, labeled drawers, clean surface](./media/2026-05-11-tuning-up-copilot-skills/hero-skill-workshop-after.png)
+
+Same workshop. Same tools. Better organized. That's what 270K tokens of optimization looks like.
 
 Main optimization session: May 11, 2026. 8 user messages, ~2 hours, 270K tokens saved. The Bonus Round consolidation happened in a follow-up session.
