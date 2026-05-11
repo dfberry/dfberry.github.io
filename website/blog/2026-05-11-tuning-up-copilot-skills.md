@@ -229,27 +229,9 @@ azure-sdk-sample-review/
 │   └── quickstart/
 ```
 
-**Before:** 86 files across 6 language folders, 45% duplicated content.
+**Before:** 86 files across 6 language folders — Java, Python, Go, .NET, TypeScript, Rust — each with its own copy of the same 14 generic reference files. 45% pure duplication. Update one? Remember to update five more.
 
-| ☕ Java | 🐍 Python | 🔷 Go | 🟣 .NET | 📘 TypeScript | 🦀 Rust |
-|---------|-----------|-------|---------|---------------|---------|
-| `references/` | `references/` | `references/` | `references/` | `references/` | `references/` |
-| *14 generic + specific* | *14 generic + specific* | *14 generic + specific* | *14 generic + specific* | *14 generic + specific* | *14 generic + specific* |
-
-**After:** Single source of truth — 14 shared files, language folders hold only what's unique.
-
-```
-references/
-├── shared/          ← 14 generic files (update once, not six times)
-├── java/            ← Java-specific only
-├── python/          ← Python-specific only
-├── go/              ← Go-specific only
-├── dotnet/          ← .NET-specific only
-├── typescript/      ← TypeScript-specific only
-└── rust/            ← Rust-specific only
-```
-
-Eliminated six duplicated routing SKILL.md files. One dispatch mechanism instead of six. Waza compliance achieved — no more isolation violations. All 7 behavioral evals running at 100%.
+**After:** One `shared/` folder holds the 14 generic files. Each language folder keeps only what's actually unique to that SDK. One update, one place. Six duplicated routing SKILL.md files collapsed to a single dispatch mechanism. Waza compliance achieved — no more isolation violations. All 7 behavioral evals running at 100%.
 
 This is the evolution: **reference extraction → shared references → unified skill with internal routing.** Each step felt right at the time. Looking back, the final architecture is simpler and more correct. Wish I'd seen it from the start. (Work captured in a follow-up PR.)
 
