@@ -408,7 +408,10 @@ The coding agent on GitHub is the lowest-friction option — no local setup, jus
 
 ## Level 5: Cloud-Scale Agent Fleets
 
-This level is for teams that want agents running continuously — not just when someone's terminal is open. There are two distinct approaches:
+<!-- IMAGE PROMPT: Watercolor illustration of a fleet of autonomous workshops on floating platforms connected by light bridges, suggesting industrial scale and distributed compute -->
+![Watercolor illustration of a fleet of autonomous workshops connected by light bridges](./media/2026-05-13-from-autocomplete-to-ai-team/level-5-cloud-scale.png)
+
+This level is for teams that want agents running continuously— not just when someone's terminal is open. There are two distinct approaches:
 
 ### Copilot Coding Agents on GitHub.com
 
