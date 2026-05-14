@@ -351,25 +351,36 @@ Level 4 is where the work has been **fully defined** and you just need it comple
 
 This is the difference between "AI that helps me work" and "AI that does the work I've specified."
 
-### Three Ways to Run Autonomously
+### Five Ways to Run Autonomously
 
-#### 1. Autopilot Mode (IDE + CLI)
+#### 1. VS Code Agent Mode
 
-In VS Code's agent mode or the standalone CLI, autopilot lets Copilot execute without stopping for confirmation at each step:
+In VS Code, Copilot's agent mode executes multi-step tasks — reading files, running commands, editing code — without manual intervention. You describe the outcome, and agent mode figures out the steps:
 
-```bash
-# CLI autopilot — executes the full task without interactive prompts
-copilot --autopilot -p "Refactor all API handlers to use the new error envelope format"
+```
+# In VS Code Copilot Chat (agent mode):
+"Refactor all API handlers to use the new error envelope format"
 ```
 
-Best for: well-scoped tasks where you trust the instructions and want hands-off execution.
+Agent mode uses your custom instructions and MCPs from Level 2, so it already knows your project's conventions. Best for: well-scoped tasks while you're in the IDE.
 
-#### 2. "Ralph, go" — Squad Work Queue
+#### 2. Copilot CLI Agent Mode
 
-Ralph, the Squad orchestrator, can process your work queue autonomously. Point it at triaged issues and it assigns work to the right agents, monitors progress, and reports back:
+The standalone CLI provides the same autonomous execution outside VS Code:
 
 ```bash
-# In a Copilot session with Squad:
+# CLI agent mode — executes the full task autonomously
+copilot -p "Refactor all API handlers to use the new error envelope format"
+```
+
+Best for: well-scoped tasks from the terminal, scripted workflows, or when you prefer the command line over the IDE.
+
+#### 3. "Ralph, go" — Squad Work Queue (In-Session)
+
+Ralph, the Squad work monitor, processes your entire work queue autonomously within a Copilot session. It triages issues, assigns work to the right specialist agents, monitors progress, and keeps going until the board is clear:
+
+```bash
+# In a Copilot CLI session with Squad:
 copilot --agent squad
 
 # Then:
@@ -377,9 +388,28 @@ copilot --agent squad
 "Ralph, status"      # → Shows what's open, stalled, or ready to merge
 ```
 
-Ralph monitors your GitHub issues, triages incoming work, and drives tasks through your agent team without you watching. Best for: ongoing repo maintenance, issue triage, and multi-agent coordination.
+Ralph monitors GitHub issues, triages incoming work, and drives tasks through your agent team without you intervening. It doesn't stop between tasks — it keeps cycling until everything is done.
 
-#### 3. Copilot Coding Agent (GitHub Issues)
+Best for: in-session work queue processing, multi-agent coordination, and batching related tasks.
+
+#### 4. Squad Watch — Persistent Local Monitoring
+
+When you're away from the keyboard but your machine is on, `squad watch` provides persistent polling of your GitHub issues:
+
+```bash
+# Polls every 10 minutes (default)
+npx @bradygaster/squad-cli watch
+
+# Custom intervals
+npx @bradygaster/squad-cli watch --interval 5    # every 5 minutes
+npx @bradygaster/squad-cli watch --interval 30   # every 30 minutes
+```
+
+This runs as a standalone local process (not inside Copilot) that auto-triages issues, assigns work based on team roles and keywords, and routes issues to agents or `@copilot` for pickup. It runs until you Ctrl+C.
+
+Best for: overnight monitoring, catching issues while you're in meetings, and persistent triage between active sessions.
+
+#### 5. Copilot Coding Agent (GitHub Issues)
 
 Assign a GitHub issue to Copilot and it works independently — creates a branch, implements the change, opens a PR:
 
@@ -392,17 +422,31 @@ The coding agent works best for well-scoped, clearly described issues: "add a ne
 
 ### When to Use Each
 
-| Approach | Best For | Runs On |
-|----------|----------|---------|
-| `copilot --autopilot` | Single well-defined tasks | Your machine (CLI) |
-| "Ralph, go" | Work queue processing, multi-agent | Your machine (Squad CLI) |
-| Copilot coding agent | Issue-driven implementation | GitHub's cloud infrastructure |
+| Approach | Best For | Runs On | Requires Active Session? |
+|----------|----------|---------|--------------------------|
+| VS Code agent mode | IDE-scoped tasks | Your machine | Yes |
+| `copilot` CLI | Terminal-scoped tasks | Your machine | Yes |
+| "Ralph, go" | Work queue + coordination | Your machine (Squad) | Yes |
+| `squad watch` | Persistent monitoring | Your machine (background) | No — standalone process |
+| Copilot coding agent | Issue-driven implementation | GitHub's cloud | No — fully async |
+
+### The Autonomy Spectrum
+
+These options form a spectrum from "I'm here watching" to "I'm asleep":
+
+```
+You're present              You're away              You're asleep
+─────────────────────────────────────────────────────────────────
+VS Code agent mode    →    squad watch        →    Copilot coding agent
+Copilot CLI           →    (machine on)       →    (GitHub cloud)
+Ralph, go                                         
+```
 
 ### What I Learned at Level 4
 
 The key insight: **autonomous execution requires fully-defined work**. The quality of autonomous output is directly proportional to how clearly the task was specified. Vague issues get vague results. A well-written issue with acceptance criteria, examples, and constraints? That's where autonomous execution shines.
 
-The coding agent on GitHub is the lowest-friction option — no local setup, just assign an issue. Ralph is best when you have a backlog of related tasks that benefit from coordination between specialized agents.
+The coding agent on GitHub is the lowest-friction option — no local setup, just assign an issue. `squad watch` bridges the gap between active sessions and cloud — your machine monitors and triages even when you're not in a Copilot session. Ralph is best when you're actively working through a backlog and want coordinated multi-agent execution.
 
 ---
 
