@@ -30,8 +30,10 @@ keywords:
 
 # From Autocomplete to AI Team: A Developer's Journey Through the Copilot Ecosystem
 
-<!-- IMAGE PROMPT: Watercolor illustration of a winding path through a landscape, starting from a single desk with a glowing screen, progressing through a workshop, a team table, and ending at a cloud city — warm tones, craft-focused, journey metaphor -->
-![Watercolor illustration of a developer's journey from a single desk to a cloud city of AI agents](./media/2026-05-13-from-autocomplete-to-ai-team/hero-copilot-journey.png)
+<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. One man in blue shirt and leather apron at a maple workbench, holding a welcome sign. A man in green shirt beside him offering a chisel. Brick walls, oak beam ceiling, arched windows, pegboard with saws, sawdust floor -->
+![Watercolor illustration of a woodworker in blue meeting his first AI helper in green at a furniture workshop](./media/2026-05-13-from-autocomplete-to-ai-team/hero-copilot-journey.png)
+
+*Imagine a furniture workshop. You're the craftsperson in the blue shirt — the one with the vision, the taste, the final say. The helpers in green shirts? Those are your AI agents. At first there's just one, handing you the right chisel at the right moment. By the end of this journey, you'll have a whole crew in green building furniture to your specifications while you sip coffee on the catwalk.*
 
 Six months ago, I was tab-completing function signatures. Today, I manage a team of named AI agents that handle PR reviews, documentation sweeps, and infrastructure audits — autonomously.
 
@@ -55,8 +57,10 @@ Each level is independently useful. You don't need Level 5 to get massive value 
 
 ## Level 1: Your First Day with Copilot
 
-<!-- IMAGE PROMPT: Watercolor illustration of a single craftsperson at a sunlit workbench with a glowing AI companion perched nearby, tools scattered warmly, suggesting a first day in a new workshop -->
-![Watercolor illustration of a craftsperson at a sunlit workbench with a glowing AI companion](./media/2026-05-13-from-autocomplete-to-ai-team/level-1-pair-programming.png)
+<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt with mallet at maple workbench fitting a dovetail joint. Man in green shirt beside him steadying the joint. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor -->
+![Watercolor illustration of a blue-shirted craftsperson at the workbench while a green-shirted helper steadies the joint](./media/2026-05-13-from-autocomplete-to-ai-team/level-1-pair-programming.png)
+
+*Your first day in the workshop. You're at the bench with your mallet (blue shirt), fitting a dovetail joint. Your one helper in green steadies the piece, hands you the right tool before you ask, and suggests a better angle — but you swing the mallet.*
 
 This is where everyone starts — and honestly, where most of the immediate productivity gains live. Level 1 spans two environments: **Copilot in your IDE** (VS Code, JetBrains, etc.) and the **standalone Copilot CLI** in your terminal.
 
@@ -131,8 +135,10 @@ The limitation: Copilot at this level knows nothing about your specific project'
 
 ## Level 2: Making Copilot Yours
 
-<!-- IMAGE PROMPT: Watercolor illustration of a craftsperson's workshop with custom-labeled tool drawers, personal reference cards pinned to the wall, and cables connecting to external machines — warm wood and copper tones -->
-![Watercolor illustration of a workshop with custom-labeled drawers, reference cards, and cables to external tools](./media/2026-05-13-from-autocomplete-to-ai-team/level-2-customization.png)
+<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt ALONE at maple workbench arranging custom jigs, labeled drawers, and pinning reference cards to pegboard. NO green shirts visible. Brick walls, oak beam ceiling, arched windows, sawdust floor -->
+![Watercolor illustration of a blue-shirted craftsperson alone, setting up custom jigs and labeled drawers](./media/2026-05-13-from-autocomplete-to-ai-team/level-2-customization.png)
+
+*No green shirts in sight — this is setup time. You're alone at the bench, labeling drawers, building custom jigs, and pinning reference cards to the pegboard. You're not building furniture yet; you're building the system that makes your workshop uniquely yours. When the green-shirted helpers return, they'll know exactly where everything goes.*
 
 Level 1 Copilot is smart but generic. Level 2 is where it starts feeling like a teammate who's read your wiki. This level works in **both the IDE and CLI** — the same instruction files and MCP configs are picked up by Copilot Chat, agent mode, and the `copilot` CLI.
 
@@ -219,8 +225,10 @@ The limitation: everything is still per-session. Copilot doesn't remember what i
 
 ## Level 3: Squad — A Team Working in Concert
 
-<!-- IMAGE PROMPT: Watercolor illustration of multiple craftspeople around a shared workbench, each with distinct tools and aprons of different colors, passing work between them in a coordinated dance — warm collaborative energy -->
-![Watercolor illustration of multiple craftspeople coordinating work around a shared workbench](./media/2026-05-13-from-autocomplete-to-ai-team/level-3-squad-team.png)
+<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt at maple workbench reading a blueprint. Three men in green shirts assembling a cabinet together nearby. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor -->
+![Watercolor illustration of a blue-shirted craftsperson reading blueprints while three green-shirted helpers assemble a cabinet](./media/2026-05-13-from-autocomplete-to-ai-team/level-3-squad-team.png)
+
+*The workshop is getting busy. You're at the bench in your blue shirt, studying the blueprint. Behind you, three helpers in green shirts are assembling a cabinet together — one holds the frame, another drives the dowels, a third checks the level. Each knows their role. Each stays in their lane. The work moves faster because they coordinate with each other, not just with you.*
 
 This is where the mental model shifts from "AI assistant" to "AI team."
 
@@ -344,8 +352,10 @@ The honest trade-off: Squad requires investment in writing good charters. A poor
 
 ## Level 4: Autonomous Operations
 
-<!-- IMAGE PROMPT: Watercolor illustration of a workshop where machines run themselves — conveyor belts moving work between stations, a craftsperson observing from a comfortable chair with a cup of tea, warm golds and blues suggesting trusted automation -->
-![Watercolor illustration of a self-running workshop with a craftsperson observing from a chair](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
+<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt sitting in armchair with coffee mug watching. Five men in green shirts working independently at maple workbenches building furniture. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor. NO machinery -->
+![Watercolor illustration of a blue-shirted craftsperson relaxing with coffee while five green-shirted workers build independently](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
+
+*You've earned that armchair. Five helpers in green shirts are working independently across the shop — each at their own bench, each building a different piece from your specifications. You sip your coffee, glance over occasionally, and trust the work because you wrote clear blueprints. The green shirts don't need you hovering.*
 
 Level 4 is where the work has been **fully defined** and you just need it completed. You've already figured out what needs to happen — now you hand it off and let the system execute.
 
@@ -452,8 +462,10 @@ The coding agent on GitHub is the lowest-friction option — no local setup, jus
 
 ## Level 5: Cloud-Scale Agent Fleets
 
-<!-- IMAGE PROMPT: Watercolor illustration of a fleet of autonomous workshops on floating platforms connected by light bridges, suggesting industrial scale and distributed compute -->
-![Watercolor illustration of a fleet of autonomous workshops connected by light bridges](./media/2026-05-13-from-autocomplete-to-ai-team/level-5-cloud-scale.png)
+<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt on catwalk above workshop floor looking down. Many men in green shirts at rows of maple workbenches building furniture. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor -->
+![Watercolor illustration of a blue-shirted craftsperson on a catwalk overseeing many green-shirted workers at rows of workbenches](./media/2026-05-13-from-autocomplete-to-ai-team/level-5-cloud-scale.png)
+
+*The workshop has become a factory floor. You're on the catwalk in your blue shirt, overseeing rows of workbenches where dozens of green-shirted workers build furniture in parallel — each team handling a different project, all following your standards. You designed the system. They execute it at scale.*
 
 This level is for teams that want agents running continuously— not just when someone's terminal is open. There are two distinct approaches:
 
@@ -549,7 +561,7 @@ The Copilot ecosystem is growing fast. Here are the key resources:
 I want to be honest about what's different after six months at Level 3+:
 
 **What improved:**
-- PR turnaround dropped from days to hours (automated first-pass review)
+- PR turnaround dropped from days to hours (the green shirts handle first-pass review)
 - Documentation stays in sync with code (sweep ceremonies catch drift)
 - I work in unfamiliar codebases with dramatically less ramp-up time
 - Boilerplate tasks that used to take 30 minutes take 2 minutes
@@ -562,7 +574,7 @@ I want to be honest about what's different after six months at Level 3+:
 - Writing good charters and instructions is a skill that takes time to develop
 
 **The mental model shift:**
-I stopped thinking "what code do I need to write?" and started thinking "what work needs to happen, and who (or what) should do it?" Sometimes the answer is me. Often it's an agent with clear instructions and a well-scoped task.
+I stopped thinking "what code do I need to write?" and started thinking "what work needs to happen, and who should do it?" Sometimes the answer is me — blue shirt at the bench, swinging the mallet. Often it's a green shirt with clear instructions and a well-scoped task.
 
 ---
 
