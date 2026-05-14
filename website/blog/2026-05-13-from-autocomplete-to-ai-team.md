@@ -4,7 +4,7 @@ canonical_url: https://dfberry.github.io/blog/2026-05-13-from-autocomplete-to-ai
 custom_edit_url: null
 sidebar_label: "2026.05.13 From Autocomplete to AI Team"
 title: "From Autocomplete to AI Team: A Developer's Journey Through the Copilot Ecosystem"
-description: "I went from tab-completing code to managing a team of named AI agents. Here's the path — from your first day with Copilot to running Squad in the cloud."
+description: "From tab-completing code to orchestrating AI agent teams — a practical progression through five levels of the GitHub Copilot ecosystem, from IDE basics to cloud-scale autonomous operations."
 draft: true
 tags:
   - GitHub Copilot
@@ -13,7 +13,7 @@ tags:
   - MCP
   - AI assisted
   - Tutorial
-updated: 2026-05-13 12:00 PST
+updated: 2026-05-14 07:00 PST
 keywords:
   - github copilot squad
   - ai team development
@@ -24,71 +24,101 @@ keywords:
   - mcp servers
   - copilot coding agent
   - ai pair programming
+  - copilot cli
+  - copilot skills
 ---
 
 # From Autocomplete to AI Team: A Developer's Journey Through the Copilot Ecosystem
 
-![Hero image representing the progression from solo coding to AI team](./media/2026-05-13-from-autocomplete-to-ai-team/hero-copilot-journey.png)
+<!-- IMAGE PROMPT: Watercolor illustration of a winding path through a landscape, starting from a single desk with a glowing screen, progressing through a workshop, a team table, and ending at a cloud city — warm tones, craft-focused, journey metaphor -->
+![Watercolor illustration of a developer's journey from a single desk to a cloud city of AI agents](./media/2026-05-13-from-autocomplete-to-ai-team/hero-copilot-journey.png)
 
 Six months ago, I was tab-completing function signatures. Today, I manage a team of named AI agents that handle PR reviews, documentation sweeps, and infrastructure audits — autonomously.
 
 That sounds like a sales pitch. It's not. It's a progression that happened one level at a time, each building on the last. And the best part? You can start the same journey in about 15 minutes.
 
-Here's the path I took — four levels, from "ooh that's cool" to "wait, this changes everything."
+Here's the path I took — five levels, from "ooh that's cool" to "wait, this changes everything."
 
 ## The TL;DR
 
 | Level | What Changes | Time to Value |
 |-------|-------------|---------------|
-| 1. First Day | You get an AI pair programmer | 15 minutes |
-| 2. Customizing | Copilot learns YOUR codebase | 1-2 hours |
-| 3. Squad | Named agents with memory and ceremonies | 1 day |
-| 4. Full Solutions | Cloud-deployed agent fleets | 1 week |
+| 1. First Day | You get an AI pair programmer (IDE + CLI) | 15 minutes |
+| 2. Making It Yours | Copilot learns YOUR codebase (instructions, MCPs, skills) | 1-2 hours |
+| 3. Squad | A team of agents working in concert | 1 day |
+| 4. Autonomous Ops | Fully defined work executes itself | 2-3 days |
+| 5. Cloud-Scale | Agent fleets running on compute platforms | 1 week |
 
-Each level is independently useful. You don't need Level 4 to get massive value from Level 1. But once you see what's possible at each stage, you'll want to keep climbing.
+Each level is independently useful. You don't need Level 5 to get massive value from Level 1. But once you see what's possible at each stage, you'll want to keep climbing.
 
 ---
 
 ## Level 1: Your First Day with Copilot
 
-![Single developer working with AI assistant](./media/2026-05-13-from-autocomplete-to-ai-team/level-1-pair-programming.png)
+<!-- IMAGE PROMPT: Watercolor illustration of a single craftsperson at a sunlit workbench with a glowing AI companion perched nearby, tools scattered warmly, suggesting a first day in a new workshop -->
+![Watercolor illustration of a craftsperson at a sunlit workbench with a glowing AI companion](./media/2026-05-13-from-autocomplete-to-ai-team/level-1-pair-programming.png)
 
-This is where everyone starts — and honestly, where most of the immediate productivity gains live.
+This is where everyone starts — and honestly, where most of the immediate productivity gains live. Level 1 spans two environments: **Copilot in your IDE** (VS Code, JetBrains, etc.) and the **standalone Copilot CLI** in your terminal.
 
-### What You Get
+### In the IDE: Inline Completions & Inline Chat
 
-**Editor completions** — the thing most people think of as "Copilot." You type, it suggests. But it's more than autocomplete. It reads your open files, your comments, your function signatures, and generates contextually aware suggestions.
+**Inline completions** — the thing most people think of as "Copilot." You type, it suggests. But it's more than autocomplete. It reads your open files, your comments, your function signatures, and generates contextually aware suggestions. This happens directly in your editor as you type.
 
-**Inline chat** — highlight code, press `Ctrl+I`, ask a question. "Explain this regex." "Refactor this to use async/await." "Add error handling." It edits in place.
+**Inline chat** — highlight code, press `Ctrl+I`, ask a question. "Explain this regex." "Refactor this to use async/await." "Add error handling." It edits in place within the current file.
 
-**The CLI** — this one surprised me. Instead of Googling shell commands:
+### In the IDE: Copilot Chat Panel
+
+The Chat panel (`Ctrl+Shift+I` or the sidebar) opens a conversation with Copilot that has broader awareness:
+
+- **Open file context** — ask questions about the file you're looking at: "What does this function do?" "Find the bug in this logic."
+- **@workspace** — ask about the entire repository: "Where is authentication handled?" "Show me all API routes." Copilot searches across your project.
+- **@terminal** — get help with shell commands without leaving the IDE: "How do I find large files?" "What's the git command to squash commits?"
+- **Agent mode** — Copilot Chat also has an "agent" mode where it can make multi-step edits, run terminal commands, and iterate. This is powerful for IDE-based workflows, but note: this is different from the Squad "agents" discussed later. Agent mode is a single AI working iteratively; Squad agents are specialized team members working in concert.
+
+### The Standalone Copilot CLI
+
+The `copilot` command brings the full Copilot agent to your terminal — file editing, shell commands, sub-agents, and more:
 
 ```bash
-# Instead of remembering tar flags:
-gh copilot -p "extract a .tar.gz file preserving permissions"
+# Non-interactive prompt mode:
+copilot -p "extract a .tar.gz file preserving permissions"
 
-# Instead of Stack Overflow for git:
-gh copilot -p "undo my last commit"
+# Ask about git:
+copilot -p "undo my last commit but keep the changes"
+
+# Start an interactive session:
+copilot
 ```
 
-**PR summaries** — Copilot generates PR descriptions, reviews code changes, and catches bugs before your teammates do.
+The standalone CLI (`copilot`) is a full agent runtime — it can read/write files, run commands, and orchestrate complex tasks from your terminal. It's distinct from the IDE chat panel but equally powerful.
+
+### When to Use Each
+
+| Context | Best For |
+|---------|----------|
+| Inline completions | Flow-state coding, writing new functions |
+| Inline chat (`Ctrl+I`) | Quick edits to selected code |
+| Chat panel (open file) | Understanding code you're reading |
+| Chat panel (@workspace) | Finding things across a project |
+| Chat panel (@terminal) | Shell command help inside IDE |
+| Agent mode (IDE) | Multi-step edits within a project |
+| `copilot` CLI | Terminal-first workflows, scripting, automation |
 
 ### Try This Now
 
 1. Install [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) in VS Code
-2. Open any project and start a new file
-3. Write a comment describing a function, then watch:
+2. Open any project, start a new file, write a comment:
 
 ```typescript
 // Parse a CSV string into an array of objects using the first row as headers
 ```
 
-Copilot will generate the implementation. Tab to accept. That's Level 1.
+Copilot will generate the implementation. Tab to accept.
 
-4. Install [GitHub CLI](https://cli.github.com/) (2.74+) and try:
+3. Install the [standalone Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli) and try:
 
 ```bash
-gh copilot -p "find all files modified in the last 24 hours larger than 1MB"
+copilot -p "find all files modified in the last 24 hours larger than 1MB"
 ```
 
 ### What I Learned at Level 1
@@ -101,13 +131,16 @@ The limitation: Copilot at this level knows nothing about your specific project'
 
 ## Level 2: Making Copilot Yours
 
-![Tools being configured and connected](./media/2026-05-13-from-autocomplete-to-ai-team/level-2-customization.png)
+<!-- IMAGE PROMPT: Watercolor illustration of a craftsperson's workshop with custom-labeled tool drawers, personal reference cards pinned to the wall, and cables connecting to external machines — warm wood and copper tones -->
+![Watercolor illustration of a workshop with custom-labeled drawers, reference cards, and cables to external tools](./media/2026-05-13-from-autocomplete-to-ai-team/level-2-customization.png)
 
-Level 1 Copilot is smart but generic. Level 2 is where it starts feeling like a teammate who's read your wiki.
+Level 1 Copilot is smart but generic. Level 2 is where it starts feeling like a teammate who's read your wiki. This level works in **both the IDE and CLI** — the same instruction files and MCP configs are picked up by Copilot Chat, agent mode, and the `copilot` CLI.
 
-### Custom Instructions
+### Custom Instruction Files
 
-Drop a `.github/copilot-instructions.md` in your repo and suddenly Copilot knows your conventions:
+Drop instruction files in your repo and Copilot learns your conventions:
+
+**`.github/copilot-instructions.md`** — global instructions for all Copilot interactions:
 
 ```markdown
 # Project Conventions
@@ -119,27 +152,13 @@ Drop a `.github/copilot-instructions.md` in your repo and suddenly Copilot knows
 - Never use `any` — prefer `unknown` with type guards
 ```
 
+**`AGENTS.md`** — instructions specifically for agent mode and the CLI agent. Define how the agent should behave when making multi-file changes, running tests, or interacting with your project structure.
+
 Every suggestion Copilot makes now respects these rules. No more "helpful" suggestions that violate your architecture.
-
-### The Coding Agent
-
-This was the first "whoa" moment for me. The coding agent doesn't just suggest code — it **does work**. Assign it a GitHub issue, and it:
-
-1. Creates a branch
-2. Reads the relevant files
-3. Implements the change
-4. Opens a PR with a description
-
-```markdown
-<!-- In a GitHub issue comment: -->
-@copilot implement this
-```
-
-It's not magic — it works best for well-scoped, clearly described issues. But for "add a new endpoint that follows the existing pattern" or "write tests for this module"? It's remarkable.
 
 ### MCP Servers: Giving Copilot New Abilities
 
-[Model Context Protocol (MCP)](https://github.com/microsoft/mcp) servers let you plug external data sources into Copilot's context. Think of them as APIs that Copilot can call mid-conversation.
+[Model Context Protocol (MCP)](https://github.com/microsoft/mcp) servers let you plug external data sources and tools into Copilot's context. Think of them as APIs that Copilot can call mid-conversation — in both the IDE and CLI.
 
 ```json
 // .copilot/mcp.json
@@ -153,49 +172,61 @@ It's not magic — it works best for well-scoped, clearly described issues. But 
 }
 ```
 
-Now Copilot can query your Azure resources, check deployment status, or read your database schema — all within the chat conversation.
+Now Copilot can query your Azure resources, check deployment status, or read your database schema — all within the conversation.
 
 Some MCP servers I use daily:
 - **[Copilot for Azure](https://github.com/microsoft/GitHub-Copilot-for-Azure)** — query Azure resources, check deployments
 - **GitHub MCP** — deep repo operations beyond what's built-in
 - **File system MCP** — let Copilot read/write files outside the workspace
 
-### Try This Now
+### Skills: Repeatable, Deterministic Work
 
-1. Create `.github/copilot-instructions.md` in your project:
+Skills are the underrated powerhouse of Level 2. A skill is a `.copilot/skills/` directory with a `SKILL.md` file that defines a repeatable pattern — including deterministic steps from scripts and code.
 
-```markdown
-# Copilot Instructions
-
-## Code Style
-- [Your language] with [your style preferences]
-- Error handling pattern: [your pattern]
-- Test framework: [your framework]
-
-## Architecture
-- [Brief description of your project structure]
-- [Key conventions a new developer would need to know]
+```
+.copilot/skills/
+├── pr-review/
+│   └── SKILL.md        # "Run lint, check test coverage, review diff"
+├── doc-sync/
+│   └── SKILL.md        # "Compare API surface to docs, flag drift"
+└── sdk-sample-check/
+    └── SKILL.md        # "Validate all samples compile and match SDK version"
 ```
 
-2. Open Copilot chat and ask: "Based on our project conventions, write a new service that fetches user profiles"
+Skills differ from instructions in that they define **executable workflows** — not just preferences. A skill can include shell commands to run, files to check, and decision trees to follow. They're reusable across sessions and agents.
 
-Notice the difference? It follows YOUR patterns now.
+Why skills matter:
+- **Repeatable** — same process every time, no drift
+- **Composable** — skills can reference other skills
+- **Deterministic where needed** — embed scripts and validation steps that always run the same way
+- **Shareable** — check them into your repo, the whole team benefits
+
+### Try This Now
+
+1. Create `.github/copilot-instructions.md` with your project's conventions
+2. Add an MCP server for a tool you use daily (Azure, database, etc.)
+3. Create a `.copilot/skills/quick-review/SKILL.md` that describes your code review checklist
+
+Then open Copilot Chat or run `copilot` and notice the difference — it follows YOUR patterns now.
 
 ### What I Learned at Level 2
 
-Custom instructions are absurdly high-leverage. A 50-line markdown file eliminates 80% of the "no, not like that" moments. The coding agent is best for tasks where you'd give a junior developer a clear spec and check their PR. MCP servers are the bridge between "Copilot that knows code" and "Copilot that knows your infrastructure."
+Custom instructions are absurdly high-leverage. A 50-line markdown file eliminates 80% of the "no, not like that" moments. MCP servers bridge "Copilot that knows code" and "Copilot that knows your infrastructure." Skills turn tribal knowledge into executable processes.
 
 The limitation: everything is still per-session. Copilot doesn't remember what it did yesterday. It doesn't have persistent context about your project's evolving state. It doesn't coordinate with other instances of itself. Enter Squad.
 
 ---
 
-## Level 3: Squad — Named Agents with Memory
+## Level 3: Squad — A Team Working in Concert
 
-![Multiple agents working together as a team](./media/2026-05-13-from-autocomplete-to-ai-team/level-3-squad-team.png)
+<!-- IMAGE PROMPT: Watercolor illustration of multiple craftspeople around a shared workbench, each with distinct tools and aprons of different colors, passing work between them in a coordinated dance — warm collaborative energy -->
+![Watercolor illustration of multiple craftspeople coordinating work around a shared workbench](./media/2026-05-13-from-autocomplete-to-ai-team/level-3-squad-team.png)
 
 This is where the mental model shifts from "AI assistant" to "AI team."
 
-[Squad](https://github.com/bradygaster/squad) gives you named agents — each with a charter (personality + expertise), persistent memory, and the ability to coordinate. It runs on top of Copilot's infrastructure but adds the organizational layer that makes agents feel like teammates.
+[Squad](https://github.com/bradygaster/squad) gives you a team of agents working **in concert** to complete tasks, where each member's expertise and boundaries positively impact the result. It's not just "named agents with memory" — it's a coordinated system where the reviewer's standards shape the coder's output, and the docs writer's perspective catches gaps the implementer missed.
+
+Squad runs on the **Copilot CLI** (`copilot --agent squad`) and adds the organizational layer that makes agents feel like a real team rather than a single assistant wearing different hats.
 
 ### What Makes Squad Different
 
@@ -204,8 +235,8 @@ This is where the mental model shifts from "AI assistant" to "AI team."
 | Memory | Per-session | Persistent across sessions |
 | Identity | Generic assistant | Named agents with charters |
 | Coordination | You manage context | Agents hand off to each other |
-| Ceremonies | None | Standups, sweeps, retros |
-| Specialization | Same agent for everything | Domain-specific agents |
+| Specialization | Same agent for everything | Domain-specific agents with boundaries |
+| Result quality | One perspective | Multiple perspectives improve output |
 
 ### Installing Squad
 
@@ -216,7 +247,7 @@ npm install -g @bradygaster/squad-cli
 # Initialize in your project
 npx @bradygaster/squad-cli init
 
-# Start Copilot with Squad
+# Start Copilot with Squad (standalone CLI)
 copilot --agent squad
 ```
 
@@ -225,21 +256,21 @@ This scaffolds a `.squad/` directory:
 ```
 .squad/
 ├── agents/
-│   ├── ralph/           # Default orchestrator
+│   ├── ralph/           # Orchestrator
 │   │   └── charter.md
 │   ├── reviewer/
 │   │   └── charter.md
 │   └── docs-writer/
 │       └── charter.md
 ├── ceremonies/
-│   └── morning-standup.md
+│   └── sweep.md
 └── memory/
     └── decisions.md
 ```
 
-### Agent Charters
+### Agent Charters: Expertise + Boundaries
 
-Each agent has a charter — a markdown file that defines who they are:
+Each agent has a charter — a markdown file that defines who they are and, critically, what they won't do:
 
 ```markdown
 # Reviewer Agent Charter
@@ -253,48 +284,35 @@ You are the code reviewer for this project. You focus on:
 ## Voice
 Direct, constructive, specific. Always suggest fixes, never just point out problems.
 
-## Tools
-- GitHub MCP (PR diffs, file contents)
-- Project conventions (from .github/copilot-instructions.md)
-
 ## Boundaries
 - Never approve your own changes
 - Escalate architectural concerns to the team lead
+- Don't refactor code that isn't in the PR scope
 ```
 
-### Ralph: The Work Monitor
+The boundaries matter as much as the expertise. A reviewer that knows when to escalate produces better outcomes than one that tries to handle everything. The interplay between agents — where one's output becomes another's input — is what makes Squad feel like a team rather than parallel solo workers.
 
-Every Squad has Ralph — an always-on agent that watches your repo and drives work. It triages issues, monitors PRs, and keeps the backlog moving without you watching.
+### Ceremonies: On-Demand Structured Workflows
 
-```bash
-# Start the persistent watch loop
-npx @bradygaster/squad-cli watch
-
-# Or activate interactively
-# In a Copilot session with Squad:
-"Ralph, go"          # → Starts processing the work queue
-"Ralph, status"      # → Shows what's open, stalled, or ready to merge
-```
-
-### Ceremonies: Structured Agent Workflows
-
-Ceremonies are scheduled, repeatable workflows:
+Ceremonies are repeatable workflows you trigger when needed:
 
 ```markdown
-# Morning Standup Ceremony
+# Documentation Sweep Ceremony
 
 ## Trigger
-Daily at 9:00 AM or on-demand
+On-demand (e.g., before a release, after a sprint)
 
 ## Steps
 1. Check all open PRs for staleness (>48h without review)
 2. Scan issues labeled `priority:high` without assignees
-3. Report deployment status from last 24h
-4. Flag any failing CI pipelines
+3. Compare API surface to documentation, flag drift
+4. Report findings with recommended actions
 
 ## Output
-Summary posted to team channel
+Summary with action items for each agent
 ```
+
+Ceremonies encode your team's best practices into executable workflows that any agent can run consistently.
 
 ### Try This Now
 
@@ -306,11 +324,11 @@ npm install -g @bradygaster/squad-cli
 cd your-project
 npx @bradygaster/squad-cli init
 
-# Start a session with Squad
+# Start a session with Squad (standalone CLI)
 copilot --agent squad
 
 # Then talk to the team:
-"Team, fan out, and add error handling to the API"
+"Team, fan out and review this PR for security issues"
 "What agents are available?"
 ```
 
@@ -318,77 +336,143 @@ copilot --agent squad
 
 The charter system is what makes Squad click. Without it, you have "Copilot with extra steps." With it, you have agents that maintain consistent behavior, remember decisions, and build expertise over time.
 
-The ceremony pattern was unexpected. I thought I'd use Squad for on-demand tasks. Instead, the most value comes from **automated routines** — daily sweeps that catch things humans forget to check.
+The real insight: **boundaries create quality**. When the reviewer can't approve its own work, when the docs writer must verify against actual code, when the security agent escalates instead of guessing — the team produces better results than any single agent could alone.
 
 The honest trade-off: Squad requires investment in writing good charters. A poorly-defined agent is worse than no agent because it gives inconsistent results. Spend the time upfront.
 
 ---
 
-## Level 4: Cloud-Scale Agent Fleets
+## Level 4: Autonomous Operations
 
-![Cloud-scale orchestration with multiple agent instances](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
+<!-- IMAGE PROMPT: Watercolor illustration of a workshop where machines run themselves — conveyor belts moving work between stations, a craftsperson observing from a comfortable chair with a cup of tea, warm golds and blues suggesting trusted automation -->
+![Watercolor illustration of a self-running workshop with a craftsperson observing from a chair](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
 
-This level is for teams that want agents running continuously — not just when someone's terminal is open.
+Level 4 is where the work has been **fully defined** and you just need it completed. You've already figured out what needs to happen — now you hand it off and let the system execute.
 
-### Squad on Azure Container Apps
+This is the difference between "AI that helps me work" and "AI that does the work I've specified."
 
-[Squad on ACA](https://github.com/haflidif/squad-on-aca) deploys your Squad infrastructure to Azure Container Apps, giving you:
+### Three Ways to Run Autonomously
+
+#### 1. Autopilot Mode (IDE + CLI)
+
+In VS Code's agent mode or the standalone CLI, autopilot lets Copilot execute without stopping for confirmation at each step:
+
+```bash
+# CLI autopilot — executes the full task without interactive prompts
+copilot --autopilot -p "Refactor all API handlers to use the new error envelope format"
+```
+
+Best for: well-scoped tasks where you trust the instructions and want hands-off execution.
+
+#### 2. "Ralph, go" — Squad Work Queue
+
+Ralph, the Squad orchestrator, can process your work queue autonomously. Point it at triaged issues and it assigns work to the right agents, monitors progress, and reports back:
+
+```bash
+# In a Copilot session with Squad:
+copilot --agent squad
+
+# Then:
+"Ralph, go"          # → Starts processing the work queue
+"Ralph, status"      # → Shows what's open, stalled, or ready to merge
+```
+
+Ralph monitors your GitHub issues, triages incoming work, and drives tasks through your agent team without you watching. Best for: ongoing repo maintenance, issue triage, and multi-agent coordination.
+
+#### 3. Copilot Coding Agent (GitHub Issues)
+
+Assign a GitHub issue to Copilot and it works independently — creates a branch, implements the change, opens a PR:
+
+```markdown
+<!-- In a GitHub issue comment: -->
+@copilot implement this
+```
+
+The coding agent works best for well-scoped, clearly described issues: "add a new endpoint that follows the existing pattern," "write tests for this module," "update the config schema to support the new field."
+
+### When to Use Each
+
+| Approach | Best For | Runs On |
+|----------|----------|---------|
+| `copilot --autopilot` | Single well-defined tasks | Your machine (CLI) |
+| "Ralph, go" | Work queue processing, multi-agent | Your machine (Squad CLI) |
+| Copilot coding agent | Issue-driven implementation | GitHub's cloud infrastructure |
+
+### What I Learned at Level 4
+
+The key insight: **autonomous execution requires fully-defined work**. The quality of autonomous output is directly proportional to how clearly the task was specified. Vague issues get vague results. A well-written issue with acceptance criteria, examples, and constraints? That's where autonomous execution shines.
+
+The coding agent on GitHub is the lowest-friction option — no local setup, just assign an issue. Ralph is best when you have a backlog of related tasks that benefit from coordination between specialized agents.
+
+---
+
+## Level 5: Cloud-Scale Agent Fleets
+
+This level is for teams that want agents running continuously — not just when someone's terminal is open. There are two distinct approaches:
+
+### Copilot Coding Agents on GitHub.com
+
+GitHub's hosted coding agent works entirely from the browser. You assign an issue, Copilot creates a branch, does the work, and opens a PR — all on GitHub's infrastructure:
+
+1. Write a clear issue with acceptance criteria
+2. Assign it to Copilot (or comment `@copilot implement this`)
+3. Copilot creates a branch, implements the change
+4. A PR appears for your review
+
+This scales naturally — assign multiple issues across multiple repos and Copilot works them in parallel. No local setup, no compute costs, no infrastructure to manage.
+
+Best for: teams using GitHub Issues as their work queue, especially for well-scoped implementation tasks across multiple repositories.
+
+### Squad on a Compute Runtime
+
+For more complex scenarios — where you have a fully specced-out PRD and need coordinated multi-agent execution — Squad can run on a compute platform like Azure Container Apps:
+
+[Squad on ACA](https://github.com/haflidif/squad-on-aca) deploys your Squad infrastructure, giving you:
 
 - **Always-on agents** that respond to webhooks (PR opened, issue created)
 - **Scalable execution** — multiple agent instances handling parallel work
-- **Persistent state** — memory that survives container restarts
+- **PRD-driven work** — hand Squad a complete PRD and it executes the entire plan autonomously
 - **Team-wide access** — anyone on the team triggers the same trained agents
 
-### The Architecture
-
 ```
-GitHub Events (webhooks)
+Fully-specced PRD
     ↓
-Azure Container Apps
-    ├── Ralph (orchestrator)
-    ├── Reviewer Agent (auto-reviews PRs)
-    ├── Docs Agent (keeps docs in sync)
-    └── Security Agent (scans for vulnerabilities)
+Squad on Azure Container Apps
+    ├── Ralph (orchestrator — breaks PRD into tasks)
+    ├── Implementer Agent (writes code per spec)
+    ├── Reviewer Agent (validates against requirements)
+    └── Docs Agent (updates documentation)
     ↓
 Results → GitHub PRs, Issues, Comments
 ```
 
-### When You Need Level 4
+Best for: large-scoped work where you've invested in writing a detailed PRD and want the whole thing executed without hand-holding.
 
-You probably need cloud deployment when:
-- Your team wants agents to respond to events automatically (not manually triggered)
-- You have multiple repos that need coordinated agent behavior
-- You need audit trails and centralized logging
+### When You Need Cloud-Scale
+
+You probably need it when:
+- Your team wants agents to respond to events automatically
+- You have a complete PRD that needs autonomous execution
+- You need multiple repos handled in parallel
 - Agent workloads are too heavy for a developer's laptop
 
 You probably don't need it when:
 - You're a solo developer or small team
 - On-demand `copilot --agent squad` covers your use cases
-- You're still iterating on agent charters
-
-### Try This Now
-
-Before going full cloud, simulate it locally with the watch loop:
-
-```bash
-# Run Squad in watch mode (monitors GitHub for work)
-npx @bradygaster/squad-cli watch --interval 5
-```
-
-When you're ready for cloud, check [Squad on ACA](https://github.com/haflidif/squad-on-aca) for the deployment guide.
+- You're still iterating on agent charters and instructions
 
 ---
 
 ## Finding Your Path
 
-Not everyone takes the same route through these levels. Here's what I've seen work for different roles:
+Not everyone takes the same route through these levels:
 
 | Role | Start Here | Quick Win | Level Up |
 |------|-----------|-----------|----------|
-| **Engineer** | Level 1 (completions + CLI) | Custom instructions for your stack | Coding agent for boilerplate |
+| **Engineer** | Level 1 (completions + CLI) | Custom instructions for your stack | Skills for repeatable reviews |
 | **PM/Content** | Level 1 (chat for drafting) | Custom instructions for voice/style | Squad ceremonies for sweeps |
-| **Team Lead** | Level 2 (coding agent for issues) | MCP servers for visibility | Squad for automated reviews |
-| **Platform** | Level 2 (MCP + infra context) | Squad for monitoring | Level 4 for always-on agents |
+| **Team Lead** | Level 2 (instructions + MCPs) | Skills for team processes | Squad for coordinated reviews |
+| **Platform** | Level 2 (MCP + infra context) | Squad for monitoring | Level 5 for always-on agents |
 
 ---
 
@@ -397,9 +481,9 @@ Not everyone takes the same route through these levels. Here's what I've seen wo
 The Copilot ecosystem is growing fast. Here are the key resources:
 
 ### Essential Tools
-- **[GitHub Copilot Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)** — the editor extension
-- **[GitHub CLI](https://cli.github.com/)** — `gh copilot` for terminal usage
-- **[Squad CLI](https://github.com/bradygaster/squad)** — named agents with memory (`npm i -g @bradygaster/squad-cli`)
+- **[GitHub Copilot Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)** — the IDE extension (VS Code, JetBrains, etc.)
+- **[Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — standalone `copilot` command for terminal
+- **[Squad CLI](https://github.com/bradygaster/squad)** — named agents working in concert (`npm i -g @bradygaster/squad-cli`)
 - **[Squad on ACA](https://github.com/haflidif/squad-on-aca)** — cloud deployment for Squad
 
 ### Learning & Community
@@ -419,9 +503,10 @@ I want to be honest about what's different after six months at Level 3+:
 
 **What improved:**
 - PR turnaround dropped from days to hours (automated first-pass review)
-- Documentation stays in sync with code (ceremony catches drift)
+- Documentation stays in sync with code (sweep ceremonies catch drift)
 - I work in unfamiliar codebases with dramatically less ramp-up time
 - Boilerplate tasks that used to take 30 minutes take 2 minutes
+- Skills encode my best practices — I define a process once, it runs the same way forever
 
 **What didn't change:**
 - Architecture decisions still require human judgment
@@ -436,19 +521,34 @@ I stopped thinking "what code do I need to write?" and started thinking "what wo
 
 ## Start Today
 
-You don't need to plan all four levels. Start where you are:
+You don't need to plan all five levels. Start where you are:
 
 **Never used Copilot?** → Install the extension, write a comment, press Tab. That's it.
 
-**Using Copilot but it's generic?** → Write a `copilot-instructions.md` file. 10 minutes, massive payoff.
+**Using Copilot but it's generic?** → Write a `copilot-instructions.md` file and one skill. 10 minutes, massive payoff.
 
 **Want more than autocomplete?** → Install Squad CLI, write one agent charter, run `copilot --agent squad`.
 
-**Ready for always-on agents?** → Deploy Squad on ACA and connect it to your GitHub webhooks.
+**Ready for autonomous execution?** → Try `copilot --autopilot` on a well-defined task, or assign an issue to the coding agent.
+
+**Need always-on agents?** → Deploy Squad on ACA and connect it to your GitHub webhooks.
 
 The progression is natural. Each level solves a real problem you'll discover at the previous one. And unlike most "AI transformation" pitches, you can validate the value at every step before investing in the next.
 
 The future of development isn't AI replacing developers. It's developers who know how to orchestrate AI systems outperforming those who don't. The tools are here. The ecosystem is open source. The only question is which level you start at.
+
+---
+
+## 📣 GitHub Copilot Dev Days — Next Week!
+
+Want to go deeper? GitHub Copilot Dev Days are happening next week with sessions in multiple languages and time zones:
+
+- 🗓️ **May 25, 2026 at 7 PM (BRT)** — [GitHub Copilot Dev Days Brazil](https://developer.microsoft.com/reactor/events/27091/) [Portuguese]
+- 🗓️ **May 26, 2026 at 12 PM (CDMX)** — [GitHub Copilot Dev Days LATAM](https://developer.microsoft.com/reactor/events/27094/) [Spanish]
+- 🗓️ **May 26, 2026 at 7:30 PM (CST)** — [GitHub Copilot Dev Days 中文版](https://developer.microsoft.com/reactor/events/27114/) [Simplified Chinese]
+- 🗓️ **May 27, 2026 at 9 AM (PST)** — [GitHub Copilot Dev Days](https://developer.microsoft.com/reactor/events/27096/) [English]
+
+These are free, virtual events covering the latest in Copilot extensibility, agentic development, and the ecosystem tools discussed in this post. See you there!
 
 ---
 
