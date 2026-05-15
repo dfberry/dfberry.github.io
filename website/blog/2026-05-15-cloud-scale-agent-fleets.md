@@ -126,3 +126,23 @@ These are free, virtual events covering the latest in Copilot extensibility, age
 ---
 
 *Have questions or want to share your own journey? Find me on GitHub at [@dfberry](https://github.com/dfberry) or check out [my other posts](/blog) on the Copilot ecosystem.*
+
+
+## The Ecosystem at a Glance
+
+The Copilot ecosystem is growing fast. Here are the key resources:
+
+### Essential Tools
+- **[GitHub Copilot Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)** — the IDE extension (VS Code, JetBrains, etc.)
+- **[Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — standalone `copilot` command for terminal
+- **[Squad CLI](https://github.com/bradygaster/squad)** — named agents working in concert (`npm i -g @bradygaster/squad-cli`)
+- **[Squad on ACA](https://github.com/haflidif/squad-on-aca)** — cloud deployment for Squad
+
+### Learning & Community
+- **[Agentic SDLC Handbook](https://github.com/danielmeppiel/agentic-sdlc-handbook)** — patterns for AI-first development
+- **[Copilot Insights](https://github.com/jackbatzner/copilot-insights)** — measure your Copilot usage
+- **[Awesome Copilot](https://awesome-copilot.github.com)** — community-curated extensions, skills, and tools ([repo](https://github.com/github/awesome-copilot))
+
+### Infrastructure
+- **[Microsoft MCP](https://github.com/microsoft/mcp)** — Model Context Protocol servers
+- **[Copilot for Azure](https://github.com/microsoft/GitHub-Copilot-for-Azure)** — Azure resource context in Copilot
