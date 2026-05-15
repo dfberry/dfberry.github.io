@@ -368,7 +368,7 @@ The honest trade-off: Squad requires investment in codifying your work patterns 
 <!-- IMAGE PROMPT: Watercolor illustration. Six men all wearing vivid emerald green shirts working at separate maple workbenches building furniture. All shirts are green, no blue shirts. One saws wood, one hammers, one planes a board, one uses clamps. Warm muted tones, brick walls, oak beams, sawdust floor, arched windows -->
 ![Watercolor illustration of workers building furniture at separate workbenches in a woodworking shop](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
 
-*The helpers are working independently across the shop — each at their own bench, each building a different piece from your specifications. One saws, one hammers, one planes. You glance across the room and trust the work because you wrote clear blueprints. They don't need you hovering.*
+*The helpers are working independently across the shop — each at their own bench, each building a different piece from your specifications. One saws, one hammers, one planes. You glance across the room and trust the work because you wrote clear blueprints for your team of experts. They don't need you hovering.*
 
 Level 4 is where the work has been **fully defined** and you just need it completed. You've already figured out what needs to happen — now you hand it off and let the system execute.
 
@@ -400,7 +400,7 @@ Best for: well-scoped tasks from the terminal, scripted workflows, or when you p
 
 #### 3. "Ralph, go" — Squad Work Queue (In-Session)
 
-Ralph, the Squad work monitor, processes your entire work queue autonomously within a Copilot session. It triages issues, assigns work to the right specialist agents, monitors progress, and keeps going until the board is clear:
+Ralph, the Squad work monitor, processes your entire work queue autonomously within a Copilot session. First, connect Squad to your repo's issues (`"pull issues from owner/repo"`). Then Ralph triages those issues, assigns work to the right specialist agents, monitors progress, and keeps going until the board is clear:
 
 ```bash
 # In a Copilot CLI session with Squad:
@@ -428,7 +428,7 @@ npx @bradygaster/squad-cli watch --interval 5    # every 5 minutes
 npx @bradygaster/squad-cli watch --interval 30   # every 30 minutes
 ```
 
-This runs as a standalone local process (not inside Copilot) that auto-triages issues, assigns work based on team roles and keywords, and routes issues to agents or `@copilot` for pickup. It runs until you Ctrl+C.
+This runs as a standalone local process (not inside Copilot) that auto-triages issues from your connected repo, assigns work based on team roles and keywords, and routes issues to agents or `@copilot` for pickup. It runs until you Ctrl+C. (Requires the same repo connection set up via Squad.)
 
 Best for: overnight monitoring, catching issues while you're in meetings, and persistent triage between active sessions.
 
