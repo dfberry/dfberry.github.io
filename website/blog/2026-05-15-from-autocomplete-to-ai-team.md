@@ -122,14 +122,14 @@ Copilot will generate the implementation. Tab to accept.
 3. Install the [standalone Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli) and try:
 
 ```bash
-copilot -p "find all files modified in the last 24 hours larger than 1MB"
+copilot -p "explain why this Node.js app leaks memory when processing large CSV uploads"
 ```
 
 ### What I Learned at Level 1
 
-The biggest unlock wasn't the code generation — it was the **velocity shift in unfamiliar territory**. Working in a language I don't know well? Copilot bridges the gap between "I know what I want" and "I know the syntax." It turned 30-minute Stack Overflow sessions into 30-second completions.
+The biggest gain wasn't the code generation — it was the **velocity shift in unfamiliar territory**. Working in a language I don't know well? Copilot bridges the gap between "I know what I want" and "I know the syntax." It turned 30-minute research into 30-second completions.
 
-The limitation: Copilot at this level knows nothing about your specific project's conventions, architecture, or preferences. It generates generic best-practice code. Which leads to...
+The limitation: Copilot at this level knows generates generic best-practice code. It knows nothing about your specific conventions, or preferences. That leads to ...
 
 ---
 
@@ -140,11 +140,11 @@ The limitation: Copilot at this level knows nothing about your specific project'
 
 *No green shirts in sight — this is setup time. You're alone at the bench, labeling drawers, building custom jigs, and pinning reference cards to the pegboard. You're not building furniture yet; you're building the system that makes your workshop uniquely yours. When the green-shirted helpers return, they'll know exactly where everything goes.*
 
-Level 1 Copilot is smart but generic. Level 2 is where it starts feeling like a teammate who's read your wiki. This level works in **both the IDE and CLI** — the same instruction files and MCP configs are picked up by Copilot Chat, agent mode, and the `copilot` CLI.
+Level 1 Copilot is smart but generic. Level 2 is where it starts feeling like a teammate who's read your wiki. This level works in **both the IDE and CLI** — the same instruction files and MCP configs are picked up by Copilot Chat in the IDE and Copilot CLI.
 
 ### Custom Instruction Files
 
-Drop instruction files in your repo and Copilot learns your conventions:
+Drop [instruction files](https://code.visualstudio.com/docs/copilot/customization/custom-instructions) in your repo and Copilot learns your conventions:
 
 **`.github/copilot-instructions.md`** — global instructions for all Copilot interactions:
 
@@ -158,7 +158,17 @@ Drop instruction files in your repo and Copilot learns your conventions:
 - Never use `any` — prefer `unknown` with type guards
 ```
 
-**`AGENTS.md`** — instructions specifically for agent mode and the CLI agent. Define how the agent should behave when making multi-file changes, running tests, or interacting with your project structure.
+**`AGENTS.md`** — agent instructions that can live **anywhere** in your repo. Unlike `copilot-instructions.md` (which must be in `.github/`), you can place multiple `AGENTS.md` files at different directory levels — the nearest one in the directory tree takes precedence. This makes it ideal for **monorepos** where each package needs its own agent behavior:
+
+```
+my-monorepo/
+├── AGENTS.md              ← shared team-wide instructions
+├── packages/
+│   ├── frontend/
+│   │   └── AGENTS.md      ← React-specific agent rules (wins here)
+│   └── backend/
+│       └── AGENTS.md      ← API-specific agent rules (wins here)
+```
 
 Every suggestion Copilot makes now respects these rules. No more "helpful" suggestions that violate your architecture.
 
@@ -182,15 +192,15 @@ Now Copilot can query your Azure resources, check deployment status, or read you
 
 Some MCP servers I use daily:
 - **[Copilot for Azure](https://github.com/microsoft/GitHub-Copilot-for-Azure)** — query Azure resources, check deployments
-- **GitHub MCP** — deep repo operations beyond what's built-in
-- **File system MCP** — let Copilot read/write files outside the workspace
+- **[GitHub MCP](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/set-up-the-github-mcp-server)** — deep repo operations beyond what's built-in
+- **[Microsoft Learn MCP](https://learn.microsoft.com/training/support/mcp)** — let Copilot read/write files outside the workspace
 
 ### Skills: Repeatable, Deterministic Work
 
-Skills are the underrated powerhouse of Level 2. A skill is a `.copilot/skills/` directory with a `SKILL.md` file that defines a repeatable pattern — including deterministic steps from scripts and code.
+Skills are the underrated powerhouse of Level 2. A [skill](https://code.visualstudio.com/docs/copilot/customization/agent-skills) is a directory with a `SKILL.md` file that defines a repeatable pattern — including deterministic steps from scripts and code.
 
 ```
-.copilot/skills/
+.<directory>/skills/
 ├── pr-review/
 │   └── SKILL.md        # "Run lint, check test coverage, review diff"
 ├── doc-sync/
@@ -198,6 +208,8 @@ Skills are the underrated powerhouse of Level 2. A skill is a `.copilot/skills/`
 └── sdk-sample-check/
     └── SKILL.md        # "Validate all samples compile and match SDK version"
 ```
+
+Read the [Visual Studio documentation](https://code.visualstudio.com/docs/copilot/customization/agent-skills#_create-a-skill) for the best directory location for your skill usage.
 
 Skills differ from instructions in that they define **executable workflows** — not just preferences. A skill can include shell commands to run, files to check, and decision trees to follow. They're reusable across sessions and agents.
 
@@ -211,7 +223,7 @@ Why skills matter:
 
 1. Create `.github/copilot-instructions.md` with your project's conventions
 2. Add an MCP server for a tool you use daily (Azure, database, etc.)
-3. Create a `.copilot/skills/quick-review/SKILL.md` that describes your code review checklist
+3. Create a `.github/skills/quick-review/SKILL.md` that describes your code review checklist
 
 Then open Copilot Chat or run `copilot` and notice the difference — it follows YOUR patterns now.
 
@@ -219,20 +231,22 @@ Then open Copilot Chat or run `copilot` and notice the difference — it follows
 
 Custom instructions are absurdly high-leverage. A 50-line markdown file eliminates 80% of the "no, not like that" moments. MCP servers bridge "Copilot that knows code" and "Copilot that knows your infrastructure." Skills turn tribal knowledge into executable processes.
 
-The limitation: everything is still per-session. Copilot doesn't remember what it did yesterday. It doesn't have persistent context about your project's evolving state. It doesn't coordinate with other instances of itself. Enter Squad.
+The limitation: everything is still per-session. Copilot doesn't automatically carry context between sessions — it won't remember decisions from yesterday's refactor. It doesn't have persistent context about your project's evolving state. It doesn't coordinate with other instances of itself. 
+
+Enter [Squad](https://bradygaster.github.io/squad/).
 
 ---
 
 ## Level 3: Squad — A Team Working in Concert
 
-<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt at maple workbench reading a blueprint. Three men in green shirts assembling a cabinet together nearby. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor -->
+<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. On the far left a man in a bright cobalt blue long-sleeve shirt stands alone reading a large blueprint. On the right three men all wearing vivid emerald green long-sleeve shirts work together assembling a cabinet at a maple workbench. The blue-shirted man is separate from the green group. Brick walls, oak beam ceiling, arched windows, sawdust floor -->
 ![Watercolor illustration of a blue-shirted craftsperson reading blueprints while three green-shirted helpers assemble a cabinet](./media/2026-05-13-from-autocomplete-to-ai-team/level-3-squad-team.png)
 
-*The workshop is getting busy. You're at the bench in your blue shirt, studying the blueprint. Behind you, three helpers in green shirts are assembling a cabinet together — one holds the frame, another drives the dowels, a third checks the level. Each knows their role. Each stays in their lane. The work moves faster because they coordinate with each other, not just with you.*
+*The workshop is getting busy. You're at the bench in your blue shirt, studying the blueprint. Behind you, three helpers in green shirts are assembling a cabinet together — one holds the frame, another drives the dowels, a third checks the level. Each knows their role. Each stays in their lane. The work moves faster because they each know their job and coordinate with each other, not just with you.*
 
 This is where the mental model shifts from "AI assistant" to "AI team."
 
-[Squad](https://github.com/bradygaster/squad) gives you a team of agents working **in concert** to complete tasks, where each member's expertise and boundaries positively impact the result. It's not just "named agents with memory" — it's a coordinated system where the reviewer's standards shape the coder's output, and the docs writer's perspective catches gaps the implementer missed.
+[Squad](https://github.com/bradygaster/squad) gives you a team of specialized agents working **in concert** to complete tasks, where each member's expertise and boundaries positively impact the result. It's not just "named agents with memory" — it's a coordinated system where the reviewer's standards shape the coder's output, and the docs writer's perspective catches gaps the implementer missed.
 
 Squad runs on the **Copilot CLI** (`copilot --agent squad`) and adds the organizational layer that makes agents feel like a real team rather than a single assistant wearing different hats.
 
@@ -240,11 +254,11 @@ Squad runs on the **Copilot CLI** (`copilot --agent squad`) and adds the organiz
 
 | Feature | Regular Copilot | Squad |
 |---------|----------------|-------|
-| Memory | Per-session | Persistent across sessions |
+| Memory | Session-based | Persistent across sessions |
 | Identity | Generic assistant | Named agents with charters |
 | Coordination | You manage context | Agents hand off to each other |
 | Specialization | Same agent for everything | Domain-specific agents with boundaries |
-| Result quality | One perspective | Multiple perspectives improve output |
+| Result quality | One perspective | Diverse perspectives improve output |
 
 ### Installing Squad
 
@@ -278,7 +292,7 @@ This scaffolds a `.squad/` directory:
 
 ### Agent Charters: Expertise + Boundaries
 
-Each agent has a charter — a markdown file that defines who they are and, critically, what they won't do:
+Each agent has a charter — a markdown file that defines who they are and do and, critically, what they won't do:
 
 ```markdown
 # Reviewer Agent Charter
@@ -289,8 +303,8 @@ You are the code reviewer for this project. You focus on:
 - Performance anti-patterns
 - Consistency with project conventions
 
-## Voice
-Direct, constructive, specific. Always suggest fixes, never just point out problems.
+## What I Own
+- TypeScript files and build system
 
 ## Boundaries
 - Never approve your own changes
@@ -305,48 +319,47 @@ The boundaries matter as much as the expertise. A reviewer that knows when to es
 Ceremonies are repeatable workflows you trigger when needed:
 
 ```markdown
-# Documentation Sweep Ceremony
+# Ceremonies & Rituals
 
-## Trigger
-On-demand (e.g., before a release, after a sprint)
+## Design Review
 
-## Steps
-1. Check all open PRs for staleness (>48h without review)
-2. Scan issues labeled `priority:high` without assignees
-3. Compare API surface to documentation, flag drift
-4. Report findings with recommended actions
+**When:** Before PRD implementation begins  
+**Who:** <list of named agents>
+**Purpose:** Validate requirements, issue templates, and process flow before work starts
 
-## Output
-Summary with action items for each agent
+## Retrospectives
+
+**When:** After major deliveries (GitHub Projects setup, issue templates, Actions automation)  
+**Who:** All team members  
+**Facilitator:** <single agent name> 
+**Purpose:** Reflect on what worked, what didn't, continuous improvement
+
+## Cross-Repo Sync
+
+**When:** As needed  
+**Owner:** <single agent name>
+**Purpose:** Ensure coordination across all projects (reads repos.json for scope)
 ```
 
 Ceremonies encode your team's best practices into executable workflows that any agent can run consistently.
 
 ### Try This Now
 
+With the Squad open in a Copilot CLI interactive chat, assign work to the squad.
+
 ```bash
-# Install Squad CLI
-npm install -g @bradygaster/squad-cli
-
-# Initialize in your project
-cd your-project
-npx @bradygaster/squad-cli init
-
-# Start a session with Squad (standalone CLI)
-copilot --agent squad
-
 # Then talk to the team:
 "Team, fan out and review this PR for security issues"
-"What agents are available?"
+"Ralph go"
 ```
 
 ### What I Learned at Level 3
 
-The charter system is what makes Squad click. Without it, you have "Copilot with extra steps." With it, you have agents that maintain consistent behavior, remember decisions, and build expertise over time.
+The agents and charter system is what makes Squad click. With it, you have agents that maintain consistent behavior, remember decisions, and build expertise over time.  Without it, you have "Copilot with extra steps."
 
-The real insight: **boundaries create quality**. When the reviewer can't approve its own work, when the docs writer must verify against actual code, when the security agent escalates instead of guessing — the team produces better results than any single agent could alone.
+The real insight: **diversity, expertise, corrdination, and boundaries create quality**. When the reviewer can't approve its own work, when the docs writer must verify against actual code, when the security agent escalates instead of guessing — the team produces better results than any single agent could alone.
 
-The honest trade-off: Squad requires investment in writing good charters. A poorly-defined agent is worse than no agent because it gives inconsistent results. Spend the time upfront.
+The honest trade-off: Squad requires investment in codifying your work patterns and practices. A poorly-defined agent is worse than no agent because it gives inconsistent results. Spend the time upfront.
 
 ---
 
