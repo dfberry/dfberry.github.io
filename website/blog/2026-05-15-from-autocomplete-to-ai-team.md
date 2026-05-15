@@ -240,9 +240,9 @@ Enter [Squad](https://bradygaster.github.io/squad/).
 ## Level 3: Squad — A Team Working in Concert
 
 <!-- IMAGE PROMPT: Watercolor illustration. Four men total standing at a large shared maple workbench building furniture together. One man wears a bright cobalt blue shirt, three men wear vivid emerald green shirts. Blue shirt man points at plans, green shirt men saw and hammer. Warm tones, brick walls, oak beams, arched windows, sawdust -->
-![Watercolor illustration of four craftspeople at a shared workbench — one in blue directing while three in green saw and hammer](./media/2026-05-13-from-autocomplete-to-ai-team/level-3-squad-team.png)
+![Watercolor illustration of craftspeople collaborating at a shared workbench in a woodworking shop](./media/2026-05-13-from-autocomplete-to-ai-team/level-3-squad-team.png)
 
-*The workshop is getting busy. You're at the bench in your blue shirt, studying the blueprint. Behind you, three helpers in green shirts are assembling a cabinet together — one holds the frame, another drives the dowels, a third checks the level. Each knows their role. Each stays in their lane. The work moves faster because they each know their job and coordinate with each other, not just with you.*
+*The workshop is getting busy. You're at the bench, studying the blueprint. Around you, a small team of helpers is assembling a cabinet together — one holds the frame, another drives the dowels, another checks the level. Each knows their role. Each stays in their lane. The work moves faster because they each know their job and coordinate with each other, not just with you.*
 
 This is where the mental model shifts from "AI assistant" to "AI team."
 
@@ -366,9 +366,9 @@ The honest trade-off: Squad requires investment in codifying your work patterns 
 ## Level 4: Autonomous Operations
 
 <!-- IMAGE PROMPT: Watercolor illustration. Six men all wearing vivid emerald green shirts working at separate maple workbenches building furniture. All shirts are green, no blue shirts. One saws wood, one hammers, one planes a board, one uses clamps. Warm muted tones, brick walls, oak beams, sawdust floor, arched windows -->
-![Watercolor illustration of six green-shirted workers actively building furniture at separate workbenches in a woodworking shop](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
+![Watercolor illustration of workers building furniture at separate workbenches in a woodworking shop](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
 
-*Five helpers in green shirts are working independently across the shop — each at their own bench, each building a different piece from your specifications. One saws, one hammers, one planes. You check your clipboard, glance across the room, and trust the work because you wrote clear blueprints. The green shirts don't need you hovering.*
+*The helpers are working independently across the shop — each at their own bench, each building a different piece from your specifications. One saws, one hammers, one planes. You glance across the room and trust the work because you wrote clear blueprints. They don't need you hovering.*
 
 Level 4 is where the work has been **fully defined** and you just need it completed. You've already figured out what needs to happen — now you hand it off and let the system execute.
 
