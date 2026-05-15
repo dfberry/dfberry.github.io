@@ -352,10 +352,10 @@ The honest trade-off: Squad requires investment in writing good charters. A poor
 
 ## Level 4: Autonomous Operations
 
-<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt sitting in armchair with coffee mug watching. Five men in green shirts working independently at maple workbenches building furniture. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor. NO machinery -->
-![Watercolor illustration of a blue-shirted craftsperson relaxing with coffee while five green-shirted workers build independently](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
+<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. One man in bright cobalt blue shirt standing at the end of the room reviewing a clipboard. Five men in vivid emerald green shirts actively working at separate maple workbenches. One green shirt saws wood, one hammers, one planes a board, one uses clamps on a chair frame, one sands a tabletop. Wood shavings flying, sawdust in the air. Brick walls, oak beam ceiling, arched windows, pegboard with saws, sawdust floor, no text -->
+![Watercolor illustration of a blue-shirted craftsperson reviewing plans while five green-shirted workers actively build furniture at separate workbenches](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
 
-*You've earned that armchair. Five helpers in green shirts are working independently across the shop — each at their own bench, each building a different piece from your specifications. You sip your coffee, glance over occasionally, and trust the work because you wrote clear blueprints. The green shirts don't need you hovering.*
+*Five helpers in green shirts are working independently across the shop — each at their own bench, each building a different piece from your specifications. One saws, one hammers, one planes. You check your clipboard, glance across the room, and trust the work because you wrote clear blueprints. The green shirts don't need you hovering.*
 
 Level 4 is where the work has been **fully defined** and you just need it completed. You've already figured out what needs to happen — now you hand it off and let the system execute.
 
