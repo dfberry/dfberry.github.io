@@ -525,7 +525,6 @@ The Copilot ecosystem is growing fast. Here are the key resources:
 - **[GitHub Copilot Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)** — the IDE extension (VS Code, JetBrains, etc.)
 - **[Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — standalone `copilot` command for terminal
 - **[Squad CLI](https://github.com/bradygaster/squad)** — named agents working in concert (`npm i -g @bradygaster/squad-cli`)
-- **[Squad on ACA](https://github.com/haflidif/squad-on-aca)** — cloud deployment for Squad
 
 ### Learning & Community
 - **[Agentic SDLC Handbook](https://github.com/danielmeppiel/agentic-sdlc-handbook)** — patterns for AI-first development
@@ -553,7 +552,7 @@ I want to be honest about what's different after six months at Level 3+:
 - Architecture decisions still require human judgment
 - Debugging subtle logic errors still requires deep thought
 - Agent output needs review — trust but verify
-- Writing good charters and instructions is a skill that takes time to develop
+- Writing good charters and instructions is a skill that takes time to develop, update, and improve
 
 **The mental model shift:**
 I stopped thinking "what code do I need to write?" and started thinking "what work needs to happen, and who should do it?" Sometimes the answer is me — blue shirt at the bench, swinging the mallet. Often it's a green shirt with clear instructions and a well-scoped task.
