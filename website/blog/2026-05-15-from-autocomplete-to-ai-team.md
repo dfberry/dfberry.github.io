@@ -1,8 +1,8 @@
 ---
-slug: /2026-05-13-from-autocomplete-to-ai-team
-canonical_url: https://dfberry.github.io/blog/2026-05-13-from-autocomplete-to-ai-team
+slug: /2026-05-15-from-autocomplete-to-ai-team
+canonical_url: https://dfberry.github.io/blog/2026-05-15-from-autocomplete-to-ai-team
 custom_edit_url: null
-sidebar_label: "2026.05.13 From Autocomplete to AI Team"
+sidebar_label: "2026.05.15 From Autocomplete to AI Team"
 title: "From Autocomplete to AI Team: A Developer's Journey Through the Copilot Ecosystem"
 description: "From tab-completing code to orchestrating AI agent teams — a practical progression through five levels of the GitHub Copilot ecosystem, from IDE basics to cloud-scale autonomous operations."
 draft: true
@@ -13,7 +13,7 @@ tags:
   - MCP
   - AI assisted
   - Tutorial
-updated: 2026-05-14 07:00 PST
+updated: 2026-05-15 07:00 PST
 keywords:
   - github copilot squad
   - ai team development
