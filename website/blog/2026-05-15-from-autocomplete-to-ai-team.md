@@ -3,7 +3,7 @@ slug: /2026-05-15-from-autocomplete-to-ai-team
 canonical_url: https://dfberry.github.io/blog/2026-05-15-from-autocomplete-to-ai-team
 custom_edit_url: null
 sidebar_label: "2026.05.15 From Autocomplete to AI Team"
-title: "From Autocomplete to AI Team: A Developer's Journey Through the Copilot Ecosystem"
+title: "GitHub Copilot: From Basics to AI Agents"
 description: "From tab-completing code to orchestrating AI agent teams — a practical progression through five levels of the GitHub Copilot ecosystem, from IDE basics to cloud-scale autonomous operations."
 draft: true
 tags:
@@ -33,9 +33,9 @@ keywords:
 <!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. One man in blue shirt and leather apron at a maple workbench, holding a welcome sign. A man in green shirt beside him offering a chisel. Brick walls, oak beam ceiling, arched windows, pegboard with saws, sawdust floor -->
 ![Watercolor illustration of a woodworker in blue meeting his first AI helper in green at a furniture workshop](./media/2026-05-13-from-autocomplete-to-ai-team/hero-copilot-journey.png)
 
-*Imagine a furniture workshop. You're the craftsperson in the blue shirt — the one with the vision, the taste, the final say. The helpers in green shirts? Those are your AI agents. At first there's just one, handing you the right chisel at the right moment. By the end of this journey, you'll have a whole crew in green building furniture to your specifications while you sip coffee on the catwalk.*
+*Imagine a furniture workshop. You're the craftsperson in the blue shirt — the one with the vision, the taste, the final say. The helpers in green shirts? Those are your AI agents. At first there's just one, handing you the right chisel at the right moment. By the end of this journey, you'll have a whole crew in green building furniture to your specifications while you direct, decide, and review.*
 
-Six months ago, I was tab-completing function signatures. Today, I manage a team of named AI agents that handle PR reviews, documentation sweeps, and infrastructure audits — autonomously.
+A year ago, I was tab-completing function signatures. Today, I manage a team of named AI agents that handle PR reviews, documentation sweeps, and infrastructure audits.
 
 That sounds like a sales pitch. It's not. It's a progression that happened one level at a time, each building on the last. And the best part? You can start the same journey in about 15 minutes.
 
@@ -57,7 +57,7 @@ Each level is independently useful. You don't need Level 5 to get massive value 
 
 ## Level 1: Your First Day with Copilot
 
-<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt with mallet at maple workbench fitting a dovetail joint. Man in green shirt beside him steadying the joint. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor -->
+<!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. On the LEFT a man wearing a bright cobalt blue long-sleeve shirt holding a mallet at a maple workbench fitting a dovetail joint. On the RIGHT a man wearing a vivid emerald green long-sleeve shirt beside him steadying the joint. The blue-shirted man and the green-shirted man contrast clearly. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor -->
 ![Watercolor illustration of a blue-shirted craftsperson at the workbench while a green-shirted helper steadies the joint](./media/2026-05-13-from-autocomplete-to-ai-team/level-1-pair-programming.png)
 
 *Your first day in the workshop. You're at the bench with your mallet (blue shirt), fitting a dovetail joint. Your one helper in green steadies the piece, hands you the right tool before you ask, and suggests a better angle — but you swing the mallet.*
@@ -465,7 +465,7 @@ The coding agent on GitHub is the lowest-friction option — no local setup, jus
 <!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt on catwalk above workshop floor looking down. Many men in green shirts at rows of maple workbenches building furniture. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor -->
 ![Watercolor illustration of a blue-shirted craftsperson on a catwalk overseeing many green-shirted workers at rows of workbenches](./media/2026-05-13-from-autocomplete-to-ai-team/level-5-cloud-scale.png)
 
-*The workshop has become a factory floor. You're on the catwalk in your blue shirt, overseeing rows of workbenches where dozens of green-shirted workers build furniture in parallel — each team handling a different project, all following your standards. You designed the system. They execute it at scale.*
+*The workshop has become a factory floor. You're the one in the blue shirt — you direct the work, decide the priorities, and review the output. Dozens of green-shirted workers build furniture in parallel across rows of workbenches, each team handling a different project, all following your standards. You designed the system. They execute it at scale.*
 
 This level is for teams that want agents running continuously— not just when someone's terminal is open. There are two distinct approaches:
 
