@@ -22,7 +22,7 @@ keywords:
   - squad cli
   - copilot custom instructions
   - mcp servers
-  - copilot coding agent
+  - copilot cloud agent
   - ai pair programming
   - copilot cli
   - copilot skills
@@ -456,18 +456,24 @@ This runs as a standalone local process (not inside Copilot) that auto-triages i
 
 Best for: overnight monitoring, catching issues while you're in meetings, and persistent triage between active sessions.
 
-#### 5. Copilot Coding Agent (GitHub Issues)
+#### 5. Copilot Cloud Agent (GitHub Issues)
 
 ☁️ Cloud · 🤖 Autonomous · 🌐 GitHub.com
 
-Assign a GitHub issue to Copilot and it works independently — creates a branch, implements the change, opens a PR:
+Assign a GitHub issue to Copilot and it works independently — no terminal open, no local setup. The cloud agent runs in a GitHub Actions-powered ephemeral environment: it researches your repo, creates a plan, makes code changes, and opens a PR.
+
+Trigger it from a GitHub issue comment:
 
 ```markdown
 <!-- In a GitHub issue comment: -->
 @copilot implement this
 ```
 
-The coding agent works best for well-scoped, clearly described issues: "add a new endpoint that follows the existing pattern," "write tests for this module," "update the config schema to support the new field."
+Or assign the issue to Copilot directly from the GitHub Issues UI, VS Code, JetBrains, or the GitHub CLI.
+
+The cloud agent works best for well-scoped, clearly described issues: "add a new endpoint that follows the existing pattern," "write tests for this module," "update the config schema to support the new field." Think of this as a single async task you hand off — describe the outcome clearly, and come back to a PR.
+
+It uses GitHub Actions minutes and Copilot premium requests, so you're trading compute for time. No local session required; the work happens entirely on GitHub's infrastructure.
 
 ### When to Use Each
 
@@ -477,7 +483,7 @@ The coding agent works best for well-scoped, clearly described issues: "add a ne
 | `copilot` CLI | Terminal-scoped tasks | Your machine | Yes |
 | "Ralph, go" | Work queue + coordination | Your machine (Squad) | Yes |
 | `squad watch` | Persistent monitoring | Your machine (background) | No — standalone process |
-| Copilot coding agent | Issue-driven implementation | GitHub's cloud | No — fully async |
+| Copilot cloud agent | Issue-driven implementation | GitHub's cloud | No — fully async |
 
 ### The Autonomy Spectrum
 
@@ -486,7 +492,7 @@ These options form a spectrum from "I'm here watching" to "I'm asleep":
 ```
 You're present              You're away              You're asleep
 ─────────────────────────────────────────────────────────────────
-VS Code agent mode    →    squad watch        →    Copilot coding agent
+VS Code agent mode    →    squad watch        →    Copilot cloud agent
 Copilot CLI           →    (machine on)       →    (GitHub cloud)
 Ralph, go                                         
 ```
@@ -495,7 +501,7 @@ Ralph, go
 
 The key insight: **autonomous execution requires fully-defined work**. The quality of autonomous output is directly proportional to how clearly the task was specified. Vague issues get vague results. A well-written issue with acceptance criteria, examples, and constraints? That's where autonomous execution shines.
 
-The coding agent on GitHub is the lowest-friction option — no local setup, just assign an issue. `squad watch` bridges the gap between active sessions and cloud — your machine monitors and triages even when you're not in a Copilot session. Ralph is best when you're actively working through a backlog and want coordinated multi-agent execution.
+The cloud agent on GitHub is the lowest-friction option — no local setup, just assign an issue. `squad watch` bridges the gap between active sessions and cloud — your machine monitors and triages even when you're not in a Copilot session. Ralph is best when you're actively working through a backlog and want coordinated multi-agent execution.
 
 ---
 
@@ -510,20 +516,23 @@ The coding agent on GitHub is the lowest-friction option — no local setup, jus
 
 This level is for teams that want agents running continuously— not just when someone's terminal is open. There are two distinct approaches:
 
-### Copilot Coding Agents on GitHub.com
+### Copilot Cloud Agents on GitHub.com
 
 ☁️ Cloud · 🤖 Autonomous · 🌐 GitHub.com
 
-GitHub's hosted coding agent works entirely from the browser. You assign an issue, Copilot creates a branch, does the work, and opens a PR — all on GitHub's infrastructure:
+At Level 4 §5, I described the cloud agent as a single-issue tool — assign a task, get a PR. At Level 5, the same capability becomes a **fleet strategy**.
 
-1. Write a clear issue with acceptance criteria
-2. Assign it to Copilot (or comment `@copilot implement this`)
-3. Copilot creates a branch, implements the change
-4. A PR appears for your review
+The shift is organizational: instead of one issue at a time, you're assigning batches of issues across multiple repos in parallel. The cloud agent runs each independently on GitHub's infrastructure, and you review PRs as they land — like a manager reviewing work from a distributed team rather than supervising one pair-programming session.
 
-This scales naturally — assign multiple issues across multiple repos and Copilot works them in parallel. No local setup, no compute costs, no infrastructure to manage.
+How this works in practice:
+1. Fill your backlog with well-scoped, clearly described issues across repos
+2. Assign batches to Copilot — from the GitHub Issues UI, VS Code, JetBrains, or the GitHub CLI
+3. Copilot works each in parallel: researches the repo, creates a plan, implements, opens a PR
+4. You review and merge the PRs as they arrive
 
-Best for: teams using GitHub Issues as their work queue, especially for well-scoped implementation tasks across multiple repositories.
+This scales naturally across repositories. Your frontend, backend, docs, and infra repos can each have active cloud agent work running simultaneously. No machines left on, no local sessions to manage — GitHub's infrastructure handles the compute.
+
+The constraint that makes this work: **issue quality determines output quality**. Vague issues get vague PRs. A well-written issue with acceptance criteria, examples, and constraints is the leverage point. Invest there.
 
 ### Squad on a Compute Runtime
 
@@ -633,7 +642,7 @@ You don't need to plan all five levels. Start where you are:
 
 **Want more than autocomplete?** → Install Squad CLI, write one agent charter, run `copilot --agent squad`.
 
-**Ready for autonomous execution?** → Try `copilot --autopilot` on a well-defined task, or assign an issue to the coding agent.
+**Ready for autonomous execution?** → Try `copilot --autopilot` on a well-defined task, or assign an issue to the cloud agent.
 
 **Need always-on agents?** → Deploy Squad on ACA and connect it to your GitHub webhooks.
 
