@@ -138,7 +138,7 @@ copilot -p "explain why this Node.js app leaks memory when processing large CSV 
 
 The biggest gain wasn't the code generation — it was the **velocity shift in unfamiliar territory**. Working in a language I don't know well? Copilot bridges the gap between "I know what I want" and "I know the syntax." It turned 30-minute research into 30-second completions.
 
-The limitation: Copilot at this level knows generates generic best-practice code. It knows nothing about your specific conventions, or preferences. That leads to ...
+The limitation: Copilot at this level generates generic best-practice code. It knows nothing about your specific conventions or preferences. That leads to ...
 
 ---
 
@@ -305,7 +305,7 @@ This scaffolds a `.squad/` directory:
 
 ### Agent Charters: Expertise + Boundaries
 
-Each agent has a charter — a markdown file that defines who they are and do and, critically, what they won't do:
+Each agent has a charter — a markdown file that defines who they are and what they do and, critically, what they won't do:
 
 ```markdown
 # Reviewer Agent Charter
@@ -368,9 +368,9 @@ With the Squad open in a Copilot CLI interactive chat, assign work to the squad.
 
 ### What I Learned at Level 3
 
-The agents and charter system is what makes Squad click. With it, you have agents that maintain consistent behavior, remember decisions, and build expertise over time.  Without it, you have "Copilot with extra steps."
+The agents and charter system is what makes Squad click. With it, you have agents that maintain consistent behavior, remember decisions, and build expertise over time. Without it, you have "Copilot with extra steps."
 
-The real insight: **diversity, expertise, corrdination, and boundaries create quality**. When the reviewer can't approve its own work, when the docs writer must verify against actual code, when the security agent escalates instead of guessing — the team produces better results than any single agent could alone.
+The real insight: **diversity, expertise, coordination, and boundaries create quality**.When the reviewer can't approve its own work, when the docs writer must verify against actual code, when the security agent escalates instead of guessing — the team produces better results than any single agent could alone.
 
 The honest trade-off: Squad requires investment in codifying your work patterns and practices. A poorly-defined agent is worse than no agent because it gives inconsistent results. Spend the time upfront.
 
