@@ -53,9 +53,13 @@ Here's the path I took — five levels, from "ooh that's cool" to "wait, this ch
 
 Each level is independently useful. You don't need Level 5 to get massive value from Level 1. But once you see what's possible at each stage, you'll want to keep climbing.
 
+> **Badge legend:** 🖥️ VS Code · ⌨️ CLI · 👤 Interactive · 🤖 Autonomous · 💻 Local · ☁️ Cloud · 🌐 GitHub.com
+
 ---
 
 ## Level 1: Your First Day with Copilot
+
+🖥️ VS Code · ⌨️ CLI · 👤 Interactive · 💻 Local
 
 <!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. On the LEFT a man wearing a bright cobalt blue long-sleeve shirt holding a mallet at a maple workbench fitting a dovetail joint. On the RIGHT a man wearing a vivid emerald green long-sleeve shirt beside him steadying the joint. The blue-shirted man and the green-shirted man contrast clearly. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor -->
 ![Watercolor illustration of a blue-shirted craftsperson at the workbench while a green-shirted helper steadies the joint](./media/2026-05-13-from-autocomplete-to-ai-team/level-1-pair-programming.png)
@@ -66,11 +70,15 @@ This is where everyone starts — and honestly, where most of the immediate prod
 
 ### In the IDE: Inline Completions & Inline Chat
 
+🖥️ VS Code · 👤 Interactive · 💻 Local
+
 **Inline completions** — the thing most people think of as "Copilot." You type, it suggests. But it's more than autocomplete. It reads your open files, your comments, your function signatures, and generates contextually aware suggestions. This happens directly in your editor as you type.
 
 **Inline chat** — highlight code, press `Ctrl+I`, ask a question. "Explain this regex." "Refactor this to use async/await." "Add error handling." It edits in place within the current file.
 
 ### In the IDE: Copilot Chat Panel
+
+🖥️ VS Code · 👤 Interactive · 💻 Local
 
 The Chat panel (`Ctrl+Shift+I` or the sidebar) opens a conversation with Copilot that has broader awareness:
 
@@ -80,6 +88,8 @@ The Chat panel (`Ctrl+Shift+I` or the sidebar) opens a conversation with Copilot
 - **Agent mode** — Copilot Chat also has an "agent" mode where it can make multi-step edits, run terminal commands, and iterate. This is powerful for IDE-based workflows, but note: this is different from the Squad "agents" discussed later. Agent mode is a single AI working iteratively; Squad agents are specialized team members working in concert.
 
 ### The Standalone Copilot CLI
+
+⌨️ CLI · 👤 Interactive · 💻 Local
 
 The `copilot` command brings the full Copilot agent to your terminal — file editing, shell commands, sub-agents, and more:
 
@@ -134,6 +144,8 @@ The limitation: Copilot at this level knows generates generic best-practice code
 ---
 
 ## Level 2: Making Copilot Yours
+
+🖥️ VS Code · ⌨️ CLI · 👤 Interactive · 💻 Local
 
 <!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt ALONE at maple workbench arranging custom jigs, labeled drawers, and pinning reference cards to pegboard. NO green shirts visible. Brick walls, oak beam ceiling, arched windows, sawdust floor -->
 ![Watercolor illustration of a blue-shirted craftsperson alone, setting up custom jigs and labeled drawers](./media/2026-05-13-from-autocomplete-to-ai-team/level-2-customization.png)
@@ -238,6 +250,8 @@ Enter [Squad](https://bradygaster.github.io/squad/).
 ---
 
 ## Level 3: Squad — A Team Working in Concert
+
+🖥️ VS Code · ⌨️ CLI · 👤 Interactive · 💻 Local
 
 <!-- IMAGE PROMPT: Watercolor illustration. Four men total standing at a large shared maple workbench building furniture together. One man wears a bright cobalt blue shirt, three men wear vivid emerald green shirts. Blue shirt man points at plans, green shirt men saw and hammer. Warm tones, brick walls, oak beams, arched windows, sawdust -->
 ![Watercolor illustration of craftspeople collaborating at a shared workbench in a woodworking shop](./media/2026-05-13-from-autocomplete-to-ai-team/level-3-squad-team.png)
@@ -365,6 +379,8 @@ The honest trade-off: Squad requires investment in codifying your work patterns 
 
 ## Level 4: Autonomous Operations
 
+🖥️ VS Code · ⌨️ CLI · 🤖 Autonomous · 💻 Local · ☁️ Cloud
+
 <!-- IMAGE PROMPT: Watercolor illustration. Six men all wearing vivid emerald green shirts working at separate maple workbenches building furniture. All shirts are green, no blue shirts. One saws wood, one hammers, one planes a board, one uses clamps. Warm muted tones, brick walls, oak beams, sawdust floor, arched windows -->
 ![Watercolor illustration of workers building furniture at separate workbenches in a woodworking shop](./media/2026-05-13-from-autocomplete-to-ai-team/level-4-cloud-fleet.png)
 
@@ -378,6 +394,8 @@ This is the difference between "AI that helps me work" and "AI that does the wor
 
 #### 1. VS Code Agent Mode
 
+🖥️ VS Code · 🤖 Autonomous · 💻 Local
+
 In VS Code, Copilot's agent mode executes multi-step tasks — reading files, running commands, editing code — without manual intervention. You describe the outcome, and agent mode figures out the steps:
 
 ```
@@ -389,6 +407,8 @@ Agent mode uses your custom instructions and MCPs from Level 2, so it already kn
 
 #### 2. Copilot CLI Agent Mode
 
+⌨️ CLI · 🤖 Autonomous · 💻 Local
+
 The standalone CLI provides the same autonomous execution outside VS Code:
 
 ```bash
@@ -399,6 +419,8 @@ copilot -p "Refactor all API handlers to use the new error envelope format"
 Best for: well-scoped tasks from the terminal, scripted workflows, or when you prefer the command line over the IDE.
 
 #### 3. "Ralph, go" — Squad Work Queue (In-Session)
+
+⌨️ CLI · 🤖 Autonomous · 💻 Local
 
 Ralph, the Squad work monitor, processes your entire work queue autonomously within a Copilot session. First, connect Squad to your repo's issues (`"pull issues from owner/repo"`). Then Ralph triages those issues, assigns work to the right specialist agents, monitors progress, and keeps going until the board is clear:
 
@@ -417,6 +439,8 @@ Best for: in-session work queue processing, multi-agent coordination, and batchi
 
 #### 4. Squad Watch — Persistent Local Monitoring
 
+⌨️ CLI · 🤖 Autonomous · 💻 Local
+
 When you're away from the keyboard but your machine is on, `squad watch` provides persistent polling of your GitHub issues:
 
 ```bash
@@ -433,6 +457,8 @@ This runs as a standalone local process (not inside Copilot) that auto-triages i
 Best for: overnight monitoring, catching issues while you're in meetings, and persistent triage between active sessions.
 
 #### 5. Copilot Coding Agent (GitHub Issues)
+
+☁️ Cloud · 🤖 Autonomous · 🌐 GitHub.com
 
 Assign a GitHub issue to Copilot and it works independently — creates a branch, implements the change, opens a PR:
 
@@ -475,6 +501,8 @@ The coding agent on GitHub is the lowest-friction option — no local setup, jus
 
 ## Level 5: Cloud-Scale Agent Fleets
 
+☁️ Cloud · 🤖 Autonomous
+
 <!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Man in blue shirt on catwalk above workshop floor looking down. Many men in green shirts at rows of maple workbenches building furniture. Brick walls, oak beam ceiling, arched windows, pegboard with hand saws, sawdust floor -->
 ![Watercolor illustration of a blue-shirted craftsperson on a catwalk overseeing many green-shirted workers at rows of workbenches](./media/2026-05-13-from-autocomplete-to-ai-team/level-5-cloud-scale.png)
 
@@ -483,6 +511,8 @@ The coding agent on GitHub is the lowest-friction option — no local setup, jus
 This level is for teams that want agents running continuously— not just when someone's terminal is open. There are two distinct approaches:
 
 ### Copilot Coding Agents on GitHub.com
+
+☁️ Cloud · 🤖 Autonomous · 🌐 GitHub.com
 
 GitHub's hosted coding agent works entirely from the browser. You assign an issue, Copilot creates a branch, does the work, and opens a PR — all on GitHub's infrastructure:
 
@@ -496,6 +526,8 @@ This scales naturally — assign multiple issues across multiple repos and Copil
 Best for: teams using GitHub Issues as their work queue, especially for well-scoped implementation tasks across multiple repositories.
 
 ### Squad on a Compute Runtime
+
+☁️ Cloud · 🤖 Autonomous · ⌨️ CLI
 
 For more complex scenarios — where you have a fully specced-out PRD and need coordinated multi-agent execution — Squad can run on a compute platform like Azure Container Apps:
 
