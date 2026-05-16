@@ -5,7 +5,7 @@ custom_edit_url: null
 sidebar_label: "2026.05.15 From Autocomplete to AI Team"
 title: "GitHub Copilot: From Basics to AI Agents"
 description: "From tab-completing code to orchestrating AI agent teams — a practical progression through four levels of the GitHub Copilot ecosystem, from IDE basics to autonomous operations."
-draft: true
+draft: false
 tags:
   - GitHub Copilot
   - Squad
