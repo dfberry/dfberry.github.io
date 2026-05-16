@@ -575,7 +575,7 @@ The progression is natural. Each level solves a real problem you'll discover at 
 
 The future of development isn't AI replacing developers. It's developers who know how to orchestrate AI systems outperforming those who don't. The tools are here. The ecosystem is open source. The only question is which level you start at.
 
-*Want to go further? Read [Cloud-Scale Agent Fleets](/blog/2026-05-15-cloud-scale-agent-fleets) for Level 5.*
+*Want to go further? The next post in this series covers Cloud-Scale Agent Fleets for Level 5 — coming soon.*
 
 ---
 
@@ -592,4 +592,4 @@ These are free, virtual events covering the latest in Copilot extensibility, age
 
 ---
 
-*Have questions or want to share your own journey? Find me on GitHub at [@dfberry](https://github.com/dfberry) or check out [my other posts](/blog) on the Copilot ecosystem.*
+*Have questions or want to share your own journey? Find me on GitHub at [@dfberry](https://github.com/dfberry) or check out [my other posts](/) on the Copilot ecosystem.*
