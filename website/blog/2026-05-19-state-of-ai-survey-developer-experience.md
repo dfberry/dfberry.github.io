@@ -66,13 +66,13 @@ One of my favorite tools in this space is [Squad](https://www.npmjs.com/package/
 
 **My prediction:** Next year's survey will have significantly more questions about agent frameworks — not just "do you use agents" but what frameworks, what patterns, what governance.
 
-## New Tools Born from AI's Demands
+## New Tools Adopted from AI's Demands
 
 Here's something the survey doesn't capture yet but I see every day: AI hasn't just changed *how* I write code — it's changed *what tools I need* to write code.
 
 Take [Dev Containers](https://learn.microsoft.com/devcontainers/overview) as the clearest example. Instead of installing tools locally and hoping versions stay consistent, I define my entire development environment as a Docker container — declarative, reproducible, isolated. I run these containers as development environments on my own compute. Every project gets exactly the dependencies it needs, and nothing bleeds between them.
 
-I didn't adopt Dev Containers because it was trendy. I adopted them because AI agents need consistent, predictable environments. When you have multiple agents running builds concurrently — or a cloud agent like [GitHub Copilot](https://learn.microsoft.com/azure/developer/github-copilot/overview) provisioning its own environment from scratch — you need something better than "I hope the right version of Go is on PATH." A `devcontainer.json` defines exactly what's available, every time, no drift. The agent gets the same environment I do.
+I didn't adopt Dev Containers because it was trendy. I adopted them because AI agents need consistent, predictable environments — and they need compute that doesn't stop. When you have multiple agents running builds concurrently, or a cloud agent like [GitHub Copilot](https://learn.microsoft.com/azure/developer/github-copilot/overview) provisioning its own environment from scratch, you need something better than "I hope the right version of Go is on PATH." A `devcontainer.json` defines exactly what's available, every time, no drift. The agent gets the same environment I do.
 
 The same pattern extends to [DevBox](https://learn.microsoft.com/devbox/overview) — the key difference is where the compute lives and whether it shuts down. Dev Containers run on my own machine, always available, always under my control. DevBox moves the environment to cloud compute that can be spun up and torn down on demand. Both solve the same core problem — declarative, reproducible environments that agents can parse and modify — but the tradeoff is local persistence versus elastic cloud resources. These aren't tools I sought out for their own sake — they're tools that became necessary because AI workflows exposed the fragility of manually-managed environments.
 
