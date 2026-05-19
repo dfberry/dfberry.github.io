@@ -28,7 +28,7 @@ keywords:
 
 <!-- IMAGE PROMPT: Watercolor illustration, warm muted tones. Split scene: left side shows a person at a desk directing a small team of helpers (interactive work), right side shows a factory assembly line running autonomously with quality checkpoints. Pacific Northwest forest visible through windows. Soft morning light. -->
 
-A year ago, I started experimenting with AI agents. Today I work with two completely different systems: an interactive agent team that I direct in real time, and an autonomous pipeline that generates documentation without me in the loop. They use the same underlying technology — large language models, structured prompts, validation steps — but they solve fundamentally different problems at fundamentally different maturity levels.
+A year ago, I started experimenting with AI agents. Today I have two completely different systems: 1) an interactive agent team that I direct in real time with my Squad across issues, prs, and repos, and 2) an automated pipeline that generates documentation without me in the loop. They use the same underlying technology — large language models, structured prompts, validation steps — but they solve fundamentally different problems at fundamentally different maturity levels.
 
 This is what I learned about when each approach works, when it doesn't, and how to know when you're ready to graduate from one to the other.
 
@@ -39,16 +39,24 @@ Here's the honest summary:
 | | Interactive (Squad + Copilot) | Autonomous (Doc Generation Pipeline) |
 |---|---|---|
 | **Human involvement** | Every session, real-time | Design time only |
-| **Validation** | I review, approve, course-correct | 8 specialized agents vote pass/fail |
-| **Error handling** | I notice and fix | Pipeline catches or fails loudly |
+| **Validation** | I review, approve, course-correct | Mostly deterministic with some non-deterministic validation |
+| **Error handling** | I notice and fix then push so skills and automation | Pipeline catches or fails loudly |
 | **Maturity** | High flexibility, lower consistency | High consistency, lower flexibility |
-| **Best for** | Novel work, exploration, judgment calls | Repetitive, well-defined transformations |
+| **Best for** | Just-in-time, new or different, process still in definition, temporary, transient work | Repetitive, well-defined transformations |
 
 Both use AI. Both produce real artifacts. But the trust models are completely different.
 
-## Interactive Agents: Squad and Copilot CLI
+## Interactive Squad and Copilot CLI
 
 My interactive setup is [Squad](https://github.com/bradygaster/squad-cli) — a coordinator that dispatches work to named AI agents. I say "Fenster, fix the error handling in index.js" and the coordinator spawns a specialized agent with the right context, charter, and history.
+
+### The Scale of Interactive Work
+
+This isn't a single-repo hobby project. My interactive agent work spans **8 active projects**, each with 2 or more repositories. Different projects involve different real people as reviewers and stakeholders, different systems (Azure DevOps, GitHub, Microsoft Learn build pipelines), and requirements that shift as each project grows.
+
+The content project alone touches 4 repos. The data-plus-ai project has sample repos in 6 languages. The Squad product itself is a multi-repo system with a CLI, extensions, and community plugins. Each project has its own routing rules, its own conventions, and its own cast of human collaborators who show up with feedback I can't predict.
+
+This is why interactive stays interactive — **the environment is too dynamic to pipeline.** People change their minds. Reviewers push back with feedback that requires judgment to address. New requirements appear mid-sprint. The process itself is still being defined in most of these projects.
 
 ### What This Actually Looks Like
 
@@ -68,15 +76,16 @@ The coordinator reads the issue, checks routing rules, and spawns the right agen
 
 Three agents, working in parallel, producing artifacts I'll review in a few minutes.
 
-### Why This Works for Exploratory Work
+### Why Interactive Stays Interactive
 
-The key insight: **I'm always in the loop.** When Fenster proposes a fix that misses an edge case, I catch it. When Hockney writes tests that don't cover the real failure mode, I redirect. The agents are fast collaborators, not autonomous decision-makers.
+The key insight: **I'm always in the loop because I have to be.** When Fenster proposes a fix that misses an edge case, I catch it. When a reviewer on a content PR pushes back with "this isn't how we describe that feature anymore," I redirect. The agents are fast collaborators, not autonomous decision-makers.
 
 This is where I spend most of my time:
 - Blog posts (like this one — agents draft, I shape)
-- PR reviews across multiple repos
+- PR reviews across multiple repos with different human reviewers
 - Architecture decisions where judgment matters
-- Investigating unfamiliar codebases
+- Content work where conventions are still evolving
+- Cross-project coordination where each project has different rules
 - One-off tasks that don't repeat
 
 ### What I Learned the Hard Way
@@ -87,9 +96,13 @@ This is where I spend most of my time:
 
 **The coordinator shouldn't do work.** My biggest recurring mistake: trying to do the work inline instead of dispatching to the right specialist. The overhead of spawning an agent feels wasteful for small tasks, but the consistency of always routing through the system pays off.
 
+**Multi-project is the real complexity.** A single project with stable requirements is easy mode for agents. Eight projects with shifting requirements, different stakeholders, and different conventions — that's where the interactive model earns its keep. The agent needs me to be the thread that connects "what reviewer X said last week" to "what we're building this week."
+
 ## The Autonomous Pipeline: Content Generation
 
 The [microsoft-mcp-doc-generation](https://github.com/diberry/microsoft-mcp-doc-generation) pipeline is a completely different animal. It takes structured input (tool definitions from the Azure MCP Server CLI) and produces complete documentation articles — with parameter tables, descriptions, prerequisites, and proper Microsoft Learn formatting.
+
+A year in, this pipeline is **stable.** The input format is well-defined. The output format is well-defined. The validation rules are comprehensive. When upstream tools add new parameters or change descriptions, the pipeline handles it without me thinking about it. That stability is the whole point — and it took a year to earn.
 
 ### What This Actually Looks Like
 
@@ -112,6 +125,8 @@ I wrote the same style of documentation article dozens of times. Each one follow
 - Related content links
 
 The judgment calls were already made — in the template design, in the validation rules, in the governing specifications. Individual articles don't need creative decisions. They need accurate, consistent transformation of structured data into structured prose.
+
+Compare this to the interactive work: nobody changes the JSON schema format on me mid-sprint. Nobody reviews a generated article and says "actually we describe parameters differently now." The input is stable. The output conventions are stable. The people who review the final PRs have consistent expectations. That's what makes it pipelineable.
 
 ### The Validation Stack That Makes It Work
 
@@ -176,8 +191,10 @@ Here's my honest framework for when interactive work should become pipeline work
 
 - **The work requires judgment** — architecture decisions, voice/tone, creative framing
 - **The patterns aren't stable yet** — you're still figuring out what "good" looks like
+- **Multiple stakeholders with changing opinions** — real people review your work and push back unpredictably
+- **The process itself is still being defined** — conventions evolve as the project matures
+- **Cross-project coordination** — different projects have different rules, and you're the thread connecting them
 - **Volume is low** — fewer than 10 similar artifacts don't justify pipeline investment
-- **Context is unique** — each instance needs different thinking, not different data
 - **You're still learning** — the interactive friction is teaching you something
 
 ### Graduate to Pipeline When:
@@ -185,8 +202,9 @@ Here's my honest framework for when interactive work should become pipeline work
 - **You can write the spec** — you can describe "correct" without thinking about it
 - **Validation is mechanical** — you can enumerate what to check without judgment
 - **Volume justifies investment** — 20+ similar artifacts, or the same artifact regenerated repeatedly
-- **Input is structured** — you have a reliable source of truth to transform from
+- **Input is structured and stable** — you have a reliable source of truth that doesn't change format on you
 - **Errors are categorical** — the same 5 bug types keep appearing, and you can write rules to catch them
+- **Stakeholder expectations are stable** — the people reviewing output have consistent, predictable standards
 
 ### The Dangerous Middle Ground
 
