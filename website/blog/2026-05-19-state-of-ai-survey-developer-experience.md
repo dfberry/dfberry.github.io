@@ -44,11 +44,11 @@ I love the [State of AI survey](https://stateofai.dev/) results put together by 
 
 You can read a lot into how a survey is designed, not just the results. One area I've been focusing heavily on in the last six months of my own development is what I call *model value* — using the right model for the right purpose.
 
-Most survey respondents (and most headlines) are focused on cloud models from the big-name vendors. [Anthropic](https://www.anthropic.com/) and [OpenAI](https://openai.com/) are obvious winners in that category, and the survey backs that up clearly. But I'm interested in extending that conversation to include model catalogs and model runtime location. That means places like [HuggingFace](https://huggingface.co/), [NVIDIA](https://www.nvidia.com/en-us/ai/), [Ollama](https://ollama.ai/), and [Azure AI Foundry](https://ai.azure.com/).
+Most survey respondents (and most headlines) are focused on cloud models from the big-name vendors. [Anthropic](https://www.anthropic.com/) and [OpenAI](https://openai.com/) are obvious winners in that category, and the survey backs that up clearly. But I'm interested in extending that conversation to include model catalogs and model runtime location. That means places like [HuggingFace](https://huggingface.co/), [NVIDIA](https://www.nvidia.com/en-us/ai/), [Ollama](https://ollama.ai/), and [Azure AI Foundry](https://learn.microsoft.com/azure/ai-studio/what-is-ai-studio).
 
 This isn't because I work at Microsoft — though I do appreciate where Foundry is going, especially its commitment to making the full breadth of the model ecosystem accessible in one place. It's because I genuinely appreciate the diversity that comes from having hundreds of models with different strengths, sizes, and licenses available to me. They all have value.
 
-I also appreciate that I can do real work on my local machine with a downloaded small language model (SLM) and not worry about token costs. That's not a fallback strategy — that's a workflow. For certain tasks: summarization, local code review, quick drafts, the SLM on my laptop is fast, free, and private.
+I also appreciate that I can do real work on my local machine with a downloaded [small language model (SLM)](https://learn.microsoft.com/ai/playbook/technology-guidance/generative-ai/working-with-llms/phi-702/overview) and not worry about token costs. That's not a fallback strategy — that's a workflow. For certain tasks: summarization, local code review, quick drafts, the SLM on my laptop is fast, free, and private.
 
 The survey supports the idea of local AI, though it's tucked in a back corner under **Usage: Local AI** — you have to go looking for it. I expect that section to grow substantially. As more developers want to maximize the compute they already own and reduce API spend, they'll branch out into other model providers and runtime locations beyond the cloud. Local-first isn't fringe thinking anymore.
 
@@ -60,7 +60,7 @@ The survey also asked for opinions on broader concerns — whether AI poses an e
 
 The section I'm most confident will grow and evolve is **Agents and Assistants**. "Agents" can mean a lot of things depending on who you ask. In my own use and development, an agent is something that completes well-defined work autonomously — not a chatbot, not a suggestion engine, but a teammate with a scope.
 
-A year ago, that meant [LangChain](https://www.langchain.com/) and [LangGraph](https://www.langchain.com/langgraph). Those are still valid tools. But now the agent framework landscape includes many more options, including the [GitHub Copilot SDK](https://github.com/features/copilot), which I've been using heavily.
+A year ago, that meant [LangChain](https://www.langchain.com/) and [LangGraph](https://www.langchain.com/langgraph). Those are still valid tools. But now the agent framework landscape includes many more options, including the [GitHub Copilot extensions](https://learn.microsoft.com/azure/developer/github-copilot/build-copilot-extensions), which I've been using heavily.
 
 One of my favorite tools in this space is [Squad CLI](https://www.npmjs.com/package/@bradygaster/squad-cli) — a team of AI agents, each with different expertise and a different work surface, collaborating to help me complete work. Squad isn't just a productivity tool. It's changed how I *think* about AI and how I interact with it. I went from asking an AI a question to managing an AI team with defined roles. That shift in mental model matters.
 
@@ -70,9 +70,9 @@ One of my favorite tools in this space is [Squad CLI](https://www.npmjs.com/pack
 
 Here's something the survey doesn't capture yet but I see every day: AI hasn't just changed *how* I write code — it's changed *what tools I need* to write code.
 
-Take [Dev Containers](https://containers.dev/) as the clearest example. Instead of installing tools locally and hoping versions stay consistent, I define my entire development environment as a Docker container — declarative, reproducible, isolated. I run these containers as development environments on my own compute. Every project gets exactly the dependencies it needs, and nothing bleeds between them.
+Take [Dev Containers](https://learn.microsoft.com/devcontainers/overview) as the clearest example. Instead of installing tools locally and hoping versions stay consistent, I define my entire development environment as a Docker container — declarative, reproducible, isolated. I run these containers as development environments on my own compute. Every project gets exactly the dependencies it needs, and nothing bleeds between them.
 
-I didn't adopt Dev Containers because it was trendy. I adopted them because AI agents need consistent, predictable environments. When you have multiple agents running builds concurrently — or a cloud agent like [GitHub Copilot](https://github.com/features/copilot) provisioning its own environment from scratch via `copilot-setup-steps.yml` — you need something better than "I hope the right version of Go is on PATH." A `devcontainer.json` defines exactly what's available, every time, no drift. The agent gets the same environment I do.
+I didn't adopt Dev Containers because it was trendy. I adopted them because AI agents need consistent, predictable environments. When you have multiple agents running builds concurrently — or a cloud agent like [GitHub Copilot](https://learn.microsoft.com/azure/developer/github-copilot/overview) provisioning its own environment from scratch via [`copilot-setup-steps.yml`](https://docs.github.com/copilot/customizing-copilot/customizing-the-development-environment-for-copilot-coding-agent) — you need something better than "I hope the right version of Go is on PATH." A `devcontainer.json` defines exactly what's available, every time, no drift. The agent gets the same environment I do.
 
 The same pattern applies to [DevBox](https://www.jetify.com/devbox), structured configuration files that agents can parse and modify, even the shift toward monorepos with clear workspace boundaries. These aren't tools I sought out for their own sake — they're tools that became necessary because AI workflows exposed the fragility of manually-managed local environments.
 
@@ -86,7 +86,7 @@ This is the part I think about every year with Devographics surveys — the sect
 
 **Thought leadership and learning sources.** Who are developers reading and listening to in order to keep up? What communities are they in? Is large language model / small language model the only path people see toward AGI, or are there other architectures getting attention? These questions would reveal a lot about how the community sees the next few years.
 
-**Security.** AI in the developer space has huge and immediate security implications — prompt injection, model poisoning, data exfiltration through context, supply chain concerns with models themselves. This deserves its own section in a developer survey, not a footnote.
+**Security.** AI in the developer space has huge and immediate [security implications](https://learn.microsoft.com/azure/ai-services/openai/concepts/red-teaming) — prompt injection, model poisoning, data exfiltration through context, supply chain concerns with models themselves. This deserves its own section in a developer survey, not a footnote.
 
 **My prediction:** Next year's report will address most of these gaps. I've seen Devographics do exactly this with previous surveys — State of JS, State of CSS — where year two and three add the depth that year one reveals is missing. The State of AI survey is following the same natural progression, and that's a good thing.
 
