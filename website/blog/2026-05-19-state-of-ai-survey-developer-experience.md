@@ -12,6 +12,8 @@ tags:
   - State of AI
   - SLM
   - Agents
+  - DevBox
+  - Developer Tools
 updated: 2026-05-19 07:00 PST
 keywords:
   - state of ai survey
@@ -26,6 +28,9 @@ keywords:
   - model context protocol MCP
   - huggingface models
   - langchain langgraph
+  - devbox jetify
+  - dev containers ai
+  - ai developer environment tooling
 ---
 
 # Developer Experience Insights from the State of AI Survey
@@ -60,6 +65,18 @@ A year ago, that meant [LangChain](https://www.langchain.com/) and [LangGraph](h
 One of my favorite tools in this space is [Squad CLI](https://www.npmjs.com/package/@bradygaster/squad-cli) — a team of AI agents, each with different expertise and a different work surface, collaborating to help me complete work. Squad isn't just a productivity tool. It's changed how I *think* about AI and how I interact with it. I went from asking an AI a question to managing an AI team with defined roles. That shift in mental model matters.
 
 **My prediction:** Next year's survey will have significantly more questions about agent frameworks — not just "do you use agents" but what frameworks, what patterns, what governance.
+
+## New Tools Born from AI's Demands
+
+Here's something the survey doesn't capture yet but I see every day: AI hasn't just changed *how* I write code — it's changed *what tools I need* to write code.
+
+Take [DevBox](https://www.jetify.com/devbox) as the clearest example. A year ago, I managed my development environments manually — install Node here, Python there, keep versions straight across projects. It was fine. But AI agents don't work the way I do. They spin up environments, run builds, execute tests, and tear things down — often across multiple projects in a single session. That workflow *demands* reproducible, declarative, isolated environments. DevBox solves exactly that problem.
+
+I didn't adopt DevBox because it was trendy. I adopted it because AI agents kept breaking my local state. When you have multiple agents running builds concurrently — or a cloud agent provisioning its own environment from scratch — you need something better than "I hope the right version of Go is on PATH." DevBox gives me a `devbox.json` that defines exactly what's available, every time, no drift.
+
+The same pattern applies to other tools I've adopted recently: [Dev Containers](https://containers.dev/) for standardized cloud agent environments, structured configuration files that agents can parse and modify, even the shift toward monorepos with clear workspace boundaries. These aren't tools I sought out for their own sake — they're tools that became necessary because AI workflows exposed the fragility of my previous setup.
+
+**My prediction:** Next year's survey will start asking about developer environment tooling in the context of AI — not just "what IDE do you use" but "how do you manage environments for AI-assisted development?" The infrastructure layer is shifting underneath us, and the tools we adopt next will be shaped by what AI needs to function well alongside us.
 
 ## What's Missing: The Survey's Blind Spots
 
