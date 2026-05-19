@@ -60,7 +60,7 @@ The survey also asked for opinions on broader concerns — whether AI poses an e
 
 The section I'm most confident will grow and evolve is **Agents and Assistants**. "Agents" can mean a lot of things depending on who you ask. In my own use and development, an agent is something that completes well-defined work autonomously — not a chatbot, not a suggestion engine, but a teammate with a scope.
 
-A year ago, that meant [LangChain](https://www.langchain.com/) and [LangGraph](https://www.langchain.com/langgraph). Those are still valid tools. But now the agent framework landscape includes many more options, including the [GitHub Copilot extensions](https://learn.microsoft.com/azure/developer/github-copilot/build-copilot-extensions), which I've been using heavily.
+A year ago, that meant [LangChain](https://www.langchain.com/) and [LangGraph](https://www.langchain.com/langgraph). Those are still valid tools. But now the agent framework landscape includes many more options, including the [GitHub Copilot SDK](https://github.com/github/copilot-sdk), which I've been using heavily.
 
 One of my favorite tools in this space is [Squad](https://www.npmjs.com/package/@bradygaster/squad-cli) — a team of AI agents, each with different expertise and a different work surface, collaborating to help me complete work. Squad isn't just a productivity tool. It's changed how I *think* about AI and how I interact with it. I went from asking an AI a question to managing an AI team with defined roles. That shift in mental model matters.
 
