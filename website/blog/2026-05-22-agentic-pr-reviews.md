@@ -33,7 +33,7 @@ keywords:
 
 PR #8648 had 14 review comments across 3 files. Statler found them.
 
-I was documenting the Azure MCP Server's SQL tools — translating entries from `tools-list.json` into parameter tables for the Microsoft Learn article. Standard work. I've done around 40 of these tool articles at this point. I submitted the PR and Statler, my adversarial Squad agent, came back with this:
+I was documenting the tool server's SQL tools — translating entries from `tools-list.json` into parameter tables for the documentation platform article. Standard work. I've done around 40 of these tool articles at this point. I submitted the PR and Statler, my adversarial Squad agent, came back with this:
 
 > **Statler — Adversarial Review**
 >
@@ -45,7 +45,7 @@ That comment isn't "missing semicolon." It's a specific claim about a pattern ac
 
 I fixed the table and replied: "Confirmed — subscription, resource-group, and devlang slug formatting follow the same ambient pattern across storage, SQL, and container apps. Adding to reviewer notes for the series." Sam (my fact-checking agent) verified the pattern against the upstream `tools-list.json`. The PR merged with one exchange and no ambiguity.
 
-The same PR also came back with a second Statler flag I hadn't noticed at all: three of my seven Example sections used `node` as the devlang slug while the rest of the Azure MCP Server series uses `javascript`. It would have built fine. Readers filtering by language tab would have gotten partial results.
+The same PR also came back with a second Statler flag I hadn't noticed at all: three of my seven Example sections used `node` as the devlang slug while the rest of the tool server documentation series uses `javascript`. It would have built fine. Readers filtering by language tab would have gotten partial results.
 
 14 comments. 3 files. Every flag was right.
 
@@ -74,11 +74,11 @@ What I wanted — and I think most people want — is a reviewer who reads caref
 
 My review setup uses [Squad v0.9.4](https://github.com/bradygaster/squad) running on the Copilot CLI. Three agents run on documentation PRs:
 
-**Sam** (Fact Checker) compares my claims against the source. For Azure MCP Server articles, that means checking parameter names, types, and descriptions against the upstream `tools-list.json`, and verifying that tool descriptions match the annotation text in the source repo. Sam approved PR #8648 after confirming the corrected subscription removal matched the pattern in the upstream JSON — and flagged a minor drift in one tool description where I'd added "against a specified database" that wasn't in the source text.
+**Sam** (Fact Checker) compares my claims against the source. For the tool server articles, that means checking parameter names, types, and descriptions against the upstream `tools-list.json`, and verifying that tool descriptions match the annotation text in the source repo. Sam approved PR #8648 after confirming the corrected subscription removal matched the pattern in the upstream JSON — and flagged a minor drift in one tool description where I'd added "against a specified database" that wasn't in the source text.
 
 **Statler** (Adversarial) looks for what will confuse readers, break patterns, or create maintenance problems. Statler caught both the subscription parameter issue and the devlang slug inconsistency on PR #8648. On a recent Azure Skills article PR, Statler caught a parameter marked as "Required" in my table that the CLI JSON schema had as "Optional" — a discrepancy I'd introduced by following the pattern from an older article rather than checking the current schema.
 
-**Scooter** (Quality) checks structure: do headings follow the expected pattern, is the frontmatter complete, do parameter tables have the right columns, are there missing Example sections. For the Azure MCP Server series, that means verifying every tool article has a Description, Parameters table, and Example section in the right order.
+**Scooter** (Quality) checks structure: do headings follow the expected pattern, is the frontmatter complete, do parameter tables have the right columns, are there missing Example sections. For the tool server documentation series, that means verifying every tool article has a Description, Parameters table, and Example section in the right order.
 
 Sam goes first (verify facts), Statler second (find problems), Scooter last (check structure). If Sam fails, the others still run — I want all the feedback, not a fail-fast stop.
 
@@ -98,10 +98,10 @@ My old mental model: a PR description is a summary so the reviewer knows roughly
 
 My current model: a PR description is a goal statement and a scope contract. It defines what "done" looks like, what the reviewer should evaluate, and what the author is explicitly not doing. Writing it is the first act of review.
 
-For Azure MCP Server tool articles — where I'm translating entries from `tools-list.json` into structured documentation — I now include:
+For tool server articles — where I'm translating entries from `tools-list.json` into structured documentation — I now include:
 
 - **Goal**: which tools this PR covers, from which source file, to which output file
-- **Source of truth**: a link to the specific commit in `microsoft/mcp` I'm translating from
+- **Source of truth**: a link to the specific commit in `upstream-repo` I'm translating from
 - **Scope**: which tools are covered, and explicitly which are not (some tools are internal, some belong in a different article)
 - **Open questions**: things I'm genuinely uncertain about, asked directly to the reviewer
 
@@ -120,13 +120,13 @@ Writing for a thoughtful reader changes how you think about what you're doing. T
 
 ## What Sam's Review on PR #8648 Actually Said
 
-For context: PR #8648 covered the Azure MCP Server SQL tool articles. 7 tools across the SQL namespace, each needing a Description, Parameters table, and Example section. Source was the SQL namespace block in `tools-list.json` plus the tool-specific annotations in the upstream repo.
+For context: PR #8648 covered the SQL tool documentation. 7 tools across the SQL namespace, each needing a Description, Parameters table, and Example section. Source was the SQL namespace block in `tools-list.json` plus the tool-specific annotations in the upstream repo.
 
 Sam's review (fact-check pass):
 
 > **Sam — Fact Check**
 >
-> I compared all 7 tool descriptions against `tools-list.json` (commit `a4f9c31`). Six match exactly. One diverges: `azmcp_sql_database_query` — your description says "executes a SQL query against a specified database" but the upstream annotation says "runs an arbitrary SQL query." "Executes" vs "runs" is a style call, but "against a specified database" is an addition not in the source. Intentional clarification, or drift?
+> I compared all 7 tool descriptions against `tools-list.json` (commit `a4f9c31`). Six match exactly. One diverges: `toolserver_sql_database_query` — your description says "executes a SQL query against a specified database" but the upstream annotation says "runs an arbitrary SQL query." "Executes" vs "runs" is a style call, but "against a specified database" is an addition not in the source. Intentional clarification, or drift?
 >
 > Parameters tables are accurate with the exception flagged by Statler. Example sections are present for all 7 tools.
 
@@ -154,7 +154,7 @@ That's what 14 comments across 3 files looks like when the reviewer is actually 
 
 The subscription parameter question came up in three consecutive SQL tool PRs before I fixed it. Not because I forgot — I genuinely wasn't sure whether the pattern I was seeing was intentional or a gap in the existing docs. After the third flag, Sam verified the pattern across the full SQL namespace and I added a rule to my reviewer notes: "subscription, resource-group, and tenant-id are ambient context params in the SQL and Storage namespaces — do not include in parameter tables."
 
-That note is now in my PR description template for the Azure MCP Server series. Statler stops flagging it. Sam stops verifying it. The question is answered and closed.
+That note is now in my PR description template for the tool server documentation series. Statler stops flagging it. Sam stops verifying it. The question is answered and closed.
 
 ```mermaid
 graph LR
@@ -201,7 +201,7 @@ One more thing on tone: agents ask rather than assume when something is ambiguou
 
 *A year later, the PR is still there. The reasoning is still there. The "why" — the hardest thing to recover — is captured in the record.*
 
-Last week I needed to know why the Azure MCP Server Cosmos DB article doesn't document the `query_items_with_partition_key` behavior as a separate tool. I went back to the PR. The scope section said: "Cosmos DB tools in this PR are limited to the publicly-listed namespace entries in `tools-list.json`. The partition key query behavior is exposed through `azmcp_cosmos_query` and is not a separate tool entry." Sam's review confirmed it: "partition key query is a parameter pattern of `azmcp_cosmos_query`, not a separate tool — correct to omit."
+Last week I needed to know why the Cosmos DB tool article doesn't document the `query_items_with_partition_key` behavior as a separate tool. I went back to the PR. The scope section said: "Cosmos DB tools in this PR are limited to the publicly-listed namespace entries in `tools-list.json`. The partition key query behavior is exposed through `toolserver_cosmos_query` and is not a separate tool entry." Sam's review confirmed it: "partition key query is a parameter pattern of `toolserver_cosmos_query`, not a separate tool — correct to omit."
 
 Thirty seconds to verify. Without that review reasoning, I'd be digging through commit messages and Slack threads trying to reconstruct intent from behavior.
 
@@ -235,7 +235,7 @@ When you know Sam will compare your descriptions against `tools-list.json` at co
 
 A lot of the things a thoughtful reviewer wants to know are things you should have been thinking about anyway. The scope boundary isn't bureaucratic overhead. It's the question that determines whether the PR does what it's supposed to do. Spelling that out before you submit means catching it yourself rather than in a review comment.
 
-There's something that builds over time too. Working with the same reviewer configuration across the Azure MCP Server series has created a shared vocabulary — not just terminology, but a shared understanding of what counts as an in-scope parameter, what belongs in a Parameters table versus an Example section, when "Required" means required by the tool vs. required by the namespace context. That vocabulary now lives in the reviewer notes in my PR template. A new article starts from that baseline instead of from zero.
+There's something that builds over time too. Working with the same reviewer configuration across the tool server documentation series has created a shared vocabulary — not just terminology, but a shared understanding of what counts as an in-scope parameter, what belongs in a Parameters table versus an Example section, when "Required" means required by the tool vs. required by the namespace context. That vocabulary now lives in the reviewer notes in my PR template. A new article starts from that baseline instead of from zero.
 
 You'd traditionally build that kind of shared vocabulary by working closely with a human expert over many PRs, until you internalized their standards. Most people don't have access to that. The expert who has the deep standards isn't always reviewing your PRs. And when they are, consistency is a casualty of a full workload. The same reviewer standards applied to every PR, with no variance based on who's available, builds the vocabulary faster than occasional reviews from domain experts who are also managing six other priorities.
 
@@ -287,7 +287,7 @@ This is the PR description template I've built over ~60 documentation PRs in the
 - `[filename]` — [one-line description of what changed and why]
 ```
 
-The "Reviewer notes" field in Source of truth is where settled decisions live. My current notes for the Azure MCP Server series:
+The "Reviewer notes" field in Source of truth is where settled decisions live. My current notes for the tool server documentation series:
 
 > subscription, resource-group, and tenant-id are ambient context params in SQL and Storage namespaces — do not include in parameter tables. Devlang slug is `javascript` not `node` for all JS/TS examples in this series. Tool descriptions should match upstream annotation text exactly; any additions or clarifications require an open question to the reviewer.
 
@@ -302,7 +302,7 @@ copilot --agent squad
 Then in the session:
 
 ```
-Sam, Statler, Scooter — review the PR branch in emu-microsoftdocs-azure-dev-docs-pr
+Sam, Statler, Scooter — review the PR branch in content-repo
 ```
 
 The agents run in sequence, post their findings, and I work through the flags before pushing for human review. Agent review plus fixes: about 30 minutes per PR. That's faster than waiting for a human reviewer to have time, and what I bring to the human review is cleaner because the pattern and fact-check issues are already resolved.
