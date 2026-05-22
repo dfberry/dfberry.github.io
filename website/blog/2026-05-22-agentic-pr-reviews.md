@@ -194,6 +194,49 @@ One more thing on tone: agents ask rather than assume when something is ambiguou
 
 ---
 
+## When Someone Else's Agent Reviews Your PR
+
+Everything so far has been about my agents reviewing my work. That's one direction.
+
+The other direction is when your PR lands in a queue owned by a different team — one with their own standards, their own patterns, their own accumulated history of what "correct" means for their content area. Before agent reviews, that came back as "LGTM," or a one-liner with no context, or silence. You had no idea what the reviewer actually checked or what standard you were being held to.
+
+When another team's agent reviews your PR, you get to see the standards.
+
+A recent PR went to a platform team for review. Their agent came back with this:
+
+> **Platform Reviewer — Standards Check**
+>
+> Parameter table uses "server name" in the Description column. The convention in this content area is "resource name" for all Azure resource identifiers, consistent with the Compute and Storage namespace articles. See: `storage_account_list`, `vm_list`.
+>
+> This inconsistency will create problems for readers switching between namespaces and may conflict with automated tooling that normalizes on "resource name."
+
+I didn't know that convention existed. There's no onboarding doc that says "resource name, not server name, for Azure resource identifiers." That standard lived in the platform team's collective head — or, now, in their reviewer notes.
+
+Before the agent, I'd have gotten "LGTM" or a terse inline comment: "resource name." No explanation. No comparison point. I'd fix it for that PR and still not understand the rule. The next PR would have the same issue. I'd fix it again. We'd repeat this indefinitely, neither side getting anything durable from the exchange.
+
+The agent gave me the rule. I added it to my template's reviewer notes. That exchange happened once.
+
+---
+
+This is the part that gets undersold in conversations about AI-assisted reviews: the transfer of standards across team boundaries.
+
+When you're not the subject matter expert and your PR lands with a team that is, you're dependent on their review being informative. "LGTM" from an SME is the worst possible outcome — they looked, they approved, and you learned nothing about whether what you wrote was actually right or just not wrong enough to reject. A correction without context gives you a fix but not the rule. And a review that's professionally marginal — terse, dismissive, delivered with implied frustration — buries whatever useful content it contains under the overhead of processing the delivery.
+
+An agent from their team applies their standards with full reasoning and no tone variance. No ALL CAPS. No "this is incorrect." Just: here's what we check, here's what doesn't match, here's what it's compared against. You don't need a relationship with that team to get a useful review. You don't need them to have time. You need their agent configured for the work.
+
+The practical version: PR goes to a team whose standards I don't fully know. Their agent flags 4–6 things, all specific, all grounded in a stated pattern or comparison. I fix the flags. I add the novel standards to my template's reviewer notes. My next PR to that team starts from a documented baseline instead of from zero.
+
+That's not the same as a review from a human expert on that team. The agent doesn't catch things that aren't in its standards — the things that are wrong because of a recent architectural shift, or a stakeholder preference that lives in one person's head. But it catches everything that's in the standards, consistently, every time. And it tells me what those standards are. Before agent reviews, that information was inconsistent at best. Often it wasn't transmitted at all.
+
+The feedback loop works the same across teams as it does within your own. First PR: their agent teaches you the standards. Second PR: you apply them. Third PR: those flags don't fire. Not because the standard disappeared. Because you learned it.
+
+<!-- IMAGE PROMPT: Watercolor illustration, soft wet-on-wet washes, visible paper texture, warm muted tones, loose brushwork. Two figures in separate pools of warm lamplight, each at a different wooden desk — one in a Pacific Northwest cabin, one in a modern studio. Between them, a single glowing thread or paper note floats in the space, carrying handwritten text. The feeling is of standards being transmitted across distance without friction. Soft greens and ambers. -->
+![Two developers in separate spaces connected by a floating review note — standards transmitted across team boundaries](./media/2026-05-22-agentic-pr-reviews/cross-team-standards-transfer.png)
+
+*When the review is professional by default, the standard travels cleanly. No relationship required. No bandwidth negotiation. Just the rule, with the reasoning.*
+
+---
+
 ## Why I Can Audit Every Decision From the Last Year
 
 <!-- IMAGE PROMPT: Watercolor illustration, soft wet-on-wet washes, visible paper texture, warm muted tones, loose brushwork. The pink-haired girl standing in front of a glowing glass display case, like a museum exhibit. Inside the case, a PR review card is preserved and illuminated, surrounded by artifacts: a code snippet, a decision note, a timestamp. The light is amber and warm, like a fire or late afternoon sun. Outside the display case window, a winter scene — bare trees, snow on the Cascades in the distance. The feeling is of preservation and permanence. -->
