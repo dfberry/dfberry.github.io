@@ -1,0 +1,11 @@
+flowchart LR
+    subgraph L[Without PRD]
+        A[Vague task] --> B[Clarify]
+        B --> C[Rework]
+        C --> B
+    end
+    subgraph R[With PRD]
+        D[Intake answers] --> E[Clear requirements]
+        E --> F[Autonomous execution]
+        F --> G[Review]
+    end
