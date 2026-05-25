@@ -5,7 +5,7 @@ custom_edit_url: null
 sidebar_label: "2026.05.24 PRDs Aren't Just for Code"
 title: "PRDs Aren't Just for Code: Communication clarity that travels"
 description: "How treating every request as a product requirement — not just code features — forces the specificity that lets AI agents execute without hand-holding."
-draft: true
+draft: false
 tags:
   - PRD
   - AI Agents
