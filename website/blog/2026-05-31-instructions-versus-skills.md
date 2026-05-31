@@ -197,35 +197,32 @@ Looking deeper at those three Microsoft repos shows how the wiring actually work
 - **Custom agents**: "Specialist persona with its own instructions, tool restrictions, and context"
 - **Agent skills**: "Folder of instructions, scripts, and resources that Copilot loads when relevant to a task"
 
-The flow is not instructions calling skills directly. Instructions invoke agents, which route to skills or external procedures. 
+The flow is not instructions calling skills directly. Instructions provide ambient governance while agents route to skills or prompts. But the exact wiring differs by repo — and this is important to acknowledge.
 
-**Microsoft MCP**: The instruction file stays thin. It points to the `agentic-workflows` agent, which is a router. The agent doesn't execute — it dispatches. It says "if the user wants to create a workflow, load the specialized prompt from `gh-aw/create-agentic-workflow.md`." The actual step-by-step instructions live in those external prompt files.
+**Microsoft MCP**: The instruction file sets repo-wide rules. The `agentic-workflows` agent exists as a dispatcher, but the instruction file doesn't explicitly reference it. Instead, the agent independently routes based on task type (create/update/debug) and loads specialized prompts from external URLs (`gh-aw/create-agentic-workflow.md`, etc.). The pattern: **coexisting layers, not a single chain**. Instructions are ambient; agent dispatch is implicit or convention-driven.
 
-**Microsoft Waza**: The instructions point to a `squad.agent.md` file, which is a *coordinator* that knows how to spawn other agents and skills. When azd-publish work is needed, the coordinator loads the `.github/skills/azd-publish/SKILL.md` file, which contains the release procedure: versioning rules, changelog steps, build verification, PR template. That skill is all *action*.
+**Microsoft Waza**: The instruction file sets repo-wide rules. The `squad.agent.md` file is a real coordinator that spawns agents, but again, the instruction file doesn't reference it. Instead, `squad.agent.md` wires to `.squad/skills/` (not `.github/skills/`), and the coordinator loads skills based on routing decisions. The pattern: **instructions and agent coexist, but don't directly invoke each other**. The coordinator is the orchestrator, but it's activated outside the visible instruction layer.
 
-**Azure SDK for JavaScript**: The instructions reference a skill router (`sdk-workflow`), which then points to the actual reviewer agents (`archie` for API review, `dash` for performance, `dexter` for dependencies, `scribe` for docs). But there's one more layer: each agent loads its own task-specific guidelines from `.github/prompts/`. When `archie` (API review) runs, it reads `architecture-review-guidelines.md`. When `dexter` (dependency review) runs, it reads `dependency-review-guidelines.md`. The prompts are templates — reusable domain expertise that stay separate from the agent's routing logic.
+**Azure SDK for JavaScript**: The instruction file sets repo-wide rules. Reviewer agents (`archie`, `dash`, `dexter`, `scribe`) exist and explicitly load task-specific prompts. But the instruction file doesn't reference `sdk-workflow` or the agents directly. Instead, two parallel mechanisms work: (1) the shared `sdk-workflow` skill for package workflows, and (2) reviewer agents invoked either directly or via PR labels. Each reviewer agent loads `../prompts/architecture-review-guidelines.md`, etc. The pattern: **parallel systems**, not a single chain.
 
-So Azure SDK actually uses five layers, not four:
+The key insight from these repos: **they prove that instructions, agents, skills, and prompts can coexist and work together — but the orchestration is often implicit rather than explicit**. The file formats show clear separation of concerns, but the linkage between layers is not always visible in static analysis.
 
-```
-Instruction (repo-wide governance) → Agent (routing) → Prompt template (domain-specific guideline) 
-```
-
-The prompt templates are the specialized instruction sets for narrow domains. An agent *reads* a prompt the same way it reads a skill — as input context. The difference: skills are *executable* (they contain procedures, tool calls, step-by-step workflows). Prompts are *epistemic* (they contain review criteria, decision trees, validation checklists, pattern libraries).
-
-The pattern in all three follows the same layering model that Copilot's documentation describes:
+The pattern in all three still follows the separation model that Copilot's documentation describes:
 
 ```
 Custom instructions (always-on, repo-wide context)
     ↓
 Custom agent (routing, dispatch logic, persona)
     ↓
-Prompt template or skill (task-specific expertise: guidelines, patterns, procedures)
+Prompt or skill (task-specific expertise: guidelines, patterns, procedures)
     ↓
 LLM receives: repo context + agent logic + domain expertise + tool definitions
 ```
 
-The instruction file is the *governance boundary*. The agent is the *orchestrator*. The skill is the *workflow*. Once you see that layering, the mistakes become obvious: if you put procedural steps in the instruction file, new contributors search there for answers instead of following the workflow. If you put governance rules only in the skill, CI can't enforce them without parsing procedural code. And if the agent tries to do both, it becomes a god object that breaks whenever either layer changes.
+But "orchestration" might be:
+- **Explicit** (agent file explicitly references prompt URLs, like MCP)
+- **Implicit** (convention-driven, like Waza's `.squad/` routing)
+- **Parallel** (multiple independent systems, like Azure's workflows + agents)
 
 ## Map the pattern to a real PR lifecycle
 
@@ -308,6 +305,14 @@ Then test whether the separation makes the repo easier to understand. In my expe
 That's also where the time savings show up. You spend a little time on the split once, then stop re-explaining the same boundary every time someone adds a new automation.
 
 If you're not sure where to start, look for the longest instruction file in the repo. Long instruction files are often carrying work they were never designed to carry. Split out the first workflow you find and leave the rule behind.
+
+## The orchestration gap: theory vs practice
+
+While the three Microsoft repos show strong separation between instructions, agents, skills, and prompts, **the exact linkage varies**. Instructions don't always explicitly invoke agents. Agents don't always reference the instruction file. But the separation of concerns is real: governance lives in one place, execution in another.
+
+This is actually a feature. It means teams can evolve each layer independently. Instructions can change without breaking agents. Agents can be added without rewriting instructions. Skills can be refined without touching either.
+
+To verify these claims and patterns, I've built an integration test suite that validates the blog's assertions against the actual repos: [Copilot orchestration test suite](https://github.com/dfberry/project-dfberry/tree/main/tests/copilot-orchestration). The tests include file existence checks, linkage validation, and content classification. You can run them against your own repos to check whether the instructions-vs-skills split is actually happening.
 
 ## Close the loop
 
