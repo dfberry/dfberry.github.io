@@ -189,6 +189,36 @@ Here's the pairing I wanted to see in public: instruction files setting the expe
 
 Those examples strengthen the same precedent from another angle: teams are publishing durable expectations in instruction files, then letting tools, workflows, and agent-specific routines handle execution elsewhere.
 
+## How the flow actually wires: instruction → agent → skill → prompt
+
+Looking deeper at those three Microsoft repos shows how the wiring actually works in practice. GitHub's [Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet) defines each layer clearly:
+
+- **Custom instructions**: "Always-on context that automatically applies to every interaction within its defined scope"
+- **Custom agents**: "Specialist persona with its own instructions, tool restrictions, and context"
+- **Agent skills**: "Folder of instructions, scripts, and resources that Copilot loads when relevant to a task"
+
+The flow is not instructions calling skills directly. Instructions invoke agents, which route to skills or external procedures. 
+
+**Microsoft MCP**: The instruction file stays thin. It points to the `agentic-workflows` agent, which is a router. The agent doesn't execute — it dispatches. It says "if the user wants to create a workflow, load the specialized prompt from `gh-aw/create-agentic-workflow.md`." The actual step-by-step instructions live in those external prompt files.
+
+**Microsoft Waza**: The instructions point to a `squad.agent.md` file, which is a *coordinator* that knows how to spawn other agents and skills. When azd-publish work is needed, the coordinator loads the `.github/skills/azd-publish/SKILL.md` file, which contains the release procedure: versioning rules, changelog steps, build verification, PR template. That skill is all *action*.
+
+**Azure SDK for JavaScript**: The instructions reference a skill router (`sdk-workflow`), which then points to the actual reviewer agents (`archie` for API review, `dash` for performance, `dexter` for dependencies, `scribe` for docs). Each agent loads its own guidelines (e.g. `architecture-review-guidelines.md`), so the instructions don't repeat that knowledge.
+
+The pattern in all three follows the same layering model that Copilot's documentation describes:
+
+```
+Custom instructions (always-on, repo-wide context)
+    ↓
+Custom agent (routing, dispatch logic, persona)
+    ↓
+Agent skill or external prompt (executable procedure, task-specific)
+    ↓
+LLM receives: repo context + agent logic + task-specific instructions + tool definitions
+```
+
+The instruction file is the *governance boundary*. The agent is the *orchestrator*. The skill is the *workflow*. Once you see that layering, the mistakes become obvious: if you put procedural steps in the instruction file, new contributors search there for answers instead of following the workflow. If you put governance rules only in the skill, CI can't enforce them without parsing procedural code. And if the agent tries to do both, it becomes a god object that breaks whenever either layer changes.
+
 ## Map the pattern to a real PR lifecycle
 
 PR lifecycle management is where this distinction stops being philosophical and starts paying rent.
