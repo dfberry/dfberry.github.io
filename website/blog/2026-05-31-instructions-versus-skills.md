@@ -273,7 +273,7 @@ Instructions are the easiest layer to lint and enforce because they read like po
 
 Skills are the layer that makes invocation and orchestration possible. They can expose a clear trigger, gather inputs, call scripts, branch on state, and produce artifacts. OpenAI's `code-change-verification` skill is a clean example: the rule lives in `AGENTS.md`, but the skill can actually run the verification stack. OpenHands does the same thing for release work by turning an SDK bump into a named procedure with exact files and commands.
 
-That's also why dfberry's repo structure keeps settling into `.github/skills/` and `.squad/`. I want the governance layer where I can review it, diff it, and eventually enforce it with policy checks. I want the execution layer where a person, a slash command, or an agent team can invoke it without dragging all of that procedural text into every session.
+That's also why my repo structure keeps settling into `.github/skills/` and `.squad/`. I want the governance layer where I can review it, diff it, and eventually enforce it with policy checks. I want the execution layer where a person, a slash command, or an agent team can invoke it without dragging all of that procedural text into every session.
 
 ## Keep the one-line rule nearby
 
@@ -312,7 +312,7 @@ While the three Microsoft repos show strong separation between instructions, age
 
 This is actually a feature. It means teams can evolve each layer independently. Instructions can change without breaking agents. Agents can be added without rewriting instructions. Skills can be refined without touching either.
 
-To verify these claims and patterns, I've built an integration test suite that validates the blog's assertions against the actual repos: [Copilot orchestration test suite](https://github.com/dfberry/project-dfberry/tree/main/tests/copilot-orchestration). The tests include file existence checks, linkage validation, and content classification. You can run them against your own repos to check whether the instructions-vs-skills split is actually happening.
+I've been validating these patterns with a local test suite that exercises the orchestration boundaries. The tests include file existence checks, linkage validation, and content classification. You can run them against your own repos to check whether the instructions-vs-skills split is actually happening.
 
 ## Close the loop
 

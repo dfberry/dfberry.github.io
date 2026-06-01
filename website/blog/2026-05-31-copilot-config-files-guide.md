@@ -1,5 +1,8 @@
 ---
 slug: /2026-05-31-copilot-config-files-guide
+authors: [dfberry]
+date: 2026-05-31
+image: ./media/2026-05-31-copilot-config-files-guide/watercolor-1-layers-of-governance.png
 canonical_url: https://dfberry.github.io/blog/2026-05-31-copilot-config-files-guide
 custom_edit_url: null
 sidebar_label: "2026.05.31 Copilot Config Files"
@@ -26,7 +29,7 @@ I'll see `.github/copilot-instructions.md` and `.github/agents/` in the same rep
 
 This guide is my attempt to make that mental model boring and usable. I want to show what each file is for, where real repos keep them, and which claims I can actually defend with links.
 
-![Layers of governance showing instructions, agents, and skills as concentric circles](./media/2026-05-31-copilot-config-files-guide/image-1-layers.png)
+![Layers of governance showing instructions, agents, and skills as concentric circles](./media/2026-05-31-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
 
 *The governance metaphor works like nested rings: instructions shape the space, agents interpret it, and skills do the work at the center.*
 
@@ -47,6 +50,8 @@ This guide is my attempt to make that mental model boring and usable. I want to 
 ![Stylized .github home showing where instructions, agents, skills, prompts, and workflows live](./media/2026-05-31-copilot-config-files-guide/image-2-where-they-live.png)
 
 *The folder-house metaphor emphasizes that these files live together, but each room has a different job.*
+
+<!-- truncate -->
 
 Those are the most commonly confused files. There are also path-specific instructions, `AGENTS.md`, hooks, and MCP configs. I keep coming back to these five because they're the ones people mix together most often.
 
@@ -141,7 +146,7 @@ A skill is a folder with a `SKILL.md` file plus whatever supporting templates, s
 
 GitHub's documentation describes what each feature does, but doesn't frame the relationship as explicitly as I'd like. Here's my mental model: **Instructions set the rules. Agents decide. Skills execute.** This is my interpretation, not GitHub's official framing, but it helps me remember which tool to reach for.
 
-![Mental model hierarchy showing instructions governing agents and skills](./media/2026-05-31-copilot-config-files-guide/diagram-1-mental-model.svg)
+![Mental model hierarchy showing instructions governing agents and skills](./media/2026-05-31-copilot-config-files-guide/diagram-1-mental-model-v3.svg)
 
 *This cascade makes the control flow explicit: rules constrain decisions, and decisions choose the reusable execution path.*
 
