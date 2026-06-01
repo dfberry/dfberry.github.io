@@ -5,6 +5,7 @@
 #
 # All commands use the Stable Diffusion image generation pipeline.
 # Prompt source: image-specs-and-prompts.md and watercolor-prompts.md
+# Device auto-detection: uses CUDA if available, MPS on Apple Silicon, falls back to CPU
 #
 # Usage: bash generate-images.sh [filter]
 #   filter (optional): "svg", "png", or "watercolor" to run only that subset
@@ -74,7 +75,6 @@ generate_png_infographics() {
         --size blog-hero \
         --seed $((SEED_BASE + 1)) \
         --output "$OUTPUT_DIR/image-1-quick-reference-table.png" \
-        --cpu \
         --modifier clarity \
         --modifier organized
     echo "   ✓ Generated\n"
@@ -88,7 +88,6 @@ generate_png_infographics() {
         --size blog-hero \
         --seed $((SEED_BASE + 2)) \
         --output "$OUTPUT_DIR/image-2-where-they-live.png" \
-        --cpu \
         --modifier structure \
         --modifier clarity
     echo "   ✓ Generated\n"
@@ -110,7 +109,6 @@ generate_watercolors() {
         --size blog-hero \
         --seed $((SEED_BASE + 3)) \
         --output "$OUTPUT_DIR/watercolor-1-mapping-file-families.png" \
-        --cpu \
         --modifier painterly \
         --modifier loose
     echo "   ✓ Generated\n"
@@ -124,7 +122,6 @@ generate_watercolors() {
         --size blog-hero \
         --seed $((SEED_BASE + 4)) \
         --output "$OUTPUT_DIR/watercolor-2-understanding-layers.png" \
-        --cpu \
         --modifier painterly \
         --modifier loose
     echo "   ✓ Generated\n"
@@ -138,7 +135,6 @@ generate_watercolors() {
         --size blog-hero \
         --seed $((SEED_BASE + 5)) \
         --output "$OUTPUT_DIR/watercolor-3-tracing-workflow.png" \
-        --cpu \
         --modifier painterly \
         --modifier loose
     echo "   ✓ Generated\n"
