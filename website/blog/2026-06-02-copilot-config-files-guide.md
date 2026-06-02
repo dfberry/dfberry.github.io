@@ -33,20 +33,20 @@ This guide is my attempt to make that mental model boring and usable. I want to 
 
 *The governance metaphor works like nested rings: instructions shape the space, agents interpret it, and skills do the work at the center.*
 
-## Quick Reference: The Five File Families
+## Quick Reference: The Six File Families
 
 | File | Lives at | Purpose | When to use |
 |------|----------|---------|------------|
 | **Copilot instructions** | `.github/copilot-instructions.md` | Repository-wide governance (always-on context) | "All Copilot work in this repo should follow these rules" |
-| **Path-specific instructions** | `.github/instructions/*.instructions.md` | Scoped rules for specific directories or file patterns | "Frontend code follows different conventions than backend code" |
+| **Path-specific instructions** | `.github/instructions/*.instructions.md` | Scoped rules for specific directories or file patterns | "My monorepo has areas with different conventions" |
 | **Agent definitions** | `.github/agents/` | Specialist persona with its own scope, tools, and constraints | "This task needs a reviewer or specialist with tighter boundaries" |
 | **Skills** | `.github/skills/{name}/SKILL.md` | Reusable workflow package with instructions, resources, and optional scripts | "This is a repeatable procedure Copilot should know how to do" |
 | **Prompt files / prompt docs** | Official prompt files: `.github/prompts/*.prompt.md`; repo-local docs often live in `.github/prompts/*.md` | Reusable prompt template or task-specific reference context | "I need either a reusable prompt in the IDE or a deeper reference doc for a specific task" |
 | **Workflows** | `.github/workflows/` | GitHub Actions automation and remote triggers | "I need this to run on a label, schedule, dispatch, or PR event" |
 
-![Configuration files structure across the five .github families](./media/2026-06-02-copilot-config-files-guide/diagram-2-configuration-files-structure.svg)
+![Configuration files structure across the six .github families](./media/2026-06-02-copilot-config-files-guide/diagram-2-configuration-files-structure.svg)
 
-*This structure diagram turns the five file families into one navigable map so you can see which pieces are baseline, specialized, reusable, or event-driven.*
+*This structure diagram turns the six file families into one navigable map so you can see which pieces are baseline, specialized, reusable, or event-driven.*
 
 ![Stylized .github home showing where instructions, agents, skills, prompts, and workflows live](./media/2026-06-02-copilot-config-files-guide/image-2-where-they-live.png)
 
@@ -54,7 +54,7 @@ This guide is my attempt to make that mental model boring and usable. I want to 
 
 <!-- truncate -->
 
-Those are the most commonly confused files. There are also `AGENTS.md`, hooks, and MCP configs. I keep coming back to these six because they're the ones people mix together most often.
+Those are the most commonly confused files. There are also `AGENTS.md` (an OpenAI/Anthropic agent convention — not a GitHub Copilot feature), hooks, and MCP configs. I keep coming back to these six because they're the ones people mix together most often.
 
 ## The Copilot Instructions File: Governance Layer
 
@@ -71,9 +71,9 @@ Those are the most commonly confused files. There are also `AGENTS.md`, hooks, a
 
 **Real examples:**
 
-[Microsoft MCP Copilot Instructions](https://github.com/microsoft/mcp/blob/main/.github/copilot-instructions.md#L1-L16) — a compact baseline file. The heading is `Coding Instructions for GitHub Copilot`, not "Comprehensive Overview," and it goes straight into always-apply rules, build expectations, and PR guidance.
+[Microsoft MCP Copilot Instructions](https://github.com/microsoft/mcp/blob/main/.github/copilot-instructions.md) — a focused baseline file. The heading is `Coding Instructions for GitHub Copilot`, not "Comprehensive Overview," and it goes straight into always-apply rules, build expectations, and PR guidance.
 
-[Azure SDK for JavaScript Copilot Instructions](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/copilot-instructions.md#L86-L111) — a denser governance file. The Azure SDK guidance gets specific about API design, implementation choices, and when to explain a deviation from the house style. In my experience, this kind of baseline makes Copilot more likely to produce code aligned with review expectations.
+[Azure SDK for JavaScript Copilot Instructions](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/copilot-instructions.md) — a denser governance file. The Azure SDK guidance gets specific about API design, implementation choices, and when to explain a deviation from the house style. In my experience, this kind of baseline makes Copilot more likely to produce code aligned with review expectations.
 
 **When you use it in Copilot:**
 - Open Copilot chat in the repo
@@ -87,7 +87,7 @@ Short enough that a human can still scan it. MCP's file is compact. Azure's is m
 
 ### Path-Specific Instructions: Scoped Rules
 
-Since late 2025, Copilot also supports **path-specific instruction files** in `.github/instructions/`. These let you scope different rules to different parts of your codebase — useful for monorepos or projects where the frontend and backend have different conventions.
+I missed this feature entirely until I was reviewing a monorepo that had three different instruction files and I couldn't figure out why Copilot kept changing tone between the frontend and backend code. Turns out, Copilot supports **path-specific instruction files** in `.github/instructions/` — and they're additive with the repo-wide file.
 
 **Format:** `{name}.instructions.md` files inside `.github/instructions/`
 
@@ -101,7 +101,17 @@ Since late 2025, Copilot also supports **path-specific instruction files** in `.
     tests.instructions.md          # applies to test files
 ```
 
-Each file uses YAML frontmatter to declare which paths it applies to, then contains markdown instructions for that scope. Copilot reads the most specific matching file for the file you're working in.
+Each file uses YAML frontmatter with an `applyTo` key to declare which paths it covers:
+
+```yaml
+---
+applyTo: "src/frontend/**"
+---
+Use React functional components with TypeScript.
+Prefer CSS modules over inline styles.
+```
+
+**Key behavior:** When you're working in a file that matches a path-specific instruction, Copilot combines **both** the repo-wide instructions and the path-specific ones. It doesn't replace — it layers. This is different from how I initially assumed it worked.
 
 **When to use path-specific instructions instead of the repo-wide file:**
 - Your monorepo has distinct language/framework areas with different conventions
@@ -130,9 +140,9 @@ Each file uses YAML frontmatter to declare which paths it applies to, then conta
 
 **Real examples:**
 
-[Azure SDK: archie.agent.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md#L1-L45) — architecture review specialist. The file defines the reviewer's purpose, allowed tools, scope, and output format. It also explicitly loads `../prompts/architecture-review-guidelines.md` in [lines 6-8](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md#L6-L8).
+[Azure SDK: archie.agent.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md) — architecture review specialist. The file defines the reviewer's purpose, allowed tools, scope, and output format. It also references `../prompts/architecture-review-guidelines.md` to load its review guidelines.
 
-[Azure SDK: scribe.agent.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/scribe.agent.md#L1-L45) — documentation review specialist. Same pattern, different charter: README, CHANGELOG, snippets, samples, and TSDoc.
+[Azure SDK: scribe.agent.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/scribe.agent.md) — documentation review specialist. Same pattern, different charter: README, CHANGELOG, snippets, samples, and TSDoc.
 
 **How to invoke it:**
 The exact path depends on the surface. GitHub's [customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet) is the clearest map I found: select the custom agent in the UI, use `/agent` in Copilot CLI, or reference the agent naturally in chat.
@@ -165,13 +175,13 @@ A skill is a folder with a `SKILL.md` file plus whatever supporting templates, s
 [Vercel Next.js: authoring-skills](https://github.com/vercel/next.js/blob/canary/.agents/skills/authoring-skills/SKILL.md) — a nice example of a skill that explains what belongs in a skill versus in `AGENTS.md`.
 
 **How it gets used:**
-- Copilot can auto-load it when the task matches
-- You can ask for that workflow explicitly in a surface that supports skills
+- In surfaces that support skills, Copilot may auto-load it when the task matches
+- You can ask for that workflow explicitly
 - A custom agent can rely on it as part of a larger procedure
 
 **Where they live:**
-- `.github/skills/` in GitHub's current docs
-- Other ecosystems also use `.agents/skills/`
+- `.github/skills/` — the GitHub Copilot canonical path
+- `.agents/skills/` — the cross-agent open standard path (used by OpenAI, Vercel, and others)
 
 **Skill vs. Agent vs. Instructions — the mental model:**
 
@@ -219,7 +229,7 @@ That means my old rule of thumb was too neat. Prompts are not always passive ref
 
 **Real examples:**
 
-[Azure SDK: architecture-review-guidelines.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/prompts/architecture-review-guidelines.md#L3-L18) — a repo-local reference doc. It defines the review scope and checklist for architecture review, and [Archie points to it directly](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md#L6-L8).
+[Azure SDK: architecture-review-guidelines.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/prompts/architecture-review-guidelines.md) — a repo-local reference doc. It defines the review scope and checklist for architecture review, and [Archie points to it directly](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md).
 
 [GitHub gh-aw: create-agentic-workflow.md](https://github.com/github/gh-aw/blob/v0.71.1/.github/aw/create-agentic-workflow.md#L13-L25) — another repo-local guide. It explains the markdown workflow structure used by `gh-aw`. Useful context, yes. An official GitHub prompt-file feature, no.
 
@@ -248,7 +258,7 @@ Because the detail belongs close to the task, not smeared across every Copilot i
 
 **Real example:**
 
-[Azure SDK for JavaScript reviewer workflows](https://github.com/Azure/azure-sdk-for-js/tree/main/.github/workflows) — not one big controller that fans everything out. Each reviewer has its own workflow file. [Archie](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md#L2-L18) and [Dexter](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dexter.md#L2-L18) both trigger on `pull_request_target` with `types: [labeled]`, and [Dash](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dash.md#L78-L84) says plainly that its job is to review a PR for performance regressions.
+[Azure SDK for JavaScript reviewer workflows](https://github.com/Azure/azure-sdk-for-js/tree/main/.github/workflows) — not one big controller that fans everything out. Each reviewer has its own workflow file. [Archie](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md) and [Dexter](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dexter.md) both trigger on `pull_request_target` with `types: [labeled]`, and [Dash](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dash.md) says plainly that its job is to review a PR for performance regressions.
 
 **How it connects to agents and skills:**
 The workflow is the remote trigger. In Azure JS, each reviewer workflow posts its own findings back to the PR. In other repos, a workflow might also call a custom agent or load a skill, but that's not the part I can prove from this example.
@@ -260,19 +270,19 @@ The workflow is the remote trigger. In Azure JS, each reviewer workflow posts it
 Here's the version of the Azure SDK flow I can actually defend with links.
 
 **1. A label triggers the run**
-In Azure JS, the review workflows listen for `pull_request_target` with `types: [labeled]`, not for PR creation. You can see that in [archie.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md#L2-L18) and [dexter.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dexter.md#L2-L18).
+In Azure JS, the review workflows listen for `pull_request_target` with `types: [labeled]`, not for PR creation. You can see that in [archie.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md) and [dexter.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dexter.md).
 
 **2. Each reviewer has its own workflow**
-[Archie](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md#L2-L18), [Dash](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dash.md#L2-L18), [Dexter](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dexter.md#L2-L18), and [Scribe](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/scribe.md#L2-L18) are separate files under `.github/workflows/`. They can run independently when their trigger label appears. This is not one workflow spawning four reviewers in parallel.
+[Archie](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md), [Dash](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dash.md), [Dexter](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dexter.md), and [Scribe](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/scribe.md) are separate files under `.github/workflows/`. They can run independently when their trigger label appears. This is not one workflow spawning four reviewers in parallel.
 
 **3. The workflow itself states the review job**
-[Dash](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dash.md#L78-L84) literally says it reviews the PR for performance regressions and anti-patterns. Archie and Dexter follow the same pattern for architecture and dependency review.
+[Dash](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dash.md) literally says it reviews the PR for performance regressions and anti-patterns. Archie and Dexter follow the same pattern for architecture and dependency review.
 
 **4. Agent files and prompt docs are the reusable layer**
-Separately from the workflow trigger, [archie.agent.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md#L1-L45) defines the architecture reviewer as a reusable custom agent, and [lines 6-8](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md#L6-L8) load `../prompts/architecture-review-guidelines.md`. That prompt doc then points back to the repo instructions in [architecture-review-guidelines.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/prompts/architecture-review-guidelines.md#L3-L18).
+Separately from the workflow trigger, [archie.agent.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md) defines the architecture reviewer as a reusable custom agent and references `../prompts/architecture-review-guidelines.md`. That prompt doc then points back to the repo instructions in [architecture-review-guidelines.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/prompts/architecture-review-guidelines.md).
 
 **5. Findings land on the PR from each workflow**
-[Archie](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md#L56-L73) and [Scribe](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/scribe.md#L56-L73) both declare `create-pull-request-review-comment` and `submit-pull-request-review` in `safe-outputs`, with run messages for the PR review lifecycle. So the accurate mental model is: each reviewer workflow posts its own findings. There isn't a separate "collector" workflow in this example.
+[Archie](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md) and [Scribe](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/scribe.md) both declare `create-pull-request-review-comment` and `submit-pull-request-review` in `safe-outputs`, with run messages for the PR review lifecycle. So the accurate mental model is: each reviewer workflow posts its own findings. There isn't a separate "collector" workflow in this example.
 
 **6. Skills are adjacent, not proven by this example**
 Skills still matter to the overall ecosystem, but Azure's review workflows are not the example I would use to claim that agents are invoking skills behind the scenes. If I want to show skills, I use an actual `SKILL.md` repo.
@@ -327,7 +337,7 @@ GitHub documents `/review` as the CLI code review path in its [Copilot CLI docs]
 gh workflow run archie.md -f item_number=42
 ```
 
-That command is a **remote workflow dispatch through GitHub CLI**, not local Copilot behavior. Azure's reviewer workflows expose `workflow_dispatch` with an `item_number` input in [archie.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md#L6-L11), so `gh` can start the run on GitHub.
+That command is a **remote workflow dispatch through GitHub CLI**, not local Copilot behavior. Azure's reviewer workflows expose `workflow_dispatch` with an `item_number` input in [archie.md](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/archie.md), so `gh` can start the run on GitHub.
 
 ---
 
@@ -372,15 +382,15 @@ Start minimal, then add layers only when each layer removes confusion.
 Here are the examples I would study first.
 
 **Azure SDK for JavaScript** — the clearest end-to-end example I found
-- Instructions baseline: [`.github/copilot-instructions.md` lines 86-111](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/copilot-instructions.md#L86-L111)
-- Architecture reviewer: [`.github/agents/archie.agent.md` lines 1-45](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md#L1-L45)
-- Prompt doc Archie loads: [`.github/prompts/architecture-review-guidelines.md` lines 3-18](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/prompts/architecture-review-guidelines.md#L3-L18)
-- Performance reviewer workflow: [`.github/workflows/dash.md` lines 78-84](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dash.md#L78-L84)
-- Dependency reviewer workflow: [`.github/workflows/dexter.md` lines 2-18](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dexter.md#L2-L18)
-- Documentation reviewer: [`.github/agents/scribe.agent.md` lines 1-45](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/scribe.agent.md#L1-L45)
+- Instructions baseline: [`.github/copilot-instructions.md`](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/copilot-instructions.md)
+- Architecture reviewer: [`.github/agents/archie.agent.md`](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/archie.agent.md)
+- Prompt doc Archie loads: [`.github/prompts/architecture-review-guidelines.md`](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/prompts/architecture-review-guidelines.md)
+- Performance reviewer workflow: [`.github/workflows/dash.md`](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dash.md)
+- Dependency reviewer workflow: [`.github/workflows/dexter.md`](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/workflows/dexter.md)
+- Documentation reviewer: [`.github/agents/scribe.agent.md`](https://github.com/Azure/azure-sdk-for-js/blob/main/.github/agents/scribe.agent.md)
 
-**Microsoft MCP** — a small, readable baseline instructions file
-- Instructions: [`.github/copilot-instructions.md` lines 1-16](https://github.com/microsoft/mcp/blob/main/.github/copilot-instructions.md#L1-L16)
+**Microsoft MCP** — a readable baseline instructions file
+- Instructions: [`.github/copilot-instructions.md`](https://github.com/microsoft/mcp/blob/main/.github/copilot-instructions.md)
 
 **GitHub gh-aw** — a good example of repo-local workflow guidance that looks prompt-like
 - Workflow authoring guide: [`.github/aw/create-agentic-workflow.md` lines 13-25](https://github.com/github/gh-aw/blob/v0.71.1/.github/aw/create-agentic-workflow.md#L13-L25)
@@ -394,7 +404,7 @@ I stole this idea from reading public repos side by side. Once I stopped looking
 
 ## The One-Sentence Rule
 
-![Woman placing the final piece into a five-panel layout at a workshop bench — all the config files fitting together](./media/2026-06-02-copilot-config-files-guide/watercolor-5-putting-it-together.png)
+![Woman placing the final piece into a six-panel layout at a workshop bench — all the config files fitting together](./media/2026-06-02-copilot-config-files-guide/watercolor-5-putting-it-together.png)
 
 If I'm stuck deciding where something belongs, this is still the fastest check I know: **If it reads like a rule, put it in instructions. If it reads like a reusable workflow, put it in a skill. If it reads like task-specific context, put it in a prompt doc or prompt file. If it has to run on GitHub events, put it in a workflow.**
 
