@@ -111,7 +111,7 @@ Use React functional components with TypeScript.
 Prefer CSS modules over inline styles.
 ```
 
-**Key behavior:** When you're working in a file that matches a path-specific instruction, Copilot combines **both** the repo-wide instructions and the path-specific ones. It doesn't replace — it layers. This is different from how I initially assumed it worked.
+**Key behavior:** When I'm working in a file that matches a path-specific instruction, Copilot combines **both** the repo-wide instructions and the path-specific ones. It doesn't replace — it layers. This is different from how I initially assumed it worked.
 
 **When to use path-specific instructions instead of the repo-wide file:**
 - Your monorepo has distinct language/framework areas with different conventions
@@ -202,7 +202,7 @@ This is the distinction that tripped me up most, because people use the word "pr
 | Aspect | Skill | Prompt file / prompt doc |
 |--------|-------|--------------------------|
 | **What it is** | Agent-skill package with instructions, resources, and sometimes scripts | Either an official `.prompt.md` template or a repo-local markdown doc used as reference context |
-| **How it gets used** | Copilot auto-loads it when relevant, or you ask for it in a supported surface | Official prompt files are typically user-selected or referenced in supported IDEs; repo-local docs can also be linked from agents or workflows |
+| **How it gets used** | In supported surfaces, Copilot may auto-load it when relevant, or you ask for it explicitly | Official prompt files are typically user-selected or referenced in supported IDEs; repo-local docs can also be linked from agents or workflows |
 | **What's inside** | Steps, commands, templates, helper assets | Examples, patterns, checklists, input variables, edge cases |
 | **CLI support** | Yes | Official `.prompt.md` prompt files are IDE-focused, not Copilot CLI |
 
