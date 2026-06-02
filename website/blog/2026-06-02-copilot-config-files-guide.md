@@ -38,6 +38,7 @@ This guide is my attempt to make that mental model boring and usable. I want to 
 | File | Lives at | Purpose | When to use |
 |------|----------|---------|------------|
 | **Copilot instructions** | `.github/copilot-instructions.md` | Repository-wide governance (always-on context) | "All Copilot work in this repo should follow these rules" |
+| **Path-specific instructions** | `.github/instructions/*.instructions.md` | Scoped rules for specific directories or file patterns | "Frontend code follows different conventions than backend code" |
 | **Agent definitions** | `.github/agents/` | Specialist persona with its own scope, tools, and constraints | "This task needs a reviewer or specialist with tighter boundaries" |
 | **Skills** | `.github/skills/{name}/SKILL.md` | Reusable workflow package with instructions, resources, and optional scripts | "This is a repeatable procedure Copilot should know how to do" |
 | **Prompt files / prompt docs** | Official prompt files: `.github/prompts/*.prompt.md`; repo-local docs often live in `.github/prompts/*.md` | Reusable prompt template or task-specific reference context | "I need either a reusable prompt in the IDE or a deeper reference doc for a specific task" |
@@ -53,7 +54,7 @@ This guide is my attempt to make that mental model boring and usable. I want to 
 
 <!-- truncate -->
 
-Those are the most commonly confused files. There are also path-specific instructions, `AGENTS.md`, hooks, and MCP configs. I keep coming back to these five because they're the ones people mix together most often.
+Those are the most commonly confused files. There are also `AGENTS.md`, hooks, and MCP configs. I keep coming back to these six because they're the ones people mix together most often.
 
 ## The Copilot Instructions File: Governance Layer
 
@@ -83,6 +84,36 @@ Those are the most commonly confused files. There are also path-specific instruc
 Short enough that a human can still scan it. MCP's file is compact. Azure's is more opinionated. If the instructions file starts reading like a runbook instead of repo policy, I move the task-specific detail somewhere else.
 
 **Key rule:** Instructions describe outcomes and standards. They are the repo's rules of engagement, not the step-by-step workflow.
+
+### Path-Specific Instructions: Scoped Rules
+
+Since late 2025, Copilot also supports **path-specific instruction files** in `.github/instructions/`. These let you scope different rules to different parts of your codebase — useful for monorepos or projects where the frontend and backend have different conventions.
+
+**Format:** `{name}.instructions.md` files inside `.github/instructions/`
+
+**Example structure:**
+```
+.github/
+  copilot-instructions.md          # repo-wide (always-on)
+  instructions/
+    frontend.instructions.md       # applies to /frontend
+    backend.instructions.md        # applies to /backend
+    tests.instructions.md          # applies to test files
+```
+
+Each file uses YAML frontmatter to declare which paths it applies to, then contains markdown instructions for that scope. Copilot reads the most specific matching file for the file you're working in.
+
+**When to use path-specific instructions instead of the repo-wide file:**
+- Your monorepo has distinct language/framework areas with different conventions
+- Test files need different guidance than production code
+- API code has stricter rules than internal scripts
+
+**When NOT to use them:**
+- Rules that apply everywhere (keep those in `copilot-instructions.md`)
+- Task-specific procedures (those belong in skills)
+- One-off guidance (just say it in chat)
+
+**Official docs:** [Adding path-specific custom instructions](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions#creating-path-specific-custom-instructions)
 
 ---
 
