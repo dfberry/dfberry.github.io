@@ -8,7 +8,6 @@ custom_edit_url: null
 sidebar_label: "2026.06.03 Copilot Config Files"
 title: "Copilot Configuration Files: What They Are, Where They Live, and When to Use Them"
 description: "A practical guide to `.github/copilot-instructions.md`, agents, skills, prompts, and workflows — what each one does, where to find accurate examples, and how they fit together."
-draft: true
 tags:
   - copilot
   - configuration
