@@ -35,16 +35,16 @@ This guide is my attempt to create that mental model. I want to know what each f
 
 ## Quick Reference: The Six File Families
 
-| File | Lives at | Purpose | When to use |
-|------|----------|---------|------------|
-| **Copilot instructions** | `.github/copilot-instructions.md` | Repository-wide governance (always-on context) | "All Copilot work in this repo should follow these rules" |
-| **Path-specific instructions** | `.github/instructions/*.instructions.md` | Scoped rules for specific directories or file patterns | "My monorepo has areas with different conventions" |
-| **Agent definitions** | `.github/agents/` | Specialist persona with its own scope, tools, and constraints | "This task needs a reviewer or specialist with tighter boundaries" |
-| **Skills** | `.github/skills/{name}/SKILL.md` | Reusable workflow package with instructions, resources, and optional scripts | "This is a repeatable procedure Copilot should know how to do" |
-| **Prompt files / prompt docs** | Official prompt files: `.github/prompts/*.prompt.md`; repo-local docs often live in `.github/prompts/*.md` | Reusable prompt template or task-specific reference context | "I need either a reusable prompt in the IDE or a deeper reference doc for a specific task" |
-| **Workflows** | `.github/workflows/` | GitHub Actions automation and remote triggers | "I need this to run on a label, schedule, dispatch, or PR event" |
+| # | File | Lives at | Purpose | When to use |
+|---|------|----------|---------|------------|
+| 1 | **Copilot instructions** | `.github/copilot-instructions.md` | Repository-wide governance (always-on context) | "All Copilot work in this repo should follow these rules" |
+| 2 | **Path-specific instructions** | `.github/instructions/*.instructions.md` | Scoped rules for specific directories or file patterns | "My monorepo has areas with different conventions" |
+| 3 | **Agent definitions** | `.github/agents/` | Specialist persona with its own scope, tools, and constraints | "This task needs a reviewer or specialist with tighter boundaries" |
+| 4 | **Skills** | `.github/skills/{name}/SKILL.md` | Reusable workflow package with instructions, resources, and optional scripts | "This is a repeatable procedure Copilot should know how to do" |
+| 5 | **Prompt files / prompt docs** | Official prompt files: `.github/prompts/*.prompt.md`; repo-local docs often live in `.github/prompts/*.md` | Reusable prompt template or task-specific reference context | "I need either a reusable prompt in the IDE or a deeper reference doc for a specific task" |
+| 6 | **Workflows** | `.github/workflows/` | GitHub Actions automation and remote triggers | "I need this to run on a label, schedule, dispatch, or PR event" |
 
-![Configuration files structure across the six .github families](./media/2026-06-03-copilot-config-files-guide/diagram-2-configuration-files-structure-color.svg)
+![Configuration files structure across the six .github families](./media/2026-06-03-copilot-config-files-guide/diagram-2-configuration-files-structure-v2.svg)
 
 *This structure diagram turns the six file families into one navigable map so you can see which pieces are baseline, specialized, reusable, or event-driven.*
 
@@ -54,7 +54,7 @@ This guide is my attempt to create that mental model. I want to know what each f
 
 <!-- truncate -->
 
-Those are the most commonly confused files. There are also `AGENTS.md` (an OpenAI/Anthropic agent convention — not a GitHub Copilot feature), hooks, and MCP configs. I keep coming back to these six because they're the ones people mix together most often.
+Those are the most commonly confused files. There are also `AGENTS.md` (an OpenAI/Anthropic agent convention — not a GitHub Copilot feature), hooks, and MCP configs. 
 
 ## The Copilot Instructions File: Governance Layer
 
@@ -194,8 +194,6 @@ GitHub's documentation describes what each feature does, but doesn't frame the r
 ---
 
 ## Skills vs. Prompts: The Critical Difference
-
-![Woman comparing two books — one simple, one with tabbed sections and tools — representing skills vs prompts](./media/2026-06-03-copilot-config-files-guide/watercolor-4-skills-vs-prompts.png)
 
 This is the distinction that tripped me up most, because people use the word "prompt" to mean two different things.
 
@@ -398,7 +396,6 @@ Here are the examples I would study first.
 **Vercel Next.js** — useful for skill design patterns
 - Skill example: [`.agents/skills/authoring-skills/SKILL.md`](https://github.com/vercel/next.js/blob/canary/.agents/skills/authoring-skills/SKILL.md)
 
-I stole this idea from reading public repos side by side. Once I stopped looking for one canonical layout, the patterns got easier to see.
 
 ---
 
@@ -406,6 +403,9 @@ I stole this idea from reading public repos side by side. Once I stopped looking
 
 ![Woman viewing four landscape paintings on a wall — the same mountain at sunrise, noon, rain, and sunset — representing the config files seen from different angles](./media/2026-06-03-copilot-config-files-guide/watercolor-5-putting-it-together.png)
 
-If I'm stuck deciding where something belongs, this is still the fastest check I know: **If it reads like a rule, put it in instructions. If it reads like a reusable workflow, put it in a skill. If it reads like task-specific context, put it in a prompt doc or prompt file. If it has to run on GitHub events, put it in a workflow.**
+If I'm stuck deciding where something belongs, this is still the fastest check I know: 
+- If it reads like a rule, put it in instructions.
+- If it reads like a reusable workflow, put it in a skill. 
+- If it reads like task-specific context, put it in a prompt doc or prompt file. 
+- If it has to run on GitHub events, put it in a workflow.**
 
-That's the mental model I keep coming back to, and it's the first one that has held up once I started checking the links.
