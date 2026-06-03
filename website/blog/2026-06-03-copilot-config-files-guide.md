@@ -23,15 +23,15 @@ keywords:
   - ai-workflow
 ---
 
-When I work with repos that use Copilot, I keep running into the same confusion: people have these files scattered across `.github/`, but they don't know what each one does, why they exist separately, or how they're supposed to work together.
+When I work with repos that use Copilot, I keep running into the same issue: people have these files scattered across `.github/`, but I'm not sure what each one does, why they exist separately, or how they're supposed to work together.
 
-I'll see `.github/copilot-instructions.md` and `.github/agents/` in the same repo, then a `prompts/` folder, then maybe a workflow file that looks half like YAML and half like agent instructions. The files exist, but the mental model doesn't.
+I'll see `.github/copilot-instructions.md` and `.github/agents/` in the same repo, then a `prompts/` folder, then maybe a workflow file that looks half like YAML and half like agent instructions. The files exist, but my mental model doesn't.
 
-This guide is my attempt to make that mental model boring and usable. I want to show what each file is for, where real repos keep them, and which claims I can actually defend with links.
+This guide is my attempt to create that mental model. I want to know what each file is for, where real repos keep them, and how they are used.
 
 ![Three matryoshka nesting dolls opened and displayed from largest to smallest — representing the governance layers of instructions, agents, and skills](./media/2026-06-03-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
 
-*The governance metaphor works like nesting dolls: instructions are the outermost layer containing agents, which in turn contain skills at the center.*
+*At first glance, these configuration files look related — but how they nest relate to each other isn't obvious until you see the full picture.*
 
 ## Quick Reference: The Six File Families
 
