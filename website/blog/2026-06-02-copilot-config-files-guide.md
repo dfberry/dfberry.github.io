@@ -44,7 +44,7 @@ This guide is my attempt to make that mental model boring and usable. I want to 
 | **Prompt files / prompt docs** | Official prompt files: `.github/prompts/*.prompt.md`; repo-local docs often live in `.github/prompts/*.md` | Reusable prompt template or task-specific reference context | "I need either a reusable prompt in the IDE or a deeper reference doc for a specific task" |
 | **Workflows** | `.github/workflows/` | GitHub Actions automation and remote triggers | "I need this to run on a label, schedule, dispatch, or PR event" |
 
-![Configuration files structure across the six .github families](./media/2026-06-02-copilot-config-files-guide/diagram-2-configuration-files-structure.svg)
+![Configuration files structure across the six .github families](./media/2026-06-02-copilot-config-files-guide/diagram-2-configuration-files-structure-color.svg)
 
 *This structure diagram turns the six file families into one navigable map so you can see which pieces are baseline, specialized, reusable, or event-driven.*
 
@@ -187,7 +187,7 @@ A skill is a folder with a `SKILL.md` file plus whatever supporting templates, s
 
 GitHub's documentation describes what each feature does, but doesn't frame the relationship as explicitly as I'd like. Here's my mental model: **Instructions set the rules. Agents decide. Skills execute.** This is my interpretation, not GitHub's official framing, but it helps me remember which tool to reach for.
 
-![Mental model hierarchy showing instructions governing agents and skills](./media/2026-06-02-copilot-config-files-guide/diagram-1-mental-model-v3.svg)
+![Mental model hierarchy showing instructions governing agents and skills](./media/2026-06-02-copilot-config-files-guide/diagram-1-mental-model-v3-color.svg)
 
 *This cascade makes the control flow explicit: rules constrain decisions, and decisions choose the reusable execution path.*
 
@@ -210,7 +210,7 @@ This is the distinction that tripped me up most, because people use the word "pr
 
 That means my old rule of thumb was too neat. Prompts are not always passive reference, and skills are not always the only place with step-by-step guidance. The better distinction is this: skills are packaged workflows Copilot can use as skills; prompt files and prompt docs are reusable context.
 
-![Decision tree for choosing between skills, official prompts, prompt docs, or no file](./media/2026-06-02-copilot-config-files-guide/diagram-3-skills-vs-prompts-decision-tree.svg)
+![Decision tree for choosing between skills, official prompts, prompt docs, or no file](./media/2026-06-02-copilot-config-files-guide/diagram-3-skills-vs-prompts-decision-tree-color.svg)
 
 *The decision tree compresses the distinction into one question sequence: reusable workflow first, reusable prompt second, reference doc third.*
 
@@ -289,7 +289,7 @@ Skills still matter to the overall ecosystem, but Azure's review workflows are n
 
 That's the loop I trust: a label starts a workflow, the workflow runs the reviewer, the reviewer uses repo guidance, and comments come back to the PR.
 
-![Sequence diagram for the Azure SDK architecture review workflow](./media/2026-06-02-copilot-config-files-guide/diagram-4-azure-sdk-workflow-trigger.svg)
+![Sequence diagram for the Azure SDK architecture review workflow](./media/2026-06-02-copilot-config-files-guide/diagram-4-azure-sdk-workflow-trigger-color.svg)
 
 *This sequence shows the asynchronous handoff from label to workflow to reviewer guidance and back to a PR comment.*
 
@@ -343,7 +343,7 @@ That command is a **remote workflow dispatch through GitHub CLI**, not local Cop
 
 ## Decision Table: Which File for What?
 
-![Decision tree for placing work in instructions, agents, skills, prompts, or workflows](./media/2026-06-02-copilot-config-files-guide/diagram-5-file-placement-decision-tree.svg)
+![Decision tree for placing work in instructions, agents, skills, prompts, or workflows](./media/2026-06-02-copilot-config-files-guide/diagram-5-file-placement-decision-tree-color.svg)
 
 *This placement tree turns the file choice into a routing problem: match the task shape, then drop it in the right folder.*
 
