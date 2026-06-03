@@ -13,6 +13,7 @@ keywords:
   - repository-patterns
   - copilot
 image: /blog/media/2026-05-31-instructions-vs-skills/hero.png
+draft: false
 ---
 
 When I look at repos that manage agents and skills, I keep noticing the same pattern: governance rules do not stay in the instruction layer. They get pushed down into skills. A repo starts with a clean distinction in theory, then practical pressure takes over. It feels easier to tuck a rule into the skill that already handles PRs, releases, reviews, or docs updates than to keep the governance layer separate and durable.
