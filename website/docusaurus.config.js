@@ -41,7 +41,6 @@ const site = require('./site.config');
           // editUrl:
           //   'https://github.com/facebook/docusaurus/edit/master/website/blog/',
           path: 'blog',
-          exclude: ['**/media/**'],
           blogSidebarCount: site.blog.sidebarCount,
           blogSidebarTitle: site.blog.sidebarTitle,
           postsPerPage: site.blog.postsPerPage,
