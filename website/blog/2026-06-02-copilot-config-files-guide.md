@@ -29,9 +29,9 @@ I'll see `.github/copilot-instructions.md` and `.github/agents/` in the same rep
 
 This guide is my attempt to make that mental model boring and usable. I want to show what each file is for, where real repos keep them, and which claims I can actually defend with links.
 
-![Layers of governance showing instructions, agents, and skills as concentric circles](./media/2026-06-02-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
+![Woman lifting the lid off nested ceramic bowls — each layer representing a governance ring from instructions to skills](./media/2026-06-02-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
 
-*The governance metaphor works like nested rings: instructions shape the space, agents interpret it, and skills do the work at the center.*
+*The governance metaphor works like nested bowls: instructions contain the space, agents sit inside interpreting it, and skills do the work at the center.*
 
 ## Quick Reference: The Six File Families
 
@@ -404,7 +404,7 @@ I stole this idea from reading public repos side by side. Once I stopped looking
 
 ## The One-Sentence Rule
 
-![Woman placing the final piece into a six-panel layout at a workshop bench — all the config files fitting together](./media/2026-06-02-copilot-config-files-guide/watercolor-5-putting-it-together.png)
+![Woman viewing four landscape paintings on a wall — the same mountain at sunrise, noon, rain, and sunset — representing the config files seen from different angles](./media/2026-06-02-copilot-config-files-guide/watercolor-5-putting-it-together.png)
 
 If I'm stuck deciding where something belongs, this is still the fastest check I know: **If it reads like a rule, put it in instructions. If it reads like a reusable workflow, put it in a skill. If it reads like task-specific context, put it in a prompt doc or prompt file. If it has to run on GitHub events, put it in a workflow.**
 
