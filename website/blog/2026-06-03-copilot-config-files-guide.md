@@ -208,7 +208,7 @@ This is the distinction that tripped me up most, because people use the word "pr
 
 That means my old rule of thumb was too neat. Prompts are not always passive reference, and skills are not always the only place with step-by-step guidance. The better distinction is this: skills are packaged workflows Copilot can use as skills; prompt files and prompt docs are reusable context.
 
-![Decision tree for choosing between skills, official prompts, prompt docs, or no file](./media/2026-06-03-copilot-config-files-guide/diagram-3-skills-vs-prompts-decision-tree-light.svg)
+![Decision tree for choosing between skills, official prompts, prompt docs, or no file](./media/2026-06-03-copilot-config-files-guide/diagram-3-skills-vs-prompts-decision-tree-color.svg)
 
 *The decision tree compresses the distinction into one question sequence: reusable workflow first, reusable prompt second, reference doc third.*
 
@@ -341,7 +341,7 @@ That command is a **remote workflow dispatch through GitHub CLI**, not local Cop
 
 ## Decision Table: Which File for What?
 
-![Decision tree for placing work in instructions, agents, skills, prompts, or workflows](./media/2026-06-03-copilot-config-files-guide/diagram-5-file-placement-decision-tree-light.svg)
+![Decision tree for placing work in instructions, agents, skills, prompts, or workflows](./media/2026-06-03-copilot-config-files-guide/diagram-5-file-placement-decision-tree-color.svg)
 
 *This placement tree turns the file choice into a routing problem: match the task shape, then drop it in the right folder.*
 
