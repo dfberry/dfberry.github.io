@@ -30,9 +30,9 @@ I'll see `.github/copilot-instructions.md` and `.github/agents/` in the same rep
 
 This guide is my attempt to make that mental model boring and usable. I want to show what each file is for, where real repos keep them, and which claims I can actually defend with links.
 
-![Layered soap being poured into a mold — three layers representing instructions, agents, and skills](./media/2026-06-02-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
+![Abstract watercolor of three stacked rectangles representing instructions, agents, and skills](./media/2026-06-02-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
 
-*The governance metaphor works like layered soap: instructions set the mold, agents interpret within it, and skills do the focused work in the innermost layer.*
+*Think of governance as stacked building blocks: instructions set the boundaries, agents interpret within them, and skills do focused work.*
 
 ## Quick Reference: The Six File Families
 
@@ -405,8 +405,8 @@ I stole this idea from reading public repos side by side. Once I stopped looking
 
 ## The One-Sentence Rule
 
-![Woman carrying a stack of books toward a bookshelf — organizing things by where they belong](./media/2026-06-02-copilot-config-files-guide/watercolor-5-putting-it-together.png)
+![Woman standing in front of a tall, unorganized stack of books — sorting through a messy pile](./media/2026-06-02-copilot-config-files-guide/watercolor-5-putting-it-together.png)
 
-If I'm stuck deciding where something belongs, I think about shelving books: each item has a home. The fastest check I know is still: **If it reads like a rule, put it in instructions. If it reads like a reusable workflow, put it in a skill. If it reads like task-specific context, put it in a prompt doc or prompt file. If it has to run on GitHub events, put it in a workflow.**
+If I'm stuck deciding where something belongs, I picture a messy pile of books: before you can shelve anything, you have to decide what it is. The fastest check I know is still: **If it reads like a rule, put it in instructions. If it reads like a reusable workflow, put it in a skill. If it reads like task-specific context, put it in a prompt doc or prompt file. If it has to run on GitHub events, put it in a workflow.**
 
 That's the mental model I keep coming back to, and it's the first one that has held up once I started checking the links.
