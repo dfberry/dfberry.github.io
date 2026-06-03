@@ -29,9 +29,9 @@ I'll see `.github/copilot-instructions.md` and `.github/agents/` in the same rep
 
 This guide is my attempt to make that mental model boring and usable. I want to show what each file is for, where real repos keep them, and which claims I can actually defend with links.
 
-![Woman lifting the lid off nested ceramic bowls — each layer representing a governance ring from instructions to skills](./media/2026-06-02-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
+![Three matryoshka nesting dolls opened and displayed from largest to smallest — representing the governance layers of instructions, agents, and skills](./media/2026-06-02-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
 
-*The governance metaphor works like nested bowls: instructions contain the space, agents sit inside interpreting it, and skills do the work at the center.*
+*The governance metaphor works like nesting dolls: instructions are the outermost layer containing agents, which in turn contain skills at the center.*
 
 ## Quick Reference: The Six File Families
 
