@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" style="background-color: #fafafa; border: 1px solid #d1d5db; border-radius: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a1a">The Six .github File Families</text>
+
+  <!-- Root node -->
+  <rect x="370" y="55" width="160" height="40" rx="6" fill="#f8f9fa" stroke="#374151" stroke-width="2"/>
+  <text x="450" y="80" text-anchor="middle" font-size="14" font-weight="bold" fill="#374151">.github/</text>
+
+  <!-- Connector lines from root to each family -->
+  <!-- 1: copilot-instructions -->
+  <path d="M 400 95 L 400 115 Q 400 125 390 125 L 155 125 Q 145 125 145 135 L 145 155" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+  <!-- 2: instructions/ -->
+  <path d="M 420 95 L 420 115 Q 420 125 410 125 L 320 125 Q 310 125 310 135 L 310 155" fill="none" stroke="#ea580c" stroke-width="1.5"/>
+  <!-- 3: agents/ -->
+  <path d="M 440 95 L 440 115 Q 440 125 445 125 L 455 125 Q 460 125 460 135 L 460 155" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+  <!-- 4: skills/ -->
+  <path d="M 460 95 L 460 115 Q 460 125 470 125 L 600 125 Q 610 125 610 135 L 610 155" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+  <!-- 5: prompts/ -->
+  <path d="M 480 95 L 480 115 Q 480 125 490 125 L 745 125 Q 755 125 755 135 L 755 155" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+  <!-- 6: workflows/ -->
+  <path d="M 500 95 L 500 115 Q 500 125 510 125 L 845 125 Q 855 125 855 135 L 855 155" fill="none" stroke="#ca8a04" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+  <!-- Family 1: Copilot Instructions -->
+  <g>
+    <rect x="50" y="155" width="190" height="130" rx="8" fill="#fde8e8" stroke="#dc2626" stroke-width="2"/>
+    <circle cx="72" cy="175" r="12" fill="#dc2626"/>
+    <text x="72" y="180" text-anchor="middle" font-size="12" font-weight="bold" fill="white">1</text>
+    <text x="90" y="180" font-size="12" font-weight="bold" fill="#991b1b">Copilot Instructions</text>
+    <text x="145" y="205" text-anchor="middle" font-size="11" fill="#4b5563">copilot-instructions.md</text>
+    <line x1="70" y1="220" x2="220" y2="220" stroke="#fca5a5" stroke-width="1"/>
+    <text x="145" y="240" text-anchor="middle" font-size="10" fill="#6b7280">Repository-wide</text>
+    <text x="145" y="255" text-anchor="middle" font-size="10" fill="#6b7280">governance rules</text>
+    <text x="145" y="275" text-anchor="middle" font-size="10" font-style="italic" fill="#9ca3af">(always-on context)</text>
+  </g>
+
+  <!-- Family 2: Path-specific Instructions -->
+  <g>
+    <rect x="215" y="310" width="190" height="130" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <circle cx="237" cy="330" r="12" fill="#ea580c"/>
+    <text x="237" y="335" text-anchor="middle" font-size="12" font-weight="bold" fill="white">2</text>
+    <text x="255" y="335" font-size="12" font-weight="bold" fill="#9a3412">Path-specific Instructions</text>
+    <text x="310" y="360" text-anchor="middle" font-size="11" fill="#4b5563">instructions/</text>
+    <text x="310" y="377" text-anchor="middle" font-size="10" fill="#6b7280">*.instructions.md</text>
+    <line x1="235" y1="390" x2="385" y2="390" stroke="#fdba74" stroke-width="1"/>
+    <text x="310" y="410" text-anchor="middle" font-size="10" fill="#6b7280">Scoped rules for</text>
+    <text x="310" y="425" text-anchor="middle" font-size="10" fill="#6b7280">specific directories</text>
+  </g>
+
+  <!-- Connector from 1 to 2 (relationship) -->
+  <path d="M 145 285 L 145 340 Q 145 355 160 360 L 215 370" fill="none" stroke="#f87171" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="130" y="320" font-size="9" fill="#9ca3af">narrows</text>
+
+  <!-- Family 3: Agent Definitions -->
+  <g>
+    <rect x="365" y="155" width="190" height="130" rx="8" fill="#e8f4fd" stroke="#2563eb" stroke-width="2"/>
+    <circle cx="387" cy="175" r="12" fill="#2563eb"/>
+    <text x="387" y="180" text-anchor="middle" font-size="12" font-weight="bold" fill="white">3</text>
+    <text x="405" y="180" font-size="12" font-weight="bold" fill="#1e40af">Agent Definitions</text>
+    <text x="460" y="205" text-anchor="middle" font-size="11" fill="#4b5563">agents/</text>
+    <text x="460" y="222" text-anchor="middle" font-size="10" fill="#6b7280">{name}.agent.md</text>
+    <line x1="385" y1="235" x2="535" y2="235" stroke="#93c5fd" stroke-width="1"/>
+    <text x="460" y="255" text-anchor="middle" font-size="10" fill="#6b7280">Specialist persona with</text>
+    <text x="460" y="270" text-anchor="middle" font-size="10" fill="#6b7280">scope, tools, constraints</text>
+  </g>
+
+  <!-- Family 4: Skills -->
+  <g>
+    <rect x="515" y="310" width="190" height="130" rx="8" fill="#e8fde8" stroke="#16a34a" stroke-width="2"/>
+    <circle cx="537" cy="330" r="12" fill="#16a34a"/>
+    <text x="537" y="335" text-anchor="middle" font-size="12" font-weight="bold" fill="white">4</text>
+    <text x="555" y="335" font-size="12" font-weight="bold" fill="#166534">Skills</text>
+    <text x="610" y="360" text-anchor="middle" font-size="11" fill="#4b5563">skills/{name}/</text>
+    <text x="610" y="377" text-anchor="middle" font-size="10" fill="#6b7280">SKILL.md</text>
+    <line x1="535" y1="390" x2="685" y2="390" stroke="#86efac" stroke-width="1"/>
+    <text x="610" y="410" text-anchor="middle" font-size="10" fill="#6b7280">Reusable workflow</text>
+    <text x="610" y="425" text-anchor="middle" font-size="10" fill="#6b7280">packages &amp; procedures</text>
+  </g>
+
+  <!-- Connector from 3 to 4 (relationship) -->
+  <path d="M 460 285 L 460 340 Q 460 355 475 360 L 515 370" fill="none" stroke="#60a5fa" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="445" y="320" font-size="9" fill="#9ca3af">loads</text>
+
+  <!-- Family 5: Prompt Files -->
+  <g>
+    <rect x="660" y="155" width="190" height="130" rx="8" fill="#f3e8fd" stroke="#7c3aed" stroke-width="2"/>
+    <circle cx="682" cy="175" r="12" fill="#7c3aed"/>
+    <text x="682" y="180" text-anchor="middle" font-size="12" font-weight="bold" fill="white">5</text>
+    <text x="700" y="180" font-size="12" font-weight="bold" fill="#6b21a8">Prompt Files</text>
+    <text x="755" y="205" text-anchor="middle" font-size="11" fill="#4b5563">prompts/</text>
+    <text x="755" y="222" text-anchor="middle" font-size="10" fill="#6b7280">*.prompt.md</text>
+    <line x1="680" y1="235" x2="830" y2="235" stroke="#c4b5fd" stroke-width="1"/>
+    <text x="755" y="255" text-anchor="middle" font-size="10" fill="#6b7280">Reusable templates &amp;</text>
+    <text x="755" y="270" text-anchor="middle" font-size="10" fill="#6b7280">reference context</text>
+  </g>
+
+  <!-- Family 6: Workflows -->
+  <g>
+    <rect x="660" y="345" width="190" height="130" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="2" stroke-dasharray="5,3"/>
+    <circle cx="682" cy="365" r="12" fill="#ca8a04"/>
+    <text x="682" y="370" text-anchor="middle" font-size="12" font-weight="bold" fill="white">6</text>
+    <text x="700" y="370" font-size="12" font-weight="bold" fill="#854d0e">Workflows</text>
+    <text x="755" y="395" text-anchor="middle" font-size="11" fill="#4b5563">workflows/</text>
+    <text x="755" y="412" text-anchor="middle" font-size="10" fill="#6b7280">*.yml</text>
+    <line x1="680" y1="425" x2="830" y2="425" stroke="#fde047" stroke-width="1"/>
+    <text x="755" y="445" text-anchor="middle" font-size="10" fill="#6b7280">GitHub Actions</text>
+    <text x="755" y="460" text-anchor="middle" font-size="10" fill="#6b7280">automation &amp; triggers</text>
+  </g>
+
+  <!-- Legend at bottom -->
+  <rect x="50" y="480" width="800" height="30" rx="4" fill="#f3f4f6" stroke="none"/>
+  <text x="70" y="500" font-size="10" fill="#6b7280">Legend:</text>
+  <line x1="120" y1="497" x2="150" y2="497" stroke="#374151" stroke-width="1.5"/>
+  <text x="155" y="500" font-size="10" fill="#6b7280">Copilot config</text>
+  <line x1="270" y1="497" x2="300" y2="497" stroke="#374151" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="305" y="500" font-size="10" fill="#6b7280">Actions (not Copilot-specific)</text>
+  <line x1="500" y1="497" x2="530" y2="497" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="535" y="500" font-size="10" fill="#6b7280">Relationship</text>
+</svg>
