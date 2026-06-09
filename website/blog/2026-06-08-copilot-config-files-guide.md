@@ -188,10 +188,6 @@ A skill is a folder with a `SKILL.md` file plus whatever supporting templates, s
 
 GitHub's documentation describes what each feature does, but doesn't frame the relationship as explicitly as I'd like. Here's my mental model: **Instructions set the rules. Agents decide. Skills execute.** This is my interpretation, not GitHub's official framing, but it helps me remember which tool to reach for.
 
-![Mental model hierarchy showing instructions governing agents and skills](./media/2026-06-08-copilot-config-files-guide/diagram-1-mental-model-v3-color.svg)
-
-*This cascade makes the control flow explicit: rules constrain decisions, and decisions choose the reusable execution path.*
-
 ---
 
 ## Skills vs. Prompts: The Critical Difference
