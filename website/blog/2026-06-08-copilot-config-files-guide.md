@@ -1,6 +1,5 @@
 ---
 slug: /2026-06-08-copilot-config-files-guide
-authors: [dfberry]
 date: 2026-06-08
 image: ./media/2026-06-08-copilot-config-files-guide/watercolor-1-layers-of-governance.png
 canonical_url: https://dfberry.github.io/blog/2026-06-08-copilot-config-files-guide
