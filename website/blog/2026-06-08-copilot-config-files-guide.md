@@ -286,12 +286,6 @@ Separately from the workflow trigger, [archie.agent.md](https://github.com/Azure
 **6. Skills are adjacent, not proven by this example**
 Skills still matter to the overall ecosystem, but Azure's review workflows are not the example I would use to claim that agents are invoking skills behind the scenes. If I want to show skills, I use an actual `SKILL.md` repo.
 
-That's the loop I trust: a label starts a workflow, the workflow runs the reviewer, the reviewer uses repo guidance, and comments come back to the PR.
-
-![Sequence diagram for the Azure SDK architecture review workflow](./media/2026-06-08-copilot-config-files-guide/diagram-4-azure-sdk-workflow-trigger-color.svg)
-
-*This sequence shows the asynchronous handoff from label to workflow to reviewer guidance and back to a PR comment.*
-
 ---
 
 ## Using Copilot with These Files: Chat and CLI
