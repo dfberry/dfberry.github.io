@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://www.googletagmanager.com">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2F4N5RRH1Q"></script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2F4N5RRH1Q",{})</script><link rel="stylesheet" href="/assets/css/styles.6ca8b731.css">
-<script src="/assets/js/runtime~main.233cfff3.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.6ba91d4f.js" defer="defer"></script>
 <script src="/assets/js/main.4c156890.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -22,7 +22,55 @@
 <p>The first time I used <a href="https://bradygaster.github.io/squad/" target="_blank" rel="noopener noreferrer" class="">Squad</a>, I got a result that was noticeably better than what I got from a single Copilot chat. It was the same task and basically the same intent, but the coverage was better.</p>
 <p>That was the moment it clicked for me: Squad is a multi-agent orchestrator. Instead of asking one AI generalist to do everything, I can route the same task through specialists with clear roles.</p>
 <p>This post came from a coworker asking me, &quot;Why Squad?&quot;</p>
-<p><img decoding="async" loading="lazy" alt="Watercolor illustration of a sunlit woodworking workshop with a team working on projects." src="/assets/images/2026-06-20-squad-first-impressions-watercolor-1-hero-9da1752e3cba5524fde419eaf36d86d8.png" width="1024" height="1024" class="img_ev3q"></p></div><footer class="row docusaurus-mt-lg"><div class="col col--9"><b>Tags:</b><ul class="tags_jXut padding--none margin-left--sm"><li class="tag_QGVx"><a rel="tag" class="tag_zVej tagRegular_sFm0" href="/tags/squad">Squad</a></li><li class="tag_QGVx"><a rel="tag" class="tag_zVej tagRegular_sFm0" href="/tags/ai-agents">AI Agents</a></li><li class="tag_QGVx"><a rel="tag" class="tag_zVej tagRegular_sFm0" href="/tags/git-hub-copilot">GitHub Copilot</a></li><li class="tag_QGVx"><a rel="tag" class="tag_zVej tagRegular_sFm0" href="/tags/multi-agent">multi-agent</a></li></ul></div><div class="col text--right col--3"><a aria-label="Read more about Why Squad?" href="/2026-06-20-squad-first-impressions"><b>Read more</b></a></div></footer></article><article class="margin-bottom--xl"><header><h2 class="title_f1Hy"><a href="/2026-05-15-from-autocomplete-to-ai-team">GitHub Copilot: From Basics to AI Agents</a></h2><div class="container_mt6G margin-vert--md"><time datetime="2026-05-15T00:00:00.000Z">May 15, 2026</time> · <!-- -->22 min read</div></header><div class="markdown"><p><img decoding="async" loading="lazy" alt="Watercolor illustration of a woodworker in blue meeting his first AI helper in green at a furniture workshop" src="/assets/images/hero-copilot-journey-83463bdd4858653029e113a89ac4521d.png" width="1024" height="1024" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" alt="Watercolor illustration of a sunlit woodworking workshop with a team working on projects." src="/assets/images/2026-06-20-squad-first-impressions-watercolor-1-hero-9da1752e3cba5524fde419eaf36d86d8.png" width="1024" height="1024" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-squad-feels-different-from-copilot">Why Squad feels different from Copilot<a href="#why-squad-feels-different-from-copilot" class="hash-link" aria-label="Direct link to Why Squad feels different from Copilot" title="Direct link to Why Squad feels different from Copilot" translate="no">​</a></h2>
+<p>Before Squad, my workflow was simple: open Copilot and ask one agent for everything. That works well for plenty of tasks, but it is still one perspective.</p>
+<p>When I ran Squad on the same docs task, the output came back with fewer blind spots. It was not just more polished. It covered angles the generalist missed.</p>
+<p>That pushed me to design my own team. I started with obvious roles like builder, reviewer, and debugger, then added project-specific specialists with strong opinions about quality. I now run with about 30 agents.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="i-am-directing-now-not-doing">I am directing now, not doing<a href="#i-am-directing-now-not-doing" class="hash-link" aria-label="Direct link to I am directing now, not doing" title="Direct link to I am directing now, not doing" translate="no">​</a></h2>
+<p>With Squad, my job shifts from doing the task to directing the process.</p>
+<p>I set the plan, the constraints, and the definition of done. Squad coordinates which agents should build, review, challenge assumptions, and test. Sometimes I direct at a high level with goals and standards. Sometimes I assign specific work.</p>
+<p>I ask Squad to make better decisions with less intervention from me.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-build-and-review-should-be-separate-teams">Why build and review should be separate teams<a href="#why-build-and-review-should-be-separate-teams" class="hash-link" aria-label="Direct link to Why build and review should be separate teams" title="Direct link to Why build and review should be separate teams" translate="no">​</a></h2>
+<p>For me, the biggest quality jump came from separating build and review.</p>
+<p>At first, I only wanted better output than one generalist could produce. Later, I built a dedicated review team where each reviewer had a different job:</p>
+<ul>
+<li class="">One reviewer hunts for security risks.</li>
+<li class="">One checks factual correctness.</li>
+<li class="">One stress-tests logic and edge cases.</li>
+<li class="">One reviews performance tradeoffs.</li>
+</ul>
+<p>I do not want eight approvals. I want eight different objections.</p>
+<p>I also want those objections resolved through agent collaboration, not by pulling me into every pass. Just like a real PR review, reviewers should send issues back to build, build should improve the work, and the review should run again until everyone agrees the bar is met.</p>
+<p><img decoding="async" loading="lazy" alt="Watercolor illustration of a team examining the same cabinet from different angles" src="/assets/images/2026-06-20-squad-first-impressions-watercolor-2-build-review-5d08ecd183dfa6ef723d1c1f26c3117e.png" width="1024" height="1024" class="img_ev3q"></p>
+<p>A single generalist reviewing its own output gives me consistency with itself. That is not the same as complete and correct.</p>
+<p>For this process, done means reviewer consensus after iterative fixes. If reviewers still disagree, the PR is not done.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="did-it-finish-is-the-wrong-question">&quot;Did it finish?&quot; is the wrong question<a href="#did-it-finish-is-the-wrong-question" class="hash-link" aria-label="Direct link to &quot;Did it finish?&quot; is the wrong question" title="Direct link to &quot;Did it finish?&quot; is the wrong question" translate="no">​</a></h2>
+<p>Before Squad, I asked:</p>
+<ul>
+<li class="">Did it work?</li>
+<li class="">What needs to change?</li>
+<li class="">Is it done?</li>
+</ul>
+<p>With Squad, the better question is: <strong>How can this be more consistently correct?</strong></p>
+<p>Who else should review this? Which assumptions need pressure testing? What would a performance engineer challenge? What would a security reviewer reject?</p>
+<p>That changes my role. I am not just relieved that something exists. I am trying to improve the system that produces it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-this-once-with-the-same-task">Try this once with the same task<a href="#try-this-once-with-the-same-task" class="hash-link" aria-label="Direct link to Try this once with the same task" title="Direct link to Try this once with the same task" translate="no">​</a></h2>
+<p>If you are curious, run a simple experiment:</p>
+<ol>
+<li class="">Pick a task you already gave to one Copilot agent.</li>
+<li class="">Run it again with a build team.</li>
+<li class="">Then run a separate review team on that output.</li>
+<li class="">Compare what the review team catches.</li>
+</ol>
+<p>That comparison is why Squad is interesting to me. I care less about getting one answer and more about running a process that catches weak spots before I ever see the final output. That is the core difference in Squad vs. Copilot for me.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="management-becomes-the-core-skill">Management becomes the core skill<a href="#management-becomes-the-core-skill" class="hash-link" aria-label="Direct link to Management becomes the core skill" title="Direct link to Management becomes the core skill" translate="no">​</a></h2>
+<p>Once you have a team of agents, management becomes the multiplier.</p>
+<p>I think in terms of plans, process, and quality gates. Projects need clear definitions and constant refinement. Squad builds to the plan, reviews against the plan, and makes quality visible.</p>
+<p>Each project moves from manual execution toward a repeatable process. For me, the next step is a project-level agent that manages implementation of that plan by treating skills as atomic process definitions. It can chain those skills together, enforce quality gates between phases, and produce reports that show what was supposed to happen, what actually happened, and whether the completion criteria were met.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="summary">Summary<a href="#summary" class="hash-link" aria-label="Direct link to Summary" title="Direct link to Summary" translate="no">​</a></h2>
+<p>Squad changed how I work. What mattered was not getting a slightly better answer from one agent. What mattered was getting a repeatable multi-agent process. Separate build and review teams, explicit skills, quality gates, and shared reports create a clearer path to &quot;done&quot; with less guesswork. Copilot helps me generate; Squad helps me run the work.</p>
+<hr></div><footer class="row docusaurus-mt-lg"><div class="col"><b>Tags:</b><ul class="tags_jXut padding--none margin-left--sm"><li class="tag_QGVx"><a rel="tag" class="tag_zVej tagRegular_sFm0" href="/tags/squad">Squad</a></li><li class="tag_QGVx"><a rel="tag" class="tag_zVej tagRegular_sFm0" href="/tags/ai-agents">AI Agents</a></li><li class="tag_QGVx"><a rel="tag" class="tag_zVej tagRegular_sFm0" href="/tags/git-hub-copilot">GitHub Copilot</a></li><li class="tag_QGVx"><a rel="tag" class="tag_zVej tagRegular_sFm0" href="/tags/multi-agent">multi-agent</a></li></ul></div></footer></article><article class="margin-bottom--xl"><header><h2 class="title_f1Hy"><a href="/2026-05-15-from-autocomplete-to-ai-team">GitHub Copilot: From Basics to AI Agents</a></h2><div class="container_mt6G margin-vert--md"><time datetime="2026-05-15T00:00:00.000Z">May 15, 2026</time> · <!-- -->22 min read</div></header><div class="markdown"><p><img decoding="async" loading="lazy" alt="Watercolor illustration of a woodworker in blue meeting his first AI helper in green at a furniture workshop" src="/assets/images/hero-copilot-journey-83463bdd4858653029e113a89ac4521d.png" width="1024" height="1024" class="img_ev3q"></p>
 <p><em>Imagine a furniture workshop. You&#x27;re the craftsperson in the blue shirt — the one with the vision, the taste, the final say. The helpers in green shirts? Those are your AI agents. At first there&#x27;s just one, handing you the right chisel at the right moment. By the end of this journey, you&#x27;ll have a whole crew in green building furniture to your specifications while you direct, decide, and review.</em></p>
 <p>A year ago, I was tab-completing function signatures. Today, I manage a team of named AI agents that handle PR reviews, documentation sweeps, and infrastructure audits.</p>
 <p>That sounds like a sales pitch. It&#x27;s not. It&#x27;s a progression that happened one level at a time, each building on the last. And the best part? You can start the same journey in about 15 minutes.</p>
@@ -40,7 +88,7 @@
 <p><em>Your first day in the workshop. You&#x27;re at the bench with your mallet (blue shirt), fitting a dovetail joint. Your one helper in green steadies the piece, hands you the right tool before you ask, and suggests a better angle — but you swing the mallet.</em></p>
 <p>This is where everyone starts — and honestly, where most of the immediate productivity gains live. Level 1 spans two environments: <strong>Copilot in your IDE</strong> (VS Code, JetBrains, etc.) and the <strong>standalone Copilot CLI</strong> in your terminal.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="in-the-ide-inline-completions--inline-chat">In the IDE: Inline Completions &amp; Inline Chat<a href="#in-the-ide-inline-completions--inline-chat" class="hash-link" aria-label="Direct link to In the IDE: Inline Completions &amp; Inline Chat" title="Direct link to In the IDE: Inline Completions &amp; Inline Chat" translate="no">​</a></h3>
-<p>🖥️ VS Code · 👤 Interactive · 💻 Local</p>
+<p>🖥 ️ VS Code · 👤 Interactive · 💻 Local</p>
 <p><strong>Inline completions</strong> — the thing most people think of as &quot;Copilot.&quot; You type, it suggests. But it&#x27;s more than autocomplete. It reads your open files, your comments, your function signatures, and generates contextually aware suggestions. This happens directly in your editor as you type.</p>
 <p><strong>Inline chat</strong> — highlight code, press <code>Ctrl+I</code>, ask a question. &quot;Explain this regex.&quot; &quot;Refactor this to use async/await.&quot; &quot;Add error handling.&quot; It edits in place within the current file.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="in-the-ide-copilot-chat-panel">In the IDE: Copilot Chat Panel<a href="#in-the-ide-copilot-chat-panel" class="hash-link" aria-label="Direct link to In the IDE: Copilot Chat Panel" title="Direct link to In the IDE: Copilot Chat Panel" translate="no">​</a></h3>
@@ -173,7 +221,7 @@
 <p>Ralph monitors GitHub issues, triages incoming work, and drives tasks through your agent team without you intervening. It doesn&#x27;t stop between tasks — it keeps cycling until everything is done.</p>
 <p>Best for: in-session work queue processing, multi-agent coordination, and batching related tasks.</p>
 <h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-squad-watch--persistent-local-monitoring">4. Squad Watch — Persistent Local Monitoring<a href="#4-squad-watch--persistent-local-monitoring" class="hash-link" aria-label="Direct link to 4. Squad Watch — Persistent Local Monitoring" title="Direct link to 4. Squad Watch — Persistent Local Monitoring" translate="no">​</a></h4>
-<p>⌨️ CLI · 🤖 Autonomous · 💻 Local</p>
+<p>⌨️ CLI · 🤖 Autonomous ·    💻 Local</p>
 <p>When you&#x27;re away from the keyboard but your machine is on, <code>squad watch</code> provides persistent polling of your GitHub issues:</p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain"># Polls every 10 minutes (default)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">npx @bradygaster/squad-cli watch</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"># Custom intervals</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">npx @bradygaster/squad-cli watch --interval 5    # every 5 minutes</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">npx @bradygaster/squad-cli watch --interval 30   # every 30 minutes</span><br></span></code></pre></div></div>
 <p>This runs as a standalone local process (not inside Copilot) that auto-triages issues from your connected repo, assigns work based on team roles and keywords, and routes issues to agents or <code>@copilot</code> for pickup. It runs until you Ctrl+C. (Requires the same repo connection set up via Squad.)</p>
