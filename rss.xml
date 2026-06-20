@@ -4,11 +4,75 @@
         <title>Dina Berry RSS feed</title>
         <link>http://dfberry.github.io</link>
         <description>Dina Berry developer and technical writer RSS feed</description>
-        <lastBuildDate>Mon, 08 Jun 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 20 Jun 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>Copyright © 2026 Dina Berry.</copyright>
+        <item>
+            <title><![CDATA[Why Squad?]]></title>
+            <link>http://dfberry.github.io/2026-06-20-squad-first-impressions</link>
+            <guid>http://dfberry.github.io/2026-06-20-squad-first-impressions</guid>
+            <pubDate>Sat, 20 Jun 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Why Squad feels different from GitHub Copilot: my first impression of its multi-agent workflow, and why build teams, review teams, skills, and quality gates improve results.]]></description>
+            <content:encoded><![CDATA[<p>If you already use GitHub Copilot, the real question is simple: why would Squad feel different enough to change your workflow?</p>
+<p>The first time I used <a href="https://bradygaster.github.io/squad/" target="_blank" rel="noopener noreferrer" class="">Squad</a>, I got a result that was noticeably better than what I got from a single Copilot chat. It was the same task and basically the same intent, but the coverage was better.</p>
+<p>That was the moment it clicked for me: Squad is a multi-agent orchestrator. Instead of asking one AI generalist to do everything, I can route the same task through specialists with clear roles.</p>
+<p>This post came from a coworker asking me, "Why Squad?"</p>
+<p><img decoding="async" loading="lazy" alt="Watercolor illustration of a sunlit woodworking workshop with a team working on projects." src="http://dfberry.github.io/assets/images/2026-06-20-squad-first-impressions-watercolor-1-hero-9da1752e3cba5524fde419eaf36d86d8.png" width="1024" height="1024" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-squad-feels-different-from-copilot">Why Squad feels different from Copilot<a href="http://dfberry.github.io/2026-06-20-squad-first-impressions#why-squad-feels-different-from-copilot" class="hash-link" aria-label="Direct link to Why Squad feels different from Copilot" title="Direct link to Why Squad feels different from Copilot" translate="no">​</a></h2>
+<p>Before Squad, my workflow was simple: open Copilot and ask one agent for everything. That works well for plenty of tasks, but it is still one perspective.</p>
+<p>When I ran Squad on the same docs task, the output came back with fewer blind spots. It was not just more polished. It covered angles the generalist missed.</p>
+<p>That pushed me to design my own team. I started with obvious roles like builder, reviewer, and debugger, then added project-specific specialists with strong opinions about quality. I now run with about 30 agents.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="i-am-directing-now-not-doing">I am directing now, not doing<a href="http://dfberry.github.io/2026-06-20-squad-first-impressions#i-am-directing-now-not-doing" class="hash-link" aria-label="Direct link to I am directing now, not doing" title="Direct link to I am directing now, not doing" translate="no">​</a></h2>
+<p>With Squad, my job shifts from doing the task to directing the process.</p>
+<p>I set the plan, the constraints, and the definition of done. Squad coordinates which agents should build, review, challenge assumptions, and test. Sometimes I direct at a high level with goals and standards. Sometimes I assign specific work.</p>
+<p>I ask Squad to make better decisions with less intervention from me.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-build-and-review-should-be-separate-teams">Why build and review should be separate teams<a href="http://dfberry.github.io/2026-06-20-squad-first-impressions#why-build-and-review-should-be-separate-teams" class="hash-link" aria-label="Direct link to Why build and review should be separate teams" title="Direct link to Why build and review should be separate teams" translate="no">​</a></h2>
+<p>For me, the biggest quality jump came from separating build and review.</p>
+<p>At first, I only wanted better output than one generalist could produce. Later, I built a dedicated review team where each reviewer had a different job:</p>
+<ul>
+<li class="">One reviewer hunts for security risks.</li>
+<li class="">One checks factual correctness.</li>
+<li class="">One stress-tests logic and edge cases.</li>
+<li class="">One reviews performance tradeoffs.</li>
+</ul>
+<p>I do not want eight approvals. I want eight different objections.</p>
+<p>I also want those objections resolved through agent collaboration, not by pulling me into every pass. Just like a real PR review, reviewers should send issues back to build, build should improve the work, and the review should run again until everyone agrees the bar is met.</p>
+<p><img decoding="async" loading="lazy" alt="Watercolor illustration of a team examining the same cabinet from different angles" src="http://dfberry.github.io/assets/images/2026-06-20-squad-first-impressions-watercolor-2-build-review-5d08ecd183dfa6ef723d1c1f26c3117e.png" width="1024" height="1024" class="img_ev3q"></p>
+<p>A single generalist reviewing its own output gives me consistency with itself. That is not the same as complete and correct.</p>
+<p>For this process, done means reviewer consensus after iterative fixes. If reviewers still disagree, the PR is not done.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="did-it-finish-is-the-wrong-question">"Did it finish?" is the wrong question<a href="http://dfberry.github.io/2026-06-20-squad-first-impressions#did-it-finish-is-the-wrong-question" class="hash-link" aria-label="Direct link to &quot;Did it finish?&quot; is the wrong question" title="Direct link to &quot;Did it finish?&quot; is the wrong question" translate="no">​</a></h2>
+<p>Before Squad, I asked:</p>
+<ul>
+<li class="">Did it work?</li>
+<li class="">What needs to change?</li>
+<li class="">Is it done?</li>
+</ul>
+<p>With Squad, the better question is: <strong>How can this be more consistently correct?</strong></p>
+<p>Who else should review this? Which assumptions need pressure testing? What would a performance engineer challenge? What would a security reviewer reject?</p>
+<p>That changes my role. I am not just relieved that something exists. I am trying to improve the system that produces it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-this-once-with-the-same-task">Try this once with the same task<a href="http://dfberry.github.io/2026-06-20-squad-first-impressions#try-this-once-with-the-same-task" class="hash-link" aria-label="Direct link to Try this once with the same task" title="Direct link to Try this once with the same task" translate="no">​</a></h2>
+<p>If you are curious, run a simple experiment:</p>
+<ol>
+<li class="">Pick a task you already gave to one Copilot agent.</li>
+<li class="">Run it again with a build team.</li>
+<li class="">Then run a separate review team on that output.</li>
+<li class="">Compare what the review team catches.</li>
+</ol>
+<p>That comparison is why Squad is interesting to me. I care less about getting one answer and more about running a process that catches weak spots before I ever see the final output. That is the core difference in Squad vs. Copilot for me.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="management-becomes-the-core-skill">Management becomes the core skill<a href="http://dfberry.github.io/2026-06-20-squad-first-impressions#management-becomes-the-core-skill" class="hash-link" aria-label="Direct link to Management becomes the core skill" title="Direct link to Management becomes the core skill" translate="no">​</a></h2>
+<p>Once you have a team of agents, management becomes the multiplier.</p>
+<p>I think in terms of plans, process, and quality gates. Projects need clear definitions and constant refinement. Squad builds to the plan, reviews against the plan, and makes quality visible.</p>
+<p>Each project moves from manual execution toward a repeatable process. For me, the next step is a project-level agent that manages implementation of that plan by treating skills as atomic process definitions. It can chain those skills together, enforce quality gates between phases, and produce reports that show what was supposed to happen, what actually happened, and whether the completion criteria were met.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="summary">Summary<a href="http://dfberry.github.io/2026-06-20-squad-first-impressions#summary" class="hash-link" aria-label="Direct link to Summary" title="Direct link to Summary" translate="no">​</a></h2>
+<p>Squad changed how I work. What mattered was not getting a slightly better answer from one agent. What mattered was getting a repeatable multi-agent process. Separate build and review teams, explicit skills, quality gates, and shared reports create a clearer path to "done" with less guesswork. Copilot helps me generate; Squad helps me run the work.</p>
+<hr>]]></content:encoded>
+            <category>Squad</category>
+            <category>AI Agents</category>
+            <category>GitHub Copilot</category>
+            <category>multi-agent</category>
+        </item>
         <item>
             <title><![CDATA[Copilot Configuration Files: What They Are, Where They Live, and When to Use Them]]></title>
             <link>http://dfberry.github.io/2026-06-08-copilot-config-files-guide</link>
@@ -2056,24 +2120,6 @@ Azure plugin: 50+ tools → ~27K in context every message.</p>
             <category>Azure CLI</category>
             <category>Azure Cloud Shell</category>
             <category>Tips</category>
-        </item>
-        <item>
-            <title><![CDATA[TypeScript type guard for empty JSON object]]></title>
-            <link>http://dfberry.github.io/2023.02.04-github-graphql-commit-history-with-typescript</link>
-            <guid>http://dfberry.github.io/2023.02.04-github-graphql-commit-history-with-typescript</guid>
-            <pubDate>Sat, 04 Feb 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[Safely type through an object's type which includes an empty JSON object.]]></description>
-            <content:encoded><![CDATA[<p>A commit history for a repo on GitHub can be optional, if there are no commits yet. The TypeScript SDK created by the <a href="https://www.npmjs.com/package/@graphql-codegen/cli" target="_blank" rel="noopener noreferrer" class="">GraphQL CodeGen</a> represents this optionality is represented with an empty object, null, or undefined. If a commit is present, its represented as a nested JSON object with more optional parameters.</p>
-<div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">declare</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">var</span><span class="token plain"> x</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">{</span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">|</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token keyword" style="color:#00009f">null</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">|</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token keyword" style="color:#00009f">undefined</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">|</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">{</span><span class="token string-property property" style="color:#36acaa">'a'</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">...</span><span class="token plain"> more optional params </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre></div></div>
-<p>The empty JSON object, <code>{}</code>, is tricky in JavaScript. There are several examples of testing for an empty object but they generally don't work as type guards in TypeScript for type safety.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="type-guard-with-in">Type guard with <code>in</code><a href="http://dfberry.github.io/2023.02.04-github-graphql-commit-history-with-typescript#type-guard-with-in" class="hash-link" aria-label="Direct link to type-guard-with-in" title="Direct link to type-guard-with-in" translate="no">​</a></h2>
-<p>After asking on <a href="https://stackoverflow.com/questions/75278401/how-do-i-get-type-target-history-from-github-graphql-on-defaultbranchref" target="_blank" rel="noopener noreferrer" class="">StackOverlow</a> and getting no response, I reached out to my local TypeScript expert for help.</p>
-<p>He helped boil the issue down to the type shown in the previous code block with a type guard using the <code>in</code> keyword:</p>
-<div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">if</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">x </span><span class="token operator" style="color:#393A34">!==</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">null</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">&amp;&amp;</span><span class="token plain"> x </span><span class="token operator" style="color:#393A34">!==</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">undefined</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">&amp;&amp;</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"a"</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">in</span><span class="token plain"> x</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token comment" style="color:#999988;font-style:italic">// no null</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token comment" style="color:#999988;font-style:italic">// not undefined</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token comment" style="color:#999988;font-style:italic">// x has property 'a' so it isn't empty</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token builtin">console</span><span class="token punctuation" style="color:#393A34">.</span><span class="token function" style="color:#d73a49">log</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">x</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">a</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre></div></div>]]></content:encoded>
-            <category>TypeScript</category>
-            <category>type guard</category>
-            <category>GitHub</category>
-            <category>GraphQL</category>
         </item>
     </channel>
 </rss>
