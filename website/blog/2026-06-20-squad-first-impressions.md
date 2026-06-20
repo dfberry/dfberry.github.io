@@ -2,13 +2,12 @@
 slug: /2026-06-20-squad-first-impressions
 authors: [dfberry]
 date: 2026-06-20
-image: ./media/2026-06-20-squad-first-impressions/watercolor-1-hero.png
+image: ./media/2026-06-20-squad-first-impressions/2026-06-20-squad-first-impressions-watercolor-1-hero.png
 canonical_url: https://dfberry.github.io/blog/2026-06-20-squad-first-impressions
 custom_edit_url: null
-sidebar_label: "2026.06.20 Squad First Impressions"
-title: "Squad: RememberingMulti-Agent Orchestration"
-description: "First impressions of Squad, the multi-agent orchestrator for GitHub Copilot. What changes when you stop asking one AI generalist for everything and start directing a team of specialist agents instead."
-draft: true
+sidebar_label: "2026.06.20 Why Squad?"
+title: "Why Squad?"
+description: "Why Squad feels different from GitHub Copilot: my first impression of its multi-agent workflow, and why build teams, review teams, skills, and quality gates improve results."
 tags:
   - Squad
   - AI Agents
@@ -20,63 +19,98 @@ keywords:
   - multi-agent orchestration
   - github copilot agents
   - specialist agents
-  - copilot agent team 
+  - copilot agent team
   - squad cli
   - agentic development
+  - squad first impressions
+  - squad vs copilot
+  - build and review agents
 ---
-Squad was captivating because it immediately provided more than Copilot. Copilot uses the model to fullfil the request. Copilot can vary based on the context and prompt but its the same model. [Squad](https://bradygaster.github.io/squad/), the first time I used it, brought a team of specialists to the request and the answer was so much better. 
+If you already use GitHub Copilot, the real question is simple: why would Squad feel different enough to change your workflow?
 
-When I talk to other Squad users, that's also their first Aha moment. The specialists produced better results. 
+The first time I used [Squad](https://bradygaster.github.io/squad/), I got a result that was noticeably better than what I got from a single Copilot chat. It was the same task and basically the same intent, but the coverage was better.
 
-I ran my first Squad workflow on a docs task I'd already done with a single Copilot agent. The output was so much more complete I went back to check that it was the same prompt. I consider Squad a multi-agent orchestrator. It lets me run specialists on the same task instead of asking one generalist to do everything.
+That was the moment it clicked for me: Squad is a multi-agent orchestrator. Instead of asking one AI generalist to do everything, I can route the same task through specialists with clear roles.
 
- This post came out of a coworker asking me, "Why Squad?"
+This post came from a coworker asking me, "Why Squad?"
 
 ![Watercolor illustration of a sunlit woodworking workshop with a team working on projects.](./media/2026-06-20-squad-first-impressions/2026-06-20-squad-first-impressions-watercolor-1-hero.png)
 
-## One Copilot generalist vs. a team of specialists
+<!-- truncate -->
 
-Before Squad, my workflow was: open Copilot, ask it everything. It covers a lot of ground. Code, docs, PR review, debugging. But it's still one perspective.
+## Why Squad feels different from Copilot
 
-When I ran Squad on that same task, the answer came back with fewer blind spots. It didn't just sound smarter. It covered angles the generalist missed.
+Before Squad, my workflow was simple: open Copilot and ask one agent for everything. That works well for plenty of tasks, but it is still one perspective.
 
-That's when I started thinking about what agents I need on my Squad team. There were the obvious agents for any project but as some of my project became more unique, I created agents that would have expertise and opinions (what does good code look like). Now I have a team of ~30 agents. 
+When I ran Squad on the same docs task, the output came back with fewer blind spots. It was not just more polished. It covered angles the generalist missed.
 
-## I'm directing now, not doing
+That pushed me to design my own team. I started with obvious roles like builder, reviewer, and debugger, then added project-specific specialists with strong opinions about quality. I now run with about 30 agents.
 
-When I use Squad, I'm not the person doing the work. I'm the person directing the Squad. The Squad coordinate picks the team to build the thing I need. I set the standards and make the judgment calls. I can direct at a high level with a plan or direct at a lower level with a specific task. 
+## I am directing now, not doing
 
-I'm constantly ask Squad how can it make better overall decisions and I direct it less.
+With Squad, my job shifts from doing the task to directing the process.
 
-## Why BUILD and REVIEW should use separate agents
+I set the plan, the constraints, and the definition of done. Squad coordinates which agents should build, review, challenge assumptions, and test. Sometimes I direct at a high level with goals and standards. Sometimes I assign specific work.
 
-The BUILD team and the REVIEW team need to be two different groups. I didn't start there. My first Squad runs were about getting better output from specialists than I was getting from one generalist.
+I ask Squad to make better decisions with less intervention from me.
 
-The separate review team came later. Eventually I had eight reviewers, each assigned to look for a different kind of mistake. That made the pattern reusable. One reviewer looks for security problems, another checks facts, another tries to break the logic. I don't want eight nods. I want eight different objections. They worked together to update and improve the code until all 8 agreed. 
+## Why build and review should be separate teams
 
-![Watercolor illustration team examining the same cabinet](./media/2026-06-20-squad-first-impressions/watercolor-2-build-review.png)
+For me, the biggest quality jump came from separating build and review.
 
-A single generalist reviewing its own output gives me self-consistency. That's not the same thing as complete and correct output.
+At first, I only wanted better output than one generalist could produce. Later, I built a dedicated review team where each reviewer had a different job:
+
+- One reviewer hunts for security risks.
+- One checks factual correctness.
+- One stress-tests logic and edge cases.
+- One reviews performance tradeoffs.
+
+I do not want eight approvals. I want eight different objections.
+
+I also want those objections resolved through agent collaboration, not by pulling me into every pass. Just like a real PR review, reviewers should send issues back to build, build should improve the work, and the review should run again until everyone agrees the bar is met.
+
+![Watercolor illustration of a team examining the same cabinet from different angles](./media/2026-06-20-squad-first-impressions/2026-06-20-squad-first-impressions-watercolor-2-build-review.png)
+
+A single generalist reviewing its own output gives me consistency with itself. That is not the same as complete and correct.
+
+For this process, done means reviewer consensus after iterative fixes. If reviewers still disagree, the PR is not done.
 
 ## "Did it finish?" is the wrong question
 
-Before Squad, I was asking: *Did it work? What needs to change? Is this done?*
+Before Squad, I asked:
 
-With Squad, the real question becomes: **How can it do more consistently?**
+- Did it work?
+- What needs to change?
+- Is it done?
 
-Who else should look at this? What assumption did the build team make that needs pressure-testing? What would the performance engineer say if I added them to the review?
+With Squad, the better question is: **How can this be more consistently correct?**
 
-I'm not just relieved something exists. I'm figuring out how to make it better.
+Who else should review this? Which assumptions need pressure testing? What would a performance engineer challenge? What would a security reviewer reject?
 
-## Try it once, with the same task
+That changes my role. I am not just relieved that something exists. I am trying to improve the system that produces it.
 
-I picked something I'd normally hand to one Copilot agent and ran it twice — once with a BUILD team, once with a different REVIEW team. I saw what the REVIEW team caught. That's exactly why Squad is interesting to me. It changes the job from working with a generalist to running a better process with my Squad agents. I want to see how far that goes.
+## Try this once with the same task
 
-## Management skills
+If you are curious, run a simple experiment:
 
-Now that I have a team of agents, my ability to manage them at a higher level is critical. I think in terms of plans and processes. This means projects have to be defined and continue to be updated and refined. The Squad builds to the plan, reviews to the plan, and both the Squad and I know when done its. 
+1. Pick a task you already gave to one Copilot agent.
+2. Run it again with a build team.
+3. Then run a separate review team on that output.
+4. Compare what the review team catches.
 
-Each project moves from manual steps to a more complete plan. The plan is implemented more consistently each time. Now, I'm moving to a project agent which can manage the plan for me. I still review, but the clear and specific output in the plan means Squad can review its own work. As my confidence in the project agent improves, now I'm looking at automating the project agent. That's a natural progression. 
+That comparison is why Squad is interesting to me. I care less about getting one answer and more about running a process that catches weak spots before I ever see the final output. That is the core difference in Squad vs. Copilot for me.
+
+## Management becomes the core skill
+
+Once you have a team of agents, management becomes the multiplier.
+
+I think in terms of plans, process, and quality gates. Projects need clear definitions and constant refinement. Squad builds to the plan, reviews against the plan, and makes quality visible.
+
+Each project moves from manual execution toward a repeatable process. For me, the next step is a project-level agent that manages implementation of that plan by treating skills as atomic process definitions. It can chain those skills together, enforce quality gates between phases, and produce reports that show what was supposed to happen, what actually happened, and whether the completion criteria were met.
+
+## Summary
+
+Squad changed how I work. What mattered was not getting a slightly better answer from one agent. What mattered was getting a repeatable multi-agent process. Separate build and review teams, explicit skills, quality gates, and shared reports create a clearer path to "done" with less guesswork. Copilot helps me generate; Squad helps me run the work.
 
 
 
