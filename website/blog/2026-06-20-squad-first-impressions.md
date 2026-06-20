@@ -1,6 +1,5 @@
 ---
 slug: /2026-06-20-squad-first-impressions
-authors: [dfberry]
 date: 2026-06-20
 image: ./media/2026-06-20-squad-first-impressions/2026-06-20-squad-first-impressions-watercolor-1-hero.png
 canonical_url: https://dfberry.github.io/blog/2026-06-20-squad-first-impressions
