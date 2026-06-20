@@ -66,7 +66,7 @@ I do not want eight approvals. I want eight different objections.
 
 I also want those objections resolved through agent collaboration, not by pulling me into every pass. Just like a real PR review, reviewers should send issues back to build, build should improve the work, and the review should run again until everyone agrees the bar is met.
 
-![Watercolor illustration of a team examining the same cabinet from different angles](./media/2026-06-20-squad-first-impressions/2026-06-20-squad-first-impressions-watercolor-2-build-review.png)
+![Watercolor illustration of a team examining the same cabinet from different angles](./media/2026-06-20-squad-first-impressions/2026-06-19-carpenter-watercolor-table-leg.png)
 
 A single generalist reviewing its own output gives me consistency with itself. That is not the same as complete and correct.
 
