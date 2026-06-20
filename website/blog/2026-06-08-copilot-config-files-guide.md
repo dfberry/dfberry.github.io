@@ -51,8 +51,6 @@ This guide is my attempt to create that mental model. I want to know what each f
 
 *The folder-house metaphor emphasizes that these files live together, but each room has a different job.*
 
-<!-- truncate -->
-
 Those are the most commonly confused files. There are also `AGENTS.md` (an OpenAI/Anthropic agent convention — not a GitHub Copilot feature), hooks, and MCP configs. 
 
 ## The Copilot Instructions File: Governance Layer
