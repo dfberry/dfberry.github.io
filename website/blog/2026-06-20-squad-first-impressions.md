@@ -35,8 +35,6 @@ This post came from a coworker asking me, "Why Squad?"
 
 ![Watercolor illustration of a sunlit woodworking workshop with a team working on projects.](./media/2026-06-20-squad-first-impressions/2026-06-20-squad-first-impressions-watercolor-1-hero.png)
 
-<!-- truncate -->
-
 ## Why Squad feels different from Copilot
 
 Before Squad, my workflow was simple: open Copilot and ask one agent for everything. That works well for plenty of tasks, but it is still one perspective.
