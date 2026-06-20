@@ -1,0 +1,22 @@
+[
+  {
+    "prompt": "Vibrant modern watercolor, sharp, high-detail. Sunlit furniture workshop with brick wall and oak beams. Person with pink hair holding a clipboard at center. Four specialists: carving, sanding, fitting hinges, inspecting — each in distinct colored shirts. Balanced, ethnically diverse mix of skin tones and ages; avoid stereotypes. Soft natural light. No text, logos, or watermark.",
+    "seed": 12345,
+    "steps": 30,
+    "guidance": 7.0,
+    "refine": true,
+    "refiner_steps": 20,
+    "output": "outputs/2026-06-19-squad-first-impressions-watercolor-1-hero.png",
+    "negative_prompt": "muted, subdued, historical, period costume, traditional, dull colors, photorealistic, blurry, bad quality, worst quality, low resolution, text, watermark, signature, deformed, ugly, avoid caricatured or stereotypical features, grayscale, monochrome"
+  },
+  {
+    "prompt": "Vibrant modern watercolor, sharp, high-detail. Three diverse female builders assembling a cabinet (full figures) inspecting and measuring. Same workshop background, warm light. Balanced, ethnically diverse mix of skin tones and ages; avoid stereotypes. No text, logos, or watermark.",
+    "seed": 12346,
+    "steps": 30,
+    "guidance": 7.0,
+    "refine": true,
+    "refiner_steps": 20,
+    "output": "outputs/2026-06-19-squad-first-impressions-watercolor-2-build-review-5.png",
+    "negative_prompt": "muted, subdued, historical, period costume, traditional, dull colors, photorealistic, blurry, bad quality, worst quality, low resolution, text, watermark, signature, deformed, ugly, avoid caricatured or stereotypical features, grayscale, monochrome"
+  }
+]
