@@ -1,0 +1,22 @@
+[
+  {
+    "prompt": "Vibrant modern watercolor, sharp, high-detail. Sunlit furniture workshop with brick wall and oak beams. Person with pink hair holding a clipboard at center. Four specialists: carving, sanding, fitting hinges, inspecting — each in distinct colored shirts. Balanced, ethnically diverse mix of skin tones and ages; avoid stereotypes. Soft natural light. No text, logos, or watermark.",
+    "seed": 12345,
+    "steps": 30,
+    "guidance": 7.0,
+    "refine": true,
+    "refiner_steps": 20,
+    "output": "outputs/2026-06-19-squad-first-impressions-watercolor-1-hero.png",
+    "negative_prompt": "muted, subdued, historical, period costume, traditional, dull colors, photorealistic, blurry, bad quality, worst quality, low resolution, text, watermark, signature, deformed, ugly, avoid caricatured or stereotypical features, grayscale, monochrome"
+  },
+  {
+    "prompt": "No text, logos, or watermark. One White woman carving a wooden table leg from a block of wood in a light-filled workshop; many finished table legs arranged around her. Anatomically correct: two arms, two hands visible, two eyes. Vibrant modern watercolor, sharp details, warm workshop light, cinematic composition.",
+    "seed": 12346,
+    "steps": 40,
+    "guidance": 7.5,
+    "refine": true,
+    "refiner_steps": 30,
+    "output": "outputs/2026-06-19-carpenter-watercolor-table-leg.png",
+    "negative_prompt": "extra limbs, extra arms, extra fingers, missing limbs, missing fingers, mutated hands, malformed hands, floating limbs, extra eyes, deformed, disfigured, blurry, low quality, monochrome, logos, watermark, text, crowd, multiple people, nudity, violence"
+  }
+]

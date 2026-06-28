@@ -1,14 +1,12 @@
 ---
-slug: /2026-06-03-copilot-config-files-guide
-authors: [dfberry]
-date: 2026-06-03
-image: ./media/2026-06-03-copilot-config-files-guide/watercolor-1-layers-of-governance.png
-canonical_url: https://dfberry.github.io/blog/2026-06-03-copilot-config-files-guide
+slug: /2026-06-08-copilot-config-files-guide
+date: 2026-06-08
+image: ./media/2026-06-08-copilot-config-files-guide/watercolor-1-layers-of-governance.png
+canonical_url: https://dfberry.github.io/blog/2026-06-08-copilot-config-files-guide
 custom_edit_url: null
-sidebar_label: "2026.06.03 Copilot Config Files"
+sidebar_label: "2026.06.08 Copilot Config Files"
 title: "Copilot Configuration Files: What They Are, Where They Live, and When to Use Them"
 description: "A practical guide to `.github/copilot-instructions.md`, agents, skills, prompts, and workflows — what each one does, where to find accurate examples, and how they fit together."
-draft: true
 tags:
   - copilot
   - configuration
@@ -26,11 +24,11 @@ keywords:
 
 When I work with repos that use Copilot, I keep running into the same issue: people have these files scattered across `.github/`, but I'm not sure what each one does, why they exist separately, or how they're supposed to work together.
 
-I'll see `.github/copilot-instructions.md` and `.github/agents/` in the same repo, then a `prompts/` folder, then maybe a workflow file that looks half like YAML and half like agent instructions. The files exist, but my mental model doesn't.
+I'll see `.github/copilot-instructions.md` and `.github/agents/` in the same repo, then a `prompts/` folder. The files exist, but my mental model doesn't.
 
 This guide is my attempt to create that mental model. I want to know what each file is for, where real repos keep them, and how they are used.
 
-![Three matryoshka nesting dolls opened and displayed from largest to smallest — representing the governance layers of instructions, agents, and skills](./media/2026-06-03-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
+![Three matryoshka nesting dolls opened and displayed from largest to smallest — representing the governance layers of instructions, agents, and skills](./media/2026-06-08-copilot-config-files-guide/watercolor-1-layers-of-governance.png)
 
 *At first glance, these configuration files look related — but how they nest relate to each other isn't obvious until you see the full picture.*
 
@@ -45,15 +43,13 @@ This guide is my attempt to create that mental model. I want to know what each f
 | 5 | **Prompt files / prompt docs** | Official prompt files: `.github/prompts/*.prompt.md`; repo-local docs often live in `.github/prompts/*.md` | Reusable prompt template or task-specific reference context | "I need either a reusable prompt in the IDE or a deeper reference doc for a specific task" |
 | 6 | **Workflows** | `.github/workflows/` | GitHub Actions automation and remote triggers | "I need this to run on a label, schedule, dispatch, or PR event" |
 
-![Configuration files structure across the six .github families](./media/2026-06-03-copilot-config-files-guide/diagram-2-configuration-files-structure-v2.svg)
+![Configuration files structure across the six .github families](./media/2026-06-08-copilot-config-files-guide/diagram-2-configuration-files-structure-v2.svg)
 
 *This structure diagram turns the six file families into one navigable map so you can see which pieces are baseline, specialized, reusable, or event-driven.*
 
-![Stylized .github home showing where instructions, agents, skills, prompts, and workflows live](./media/2026-06-03-copilot-config-files-guide/image-2-where-they-live.png)
+![Stylized .github home showing where instructions, agents, skills, prompts, and workflows live](./media/2026-06-08-copilot-config-files-guide/image-2-where-they-live.png)
 
 *The folder-house metaphor emphasizes that these files live together, but each room has a different job.*
-
-<!-- truncate -->
 
 Those are the most commonly confused files. There are also `AGENTS.md` (an OpenAI/Anthropic agent convention — not a GitHub Copilot feature), hooks, and MCP configs. 
 
@@ -188,10 +184,6 @@ A skill is a folder with a `SKILL.md` file plus whatever supporting templates, s
 
 GitHub's documentation describes what each feature does, but doesn't frame the relationship as explicitly as I'd like. Here's my mental model: **Instructions set the rules. Agents decide. Skills execute.** This is my interpretation, not GitHub's official framing, but it helps me remember which tool to reach for.
 
-![Mental model hierarchy showing instructions governing agents and skills](./media/2026-06-03-copilot-config-files-guide/diagram-1-mental-model-v3-color.svg)
-
-*This cascade makes the control flow explicit: rules constrain decisions, and decisions choose the reusable execution path.*
-
 ---
 
 ## Skills vs. Prompts: The Critical Difference
@@ -209,7 +201,7 @@ This is the distinction that tripped me up most, because people use the word "pr
 
 That means my old rule of thumb was too neat. Prompts are not always passive reference, and skills are not always the only place with step-by-step guidance. The better distinction is this: skills are packaged workflows Copilot can use as skills; prompt files and prompt docs are reusable context.
 
-![Decision tree for choosing between skills, official prompts, prompt docs, or no file](./media/2026-06-03-copilot-config-files-guide/diagram-3-skills-vs-prompts-decision-tree-light.svg)
+![Decision tree for choosing between skills, official prompts, prompt docs, or no file](./media/2026-06-08-copilot-config-files-guide/diagram-3-skills-vs-prompts-decision-tree-light.svg)
 
 *The decision tree compresses the distinction into one question sequence: reusable workflow first, reusable prompt second, reference doc third.*
 
@@ -286,12 +278,6 @@ Separately from the workflow trigger, [archie.agent.md](https://github.com/Azure
 **6. Skills are adjacent, not proven by this example**
 Skills still matter to the overall ecosystem, but Azure's review workflows are not the example I would use to claim that agents are invoking skills behind the scenes. If I want to show skills, I use an actual `SKILL.md` repo.
 
-That's the loop I trust: a label starts a workflow, the workflow runs the reviewer, the reviewer uses repo guidance, and comments come back to the PR.
-
-![Sequence diagram for the Azure SDK architecture review workflow](./media/2026-06-03-copilot-config-files-guide/diagram-4-azure-sdk-workflow-trigger-color.svg)
-
-*This sequence shows the asynchronous handoff from label to workflow to reviewer guidance and back to a PR comment.*
-
 ---
 
 ## Using Copilot with These Files: Chat and CLI
@@ -342,7 +328,7 @@ That command is a **remote workflow dispatch through GitHub CLI**, not local Cop
 
 ## Decision Table: Which File for What?
 
-![Decision tree for placing work in instructions, agents, skills, prompts, or workflows](./media/2026-06-03-copilot-config-files-guide/diagram-5-file-placement-decision-tree-light.svg)
+![Decision tree for placing work in instructions, agents, skills, prompts, or workflows](./media/2026-06-08-copilot-config-files-guide/diagram-5-file-placement-decision-tree-light.svg)
 
 *This placement tree turns the file choice into a routing problem: match the task shape, then drop it in the right folder.*
 
@@ -402,11 +388,11 @@ Here are the examples I would study first.
 
 ## The One-Sentence Rule
 
-![Woman viewing four landscape paintings on a wall — the same mountain at sunrise, noon, rain, and sunset — representing the config files seen from different angles](./media/2026-06-03-copilot-config-files-guide/watercolor-5-putting-it-together.png)
+![Woman viewing four landscape paintings on a wall — the same mountain at sunrise, noon, rain, and sunset — representing the config files seen from different angles](./media/2026-06-08-copilot-config-files-guide/watercolor-5-putting-it-together.png)
 
 If I'm stuck deciding where something belongs, this is still the fastest check I know: 
 - If it reads like a rule, put it in instructions.
 - If it reads like a reusable workflow, put it in a skill. 
 - If it reads like task-specific context, put it in a prompt doc or prompt file. 
-- If it has to run on GitHub events, put it in a workflow.**
+- If it has to run on GitHub events, put it in a workflow.
 
