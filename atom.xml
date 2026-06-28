@@ -2,12 +2,102 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>http://dfberry.github.io</id>
     <title>Dina Berry RSS feed</title>
-    <updated>2026-06-20T00:00:00.000Z</updated>
+    <updated>2026-06-28T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="http://dfberry.github.io"/>
     <subtitle>Dina Berry developer and technical writer RSS feed</subtitle>
     <icon>http://dfberry.github.io/favicon.ico</icon>
     <rights>Copyright © 2026 Dina Berry.</rights>
+    <entry>
+        <title type="html"><![CDATA[Running AI at Work: A Field Guide to Cost, Craft, and Guardrails]]></title>
+        <id>http://dfberry.github.io/2026-06-28-ai-at-work</id>
+        <link href="http://dfberry.github.io/2026-06-28-ai-at-work"/>
+        <updated>2026-06-28T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[A practical field guide to running AI day to day — paying for tokens once, picking the right model on a cost gradient, hardening prototypes into testable processes, and scoping least privilege, observability, and accountability for things that aren't people.]]></summary>
+        <content type="html"><![CDATA[<p><em>For the engineers building with AI every day — and the leaders setting the guardrails around them.</em></p>
+<p>Take a few minutes to think about where we are. We're past the demo phase. The exciting question used to be "can a model even do this?" — and now it's the much less glamorous "how do we run this every day, at a price we can actually justify, without handing an autonomous process the keys to everything?"</p>
+<p>That question really has three threads tangled together, and it helps to pull them apart up front:</p>
+<ul>
+<li class=""><strong>The money</strong> — don't pay twice, and use the right tool for the job.</li>
+<li class=""><strong>The craft</strong> — move from one-shot prompts to repeatable, testable processes.</li>
+<li class=""><strong>The guardrails</strong> — least privilege, real observability, and accountability for things that aren't people.</li>
+</ul>
+<p>There's one idea underneath all three: <strong>the graduation handoff.</strong> Almost everything here describes a single moment — a skill or agent growing up from "you're watching it work, turn by turn" into "it runs in production on its own." Before that moment, <em>you</em> are the scaffolding that earns the trust. After it, your standard production stack — telemetry, observability, authorization — becomes the permanent structure that keeps it. Keep that handoff in the back of your mind. It's the spine of everything below.</p>
+<p>That watching phase—where you're present for each turn—is the subject of what comes next. It's not forever, but it's the cost of earning trust.</p>
+<p><img decoding="async" loading="lazy" alt="A woman with pink hair stands at a rocky coastline, watching and thinking" src="http://dfberry.github.io/assets/images/2026-06-27-running-ai-at-work-1-hero-graduation-handoff-18ec81968bdf4bc0353f579cf4692709.png" width="1024" height="1024" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="part-1--the-money-stop-paying-twice">Part 1 — The money: stop paying twice<a href="http://dfberry.github.io/2026-06-28-ai-at-work#part-1--the-money-stop-paying-twice" class="hash-link" aria-label="Direct link to Part 1 — The money: stop paying twice" title="Direct link to Part 1 — The money: stop paying twice" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="pay-for-tokens-once">Pay for tokens once<a href="http://dfberry.github.io/2026-06-28-ai-at-work#pay-for-tokens-once" class="hash-link" aria-label="Direct link to Pay for tokens once" title="Direct link to Pay for tokens once" translate="no">​</a></h3>
+<p>Here's the thing about tokens: they're wonderful for exploring and terrible as a permanent runtime. Once you really understand a workflow, push it toward determinism — scripts, apps, tests, CI — so you pay the model once to figure it out, not on every single run.</p>
+<p>I want to be straight with you, though: determinism isn't a free lunch, it's a <em>trade</em>. Scripts rot. APIs change, schemas drift, dependencies break. You're swapping a per-run token cost for a smaller, recurring maintenance cost — not erasing the cost.</p>
+<p>So when do you actually harden something? It comes down to stakes. If a workflow is quick and clearly defined, move it to determinism early. If the consequences are bigger, give it a middle ground: let it mature <em>with</em> AI first, and as individual parts settle, move <em>those</em> parts into hardened, deterministic form — within the real-world limits of security, maintenance, and interoperability. The two failure modes to avoid: hardening a moving target, and paying frontier prices for something that's already settled.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="use-the-right-tool-for-the-job--on-a-cost-gradient">Use the right tool for the job — on a cost gradient<a href="http://dfberry.github.io/2026-06-28-ai-at-work#use-the-right-tool-for-the-job--on-a-cost-gradient" class="hash-link" aria-label="Direct link to Use the right tool for the job — on a cost gradient" title="Direct link to Use the right tool for the job — on a cost gradient" translate="no">​</a></h3>
+<p>"Use AI for everything" isn't a strategy. The real principle is the boring, durable one you already know: <em>right tool for the job.</em> And the tools sit on a gradient — a classic <strong>deterministic tool</strong>, then a <strong>small or local model</strong>, then a <strong>frontier model</strong>. Pick the cheapest rung that actually does the work.</p>
+<p>Choosing the right one saves money, but more importantly, it saves cognitive load. You're not wrestling with overkill; you're matching capability to need.</p>
+<p><img decoding="async" loading="lazy" alt="A woman in a forest selecting the right tool from many options" src="http://dfberry.github.io/assets/images/2026-06-27-running-ai-at-work-2-cost-gradient-72cf6889346e58401a450794734f7f60.png" width="1024" height="1024" class="img_ev3q"></p>
+<p>Spelling and grammar is a nice illustration, precisely because it usually lands on the <em>deterministic</em> rung. Mature tools handle it cheaply and predictably, so you'd never reach for a frontier model — same instinct as "pay once." The interesting rung is the one <em>above</em> deterministic but <em>below</em> frontier, and that's where small or local models genuinely earn their keep: classification, routing, redaction, embeddings — work that needs more flexibility than a fixed tool can give but doesn't need state-of-the-art reasoning.</p>
+<p>A concrete example I like: <strong>redacting PII from your logs before they're stored.</strong> A regex can't reliably catch a name or address it's never seen. A frontier model is overkill on every log line. A small <em>local</em> model is right in the sweet spot — flexible enough to generalize, cheap enough to run on every write, and local so the sensitive data never leaves your boundary.</p>
+<p>Here's how to think about it systematically:</p>
+<p><img decoding="async" loading="lazy" alt="Cost gradient diagram" src="http://dfberry.github.io/assets/images/dia1_2-cb8e9931320f5a081c10e5138f3fe780.svg" width="223" height="278" class="img_ev3q"></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="turn-that-gradient-into-a-system-model-routing">Turn that gradient into a system: model routing<a href="http://dfberry.github.io/2026-06-28-ai-at-work#turn-that-gradient-into-a-system-model-routing" class="hash-link" aria-label="Direct link to Turn that gradient into a system: model routing" title="Direct link to Turn that gradient into a system: model routing" translate="no">​</a></h3>
+<p>Don't leave "good enough vs. state of the art" as a gut feeling. Systematize it with <strong>model routing</strong>, or cascades: try the cheap model first, and escalate to the frontier one only when confidence is low. Same instinct as above — but now it's a measurable, tiered spend you can actually reason about instead of a vibe.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="dont-pay-for-compute-you-dont-need--and-remember-local-buys-more-than-savings">Don't pay for compute you don't need — and remember local buys more than savings<a href="http://dfberry.github.io/2026-06-28-ai-at-work#dont-pay-for-compute-you-dont-need--and-remember-local-buys-more-than-savings" class="hash-link" aria-label="Direct link to Don't pay for compute you don't need — and remember local buys more than savings" title="Direct link to Don't pay for compute you don't need — and remember local buys more than savings" translate="no">​</a></h3>
+<p>If you don't need cloud or remote access, a small or local model lets you skip the ongoing API bill. But please don't fall for "local is free" — it's a myth. You're really just swapping one kind of cost for two others: you trade a pay-as-you-go bill for a big upfront purchase <em>plus</em> a new set of ongoing costs — hardware, electricity, wear-and-tear, and the engineer-hours to run and patch the thing. For low or spiky volume, cloud is often both cheaper <em>and</em> more secure than a box you babysit.</p>
+<p>So find the real break-even: volume, latency, and data-residency or compliance constraints — not cost alone. And notice the two things local buys you beyond money. First, <strong>privacy and residency</strong> — the data never leaves your boundary, which is honestly the <em>real</em> reason to go local more often than cost is. Second, a chance to work in an <strong>emerging space.</strong> Local model management is still young — tools like Ollama, LM Studio, and Docker's Model Runner have made a real start, but enterprise basics are still thin: per-user access control, audit logging, versioning, and cost tracking. If you like building tools, there's real room here.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="treat-ai-spend-like-any-other-tech-spend">Treat AI spend like any other tech spend<a href="http://dfberry.github.io/2026-06-28-ai-at-work#treat-ai-spend-like-any-other-tech-spend" class="hash-link" aria-label="Direct link to Treat AI spend like any other tech spend" title="Direct link to Treat AI spend like any other tech spend" translate="no">​</a></h3>
+<p>After all this talk of cost, let me be clear about the goal: it isn't to fret over every dollar. It's the opposite. AI spend deserves the same deliberate budgeting you give every other part of your stack — it's real, it's recurring, and it should be a line item you own on purpose, tracked per team and per workflow.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="part-2--the-craft-from-prompt-to-process">Part 2 — The craft: from prompt to process<a href="http://dfberry.github.io/2026-06-28-ai-at-work#part-2--the-craft-from-prompt-to-process" class="hash-link" aria-label="Direct link to Part 2 — The craft: from prompt to process" title="Direct link to Part 2 — The craft: from prompt to process" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="ai-builds-the-prototype-you-harden-what-matters">AI builds the prototype; you harden what matters<a href="http://dfberry.github.io/2026-06-28-ai-at-work#ai-builds-the-prototype-you-harden-what-matters" class="hash-link" aria-label="Direct link to AI builds the prototype; you harden what matters" title="Direct link to AI builds the prototype; you harden what matters" translate="no">​</a></h3>
+<p>One of the most durable patterns here is an old one wearing new clothes. AI builds the prototype fast; once it works, <em>you</em> decide what becomes a repeatable, testable, secure process.</p>
+<p>What's the artifact of that transition? Today it's a skill, an agent, or some other markdown file — but the <em>format is incidental.</em> What matters is the <strong>information that persists</strong>: a durable, reviewable source of truth that outlives whatever wrapper happens to hold it.</p>
+<p>The work is real and tangible—you're shaping raw materials into something refined and usable:</p>
+<p><img decoding="async" loading="lazy" alt="A woman with pink hair shaping and crafting materials at a table with plants" src="http://dfberry.github.io/assets/images/2026-06-27-running-ai-at-work-2-cost-gradient-2-5df4c98f561dd74ec05e0bd46b8cd678.png" width="1024" height="1024" class="img_ev3q"></p>
+<p>And here's a bonus that's easy to miss: the hardening boundary is also the line between your <strong>two test regimes.</strong> What you've hardened gets a deterministic unit test. What stays probabilistic gets an <em>eval</em> — golden sets, LLM-as-judge, acceptance bands. Deciding what to harden <em>is</em> deciding how each piece gets tested. The test surface didn't shrink when AI showed up; it grew to cover both. Good news: the frameworks for this already exist, so you don't have to invent them.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="move-from-one-shot-prompts-to-repeatable-processes--and-give-them-an-owner">Move from one-shot prompts to repeatable processes — and give them an owner<a href="http://dfberry.github.io/2026-06-28-ai-at-work#move-from-one-shot-prompts-to-repeatable-processes--and-give-them-an-owner" class="hash-link" aria-label="Direct link to Move from one-shot prompts to repeatable processes — and give them an owner" title="Direct link to Move from one-shot prompts to repeatable processes — and give them an owner" translate="no">​</a></h3>
+<p>Wrap your deterministic scripts in AI skills that lean toward repeatable processes anyone can pick up. But reuse without ownership just turns into shadow IT — handy, but unowned and ungoverned. So give every reusable thing a home.</p>
+<p>A frame I borrowed from a governance thinker in the company helps here: think <strong>federal, state, and local</strong>, where you, the individual contributor, are <em>local</em>. Federal assets are organization-wide. State builds on federal. Local builds on both. The pipeline updates assets as they change upstream — a local copy can be refreshed from its non-local source instead of drifting out of date. The point is that every reusable unit has an owning tier and an update path. That's the difference between a library and a junk drawer.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="chain-and-gate-skills-into-workflows--but-only-what-you-can-watch">Chain and gate skills into workflows — but only what you can watch<a href="http://dfberry.github.io/2026-06-28-ai-at-work#chain-and-gate-skills-into-workflows--but-only-what-you-can-watch" class="hash-link" aria-label="Direct link to Chain and gate skills into workflows — but only what you can watch" title="Direct link to Chain and gate skills into workflows — but only what you can watch" translate="no">​</a></h3>
+<p>You can absolutely chain skills into full workflows — just respect the math, because reliability compounds <em>downward</em>. Five steps at 95% each lands you around 77% end to end. So chain only what you can observe and gate, and keep your chains short.</p>
+<p>What's a "gate"? Any defined checkpoint — a human in the loop or an AI, as long as it's explicit. The simplest version: look at the output or log of the last skill; if it has everything the next skill needs and shows no failures, move on. And a gentle reminder: more agents doesn't automatically produce better results.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-team-of-specialists-beats-one-do-it-all-generalist">A team of specialists beats one do-it-all generalist<a href="http://dfberry.github.io/2026-06-28-ai-at-work#a-team-of-specialists-beats-one-do-it-all-generalist" class="hash-link" aria-label="Direct link to A team of specialists beats one do-it-all generalist" title="Direct link to A team of specialists beats one do-it-all generalist" translate="no">​</a></h3>
+<p>There's a lot of research showing that teams of specialists outperform teams of generalists, and the same holds for AI agents. If you need a team, a set of focused specialist agents will beat one general-purpose agent copied over and over to fill every seat.</p>
+<p>The usual objection to agent teams is that things get lost in the handoff — when one agent passes work to the next, the second agent doesn't know what the first one already figured out. That objection is fading fast. Most AI platforms now give agents shared memory (Squad does this for me today), so the specialists all read from and write to the same memory. Nothing has to be re-explained and lost at each step; the context is simply there for whoever needs it next.</p>
+<p>So what's actually left to weigh? Mostly cost. A team of agents costs more than a single agent, because each one does its own thinking and runs up its own bill. That's the real trade-off — not lost context — and it's usually worth paying when each specialist does its part better than a generalist would.</p>
+<p>The only time to reach for a single agent is when a team would be overkill: a small, simple job where spinning up specialists adds cost and coordination for no real gain. That's a simplicity call, not a limit on what specialists can do.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="capture-tribal-knowledge--turn-repeatable-work-into-skills">Capture tribal knowledge — turn repeatable work into skills<a href="http://dfberry.github.io/2026-06-28-ai-at-work#capture-tribal-knowledge--turn-repeatable-work-into-skills" class="hash-link" aria-label="Direct link to Capture tribal knowledge — turn repeatable work into skills" title="Direct link to Capture tribal knowledge — turn repeatable work into skills" translate="no">​</a></h3>
+<p>Here's a simple test: if you had to hand your work to someone else before going on vacation, and you'd explain a process step by step, that process is probably a skill. The moment you find yourself writing "first do this, then do that, then check for this" — you're describing something a skill can hold. Capture it.</p>
+<p>Not everything passes the test. Codify the parts that are repetitive and stable; leave the genuinely judgment-heavy or one-off work to a person. Repetition is the tell — when you catch yourself doing the same thing the same way again and again, that's the signal.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="part-3--the-guardrails-things-that-arent-people">Part 3 — The guardrails: things that aren't people<a href="http://dfberry.github.io/2026-06-28-ai-at-work#part-3--the-guardrails-things-that-arent-people" class="hash-link" aria-label="Direct link to Part 3 — The guardrails: things that aren't people" title="Direct link to Part 3 — The guardrails: things that aren't people" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="least-privilege-for-agents--and-the-third-thing-thats-easy-to-miss">Least privilege for agents — and the third thing that's easy to miss<a href="http://dfberry.github.io/2026-06-28-ai-at-work#least-privilege-for-agents--and-the-third-thing-thats-easy-to-miss" class="hash-link" aria-label="Direct link to Least privilege for agents — and the third thing that's easy to miss" title="Direct link to Least privilege for agents — and the third thing that's easy to miss" translate="no">​</a></h3>
+<p>You already put real effort into deciding what access your <em>people</em> should have. Do the same for agents — don't let them roam your systems with <em>your</em> full authorization. And notice there are three distinct ideas here, not two:</p>
+<ul>
+<li class=""><strong>Identity</strong> — <em>who the agent is.</em> It'll likely look a lot like an app or service principal (Entra Agent ID and similar platforms point that way).</li>
+<li class=""><strong>Authorization</strong> — <em>what it's allowed to do.</em> Scope it as carefully as you'd scope a person.</li>
+<li class=""><strong>Accountability</strong> — <em>who answers when it causes harm.</em></li>
+</ul>
+<p>With an employee, all three exist: a badge, access grants, and a liable person with intent, a contract, and consequences. With an agent, even identity is messier than it looks. Either the agent borrows a real person's identity — so every action it takes shows up as <em>that human</em> doing it — or it runs as a service principal that <em>owns</em> resources outright, with no person attached at all. Neither option cleanly separates the three ideas, and <strong>accountability has no home</strong> in either. When a correctly-scoped agent still deletes prod, leaks a secret, or does something destructive a human would've paused on, who's liable? The agent has no intent. The IC who launched it didn't author the step. The team that built the skill didn't run it. The vendor's model chose the action.</p>
+<p>This is what separation of concerns looks like in practice—distance and clarity between who's watching and who's doing:</p>
+<p><img decoding="async" loading="lazy" alt="People watching and considering at a rocky shore, separated by distance and intention" src="http://dfberry.github.io/assets/images/2026-06-27-running-ai-at-work-5-watching-bc402153316c5eea5273a58c39bae6eb.png" width="1024" height="1024" class="img_ev3q"></p>
+<p>The principle is simple—scope each agent to the single, smallest set of permissions it actually needs. Nothing more. Think of it as giving someone only what they need to do the job, not the keys to everything.
+There's one more wrinkle worth knowing about: an agent can be tricked into misusing access it legitimately has. A well-documented pattern (often called prompt injection) is when text the agent reads — a web page, a file, an email — contains hidden instructions, and the agent treats them as if you'd asked for them. The access was scoped correctly; the agent just used it on the wrong instructions. Weigh it when you decide how much an agent should be allowed to do on its own.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="log-the-output-your-gates-depend-on">Log the output your gates depend on<a href="http://dfberry.github.io/2026-06-28-ai-at-work#log-the-output-your-gates-depend-on" class="hash-link" aria-label="Direct link to Log the output your gates depend on" title="Direct link to Log the output your gates depend on" translate="no">​</a></h3>
+<p>"Log everything" needs a sharper edge, because prompt-and-response logs are a huge new sensitive-data surface. So let me be specific about what I actually mean: not the prompts and responses, but the <strong>core output of each step</strong> — the data flowing through your scripts.</p>
+<p>That's the logging that makes chained gates effective. A gate can only ask "did the last step produce what the next one needs, with no failures?" if that output is captured. It's also what tells you when something went wrong and how much it affected. Without those logs, you can't even see how far the damage spread. And that's really the point: before anything runs on its own in production, you map out how far a failure could spread and build up trust in the process over a good stretch of running it with a person watching.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="ai-wont-stay-a-black-box--until-it-earns-the-right-to-be-one">AI won't stay a black box — until it earns the right to be one<a href="http://dfberry.github.io/2026-06-28-ai-at-work#ai-wont-stay-a-black-box--until-it-earns-the-right-to-be-one" class="hash-link" aria-label="Direct link to AI won't stay a black box — until it earns the right to be one" title="Direct link to AI won't stay a black box — until it earns the right to be one" translate="no">​</a></h3>
+<p>You're going to have to understand what's happening at levels you used to happily ignore. The usual car analogy — turn the key, drop it in gear, hit the gas, never think about the engine — actually cuts the <em>other</em> way right now. Cars earned that abstraction by working reliably for a century. AI hasn't earned it yet.</p>
+<p>You need to see inside the box <em>until it consistently succeeds.</em> There's a whole range from "barely works" to "works every single time," and watching turn by turn is the discipline for the immature end of it. The watching doesn't disappear as the system matures — it <strong>changes form.</strong> When a skill or agent graduates from "watch every turn" to "production-automated," your bespoke attention gets handed off to the standard production stack: telemetry, observability, authorization. Manual vigilance is the <em>scaffolding</em> you use to earn trust; mature observability is the <em>permanent structure</em> that keeps it. That's the graduation handoff again — the very same moment that hardening, scoped authorization, and step-output logging each describe from their own corner.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="where-this-leaves-us">Where this leaves us<a href="http://dfberry.github.io/2026-06-28-ai-at-work#where-this-leaves-us" class="hash-link" aria-label="Direct link to Where this leaves us" title="Direct link to Where this leaves us" translate="no">​</a></h2>
+<p>Read straight through, these aren't a dozen scattered tips — they're one lifecycle. A capability starts life as an expensive, non-deterministic, hand-watched experiment, and if it proves out, it graduates into something cheap, deterministic, governed, and observable. The money tells you <em>which</em> rung to run it on. The craft tells you <em>how</em> to harden and test it. The guardrails tell you <em>what</em> it can touch and <em>who</em> answers when it goes wrong. And the handoff — your scaffolding giving way to standard ops — is where all three meet.</p>
+<p>That journey is real work—intentional, deliberate, with a clear view of where you're building:</p>
+<p><img decoding="async" loading="lazy" alt="A woman at a mountain cabin workspace, designing and developing work with view and intention" src="http://dfberry.github.io/assets/images/2026-06-27-running-ai-at-work-3-prototype-to-process-2ca591409228760d1af9a281cc2aead6.png" width="1024" height="1024" class="img_ev3q"></p>
+<p>And this is how it unfolds end to end—from experiment to automation, from manual scaffolding to permanent structure:</p>
+<p><img decoding="async" loading="lazy" alt="Graduation lifecycle diagram" src="http://dfberry.github.io/assets/images/dia2_2-d36d7a2ddb7882c04f1fe05e5fd35213.svg" width="276" height="406" class="img_ev3q"></p>
+<p>So that's the real work in front of teams and organizations right now. It isn't <em>adopting</em> AI. It's <em>graduating</em> it. If you're already wrestling with any of this, I'd genuinely love to hear what's working for you and what isn't — that's how all of us find the real value faster.</p>]]></content>
+        <category label="ai" term="ai"/>
+        <category label="governance" term="governance"/>
+        <category label="cost" term="cost"/>
+        <category label="skills" term="skills"/>
+        <category label="agents" term="agents"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Why Squad?]]></title>
         <id>http://dfberry.github.io/2026-06-20-squad-first-impressions</id>
@@ -2068,56 +2158,5 @@ Azure plugin: 50+ tools → ~27K in context every message.</p>
         <category label="OpenAI" term="OpenAI"/>
         <category label="TypeScript" term="TypeScript"/>
         <category label="Sample" term="Sample"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Azure Cloud Shell Frequently asked questions]]></title>
-        <id>http://dfberry.github.io/2023-02-09-azure-cloud-shell-faq</id>
-        <link href="http://dfberry.github.io/2023-02-09-azure-cloud-shell-faq"/>
-        <updated>2023-02-09T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Things I wish I knew about Azure CLI and Azure Cloud shell]]></summary>
-        <content type="html"><![CDATA[<ol>
-<li class="">
-<p>You don't need to install <a href="https://learn.microsoft.com/en-us/cli/azure/what-is-azure-cli" target="_blank" rel="noopener noreferrer" class="">Azure CLI</a> in your local dev environment.</p>
-<p>The Cloud Shell (Azure CLI in a browser) is available from the <a href="https://portal.azure.com/" target="_blank" rel="noopener noreferrer" class="">Azure portal</a>.</p>
-<p><img decoding="async" loading="lazy" alt="Screenshot showing Azure Cloud Shell is available from top navigation bar in Azure portal. " src="http://dfberry.github.io/assets/images/azure-cloud-shell-button-58482e80e2729845c618a7f3a7d737ae.png" width="10112" height="3424" class="img_ev3q"></p>
-</li>
-<li class="">
-<p>The cloud shell is sticky. Because the Cloud shell uses Azure Storage (File storage), when you end your sessions then return, <a href="https://learn.microsoft.com/en-us/azure/cloud-shell/persisting-shell-storage" target="_blank" rel="noopener noreferrer" class="">your files are still there</a>.</p>
-<ul>
-<li class="">Want to quickly work with a GitHub repo? No problem, <strong>git</strong> is available.</li>
-</ul>
-</li>
-<li class="">
-<p>Because you use it from the portal, you are already authenticated. No need for <a href="https://learn.microsoft.com/cli/azure/reference-index?view=azure-cli-latest#az-login" target="_blank" rel="noopener noreferrer" class="">az login</a>.</p>
-</li>
-<li class="">
-<p>Many CLI tools are already installed for you.</p>
-<ul>
-<li class="">Azure CLI</li>
-<li class="">git, zip, jq</li>
-<li class="">code (not exactly Visual Studio Code, but a good IDE)</li>
-<li class="">nano, vim</li>
-<li class="">Node.js, npm</li>
-<li class="">Java and Maven</li>
-<li class="">Python</li>
-<li class="">.NET Core</li>
-<li class="">PowerShell</li>
-<li class="">Go (Golang)</li>
-<li class=""><a href="https://learn.microsoft.com/azure/azure-functions/functions-run-local" target="_blank" rel="noopener noreferrer" class="">Azure Functions CLI</a></li>
-<li class="">Docker CLI, Kubectl, Helm, Terraform, Ansible</li>
-<li class=""><a href="https://pnp.github.io/cli-microsoft365/" target="_blank" rel="noopener noreferrer" class="">Office 365 CLI</a></li>
-<li class="">MySQL client</li>
-<li class="">PostgreSql client</li>
-<li class="">SQL cli</li>
-</ul>
-</li>
-<li class="">
-<p>Create <a href="https://learn.microsoft.com/azure/cloud-shell/quickstart" target="_blank" rel="noopener noreferrer" class="">bash scripts with Azure CLI commands</a> to manage your Azure resources.</p>
-</li>
-</ol>]]></content>
-        <category label="Azure" term="Azure"/>
-        <category label="Azure CLI" term="Azure CLI"/>
-        <category label="Azure Cloud Shell" term="Azure Cloud Shell"/>
-        <category label="Tips" term="Tips"/>
     </entry>
 </feed>
