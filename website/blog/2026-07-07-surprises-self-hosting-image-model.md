@@ -10,6 +10,16 @@ This project started as hands-on image generation, not an abstract model experim
 
 The local and local container stages were mostly smooth. They gave me enough confidence that moving from laptop to container to cloud would be more plumbing than discovery. The surprises showed up when self-hosting moved to Azure, where model files, process readiness, storage, and deployment behavior all became part of the system.
 
+## What the Model Produces
+
+Before the surprises, here is what the self-hosted SDXL pipeline actually generates once it is loaded and running. These are direct outputs from the same code, unretouched.
+
+![Self-hosted SDXL output: a warm, sunlit coffee shop interior with bookshelves, wooden tables, and afternoon light through tall windows](./media/2026-07-07-surprises-self-hosting-image-model/example-output-coffee-shop.png)
+
+![Self-hosted SDXL output: a photorealistic mountain lake at sunset with pine trees, still water reflections, and mountains in the background](./media/2026-07-07-surprises-self-hosting-image-model/example-output-mountain-lake.png)
+
+This is the payoff I was working toward. The rest of the post is about everything that stood between the container starting and these images coming out.
+
 ## The False Assumption
 
 Calling a vendor API makes image generation look like one operation: send a request, get an image back. Self-hosting a generative model turns that single operation into a system I have to own.
