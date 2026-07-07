@@ -23,7 +23,7 @@ The system shape looked straightforward before the edge cases showed up. Local c
 The first version looked like this:
 
 ```mermaid
-%%{init: {'theme':'base'}}%%
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
 flowchart TD
     Code["Local SDXL Python code"] --> Flask["Flask API wrapper"]
     Flask --> Docker["Docker image"]
@@ -51,7 +51,7 @@ That architecture was directionally right, but it left out most of the operation
 The first clean picture hid two separate truths: the container could be up without running Flask, and model files could exist without the process being ready.
 
 ```mermaid
-%%{init: {'theme':'base'}}%%
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
 flowchart TD
     Provision["azd provision"] --> Placeholder["placeholder image + command<br/>python3 -m http.server 8000"]
     Placeholder --> Deploy["azd deploy"]
