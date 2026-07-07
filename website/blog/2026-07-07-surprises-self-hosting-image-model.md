@@ -74,6 +74,22 @@ flowchart TD
 
 The first lifecycle mistake was treating stored model assets as if they were the same thing as a ready application. Persistent storage can keep files between revisions. It cannot keep a new container process warm.
 
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Files["Azure Files share<br/>model files persist"] --> Revision["New revision<br/>new process"]
+    Revision --> Memory["Process memory<br/>model not loaded"]
+    Memory -- "GET /model/status" --> Status["state: not_started"]
+    Files --> Status
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Revision,Memory purple;
+    class Status pink;
+    class Files orange;
+```
+
 After the first cold download succeeded, I expected the next revision to be warm. The model files were on the Azure Files share, the share was mounted, and the path existed.
 
 Then the app reported readiness state held in the process's memory, through the `/model/status` `state` field:
@@ -99,11 +115,44 @@ Those are different costs, and they happen for different reasons. The deployment
 
 Persistent storage keeps assets. It does not keep application memory warm. For model-serving systems, readiness is process state.
 
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Gate["Deployment gate"] --> Check["Check readiness state"]
+    Cache["Cached Azure Files share"] --> Load["Warm load<br/>about 48 sec"]
+    Check -- "state: ready" --> Ready["Ready to serve"]
+    Load --> Ready
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Gate,Cache purple;
+    class Check,Load pink;
+    class Ready orange;
+```
+
 ## Surprise #2: Model Files Are Not Just Files
 
 The next storage mistake was treating model acquisition as a small deployment detail. For a generative model, the weights are a deployable asset with their own lifecycle.
 
 A 7–13GB model is not a small deployment detail. It is its own deployment phase.
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    AVD["azd up provisions infra"] --> Share["Empty model share"]
+    Weights["7-13GB model weights"] --> Missing["Weights do not appear"]
+    Lock["Download assumes POSIX flock"] --> SMB["Azure Files uses SMB"]
+    SMB --> Broken["Download logic broke"]
+    Share --> Missing
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class AVD,Weights,Lock purple;
+    class Missing,Broken pink;
+    class Share,SMB orange;
+```
 
 The model weights do not appear during `azd up`. Infrastructure provisioning creates the place where the model can live, but it does not populate that place with model assets.
 
@@ -135,11 +184,42 @@ That kind of bug feels like an operating system problem until you remember that 
 
 Once that was fixed, the cold download was faster than I expected: about **2 minutes 23 seconds** over the Azure backbone. The newer Hugging Face transfer path helped here; `hf_xet` replaced the deprecated `hf_transfer`, and the transfer itself was not the bottleneck I feared.
 
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Hook["postdeploy hook"] --> Pull["POST /model/pull"]
+    Pull --> Download["Download without flock"]
+    Xet["hf_xet over Azure backbone"] --> Download
+    Download --> Poll["Poll /model/status"]
+    Poll -- "state: ready" --> Ready["Ready after cold pull"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Hook,Xet,Poll purple;
+    class Pull,Download pink;
+    class Ready orange;
+```
+
 The useful takeaway was not simply that downloads can be fast. The model is a deployable asset with its own lifecycle. With a vendor API, the weights are someone else's problem. With self-hosting, model acquisition needs ordering, retries, logs, status, and a failure mode that stops the release instead of hiding the problem until the first image request.
 
 ## Surprise #3: "CPU Offload" Doesn't Work on a CPU
 
 The runtime mistake was trusting a helper name before checking the hardware contract behind it. I expected memory to be an issue, and it was. The memory-saving helper I reached for had a name that sounded perfect for CPU hosting but failed because the container was actually running on CPU.
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Container["Pure-CPU container"] --> Helper["enable_model_cpu_offload"]
+    Helper --> Contract["Offloads to CPU<br/>from accelerator"]
+    Contract --> Error["requires accelerator<br/>but not found"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Container,Helper,Contract purple;
+    class Error pink;
+```
 
 In `diffusers`, the helper is `enable_model_cpu_offload()`:
 
@@ -174,11 +254,44 @@ pipe.vae.enable_tiling()
 
 Model libraries encode hardware assumptions. Sometimes those assumptions are obvious. Sometimes they are hidden inside method names that sound like they were written for your exact scenario.
 
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Runtime["CPU runtime"] --> ToCPU["pipe.to(cpu)"]
+    ToCPU --> Attention["Attention slicing"]
+    Attention --> VAE["VAE slicing and tiling"]
+    VAE --> Ready["Runs within memory limits"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Runtime purple;
+    class ToCPU,Attention,VAE pink;
+    class Ready orange;
+```
+
 For this deployment, "CPU offload" means "offload to CPU from somewhere else." It does not mean "run on CPU." The app is not just my Flask routes; it is also the model runtime, tensor dtype, memory behavior, and hardware profile lining up correctly.
 
 ## Surprise #4: The Container Was Running, But Not My App
 
 The startup mistake was using a running container as proof that my application was running. A container can be healthy enough to accept traffic while the wrong process is listening.
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Provision["azd provision"] --> Placeholder["Placeholder command"]
+    Deploy["azd deploy swaps image"] --> Preserve["Command is preserved"]
+    Placeholder --> Preserve
+    Preserve --> Static["Static server running"]
+    Static -- "GET /" --> Root["200 from /"]
+    Static -- "/health and model routes" --> Missing["404 File not found"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Provision,Deploy,Root purple;
+    class Placeholder,Preserve,Static,Missing pink;
+```
 
 The container app was up, the revision existed, the endpoint responded, and `GET /` returned `200`. Every real route still returned this exact response:
 
@@ -215,6 +328,22 @@ Then the hook waits for the actual application route before it does any model wo
 curl --fail "$APP_URL/health"
 ```
 
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Image["Real Flask image"] --> Heal["Reset command<br/>python3 app.py"]
+    Heal --> Flask["Flask starts"]
+    Flask -- "GET /health" --> Health["Health responds"]
+    Health --> ModelWork["Continue model work"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Image purple;
+    class Heal pink;
+    class Flask,Health,ModelWork orange;
+```
+
 Only after `/health` responds from Flask does the deployment continue. Calling `/model/pull` before proving Flask is running is just sending a request to whatever process happens to be listening.
 
 I now treat the command, the image, and the health endpoint as three separate facts. The deployment is not ready until all three are true.
@@ -222,6 +351,22 @@ I now treat the command, the image, and the health endpoint as three separate fa
 ## Surprise #5: Tooling Silence Is Also a Failure Mode
 
 The verification mistake was trusting quiet tooling. Some failures throw obvious errors. Others look like nothing happened.
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Hook["azd hook running"] --> Quiet["stdout invisible"]
+    Config["Invalid azure.yaml keys"] --> Defaults["Default image path used"]
+    Bicep["Circular Bicep dependency"] --> Validation["Template validation failed"]
+    Quiet --> Confusing["Deployment looked idle"]
+    Defaults --> Wrong["Wrong image built"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Hook,Config,Bicep purple;
+    class Quiet,Defaults,Validation,Confusing,Wrong pink;
+```
 
 One problem was visibility. The `azd` postdeploy hook was running, but when its output was piped or non-interactive, stdout was invisible. Nothing in the terminal made it obvious what the hook was doing, so I verified through the platform logs:
 
@@ -260,6 +405,25 @@ CMD ["python3", "app.py"]
 Without that default, ACA could end up in `ContainerBackOff` or `ActivationFailed`, depending on which part of startup failed.
 
 There was also an infrastructure bug: a circular dependency in the Bicep for the container app failed template validation until I broke the cycle. That was not an SDXL issue. The model deployment made the infrastructure graph more complicated, and the graph had to be correct before the app could even try to start.
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Logs["Container App logs"] --> Verify["Verify source of truth"]
+    YAML["Supported docker block"] --> Build["Correct image builds"]
+    CMD["Dockerfile CMD default"] --> Start["Flask starts by default"]
+    Bicep["Break Bicep cycle"] --> Deploy["Observable correct deploy"]
+    Verify --> Deploy
+    Build --> Deploy
+    Start --> Deploy
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Logs,YAML,CMD,Bicep purple;
+    class Verify,Build,Start pink;
+    class Deploy orange;
+```
 
 Automation needs observable verification. In this setup, a successful command did not prove the deployment was correct, a running container did not prove Flask was running, a mounted share did not prove the model was ready, and a quiet hook did not prove the hook was idle.
 
