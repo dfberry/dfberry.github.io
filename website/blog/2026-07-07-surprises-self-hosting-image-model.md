@@ -40,9 +40,9 @@ flowchart TD
     class Files,Hook,Generate orange;
 ```
 
-The concrete version ran my Flask-wrapped SDXL code in Docker on Azure Container Apps, with an Azure Files share mounted for cached model weights and a deployment automation step that runs after deploy, the `azd` postdeploy hook, to pull the model.
+The concrete version ran my Flask-wrapped SDXL (Stable Diffusion XL, an open image-generation model) code in Docker on Azure Container Apps (ACA, the managed container hosting service used here), with an Azure Files share (a network-attached mount) for cached model weights. An `azd` (Azure Developer CLI) postdeploy hook—an automation step after deploy—pulled the model.
 
-The real deployment runs on CPU in Azure Container Apps: **4 vCPU, 16Gi memory, `device=cpu`, and 136Gi ephemeral storage**. The mounted Azure Files share holds the model cache, because the SDXL assets are too large to treat as incidental container filesystem state.
+The real deployment runs on CPU in Azure Container Apps: **4 vCPU, 16Gi memory, `device=cpu`, and 136Gi ephemeral storage**, the container's local scratch disk, wiped on restart. The mounted Azure Files share holds the model cache, because the SDXL assets are too large to treat as incidental container filesystem state.
 
 That architecture was directionally right, but it left out most of the operational work.
 
@@ -72,7 +72,7 @@ flowchart TD
 
 ## Surprise #1: Persistent Storage Does Not Mean Warm Application State
 
-The first lifecycle mistake was treating stored model assets as if they were the same thing as a ready application. Persistent storage can keep files between revisions. It cannot keep a new container process warm.
+The first lifecycle mistake was treating stored model assets as if they were the same thing as a ready application. Persistent storage can keep files between revisions, ACA's immutable deployment versions. It cannot keep a new container process warm.
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
@@ -178,11 +178,11 @@ A useful response includes the process readiness state, target device, and model
 }
 ```
 
-That was the right shape, but the storage layer had its own constraints. The mounted network-attached file storage is an Azure Files share, which uses Server Message Block (SMB). SMB does not support POSIX `flock` the way a local Linux filesystem does. The first version of the download logic assumed file locking would behave like local disk, and that assumption broke on the mounted share.
+That was the right shape, but the storage layer had its own constraints. The mounted network-attached file storage is an Azure Files share, which uses Server Message Block (SMB, the network file-sharing protocol Azure Files uses). SMB does not support POSIX `flock`, the file-locking call a local Linux filesystem supports. The first version of the download logic assumed file locking would behave like local disk, and that assumption broke on the mounted share.
 
 That kind of bug feels like an operating system problem until you remember that self-hosting makes the filesystem part of the application architecture. I had to rework the download logic so the app did not depend on unsupported locking behavior on the mounted share.
 
-Once that was fixed, the cold download was faster than I expected: about **2 minutes 23 seconds** over the Azure backbone. The newer Hugging Face transfer path helped here; `hf_xet` replaced the deprecated `hf_transfer`, and the transfer itself was not the bottleneck I feared.
+Once that was fixed, the cold download was faster than I expected: about **2 minutes 23 seconds** over the Azure backbone. The newer Hugging Face transfer path helped here; `hf_xet`, Hugging Face's newer fast download transport, replaced the deprecated `hf_transfer`, and the transfer itself was not the bottleneck I feared.
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
@@ -221,7 +221,7 @@ flowchart TD
     class Error pink;
 ```
 
-In `diffusers`, the helper is `enable_model_cpu_offload()`:
+In `diffusers`, Hugging Face's Python library for running diffusion image models, the helper is `enable_model_cpu_offload()`:
 
 ```python
 pipe.enable_model_cpu_offload()
@@ -251,6 +251,8 @@ pipe.enable_attention_slicing()
 pipe.vae.enable_slicing()
 pipe.vae.enable_tiling()
 ```
+
+The memory-saving calls here are literal: attention slicing computes attention in smaller chunks, and VAE (the variational autoencoder stage that decodes latents into the final image) slicing and tiling decode the image in pieces.
 
 Model libraries encode hardware assumptions. Sometimes those assumptions are obvious. Sometimes they are hidden inside method names that sound like they were written for your exact scenario.
 
@@ -301,7 +303,7 @@ The container app was up, the revision existed, the endpoint responded, and `GET
 
 At first, that looked like my Flask routing was broken. Maybe the app was not binding correctly. Maybe the container port was wrong. Maybe the health route was missing. Maybe the image was stale.
 
-The exact error string pointed to the real problem. `404 File not found` is not Flask's default response; it is Python's `SimpleHTTPRequestHandler`. My container was running, but my Flask app was not.
+The exact error string pointed to the real problem. `404 File not found` is not Flask's default response; it is Python's `SimpleHTTPRequestHandler`, the built-in static file server that emits that string. My container was running, but my Flask app was not.
 
 On a fresh environment, `azd` provisions the Azure Container App before the real application image exists. To make the infrastructure deployment succeed, it uses a temporary placeholder web server, `python3 -m http.server 8000`:
 
@@ -402,9 +404,9 @@ The Dockerfile also had to default to the Flask server as its entrypoint. If the
 CMD ["python3", "app.py"]
 ```
 
-Without that default, ACA could end up in `ContainerBackOff` or `ActivationFailed`, depending on which part of startup failed.
+Without that default, ACA could end up in `ContainerBackOff` or `ActivationFailed`, ACA states for a container that cannot start or stay up, depending on which part of startup failed.
 
-There was also an infrastructure bug: a circular dependency in the Bicep for the container app failed template validation until I broke the cycle. That was not an SDXL issue. The model deployment made the infrastructure graph more complicated, and the graph had to be correct before the app could even try to start.
+There was also an infrastructure bug: a circular dependency in the Bicep, Azure's infrastructure-as-code language, for the container app failed template validation until I broke the cycle. That was not an SDXL issue. The model deployment made the infrastructure graph more complicated, and the graph had to be correct before the app could even try to start.
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
