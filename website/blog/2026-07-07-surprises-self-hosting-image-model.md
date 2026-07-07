@@ -6,6 +6,10 @@ description: "Self-hosting SDXL on Azure Container Apps means taking responsibil
 tags: ["AI", "Azure", "Docker", "SDXL", "Azure Container Apps", "Architecture", "Lessons Learned"]
 ---
 
+This project started as hands-on image generation, not an abstract model experiment. I was working with SDXL (Stable Diffusion XL), an open text-to-image generation model, and the path felt natural: first run it locally on my own machine, then package the same work in a local container with Docker, then deploy that container to Azure Container Apps.
+
+The local and local container stages were mostly smooth. They gave me enough confidence that moving from laptop to container to cloud would be more plumbing than discovery. The surprises showed up when self-hosting moved to Azure, where model files, process readiness, storage, and deployment behavior all became part of the system.
+
 ## The False Assumption
 
 Calling a vendor API makes image generation look like one operation: send a request, get an image back. Self-hosting a generative model turns that single operation into a system I have to own.
