@@ -8,17 +8,19 @@ tags: ["AI", "Azure", "Docker", "SDXL", "Azure Container Apps", "Architecture", 
 
 ## The False Assumption
 
-I thought getting SDXL into a container would be the main challenge. It was only the starting point.
+Calling a vendor API makes image generation look like one operation: send a request, get an image back. Self-hosting a generative model turns that single operation into a system I have to own.
 
-Running my own image generation service sounded like an infrastructure choice: wrap my Python code in Flask, build a Docker image, deploy it to Azure Container Apps, and stop calling vendor APIs for every image. I wanted control over inference settings, no lock-in to a hosted image API, and a cost model I could reason about.
+I wanted control over inference settings, no lock-in to a hosted image API, and a cost model I could reason about. At the top level, the choice sounded simple: stop calling the vendor service and run the model myself.
 
-That view missed a lot of what vendor APIs handle for you. A vendor API hides model storage, runtime assumptions, readiness, cold start behavior, and the difference between "the model files exist" and "this process has the model loaded and can generate an image."
+That choice moved hidden responsibilities into my application boundary. I inherited the model runtime, storage lifecycle, readiness state, and deployment behavior. I also inherited the difference between persisted model assets and a process that has loaded the model and can generate an image.
 
-When I self-hosted SDXL, I took responsibility for all of that.
+The container was only the packaging format. Self-hosting meant owning everything the model needed after the container started.
 
 ## The Architecture I Expected
 
-The first version looked straightforward:
+The system shape looked straightforward before the edge cases showed up. Local code would become a web API, the web API would run in a container, and the deployed container would use external storage for the model cache.
+
+The first version looked like this:
 
 ```text
 local SDXL Python code
@@ -34,15 +36,84 @@ Azure Files share for cached model weights
 postdeploy hook pulls the model
 ```
 
+The concrete version ran my Flask-wrapped SDXL code in Docker on Azure Container Apps, with an Azure Files share mounted for cached model weights and a deployment automation step that runs after deploy, the `azd` postdeploy hook, to pull the model.
+
 The real deployment runs on CPU in Azure Container Apps: **4 vCPU, 16Gi memory, `device=cpu`, and 136Gi ephemeral storage**. The mounted Azure Files share holds the model cache, because the SDXL assets are too large to treat as incidental container filesystem state.
 
 That architecture was directionally right, but it left out most of the operational work.
 
-## Surprise #1: "CPU Offload" Doesn't Work on a CPU
+## Surprise #1: Persistent Storage Does Not Mean Warm Application State
 
-I expected memory to be an issue, and it was. What I did not expect was a memory-saving API with a name that sounded perfect for CPU hosting but failed because the container was actually running on CPU.
+The first lifecycle mistake was treating stored model assets as if they were the same thing as a ready application. Persistent storage can keep files between revisions. It cannot keep a new container process warm.
 
-In `diffusers`, this looks tempting:
+After the first cold download succeeded, I expected the next revision to be warm. The model files were on the Azure Files share, the share was mounted, and the path existed.
+
+Then the app reported readiness state held in the process's memory, through the `/model/status` `state` field:
+
+```json
+{
+  "state": "not_started"
+}
+```
+
+That looked wrong until I separated two states I had been mentally combining:
+
+- model assets persisted on disk
+- model loaded and ready in this process
+
+Those are not the same lifecycle. The Azure Files share can be warm while the container process is cold. A new revision starts a new process. That process can see the cached files, but it still has to initialize the SDXL pipeline in memory.
+
+The specific `not_started` state did not mean "the share is empty." It meant "this process has not begun loading the model." The useful ready state was `ready`, also reported by `/model/status`.
+
+That distinction changed how I read status. A cold path downloads model assets and then loads the model. A warm path skips the download but still loads the model from the mounted cache. In my deployment, warm load from the cached share was about **48 seconds**. Cold download took minutes.
+
+Those are different costs, and they happen for different reasons. The deployment gate needed to care about readiness, not just file presence. Checking whether a directory exists is not enough. Checking whether the model cache is populated is not enough. The application has to report that this process is ready to serve generation requests.
+
+Persistent storage keeps assets. It does not keep application memory warm. For model-serving systems, readiness is process state.
+
+## Surprise #2: Model Files Are Not Just Files
+
+The next storage mistake was treating model acquisition as a small deployment detail. For a generative model, the weights are a deployable asset with their own lifecycle.
+
+A 7–13GB model is not a small deployment detail. It is its own deployment phase.
+
+The model weights do not appear during `azd up`. Infrastructure provisioning creates the place where the model can live, but it does not populate that place with model assets.
+
+I made model acquisition part of postdeploy. The deployment automation step that runs after deploy, the `azd` postdeploy hook, calls the app's model-download endpoint, `POST /model/pull`:
+
+```bash
+curl --fail -X POST "$APP_URL/model/pull"
+```
+
+Then it blocks until the app reports through the model-status endpoint, `/model/status`, that the model is ready:
+
+```bash
+curl --fail "$APP_URL/model/status"
+```
+
+A useful response includes the process readiness state, target device, and model path:
+
+```json
+{
+  "state": "ready",
+  "device": "cpu",
+  "model_path": "/models/stable-diffusion-xl-base-1.0"
+}
+```
+
+That was the right shape, but the storage layer had its own constraints. The mounted network-attached file storage is an Azure Files share, which uses Server Message Block (SMB). SMB does not support POSIX `flock` the way a local Linux filesystem does. The first version of the download logic assumed file locking would behave like local disk, and that assumption broke on the mounted share.
+
+That kind of bug feels like an operating system problem until you remember that self-hosting makes the filesystem part of the application architecture. I had to rework the download logic so the app did not depend on unsupported locking behavior on the mounted share.
+
+Once that was fixed, the cold download was faster than I expected: about **2 minutes 23 seconds** over the Azure backbone. The newer Hugging Face transfer path helped here; `hf_xet` replaced the deprecated `hf_transfer`, and the transfer itself was not the bottleneck I feared.
+
+The useful takeaway was not simply that downloads can be fast. The model is a deployable asset with its own lifecycle. With a vendor API, the weights are someone else's problem. With self-hosting, model acquisition needs ordering, retries, logs, status, and a failure mode that stops the release instead of hiding the problem until the first image request.
+
+## Surprise #3: "CPU Offload" Doesn't Work on a CPU
+
+The runtime mistake was trusting a helper name before checking the hardware contract behind it. I expected memory to be an issue, and it was. The memory-saving helper I reached for had a name that sounded perfect for CPU hosting but failed because the container was actually running on CPU.
+
+In `diffusers`, the helper is `enable_model_cpu_offload()`:
 
 ```python
 pipe.enable_model_cpu_offload()
@@ -58,7 +129,7 @@ requires accelerator, but not found
 
 `enable_model_cpu_offload()` means "offload *to* CPU *from* an accelerator." It is for a system that has an accelerator and wants to move parts of the model back to CPU memory. It is not a CPU execution mode.
 
-The fix was explicit:
+The fix was explicit CPU-safe initialization:
 
 ```python
 pipe = StableDiffusionXLPipeline.from_pretrained(
@@ -77,9 +148,11 @@ Model libraries encode hardware assumptions. Sometimes those assumptions are obv
 
 For this deployment, "CPU offload" means "offload to CPU from somewhere else." It does not mean "run on CPU." The app is not just my Flask routes; it is also the model runtime, tensor dtype, memory behavior, and hardware profile lining up correctly.
 
-## Surprise #2: The Container Was Running, But Not My App
+## Surprise #4: The Container Was Running, But Not My App
 
-The container app was up, the revision existed, the endpoint responded, and `GET /` returned `200`. Every real route still returned this:
+The startup mistake was using a running container as proof that my application was running. A container can be healthy enough to accept traffic while the wrong process is listening.
+
+The container app was up, the revision existed, the endpoint responded, and `GET /` returned `200`. Every real route still returned this exact response:
 
 ```text
 404 File not found
@@ -89,7 +162,7 @@ At first, that looked like my Flask routing was broken. Maybe the app was not bi
 
 The exact error string pointed to the real problem. `404 File not found` is not Flask's default response; it is Python's `SimpleHTTPRequestHandler`. My container was running, but my Flask app was not.
 
-On a fresh environment, `azd` provisions the Azure Container App before the real application image exists. To make the infrastructure deployment succeed, it uses a placeholder image and a placeholder command:
+On a fresh environment, `azd` provisions the Azure Container App before the real application image exists. To make the infrastructure deployment succeed, it uses a temporary placeholder web server, `python3 -m http.server 8000`:
 
 ```text
 python3 -m http.server 8000
@@ -118,74 +191,9 @@ Only after `/health` responds from Flask does the deployment continue. Calling `
 
 I now treat the command, the image, and the health endpoint as three separate facts. The deployment is not ready until all three are true.
 
-## Surprise #3: Model Files Are Not Just Files
-
-The next assumption was that model acquisition would be a deployment detail. Provision the storage, mount the share, let the app download the model, and move on.
-
-A 7–13GB model is not a small deployment detail. It is its own deployment phase.
-
-The model weights do not appear during `azd up`. Infrastructure provisioning creates the place where the model can live, but it does not populate that place with model assets.
-
-I made model acquisition part of postdeploy. The hook calls the app:
-
-```bash
-curl --fail -X POST "$APP_URL/model/pull"
-```
-
-Then it blocks until the app reports that the model is ready:
-
-```bash
-curl --fail "$APP_URL/model/status"
-```
-
-A useful response looks like this:
-
-```json
-{
-  "state": "ready",
-  "device": "cpu",
-  "model_path": "/models/stable-diffusion-xl-base-1.0"
-}
-```
-
-That was the right shape, but the storage layer had its own constraints. The mounted Azure Files share uses SMB semantics, so it does not support POSIX `flock` the way a local Linux filesystem does. The first version of the download logic assumed file locking would behave like local disk, and that assumption broke on the mounted share.
-
-That kind of bug feels like an operating system problem until you remember that self-hosting makes the filesystem part of the application architecture. I had to rework the download logic so the app did not depend on unsupported locking behavior on the mounted share.
-
-Once that was fixed, the cold download was faster than I expected: about **2 minutes 23 seconds** over the Azure backbone. The newer Hugging Face transfer path helped here; `hf_xet` replaced the deprecated `hf_transfer`, and the transfer itself was not the bottleneck I feared.
-
-The useful takeaway was not simply that downloads can be fast. The model is a deployable asset with its own lifecycle. With a vendor API, the weights are someone else's problem. With self-hosting, model acquisition needs ordering, retries, logs, status, and a failure mode that stops the release instead of hiding the problem until the first image request.
-
-## Surprise #4: Persistent Storage Does Not Mean Warm Application State
-
-After the first cold download succeeded, I expected the next revision to be warm. The model files were on the Azure Files share, the share was mounted, and the path existed.
-
-Then the app reported:
-
-```json
-{
-  "state": "not_started"
-}
-```
-
-That looked wrong until I separated two states I had been mentally combining:
-
-- model assets persisted on disk
-- model loaded and ready in this process
-
-Those are not the same lifecycle. The Azure Files share can be warm while the container process is cold. A new revision starts a new process. That process can see the cached files, but it still has to initialize the SDXL pipeline in memory.
-
-`not_started` did not mean "the share is empty." It meant "this process has not begun loading the model."
-
-That distinction changed how I read status. A cold path downloads model assets and then loads the model. A warm path skips the download but still loads the model from the mounted cache. In my deployment, warm load from the cached share was about **48 seconds**. Cold download took minutes.
-
-Those are different costs, and they happen for different reasons. The deployment gate needed to care about readiness, not just file presence. Checking whether a directory exists is not enough. Checking whether the model cache is populated is not enough. The application has to report that this process is ready to serve generation requests.
-
-Persistent storage keeps assets. It does not keep application memory warm. For model-serving systems, readiness is process state.
-
 ## Surprise #5: Tooling Silence Is Also a Failure Mode
 
-The obvious failures were easier to debug than the quiet ones.
+The verification mistake was trusting quiet tooling. Some failures throw obvious errors. Others look like nothing happened.
 
 One problem was visibility. The `azd` postdeploy hook was running, but when its output was piped or non-interactive, stdout was invisible. Nothing in the terminal made it obvious what the hook was doing, so I verified through the platform logs:
 
@@ -200,7 +208,7 @@ Those logs became the source of truth.
 
 Another problem was configuration shape. I had invalid keys in `azure.yaml` during one iteration. A top-level `dockerfile:` or `port:` looks plausible if you are moving fast, but `azd` did not fail the way I wanted. It ignored the invalid shape and fell back to default behavior.
 
-The Dockerfile must be configured through the `docker:` block:
+The Dockerfile must be configured through the supported `docker:` block in `azure.yaml`:
 
 ```yaml
 services:
@@ -229,7 +237,7 @@ Automation needs observable verification. In this setup, a successful command di
 
 ## What the Final Architecture Became
 
-The final shape is more explicit than the one I started with.
+The final shape is the concrete version of the earlier diagram. Each piece now has an explicit responsibility, and deployment gates on the application being ready, not just the infrastructure existing.
 
 The container image defaults to Flask:
 
@@ -296,11 +304,9 @@ The app owns readiness. The hook gates deployment on readiness. Logs validate re
 
 ## The Decision Framework I Actually Trust Now
 
-I still like the decision to self-host for this project.
+I still like the decision to self-host for this project. The tradeoff is just clearer now.
 
-I get control over inference settings. I can keep the app portable. I am not designing around a vendor-specific image API. I can change the container, the model loading strategy, and the deployment lifecycle when I need to.
-
-The tradeoff is clearer now. Self-hosting buys control by moving hidden responsibilities into your application boundary: runtime assumptions, model storage, download orchestration, readiness, deployment verification, logs, sizing, and the difference between "files exist" and "the model can answer this request."
+Self-hosting buys control over inference settings, portability, model loading strategy, and deployment lifecycle. It also moves hidden responsibilities into your application boundary: runtime assumptions, model storage, download orchestration, readiness, deployment verification, logs, sizing, and the difference between "files exist" and "the model can answer this request."
 
 A vendor API charges for convenience, but the convenience is real. It is not just inference. It is the operational surface area you do not have to build.
 
