@@ -46,7 +46,7 @@ flowchart TD
 
 The concrete version ran my Flask-wrapped SDXL (Stable Diffusion XL, an open image-generation model) code in Docker on Azure Container Apps (ACA, the managed container hosting service used here), with an Azure Files share (a network-attached mount) for cached model weights. An `azd` (Azure Developer CLI) postdeploy hook—an automation step after deploy—pulled the model.
 
-The real deployment runs on CPU in Azure Container Apps: **4 vCPU, 16Gi memory, `device=cpu`, and 136Gi ephemeral storage**, the container's local scratch disk, wiped on restart. The mounted Azure Files share holds the model cache, because the SDXL assets are too large to treat as incidental container filesystem state.
+The real deployment runs on CPU in Azure Container Apps: **4 vCPU, 16Gi memory, `device=cpu`, and 136Gi ephemeral storage**, the container's local scratch disk, wiped on restart. That 4 vCPU / 16Gi shape requires an Azure Container Apps Dedicated (D4) workload profile; the Consumption plan caps at 4 vCPU / 8Gi. The mounted Azure Files share holds the model cache, because the SDXL assets are too large to treat as incidental container filesystem state.
 
 That architecture was directionally right, but it left out most of the operational work.
 
@@ -62,7 +62,7 @@ flowchart TD
     Deploy --> RealImage["real Flask image<br/>(command preserved)"]
     RealImage --> Running["container up<br/>(static server still running)"]
     Running -- "GET /" --> Root["200 OK<br/>(static file server)"]
-    Running -- "/health, /model/status,<br/>/model/pull" --> Missing["404 File not found<br/>(Flask never started)"]
+    Running -- "/health, /model/status,<br/>/model/pull" --> Missing["404 Not Found<br/>(Message: File not found.)"]
     Files["Azure Files share<br/>(model files exist)"] --> Status["/model/status: not_started<br/>(process cold; SMB has no flock)"]
     Running --> Status
 
@@ -139,13 +139,13 @@ flowchart TD
 
 The next storage mistake was treating model acquisition as a small deployment detail. For a generative model, the weights are a deployable asset with their own lifecycle.
 
-A 7–13GB model is not a small deployment detail. It is its own deployment phase.
+A model that is about 7GB in FP16, or roughly 14GB loaded as FP32 on CPU the way this deployment runs it, is not a small deployment detail. It is its own deployment phase.
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
 flowchart TD
     AVD["azd up provisions infra"] --> Share["Empty model share"]
-    Weights["7-13GB model weights"] --> Missing["Weights do not appear"]
+    Weights["7GB FP16 / ~14GB FP32 weights"] --> Missing["Weights do not appear"]
     Lock["Download assumes POSIX flock"] --> SMB["Azure Files uses SMB"]
     SMB --> Broken["Download logic broke"]
     Share --> Missing
@@ -256,6 +256,8 @@ pipe.vae.enable_slicing()
 pipe.vae.enable_tiling()
 ```
 
+The idiomatic `diffusers` pipeline-level equivalents are `pipe.enable_vae_slicing()` and `pipe.enable_vae_tiling()`; both forms are equivalent.
+
 The memory-saving calls here are literal: attention slicing computes attention in smaller chunks, and VAE (the variational autoencoder stage that decodes latents into the final image) slicing and tiling decode the image in pieces.
 
 Model libraries encode hardware assumptions. Sometimes those assumptions are obvious. Sometimes they are hidden inside method names that sound like they were written for your exact scenario.
@@ -290,7 +292,7 @@ flowchart TD
     Placeholder --> Preserve
     Preserve --> Static["Static server running"]
     Static -- "GET /" --> Root["200 from /"]
-    Static -- "/health and model routes" --> Missing["404 File not found"]
+    Static -- "/health and model routes" --> Missing["404 Not Found<br/>(Message: File not found.)"]
 
     classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
     classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
@@ -299,15 +301,15 @@ flowchart TD
     class Placeholder,Preserve,Static,Missing pink;
 ```
 
-The container app was up, the revision existed, the endpoint responded, and `GET /` returned `200`. Every real route still returned this exact response:
+The container app was up, the revision existed, the endpoint responded, and `GET /` returned `200`. Every real route still returned a `404 Not Found` from Python's static file server, with this line in the HTML body:
 
 ```text
-404 File not found
+Message: File not found.
 ```
 
 At first, that looked like my Flask routing was broken. Maybe the app was not binding correctly. Maybe the container port was wrong. Maybe the health route was missing. Maybe the image was stale.
 
-The exact error string pointed to the real problem. `404 File not found` is not Flask's default response; it is Python's `SimpleHTTPRequestHandler`, the built-in static file server that emits that string. My container was running, but my Flask app was not.
+The error page pointed to the real problem. `Message: File not found.` is not Flask's default response; it is Python's `SimpleHTTPRequestHandler`, the built-in static file server returning its HTML error page. My container was running, but my Flask app was not.
 
 On a fresh environment, `azd` provisions the Azure Container App before the real application image exists. To make the infrastructure deployment succeed, it uses a temporary placeholder web server, `python3 -m http.server 8000`:
 
@@ -317,7 +319,7 @@ python3 -m http.server 8000
 
 That is reasonable during provisioning. The surprise came later, when `azd deploy` swapped in my real Flask image and preserved the placeholder command. The image changed, but the runtime command did not.
 
-So my real container image started successfully and then ran Python's static file server instead of my Flask app. That is why `/` returned `200`, and why `/health`, `/model/status`, and `/model/pull` returned `404 File not found`. Those routes only exist in Flask, and Flask was never running.
+So my real container image started successfully and then ran Python's static file server instead of my Flask app. That is why `/` returned `200`, and why `/health`, `/model/status`, and `/model/pull` returned `404 Not Found` responses whose HTML body said `Message: File not found.` Those routes only exist in Flask, and Flask was never running.
 
 I stopped treating "container is up" as proof that the application is running. I added a self-heal step in the postdeploy hook that resets the command explicitly:
 
@@ -353,6 +355,8 @@ flowchart TD
 Only after `/health` responds from Flask does the deployment continue. Calling `/model/pull` before proving Flask is running is just sending a request to whatever process happens to be listening.
 
 I now treat the command, the image, and the health endpoint as three separate facts. The deployment is not ready until all three are true.
+
+The self-heal works, but it treats a symptom. The root cause is that the container `command` was set in the Bicep template, and `azd deploy` swaps only `containers[0].image`, so the placeholder command survives and overrides the image's own start command. The cleaner pattern is to put `CMD ["python3", "app.py"]` in the Dockerfile, remove `command` and `args` from the Bicep entirely so the image command is used, and gate readiness with an ACA startup probe on `/health` instead of a manual wait loop. I kept the self-heal hook because it is what is working in this deployment, but if I were starting clean I would remove the Bicep command override and let the image plus a startup probe do this job.
 
 ## Surprise #5: Tooling Silence Is Also a Failure Mode
 
@@ -460,6 +464,8 @@ pipe.enable_attention_slicing()
 pipe.vae.enable_slicing()
 pipe.vae.enable_tiling()
 ```
+
+Here too, the pipeline-level `pipe.enable_vae_slicing()` and `pipe.enable_vae_tiling()` calls are the idiomatic `diffusers` form.
 
 The Azure Developer CLI configuration points at the CPU Dockerfile through the supported shape:
 
