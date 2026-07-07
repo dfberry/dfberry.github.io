@@ -79,6 +79,10 @@ Those are different costs, and they happen for different reasons. The deployment
 
 Persistent storage keeps assets. It does not keep application memory warm. For model-serving systems, readiness is process state.
 
+I built a small web console over these endpoints so I could see that distinction directly. Each endpoint the deployment depends on has its own section, and `/model/status` reports the process state in plain language: here it shows **READY - Model weights cached on disk. /generate will load from cache**, which is exactly the difference between "the files are on the share" and "this process can answer a request."
+
+![SDXL API Console web UI with one section per endpoint: GET /api, GET /health showing HEALTHY on device cpu, GET /model/status showing READY with model weights cached on disk, POST /model/pull, and a POST /generate form with prompt, steps, guidance, size, and Force CPU options](./media/2026-07-07-surprises-self-hosting-image-model/web-ui-api-console.png)
+
 ![Surprise 1 fix: a deployment gate checks readiness while the cached share warm-loads the model in about 48 seconds before serving](./media/2026-07-07-surprises-self-hosting-image-model/surprise1-warm-load-fix.png)
 
 ## Surprise #2: Model Files Are Not Just Files
