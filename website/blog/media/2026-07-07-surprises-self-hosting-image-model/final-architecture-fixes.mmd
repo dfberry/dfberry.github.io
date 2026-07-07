@@ -1,0 +1,16 @@
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Logs["Container App logs"] --> Verify["Verify source of truth"]
+    YAML["Supported docker block"] --> Build["Correct image builds"]
+    CMD["Dockerfile CMD default"] --> Start["Flask starts by default"]
+    Bicep["Break Bicep cycle"] --> Deploy["Observable correct deploy"]
+    Verify --> Deploy
+    Build --> Deploy
+    Start --> Deploy
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Logs,YAML,CMD,Bicep purple;
+    class Verify,Build,Start pink;
+    class Deploy orange;

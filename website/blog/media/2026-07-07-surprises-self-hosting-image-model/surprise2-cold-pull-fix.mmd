@@ -1,0 +1,14 @@
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Hook["postdeploy hook"] --> Pull["POST /model/pull"]
+    Pull --> Download["Download without flock"]
+    Xet["hf_xet over Azure backbone"] --> Download
+    Download --> Poll["Poll /model/status"]
+    Poll -- "state: ready" --> Ready["Ready after cold pull"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Hook,Xet,Poll purple;
+    class Pull,Download pink;
+    class Ready orange;

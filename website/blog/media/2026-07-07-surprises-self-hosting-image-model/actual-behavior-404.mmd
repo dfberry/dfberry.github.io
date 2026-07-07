@@ -1,0 +1,17 @@
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Provision["azd provision"] --> Placeholder["placeholder image + command<br/>python3 -m http.server 8000"]
+    Placeholder --> Deploy["azd deploy"]
+    Deploy --> RealImage["real Flask image<br/>(command preserved)"]
+    RealImage --> Running["container up<br/>(static server still running)"]
+    Running -- "GET /" --> Root["200 OK<br/>(static file server)"]
+    Running -- "/health, /model/status,<br/>/model/pull" --> Missing["404 Not Found<br/>(Message: File not found.)"]
+    Files["Azure Files share<br/>(model files exist)"] --> Status["/model/status: not_started<br/>(process cold; SMB has no flock)"]
+    Running --> Status
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Provision,Deploy purple;
+    class Placeholder,RealImage,Running,Root,Missing pink;
+    class Files,Status orange;

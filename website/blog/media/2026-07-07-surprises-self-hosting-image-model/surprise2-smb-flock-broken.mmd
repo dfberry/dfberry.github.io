@@ -1,0 +1,14 @@
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    AVD["azd up provisions infra"] --> Share["Empty model share"]
+    Weights["7GB FP16 / ~14GB FP32 weights"] --> Missing["Weights do not appear"]
+    Lock["Download assumes POSIX flock"] --> SMB["Azure Files uses SMB"]
+    SMB --> Broken["Download logic broke"]
+    Share --> Missing
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class AVD,Weights,Lock purple;
+    class Missing,Broken pink;
+    class Share,SMB orange;

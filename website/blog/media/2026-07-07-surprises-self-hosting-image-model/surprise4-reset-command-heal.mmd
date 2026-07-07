@@ -1,0 +1,13 @@
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Image["Real Flask image"] --> Heal["Reset command<br/>python3 app.py"]
+    Heal --> Flask["Flask starts"]
+    Flask -- "GET /health" --> Health["Health responds"]
+    Health --> ModelWork["Continue model work"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Image purple;
+    class Heal pink;
+    class Flask,Health,ModelWork orange;
