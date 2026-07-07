@@ -22,18 +22,22 @@ The system shape looked straightforward before the edge cases showed up. Local c
 
 The first version looked like this:
 
-```text
-local SDXL Python code
-        ↓
-Flask API wrapper
-        ↓
-Docker image
-        ↓
-Azure Container Apps
-        ↓
-Azure Files share for cached model weights
-        ↓
-postdeploy hook pulls the model
+```mermaid
+%%{init: {'theme':'base'}}%%
+flowchart TD
+    Code["Local SDXL Python code"] --> Flask["Flask API wrapper"]
+    Flask --> Docker["Docker image"]
+    Docker --> ACA["Azure Container Apps"]
+    ACA --> Files["Azure Files share<br/>(cached model weights)"]
+    Hook["azd postdeploy hook"] -- "POST /model/pull" --> ACA
+    ACA -- "model ready" --> Generate["Generate images"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Code,Flask purple;
+    class Docker,ACA pink;
+    class Files,Hook,Generate orange;
 ```
 
 The concrete version ran my Flask-wrapped SDXL code in Docker on Azure Container Apps, with an Azure Files share mounted for cached model weights and a deployment automation step that runs after deploy, the `azd` postdeploy hook, to pull the model.
@@ -41,6 +45,30 @@ The concrete version ran my Flask-wrapped SDXL code in Docker on Azure Container
 The real deployment runs on CPU in Azure Container Apps: **4 vCPU, 16Gi memory, `device=cpu`, and 136Gi ephemeral storage**. The mounted Azure Files share holds the model cache, because the SDXL assets are too large to treat as incidental container filesystem state.
 
 That architecture was directionally right, but it left out most of the operational work.
+
+### What Was Actually Happening
+
+The first clean picture hid two separate truths: the container could be up without running Flask, and model files could exist without the process being ready.
+
+```mermaid
+%%{init: {'theme':'base'}}%%
+flowchart TD
+    Provision["azd provision"] --> Placeholder["placeholder image + command<br/>python3 -m http.server 8000"]
+    Placeholder --> Deploy["azd deploy"]
+    Deploy --> RealImage["real Flask image<br/>(command preserved)"]
+    RealImage --> Running["container up<br/>(static server still running)"]
+    Running -- "GET /" --> Root["200 OK<br/>(static file server)"]
+    Running -- "/health, /model/status,<br/>/model/pull" --> Missing["404 File not found<br/>(Flask never started)"]
+    Files["Azure Files share<br/>(model files exist)"] --> Status["/model/status: not_started<br/>(process cold; SMB has no flock)"]
+    Running --> Status
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Provision,Deploy purple;
+    class Placeholder,RealImage,Running,Root,Missing pink;
+    class Files,Status orange;
+```
 
 ## Surprise #1: Persistent Storage Does Not Mean Warm Application State
 
