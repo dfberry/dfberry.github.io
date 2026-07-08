@@ -34,11 +34,11 @@ The local and local container stages were mostly smooth. They gave me enough con
 
 ## What the Model Produces
 
-Before the surprises, here is what the self-hosted SDXL pipeline actually generates once it is loaded and running. These are direct outputs from the same code, unretouched.
+Before the surprises, here is what the self-hosted SDXL pipeline actually generates once it is loaded and running. These is direct output from the same code, unretouched.
 
 ![Self-hosted SDXL output: a warm, sunlit coffee shop interior with bookshelves, wooden tables, and afternoon light through tall windows](./media/2026-07-07-surprises-self-hosting-image-model/example-output-coffee-shop.png)
 
-This is the payoff I was working toward. The rest of the post is about everything that stood between the container starting and these images coming out.
+This is the payoff I was working toward. The rest of the post is about everything that stood between the container starting and this image coming out.
 
 ## The False Assumption
 
@@ -68,13 +68,13 @@ That architecture was directionally right, but it left out most of the operation
 
 The first clean picture hid two separate truths: the container could be up without running Flask, and model files could exist without the process being ready.
 
-![What actually happened: after deploy the placeholder static server command was preserved, so GET / returned 200 but /health and model routes returned 404, and /model/status reported not_started](./media/2026-07-07-surprises-self-hosting-image-model/actual-behavior-404.png)
+![What actually happened: after deploy the placeholder static server command was preserved, so GET / returned 200 but /health and model routes returned 404, and /model/status reported not_started](./media/2026-07-07-surprises-self-hosting-image-model/actual-behavior-404-2.png)
 
 ## Surprise #1: Persistent Storage Does Not Mean Warm Application State
 
 The first lifecycle mistake was treating stored model assets as if they were the same thing as a ready application. Persistent storage can keep files between revisions, ACA's immutable deployment versions. It cannot keep a new container process warm.
 
-![Surprise 1: model files persist on the Azure Files share, but a new revision starts a cold process so /model/status reports not_started](./media/2026-07-07-surprises-self-hosting-image-model/surprise1-cold-process-state.png)
+![Surprise 1: model files persist on the Azure Files share, but a new revision starts a cold process so /model/status reports not_started](./media/2026-07-07-surprises-self-hosting-image-model/surprise1-cold-process-state-3.png)
 
 After the first cold download succeeded, I expected the next revision to be warm. The model files were on the Azure Files share, the share was mounted, and the path existed.
 
@@ -153,7 +153,7 @@ The useful takeaway was not simply that downloads can be fast. The model is a de
 
 The runtime mistake was trusting a helper name before checking the hardware contract behind it. I expected memory to be an issue, and it was. The memory-saving helper I reached for had a name that sounded perfect for CPU hosting but failed because the container was actually running on CPU.
 
-![Surprise 3: on a pure-CPU container, enable_model_cpu_offload expects an accelerator and errors with requires accelerator but not found](./media/2026-07-07-surprises-self-hosting-image-model/surprise3-cpu-offload-error.png)
+![Surprise 3: on a pure-CPU container, enable_model_cpu_offload expects an accelerator and errors with requires accelerator but not found](./media/2026-07-07-surprises-self-hosting-image-model/surprise3-cpu-offload-error-2.png)
 
 In `diffusers`, Hugging Face's Python library for running diffusion image models, the helper is `enable_model_cpu_offload()`:
 
@@ -192,7 +192,7 @@ The memory-saving calls here are literal: attention slicing computes attention i
 
 Model libraries encode hardware assumptions. Sometimes those assumptions are obvious. Sometimes they are hidden inside method names that sound like they were written for your exact scenario.
 
-![Surprise 3 fix: move the pipeline to CPU with pipe.to(cpu) plus attention slicing and VAE slicing and tiling to fit memory](./media/2026-07-07-surprises-self-hosting-image-model/surprise3-cpu-memory-fix.png)
+![Surprise 3 fix: move the pipeline to CPU with pipe.to(cpu) plus attention slicing and VAE slicing and tiling to fit memory](./media/2026-07-07-surprises-self-hosting-image-model/surprise3-cpu-memory-fix-2.png)
 
 For this deployment, "CPU offload" means "offload to CPU from somewhere else." It does not mean "run on CPU." The app is not just my Flask routes; it is also the model runtime, tensor dtype, memory behavior, and hardware profile lining up correctly.
 
@@ -237,7 +237,7 @@ Then the hook waits for the actual application route before it does any model wo
 curl --fail "$APP_URL/health"
 ```
 
-![Surprise 4 fix: reset the container command to python3 app.py so Flask starts, /health responds, and model work continues](./media/2026-07-07-surprises-self-hosting-image-model/surprise4-reset-command-heal.png)
+![Surprise 4 fix: reset the container command to python3 app.py so Flask starts, /health responds, and model work continues](./media/2026-07-07-surprises-self-hosting-image-model/surprise4-reset-command-heal-2.png)
 
 Only after `/health` responds from Flask does the deployment continue. Calling `/model/pull` before proving Flask is running is just sending a request to whatever process happens to be listening.
 
