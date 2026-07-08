@@ -155,14 +155,14 @@
 <p>Self-hosting a generative model is not just replacing an API call with a container. It means the model is part of the system, with the same deployment and reliability responsibilities as the rest of the application.</p>
 <p>And once all of that is in place, the model just does its job:</p>
 <p><img decoding="async" loading="lazy" alt="Self-hosted SDXL output: a photorealistic mountain lake at sunset with pine trees, still water reflections, and mountains in the background" src="http://dfberry.github.io/assets/images/example-output-mountain-lake-292bc40fab2dea36256a27078d21fe02.png" width="1024" height="1024" class="img_ev3q"></p>]]></content:encoded>
-            <category>AI</category>
-            <category>Azure</category>
-            <category>Docker</category>
-            <category>SDXL</category>
-            <category>Azure Container Apps</category>
-            <category>Cloud Deployment</category>
-            <category>Architecture</category>
-            <category>Lessons Learned</category>
+            <category>ai</category>
+            <category>azure</category>
+            <category>docker</category>
+            <category>sdxl</category>
+            <category>azure container apps</category>
+            <category>cloud deployment</category>
+            <category>architecture</category>
+            <category>lessons learned</category>
         </item>
         <item>
             <title><![CDATA[Running AI at Work: A Field Guide to Cost, Craft, and Guardrails]]></title>

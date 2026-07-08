@@ -154,14 +154,14 @@
 <p>Self-hosting a generative model is not just replacing an API call with a container. It means the model is part of the system, with the same deployment and reliability responsibilities as the rest of the application.</p>
 <p>And once all of that is in place, the model just does its job:</p>
 <p><img decoding="async" loading="lazy" alt="Self-hosted SDXL output: a photorealistic mountain lake at sunset with pine trees, still water reflections, and mountains in the background" src="http://dfberry.github.io/assets/images/example-output-mountain-lake-292bc40fab2dea36256a27078d21fe02.png" width="1024" height="1024" class="img_ev3q"></p>]]></content>
-        <category label="AI" term="AI"/>
-        <category label="Azure" term="Azure"/>
-        <category label="Docker" term="Docker"/>
-        <category label="SDXL" term="SDXL"/>
-        <category label="Azure Container Apps" term="Azure Container Apps"/>
-        <category label="Cloud Deployment" term="Cloud Deployment"/>
-        <category label="Architecture" term="Architecture"/>
-        <category label="Lessons Learned" term="Lessons Learned"/>
+        <category label="ai" term="ai"/>
+        <category label="azure" term="azure"/>
+        <category label="docker" term="docker"/>
+        <category label="sdxl" term="sdxl"/>
+        <category label="azure container apps" term="azure container apps"/>
+        <category label="cloud deployment" term="cloud deployment"/>
+        <category label="architecture" term="architecture"/>
+        <category label="lessons learned" term="lessons learned"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Running AI at Work: A Field Guide to Cost, Craft, and Guardrails]]></title>

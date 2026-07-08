@@ -12,14 +12,14 @@
             "summary": "Self-hosting SDXL on Azure Container Apps means taking responsibility for the model runtime, storage lifecycle, readiness state, and deployment behavior.",
             "date_modified": "2026-07-07T00:00:00.000Z",
             "tags": [
-                "AI",
-                "Azure",
-                "Docker",
-                "SDXL",
-                "Azure Container Apps",
-                "Cloud Deployment",
-                "Architecture",
-                "Lessons Learned"
+                "ai",
+                "azure",
+                "docker",
+                "sdxl",
+                "azure container apps",
+                "cloud deployment",
+                "architecture",
+                "lessons learned"
             ]
         },
         {
