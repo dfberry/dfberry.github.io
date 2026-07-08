@@ -1,9 +1,20 @@
 ---
-title: "Self-Hosting SDXL on Azure Container Apps: What the Vendor API Was Hiding"
-date: 2026-07-07
 slug: /2026-07-07-surprises-self-hosting-image-model
+date: 2026-07-07
+canonical_url: https://dfberry.github.io/blog/2026-07-07-surprises-self-hosting-image-model
+custom_edit_url: null
+sidebar_label: "2026.07.07 Self-hosting image model"
+title: "Self-Hosting SDXL on Azure Container Apps: What the Vendor API Was Hiding"
 description: "Self-hosting SDXL on Azure Container Apps means taking responsibility for the model runtime, storage lifecycle, readiness state, and deployment behavior."
-tags: ["AI", "Azure", "Docker", "SDXL", "Azure Container Apps", "Cloud Deployment", "Architecture", "Lessons Learned"]
+tags:
+  - ai
+  - azure
+  - docker
+  - sdxl
+  - azure container apps
+  - cloud deployment
+  - architecture
+  - lessons learned
 keywords:
   - self-hosting sdxl
   - sdxl azure container apps
@@ -15,7 +26,6 @@ keywords:
   - diffusers cpu optimization
   - self-hosted image generation
   - vendor api lock-in
-
 ---
 
 This project started as hands-on image generation, not an abstract model experiment. I was working with SDXL (Stable Diffusion XL), an open text-to-image generation model, and the path felt natural: first run it locally on my own machine, then package the same work in a local container with Docker, then deploy that container to Azure Container Apps.
