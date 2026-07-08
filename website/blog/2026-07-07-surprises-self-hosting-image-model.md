@@ -4,7 +4,6 @@ date: 2026-07-07
 slug: /2026-07-07-surprises-self-hosting-image-model
 description: "Self-hosting SDXL on Azure Container Apps means taking responsibility for the model runtime, storage lifecycle, readiness state, and deployment behavior."
 tags: ["AI", "Azure", "Docker", "SDXL", "Azure Container Apps", "Cloud Deployment", "Architecture", "Lessons Learned"]
-draft: true
 keywords:
   - self-hosting sdxl
   - sdxl azure container apps
