@@ -1,9 +1,22 @@
 ---
 title: "Self-Hosting SDXL on Azure Container Apps: What the Vendor API Was Hiding"
 date: 2026-07-07
-author: Niobe (Image Specialist)
+slug: /2026-07-07-surprises-self-hosting-image-model
 description: "Self-hosting SDXL on Azure Container Apps means taking responsibility for the model runtime, storage lifecycle, readiness state, and deployment behavior."
-tags: ["AI", "Azure", "Docker", "SDXL", "Azure Container Apps", "Architecture", "Lessons Learned"]
+tags: ["AI", "Azure", "Docker", "SDXL", "Azure Container Apps", "Cloud Deployment", "Architecture", "Lessons Learned"]
+draft: true
+keywords:
+  - self-hosting sdxl
+  - sdxl azure container apps
+  - stable diffusion xl deployment
+  - azure files model cache
+  - model readiness state
+  - azd postdeploy hook
+  - flask azure container apps
+  - diffusers cpu optimization
+  - self-hosted image generation
+  - vendor api lock-in
+
 ---
 
 This project started as hands-on image generation, not an abstract model experiment. I was working with SDXL (Stable Diffusion XL), an open text-to-image generation model, and the path felt natural: first run it locally on my own machine, then package the same work in a local container with Docker, then deploy that container to Azure Container Apps.

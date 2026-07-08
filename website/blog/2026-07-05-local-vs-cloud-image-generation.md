@@ -3,6 +3,7 @@ title: "Three Ways to Run Models: API, Rented Hardware, or Your Own Machine"
 date: 2026-07-05
 author: Niobe
 description: "I've been thinking about the choices for running models—image generation, LLMs, speech, all of it. Here's how I think about the three paths and when each makes sense."
+draft: true
 ---
 
 # Three Ways to Run Models: API, Rented Hardware, or Your Own Machine

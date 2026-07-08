@@ -1,8 +1,8 @@
 ---
 title: "From Idea to Image: A Complete Guide to SDXL Image Generation"
 date: 2026-06-28
-author: Niobe (Image Specialist)
 description: "Master Stable Diffusion XL image generation — from quick drafts to production-ready visuals. A guide for developers, designers, and creative teams."
+draft: true
 ---
 
 # From Idea to Image: A Complete Guide to SDXL Image Generation
@@ -41,8 +41,6 @@ pip install -r requirements.txt
 # 3. Verify installation
 python -m image_generation.cli.generate --help
 ```
-
-For detailed setup instructions, troubleshooting, and GPU configuration, see [**image-generation/README.md**](./image-generation/README.md).
 
 ### Three Core Concepts (Explained Simply)
 

@@ -3,6 +3,7 @@ title: "Three Ways to Run Models: Pick the One That Fits"
 date: 2026-07-05
 author: Niobe
 description: "A straightforward look at cloud APIs, rented hardware, and your own machine—and when each one actually makes sense."
+draft: true
 ---
 
 # Three Ways to Run Models: Pick the One That Fits

@@ -3,6 +3,7 @@ title: "Running Custom Image Generation at Scale: SDXL on Azure Container Apps"
 date: 2026-07-05
 author: Niobe
 description: "I containerized my local SDXL setup and deployed it to Azure Container Apps. No vendor lock-in, complete control, and you only pay when it runs."
+draft: true
 ---
 
 # Running Custom Image Generation at Scale: SDXL on Azure Container Apps

@@ -3,6 +3,7 @@ title: "From Custom Local Setup to Elastic Cloud: Containerizing SDXL for Azure 
 date: 2026-07-05
 description: "I needed my exact model configs, not a vendor's API. Here's how I went from a local Python CLI to a production Flask API deployed on Azure—no lock-in, full control."
 tags: ["AI", "DevOps", "Azure", "Docker", "SDXL", "Cloud Deployment", "Production"]
+draft: true
 ---
 
 ## The Problem: Vendor APIs Weren't Mine
