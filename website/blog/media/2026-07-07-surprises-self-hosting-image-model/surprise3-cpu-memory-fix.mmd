@@ -1,0 +1,13 @@
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#52186F','lineColor':'#E84E9C','edgeLabelBackground':'#F7883B','fontFamily':'inherit'}}}%%
+flowchart TD
+    Runtime["CPU runtime"] --> ToCPU["pipe.to(cpu)"]
+    ToCPU --> Attention["Attention slicing"]
+    Attention --> VAE["VAE slicing and tiling"]
+    VAE --> Ready["Runs within memory limits"]
+
+    classDef purple fill:#7B2FA0,stroke:#52186F,color:#FFFFFF;
+    classDef pink fill:#E84E9C,stroke:#B12A6E,color:#FFFFFF;
+    classDef orange fill:#F7883B,stroke:#C25E15,color:#FFFFFF;
+    class Runtime purple;
+    class ToCPU,Attention,VAE pink;
+    class Ready orange;
