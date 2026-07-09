@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="800" height="450" fill="#1a1a2e" rx="12"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#e0e0e0" font-size="16" font-weight="600">Personal Context → Process → Skills → Agents</text>
+  <text x="400" y="55" text-anchor="middle" fill="#888" font-size="11">Knowledge flows downward. The person is the root.</text>
+  
+  <!-- Layer 1: Person (top, widest) -->
+  <rect x="50" y="75" width="700" height="85" rx="10" fill="#1b4332" stroke="#27ae60" stroke-width="3"/>
+  <text x="80" y="100" fill="#a8d8a8" font-size="15" font-weight="700">YOU — Personal Context</text>
+  <text x="80" y="120" fill="#52b788" font-size="11">Expertise • Boundaries • Decisions • Quality Bar • Communication Style</text>
+  <text x="80" y="140" fill="#52b788" font-size="11">Scope: Everything you do, across all tools, all time</text>
+  <text x="80" y="153" fill="#388e5e" font-size="10">Example: "I require surgical edits only" • "Never auto-push to upstream" • "Use tabs for multi-language"</text>
+  
+  <!-- Arrow down -->
+  <polygon points="400,162 390,170 410,170" fill="#52b788"/>
+  <line x1="400" y1="170" x2="400" y2="180" stroke="#52b788" stroke-width="2"/>
+  
+  <!-- Layer 2: Process (documented workflows) -->
+  <rect x="100" y="182" width="600" height="75" rx="10" fill="#2c3e50" stroke="#5dade2" stroke-width="2"/>
+  <text x="130" y="207" fill="#87ceeb" font-size="14" font-weight="700">PROCESS — Documented Workflows</text>
+  <text x="130" y="225" fill="#5dade2" font-size="11">Content workflow • Code workflow • Review standards • Tool preferences</text>
+  <text x="130" y="241" fill="#5dade2" font-size="11">Scope: How you do a category of work, refined over time</text>
+  <text x="130" y="253" fill="#3d7ea6" font-size="10">Example: "To write content: fork → branch → draft → review cycle → PR → merge"</text>
+  
+  <!-- Arrow down -->
+  <polygon points="400,259 390,267 410,267" fill="#5dade2"/>
+  <line x1="400" y1="267" x2="400" y2="277" stroke="#5dade2" stroke-width="2"/>
+  
+  <!-- Layer 3: Skills -->
+  <rect x="150" y="279" width="500" height="70" rx="10" fill="#3d2c1e" stroke="#d4a039" stroke-width="2"/>
+  <text x="180" y="302" fill="#f8d87a" font-size="14" font-weight="700">SKILLS — Formalized Recipes</text>
+  <text x="180" y="320" fill="#d4a039" font-size="11">pr-review • session-summary • freshness-analysis • monthly-report</text>
+  <text x="180" y="336" fill="#d4a039" font-size="11">Scope: One repeatable task, step-by-step</text>
+  <text x="180" y="348" fill="#a67c2e" font-size="10">Example: "Step 1: Check metadata. Step 2: Validate links. Step 3: Run style check..."</text>
+  
+  <!-- Arrow down -->
+  <polygon points="400,351 390,359 410,359" fill="#d4a039"/>
+  <line x1="400" y1="359" x2="400" y2="369" stroke="#d4a039" stroke-width="2"/>
+  
+  <!-- Layer 4: Agents (narrowest) -->
+  <rect x="200" y="371" width="400" height="60" rx="10" fill="#3d1e3d" stroke="#9b59b6" stroke-width="2"/>
+  <text x="230" y="394" fill="#dda0dd" font-size="14" font-weight="700">AGENTS — Execution Personas</text>
+  <text x="230" y="412" fill="#af7ac5" font-size="11">CDA Cortex • Code Reviewer • Project Coordinator</text>
+  <text x="230" y="425" fill="#7d4f7d" font-size="10">Scope: One role, one surface, using assigned skills</text>
+  
+  <!-- Side annotation: direction of flow -->
+  <text x="760" y="130" fill="#27ae60" font-size="10" text-anchor="end">Stable</text>
+  <text x="760" y="145" fill="#27ae60" font-size="10" text-anchor="end">(years)</text>
+  <line x1="770" y1="100" x2="770" y2="420" stroke="#555" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="760" y="400" fill="#9b59b6" font-size="10" text-anchor="end">Volatile</text>
+  <text x="760" y="415" fill="#9b59b6" font-size="10" text-anchor="end">(weeks)</text>
+  
+  <!-- Left annotation: what flows down -->
+  <text x="35" y="220" fill="#666" font-size="9" writing-mode="tb">Knowledge flows down →</text>
+</svg>

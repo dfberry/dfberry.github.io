@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="800" height="200" fill="#1a1a2e" rx="12"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" fill="#e0e0e0" font-size="14" font-weight="600">30-Minute Setup</text>
+  
+  <!-- Timeline base -->
+  <line x1="60" y1="100" x2="740" y2="100" stroke="#444" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Progress fill -->
+  <line x1="60" y1="100" x2="740" y2="100" stroke="#27ae60" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+  
+  <!-- Milestone 1: 5 min -->
+  <circle cx="145" cy="100" r="16" fill="#1b4332" stroke="#27ae60" stroke-width="2"/>
+  <text x="145" y="105" text-anchor="middle" fill="#27ae60" font-size="11" font-weight="700">1</text>
+  <text x="145" y="72" text-anchor="middle" fill="#a8d8a8" font-size="10" font-weight="600">5 min</text>
+  <text x="145" y="130" text-anchor="middle" fill="#999" font-size="9">Create repo</text>
+  <text x="145" y="143" text-anchor="middle" fill="#999" font-size="9">+ folders</text>
+  
+  <!-- Milestone 2: 15 min -->
+  <circle cx="315" cy="100" r="16" fill="#1b4332" stroke="#27ae60" stroke-width="2"/>
+  <text x="315" y="105" text-anchor="middle" fill="#27ae60" font-size="11" font-weight="700">2</text>
+  <text x="315" y="72" text-anchor="middle" fill="#a8d8a8" font-size="10" font-weight="600">15 min</text>
+  <text x="315" y="130" text-anchor="middle" fill="#999" font-size="9">Write identity</text>
+  <text x="315" y="143" text-anchor="middle" fill="#999" font-size="9">role + boundaries</text>
+  
+  <!-- Milestone 3: 25 min -->
+  <circle cx="485" cy="100" r="16" fill="#1b4332" stroke="#27ae60" stroke-width="2"/>
+  <text x="485" y="105" text-anchor="middle" fill="#27ae60" font-size="11" font-weight="700">3</text>
+  <text x="485" y="72" text-anchor="middle" fill="#a8d8a8" font-size="10" font-weight="600">25 min</text>
+  <text x="485" y="130" text-anchor="middle" fill="#999" font-size="9">Capture first</text>
+  <text x="485" y="143" text-anchor="middle" fill="#999" font-size="9">5 decisions</text>
+  
+  <!-- Milestone 4: 30 min -->
+  <circle cx="655" cy="100" r="16" fill="#27ae60" stroke="#27ae60" stroke-width="2"/>
+  <text x="655" y="105" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">✓</text>
+  <text x="655" y="72" text-anchor="middle" fill="#a8d8a8" font-size="10" font-weight="600">30 min</text>
+  <text x="655" y="130" text-anchor="middle" fill="#999" font-size="9">Connect one</text>
+  <text x="655" y="143" text-anchor="middle" fill="#999" font-size="9">surface</text>
+  
+  <!-- Time markers -->
+  <text x="60" y="170" fill="#666" font-size="9">0 min</text>
+  <text x="720" y="170" fill="#27ae60" font-size="9" font-weight="600">Done ✓</text>
+  
+  <!-- Subtitle -->
+  <text x="400" y="190" text-anchor="middle" fill="#666" font-size="9">You don't need to write everything upfront. Start here, evolve naturally.</text>
+</svg>

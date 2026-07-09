@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="900" height="400" fill="#1a1a2e" rx="12"/>
+  
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" fill="#e0e0e0" font-size="16" font-weight="600">Personalization Exists — But It's Locked to Each Surface</text>
+  
+  <!-- M365 Card -->
+  <rect x="30" y="60" width="190" height="150" rx="8" fill="#252540" stroke="#555" stroke-width="1"/>
+  <text x="125" y="85" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">M365 Copilot</text>
+  <text x="50" y="108" fill="#8ab4f8" font-size="9">✓ Custom instructions</text>
+  <text x="50" y="124" fill="#8ab4f8" font-size="9">✓ Work profile</text>
+  <text x="50" y="140" fill="#8ab4f8" font-size="9">✓ Saved memories</text>
+  <text x="50" y="156" fill="#8ab4f8" font-size="9">✓ Chat history</text>
+  <!-- Lock -->
+  <text x="190" y="80" fill="#e74c3c" font-size="14">🔒</text>
+  
+  <!-- ChatGPT Card -->
+  <rect x="240" y="60" width="190" height="150" rx="8" fill="#252540" stroke="#555" stroke-width="1"/>
+  <text x="335" y="85" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">ChatGPT</text>
+  <text x="260" y="108" fill="#a8d8a8" font-size="9">✓ Custom instructions</text>
+  <text x="260" y="124" fill="#a8d8a8" font-size="9">✓ Memory (auto)</text>
+  <text x="260" y="140" fill="#a8d8a8" font-size="9">✓ Chat history</text>
+  <text x="400" y="80" fill="#e74c3c" font-size="14">🔒</text>
+  
+  <!-- Claude Card -->
+  <rect x="450" y="60" width="190" height="150" rx="8" fill="#252540" stroke="#555" stroke-width="1"/>
+  <text x="545" y="85" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Claude</text>
+  <text x="470" y="108" fill="#c39bd3" font-size="9">✓ CLAUDE.md (user-level)</text>
+  <text x="470" y="124" fill="#c39bd3" font-size="9">✓ Project instructions</text>
+  <text x="470" y="140" fill="#c39bd3" font-size="9">✓ Auto-memory</text>
+  <text x="610" y="80" fill="#e74c3c" font-size="14">🔒</text>
+  
+  <!-- Cursor Card -->
+  <rect x="660" y="60" width="190" height="150" rx="8" fill="#252540" stroke="#555" stroke-width="1"/>
+  <text x="755" y="85" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Cursor</text>
+  <text x="680" y="108" fill="#f8d87a" font-size="9">✓ Rules</text>
+  <text x="680" y="124" fill="#f8d87a" font-size="9">✓ .cursorrules (legacy)</text>
+  <text x="820" y="80" fill="#e74c3c" font-size="14">🔒</text>
+  
+  <!-- Broken connections between cards -->
+  <line x1="220" y1="135" x2="240" y2="135" stroke="#e74c3c" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="230" y="130" fill="#e74c3c" font-size="12">✕</text>
+  <line x1="430" y1="135" x2="450" y2="135" stroke="#e74c3c" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="440" y="130" fill="#e74c3c" font-size="12">✕</text>
+  <line x1="640" y1="135" x2="660" y2="135" stroke="#e74c3c" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="650" y="130" fill="#e74c3c" font-size="12">✕</text>
+  
+  <!-- Divider -->
+  <line x1="50" y1="240" x2="850" y2="240" stroke="#444" stroke-width="1" stroke-dasharray="6,4"/>
+  <text x="450" y="260" text-anchor="middle" fill="#27ae60" font-size="12" font-weight="600">▼ With Personal Context Repo ▼</text>
+  
+  <!-- Unified repo -->
+  <rect x="300" y="275" width="300" height="55" rx="10" fill="#1b4332" stroke="#27ae60" stroke-width="3"/>
+  <text x="450" y="300" text-anchor="middle" fill="#a8d8a8" font-size="13" font-weight="700">📦 personal-context repo</text>
+  <text x="450" y="318" text-anchor="middle" fill="#52b788" font-size="10">One source • Every surface reads it • You own it</text>
+  <text x="570" y="290" fill="#27ae60" font-size="14">🔓</text>
+  
+  <!-- Arrows from repo to surfaces -->
+  <line x1="350" y1="330" x2="125" y2="360" stroke="#27ae60" stroke-width="1.5"/>
+  <line x1="400" y1="330" x2="335" y2="360" stroke="#27ae60" stroke-width="1.5"/>
+  <line x1="500" y1="330" x2="545" y2="360" stroke="#27ae60" stroke-width="1.5"/>
+  <line x1="550" y1="330" x2="755" y2="360" stroke="#27ae60" stroke-width="1.5"/>
+  
+  <!-- Small surface labels at bottom -->
+  <text x="125" y="375" text-anchor="middle" fill="#8ab4f8" font-size="10">M365</text>
+  <text x="335" y="375" text-anchor="middle" fill="#a8d8a8" font-size="10">ChatGPT</text>
+  <text x="545" y="375" text-anchor="middle" fill="#c39bd3" font-size="10">Claude</text>
+  <text x="755" y="375" text-anchor="middle" fill="#f8d87a" font-size="10">Cursor</text>
+  
+  <!-- Checkmarks -->
+  <text x="125" y="392" text-anchor="middle" fill="#27ae60" font-size="12">✓</text>
+  <text x="335" y="392" text-anchor="middle" fill="#27ae60" font-size="12">✓</text>
+  <text x="545" y="392" text-anchor="middle" fill="#27ae60" font-size="12">✓</text>
+  <text x="755" y="392" text-anchor="middle" fill="#27ae60" font-size="12">✓</text>
+</svg>
