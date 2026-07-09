@@ -588,18 +588,6 @@ Build a **REST/OpenAPI service as the source of truth**, and expose **MCP as a t
 
 The REST contract is the thing you version carefully and support for years. The MCP facade is a convenience layer you can rewrite — or swap for the next protocol — without touching your data model.
 
-### A plausible stack (an example, not a mandate)
-
-| Concern | Example choice | Why |
-|---|---|---|
-| REST + MCP server | Azure Container Apps | Scales to zero, no cluster to run |
-| Storage | Cosmos DB serverless | Change feed gives you versioning + audit almost for free |
-| Secrets | Key Vault | Keep keys out of the app |
-| Auth / identity | Entra ID app registration + managed identity | Real identity, no shared secrets |
-| Output scanning (later) | API Management + Azure AI Content Safety / Prompt Shields | Add when you need it, not on day one |
-
-> **MCP is the transport; Entra is the identity.**
-
 ### What the service actually is: a context broker
 
 Strip away the stack and the service does four jobs:
