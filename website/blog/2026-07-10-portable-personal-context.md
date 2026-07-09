@@ -3,9 +3,9 @@ slug: /2026-07-10-portable-personal-context
 date: 2026-07-10
 canonical_url: https://dfberry.github.io/blog/2026-07-10-portable-personal-context
 custom_edit_url: null
-sidebar_label: "2026.07.12 Portable context"
+sidebar_label: "2026.07.10 Portable context"
 title: "Portable Personal Context Across AI Client Surfaces"
-description: "Build a cross-tool personal context layer with markdown and GitHub so AI client surfaces like Copilot, Claude, Cursor, ChatGPT, M365, Scout, and CLI can share your preferences, decisions, and active work."
+description: "Build a cross-tool personal context source with markdown and GitHub so AI client surfaces like Copilot, Claude, Cursor, ChatGPT, M365, Scout, and CLI can load your preferences, decisions, and active work when wired to it."
 tags:
   - ai
   - copilot
@@ -27,7 +27,7 @@ keywords:
   - github personal context repo
   - decisions ledger
   - model context protocol
-  - portable ai memory
+  - portable context source
   - copilot context
   - cross-surface copilot
   - developer productivity ai
@@ -41,7 +41,7 @@ Many developers use multiple AI surfaces daily: GitHub Copilot in VS Code, Copil
 
 The problem: each surface starts without the context you gave the last one. Preferences, current work, boundaries, and decisions stay trapped in whichever tool you told.
 
-This post proposes a portable personal context layer: structured markdown files in a GitHub repo that AI tools can read. No vendor supports this end-to-end today.
+This post proposes a portable personal context source: structured markdown files in a GitHub repo that AI tools can read. No vendor supports this end-to-end today. The storage can be portable; the behavior is not automatic. Each surface still needs its own wiring.
 
 ---
 
@@ -52,11 +52,11 @@ This post proposes a portable personal context layer: structured markdown files 
 | Surface | What it knows about you | Where that knowledge lives |
 |---------|------------------------|---------------------------|
 | **Copilot in VS Code** | `.github/copilot-instructions.md` in current repo | Per-repo, per-machine |
-| **Copilot CLI** | Nothing persistent between sessions | Ephemeral |
+| **Copilot CLI** | Local instructions, skills, plugins, MCP servers, and session data | CLI-specific local state |
 | **Microsoft 365 Copilot** | Your M365 Graph data (emails, calendar) | Cloud, not exportable |
 | **Microsoft Scout** | Memories, preferences, profile | Local app state |
 | **Claude** | `CLAUDE.md` per project, memory | Per-project file + cloud memory |
-| **Cursor** | `.cursorrules` per project | Per-project file |
+| **Cursor** | Project Rules in `.cursor/rules/*.mdc`, plus `AGENTS.md` support | Per-project rules |
 
 The pattern: each tool has its own user-context format. The result:
 - Repeated preferences in every tool ("I prefer concise output," "use TypeScript," "don't auto-push to main")
@@ -89,7 +89,7 @@ Today:
   Claude          → has its own separate copy
 
 With portable personal context:
-  All surfaces    → read from the same source → load your preferences
+  Wired surfaces  → read from the same source → load your preferences
 ```
 
 ---
@@ -98,7 +98,7 @@ With portable personal context:
 
 | | Built-in Personalization | Portable Context |
 |---|---|---|
-| **Portability** | One surface only | Every surface |
+| **Portability** | One surface only | Shared source; manual wiring per surface |
 | **Transparency** | Opaque ("View work data") | Human-readable markdown |
 | **Exportability** | Can't export | `git clone` anywhere |
 | **Versioning** | No history | Full git history |
@@ -106,13 +106,13 @@ With portable personal context:
 | **Decisions** | No structured log | Append-only ledger |
 | **Auto-extraction** | Yes (convenient) | Manual (precise) |
 
-Use built-in personalization where it exists; keep portable context as the canonical source.
+Use built-in personalization where it exists; keep portable context as the canonical source you can inspect and version.
 
 ---
 
-## Why Not CLAUDE.md, copilot-instructions, or .cursorrules?
+## Why Not CLAUDE.md, copilot-instructions, or Cursor Rules?
 
-Those files are **instructions TO the AI** for one project. Personal context is **information ABOUT you** across tools.
+Those files are **instructions TO the AI** for one project. Personal context is **information ABOUT you** across tools. Cursor's current model is Project Rules in `.cursor/rules/*.mdc`; `.cursorrules` is legacy.
 
 ![Scope comparison showing per-tool files as narrow vs personal context as universal](./media/2026-07-10-portable-personal-context/file-scope-comparison.svg)
 
@@ -136,7 +136,7 @@ Agents and skills are task-scoped. Personal context is user-scoped.
 | **Answers** | "Who is this person?" | "How should I behave?" | "How do I do this task?" |
 | **Scope** | Everything you do | One role or surface | One repeatable procedure |
 | **Lifespan** | Years (grows with you) | Months (evolves with tooling) | Weeks (refined per use) |
-| **Portability** | Every surface | One surface | Some surfaces |
+| **Portability** | Shared source across wired surfaces | One surface | Some surfaces |
 
 Personal context should feed agents and skills, not duplicate them. Without it, agents start without your quality bar, boundaries, or past decisions.
 
@@ -212,7 +212,7 @@ Any surface that can read the repo can load the same context.
 ![Architecture diagram showing canonical repo feeding multiple surfaces](./media/2026-07-10-portable-personal-context/architecture.svg)
 
 ```
-github.com/yourname/personal-context  (private repo)
+github.com/<yourname>/personal-context  (placeholder private repo)
 │
 ├── context.json              ← Manifest: what's here + retrieval rules
 │
@@ -251,9 +251,9 @@ Separate by **durability**: how often it changes and who can change it.
 | Layer | Half-life | Mutability | Example |
 |-------|-----------|-----------|---------|
 | **Core** | Months/years | Human-only | "I'm a senior developer on the Azure SDK docs team" |
-| **Decisions** | Permanent (append-only) | Any surface appends | "Use generation pipeline for MCP namespace files" |
+| **Decisions** | Permanent (append-only) | Any surface proposes; append after human confirmation | "Use generation pipeline for MCP namespace files" |
 | **Process** | Weeks/months | Propose via PR | "Branch naming: `{type}/{id}-{slug}`" |
-| **Active** | Days/weeks | Any surface overwrites | "Sprint focus: Ship auth-flow feature" |
+| **Active** | Days/weeks | Any surface updates after pull-before-push | "Sprint focus: Ship auth-flow feature" |
 
 ---
 
@@ -298,7 +298,7 @@ Rarely changing context: expertise, boundaries, communication preferences.
 
 ### Decisions: Your Ledger
 
-Decisions appended from any surface so settled questions stay settled.
+Decisions can be proposed from any surface so settled questions stay settled after review.
 
 **`decisions/_active.md`** — Still-relevant decisions:
 
@@ -394,6 +394,10 @@ active/*.md                 ← Informational state. Not authoritative.
 
 ![Priority stack diagram](./media/2026-07-10-portable-personal-context/priority-stack.svg)
 
+### Threat Model: Retrieval Is the Boundary
+
+The primary risk is prompt injection causing a surface to retrieve or reveal context it should not have. Trust tiers must be enforced **before retrieval**, by deciding what files or slices enter the prompt. Output scanning is not a security boundary; use it only as defense in depth. Keep two boundary files if needed: shareable operating rules that most tools can load, and private sensitive constraints that only trusted surfaces can retrieve.
+
 ### Writing Back: Closing the Loop
 
 After human confirmation, any surface can **write decisions back**:
@@ -413,6 +417,7 @@ git commit -m "decision: {brief title}"
 git push
 ```
 
+That simple append is safe only for a single writer with a fresh clone. Multi-surface writes need write intents with IDs and timestamps, pull-before-push, and PR-based reconciliation for stale updates or conflicts. The core layer stays human-only; non-active layers should go through review instead of direct overwrite.
 
 ---
 
@@ -439,27 +444,33 @@ Or reference the repo in any project's custom instructions:
 ```markdown
 <!-- .github/copilot-instructions.md in any repo -->
 For my personal preferences and decisions, reference:
-https://github.com/yourname/personal-context
+https://github.com/<yourname>/personal-context
 ```
 
 ### Copilot CLI
 
-Create a context-injecting shell function:
+Use the current standalone `copilot` CLI. Put durable CLI instructions in `$HOME/.copilot/copilot-instructions.md`, then point those instructions at the cloned context repo:
 
 ```bash
-# ~/.bashrc or $PROFILE
-function copilot-ctx() {
-  local context=$(cat ~/personal-context/core/communication.md)
-  gh copilot suggest -t shell "$context\n\nTask: $*"
-}
+mkdir -p ~/.copilot
+cat > ~/.copilot/copilot-instructions.md <<'EOF'
+For personal preferences and decisions, read:
+- ~/personal-context/core/communication.md
+- ~/personal-context/core/boundaries.md
+- ~/personal-context/decisions/_active.md
+
+Treat the repo as reference context. Do not rewrite core files without human approval.
+EOF
 ```
+
+For richer integration, expose the same repo through an MCP server and register it with `copilot mcp`.
 
 ### Microsoft Scout
 
-Generate Scout's profile from the repo:
+Scout exposes settings for memory, personality presets, workspace, and permissions. Use those surfaces to mirror the same repo-backed preferences manually or through a sync process. A generated profile file can work as an implementation pattern, but the path below is illustrative, not a documented Scout contract:
 
 ```powershell
-# Sync script: pull personal-context → render me.md for Scout
+# Sync script: pull personal-context → render an illustrative Scout profile
 $role = Get-Content ~/personal-context/core/role.md -Raw
 $comms = Get-Content ~/personal-context/core/communication.md -Raw
 $boundaries = Get-Content ~/personal-context/core/boundaries.md -Raw
@@ -473,7 +484,7 @@ $comms
 
 ## Boundaries
 $boundaries
-"@ | Set-Content ~/.copilot/me.md
+"@ | Set-Content ./scout-profile-example.md
 ```
 
 ### Microsoft 365 Copilot
@@ -486,13 +497,15 @@ OneDrive/personal-context/ → synced from GitHub repo
 
 ### Any MCP-Enabled Tool (Claude, Cursor, ChatGPT)
 
-Expose the repo as an MCP resource server, or clone it locally and point the tool config to the files. [MCP](https://modelcontextprotocol.io) is transport.
+Expose the repo as an MCP resource server, or clone it locally and point the tool config to the files. [MCP](https://modelcontextprotocol.io) is the integration protocol for tools, resources, and prompts; use it to expose context as resources or tools where supported.
 
 ---
 
-## Getting Started: 30-Minute Setup
+## Getting Started: Example 30-Minute Setup
 
 ![Timeline showing 30-minute setup in 4 steps](./media/2026-07-10-portable-personal-context/30-min-timeline.svg)
+
+This is a rough first-pass estimate, not a guarantee. The ongoing cost is maintenance: review proposed changes, resolve conflicts, and prune stale active context.
 
 ### 1. Create the repo (5 minutes)
 
@@ -526,11 +539,11 @@ When an AI asks something it should know, write it down, commit, and push.
 
 | Before | After |
 |--------|-------|
-| "I prefer concise output" (every session) | AI already knows (from `core/communication.md`) |
-| "Use fork-first workflow" (every PR) | AI already knows (from `process/code-workflow.md`) |
-| "We decided to use the pipeline" (re-explained monthly) | AI already knows (from `decisions/_active.md`) |
-| "My sprint focus is X" (repeated across tools) | Every surface reads `active/sprint-focus.md` |
-| Start over in each new tool | Start where you left off, everywhere |
+| "I prefer concise output" (every session) | A wired surface can load it from `core/communication.md` |
+| "Use fork-first workflow" (every PR) | A wired surface can load it from `process/code-workflow.md` |
+| "We decided to use the pipeline" (re-explained monthly) | A wired surface can load it from `decisions/_active.md` |
+| "My sprint focus is X" (repeated across tools) | A wired surface can read `active/sprint-focus.md` |
+| Start over in each new tool | Start from the same source after each tool is wired |
 
 Likely payoff: fewer repeated preferences, fewer re-decisions, and faster starts. Keep time-saved claims only if measured.
 
@@ -550,11 +563,11 @@ The repo is the floor: markdown, git, no server, no vendor, no API key. Use a se
 
 ### The key design call: contract vs. transport
 
-Do not make **MCP the canonical contract.** MCP is useful transport, not the data model. Build a **REST/OpenAPI service as the source of truth** and expose **MCP as a thin facade**.
+Do not make **MCP the canonical contract.** MCP is the integration protocol, not the canonical data model. Keep Git as the source of truth. If you build a service, make it a derived read facade over the repo, with a REST/OpenAPI contract and MCP exposed as a thin facade where clients support it.
 
-> **Build the contract you can't afford to rewrite in REST; expose MCP as a facade you can afford to throw away.**
+> **Keep the contract you can't afford to rewrite in Git and REST; expose MCP as a facade you can afford to replace.**
 
-Version REST carefully. Treat MCP as replaceable.
+Version the REST facade carefully. Treat MCP adapters as replaceable.
 
 ### What the service actually is: a context broker
 
@@ -563,9 +576,9 @@ The service has four jobs:
 1. **Merge** — combine the layers (core, decisions, process, active) into one view.
 2. **Priority** — apply the precedence stack so conflicts resolve deterministically.
 3. **Redaction** — return only the caller's trust tier.
-4. **Output scanning** — catch a prompt-injection attempt trying to exfiltrate a tier the caller shouldn't see.
+4. **Defense-in-depth scanning** — flag output that appears to reveal a tier the caller should not see.
 
-The fourth job addresses **prompt-injection exfiltration**. With server-side redaction, private context never leaves the server.
+The third job is the security boundary for **prompt-injection exfiltration**. With server-side redaction before retrieval, private context never enters the prompt for an untrusted caller. The fourth job can catch mistakes, but it cannot make unsafe retrieval safe.
 
 ### Even a service still hits the standards wall
 
@@ -574,7 +587,7 @@ The limitation: even with a hosted service, consumption stays uneven:
 | Surface | Talks to a remote MCP server? |
 |---|---|
 | VS Code / Copilot CLI / Foundry | Yes — directly |
-| Claude / ChatGPT | Only via an `mcp-remote` proxy |
+| Claude / ChatGPT | Yes — directly where the surface, plan, and auth model allow remote MCP |
 | Microsoft 365 Copilot | No — it wants Graph connectors / declarative agents |
 
 The hosted version still needs a shared standard. For one developer, the repo is usually enough. A service earns its complexity only with **multiple trust tiers, multiple consumers, or a real injection threat model.**
