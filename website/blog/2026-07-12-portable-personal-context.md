@@ -177,6 +177,8 @@ Mem0's own research says file-based memory "works beautifully for ≤200 static 
 
 ## Personal Context Is Not Memory
 
+![Context vs Memory promotion pipeline](./media/2026-07-12-portable-personal-context/context-vs-memory.svg)
+
 Before going further, one distinction that tripped me up when I started — and trips up half the tools in this space: **personal context is not memory.** They feel similar, they overlap, and plenty of products blur them on purpose. Architecturally, though, they're two different animals, and conflating them is exactly why so many "memory" features feel both magical and untrustworthy.
 
 Here's the one-line version:
@@ -272,7 +274,7 @@ Not all context is equal. The key insight is separating by **durability** — ho
 |-------|-----------|-----------|---------|
 | **Core** | Months/years | Human-only | "I'm a senior developer on the Azure SDK docs team" |
 | **Decisions** | Permanent (append-only) | Any surface appends | "Use generation pipeline for MCP namespace files" |
-| **Process** | Weeks/months | Propose via PR | "Branch naming: {type}/{id}-{slug}" |
+| **Process** | Weeks/months | Propose via PR | "Branch naming: `{type}/{id}-{slug}`" |
 | **Active** | Days/weeks | Any surface overwrites | "Sprint focus: Ship auth-flow feature" |
 
 ---
@@ -564,6 +566,8 @@ The compound effect is significant. After a month, you've spent maybe 2 hours to
 
 ## Beyond the Repo: When a Service Makes Sense
 
+![Context broker architecture with MCP facade and trust tiers](./media/2026-07-12-portable-personal-context/context-broker.svg)
+
 Everything above is deliberately the **floor** — the simplest thing that could possibly work. A flat git repo of markdown is the whole point: no server, no vendor, no API key. So when *would* you reach for something more?
 
 The honest answer: when a flat repo can't enforce what you need. A git repo hands the whole file to anyone who can read it. A **hosted service** can hand back only the slice the caller is cleared to see. That's the line.
@@ -624,6 +628,8 @@ And to be clear about scope: for one developer, the repo is usually enough. The 
 ---
 
 ## What's Next: The Standard That Doesn't Exist Yet
+
+![Convergence diagram showing vendors approaching a missing standard](./media/2026-07-12-portable-personal-context/standards-convergence.svg)
 
 This post is a proposal, not a product announcement. Today, **none of this works automatically** — not even across two Copilot surfaces from the same company. Each tool reads its own context files, in its own format, from its own location.
 

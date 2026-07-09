@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="900" height="420" fill="#1a1a2e" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" fill="#e0e0e0" font-size="18" font-weight="600">Context vs Memory: The Promotion Pipeline</text>
+
+  <!-- Pipeline arrow background -->
+  <rect x="60" y="140" width="780" height="70" rx="8" fill="#16213e" stroke="#2c3e6b" stroke-width="1"/>
+
+  <!-- Stage 1: Observation (Memory) -->
+  <rect x="80" y="100" width="160" height="110" rx="10" fill="#4a2d2d" stroke="#e74c3c" stroke-width="2"/>
+  <text x="160" y="130" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Observation</text>
+  <text x="160" y="150" text-anchor="middle" fill="#e8a0a0" font-size="11">(Memory)</text>
+  <text x="160" y="175" text-anchor="middle" fill="#ccc" font-size="10">"You renamed a branch</text>
+  <text x="160" y="190" text-anchor="middle" fill="#ccc" font-size="10">to wip-2 last Tuesday"</text>
+
+  <!-- Arrow 1 -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4a90d9"/>
+    </marker>
+  </defs>
+  <line x1="245" y1="155" x2="290" y2="155" stroke="#4a90d9" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: Candidate -->
+  <rect x="295" y="100" width="160" height="110" rx="10" fill="#2d3a4a" stroke="#f39c12" stroke-width="2"/>
+  <text x="375" y="130" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Candidate</text>
+  <text x="375" y="150" text-anchor="middle" fill="#f5d98e" font-size="11">(Proposed)</text>
+  <text x="375" y="175" text-anchor="middle" fill="#ccc" font-size="10">"Should branch naming</text>
+  <text x="375" y="190" text-anchor="middle" fill="#ccc" font-size="10">be type/id-slug?"</text>
+
+  <!-- Arrow 2 with gate -->
+  <line x1="460" y1="155" x2="505" y2="155" stroke="#4a90d9" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Ratification Gate -->
+  <rect x="510" y="85" width="140" height="140" rx="10" fill="#1e3a2e" stroke="#27ae60" stroke-width="3" stroke-dasharray="6,3"/>
+  <text x="580" y="118" text-anchor="middle" fill="#27ae60" font-size="22">⚡</text>
+  <text x="580" y="142" text-anchor="middle" fill="#2ecc71" font-size="13" font-weight="700">Ratification</text>
+  <text x="580" y="160" text-anchor="middle" fill="#2ecc71" font-size="13" font-weight="700">Gate</text>
+  <text x="580" y="185" text-anchor="middle" fill="#a8d8a8" font-size="10">Human decision:</text>
+  <text x="580" y="200" text-anchor="middle" fill="#a8d8a8" font-size="10">"Yes, that's the rule"</text>
+
+  <!-- Arrow 3 -->
+  <line x1="655" y1="155" x2="700" y2="155" stroke="#27ae60" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 4: Context (Canonical) -->
+  <rect x="705" y="100" width="160" height="110" rx="10" fill="#1e3a5f" stroke="#4a90d9" stroke-width="2"/>
+  <text x="785" y="130" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Context</text>
+  <text x="785" y="150" text-anchor="middle" fill="#8ab4f8" font-size="11">(Canonical)</text>
+  <text x="785" y="175" text-anchor="middle" fill="#ccc" font-size="10">"Branch naming is</text>
+  <text x="785" y="190" text-anchor="middle" fill="#ccc" font-size="10">type/id-slug. Always."</text>
+
+  <!-- Bottom comparison boxes -->
+  <!-- Memory box -->
+  <rect x="80" y="260" width="350" height="120" rx="10" fill="#2d1f1f" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="255" y="288" text-anchor="middle" fill="#e74c3c" font-size="14" font-weight="600">📓 Memory (Diary)</text>
+  <text x="255" y="312" text-anchor="middle" fill="#ccc" font-size="11">• Auto-captured, high-volume</text>
+  <text x="255" y="330" text-anchor="middle" fill="#ccc" font-size="11">• Evidentiary, not authoritative</text>
+  <text x="255" y="348" text-anchor="middle" fill="#ccc" font-size="11">• Search-when-relevant</text>
+  <text x="255" y="366" text-anchor="middle" fill="#ccc" font-size="11">• Loses to context when they conflict</text>
+
+  <!-- Context box -->
+  <rect x="470" y="260" width="350" height="120" rx="10" fill="#162a3e" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="645" y="288" text-anchor="middle" fill="#4a90d9" font-size="14" font-weight="600">📜 Context (Constitution)</text>
+  <text x="645" y="312" text-anchor="middle" fill="#ccc" font-size="11">• Human-authored, small (&lt;150 facts)</text>
+  <text x="645" y="330" text-anchor="middle" fill="#ccc" font-size="11">• Authoritative, versioned in git</text>
+  <text x="645" y="348" text-anchor="middle" fill="#ccc" font-size="11">• Load-always, trusted</text>
+  <text x="645" y="366" text-anchor="middle" fill="#ccc" font-size="11">• Outranks memory. Always wins.</text>
+
+  <!-- Legend -->
+  <text x="450" y="408" text-anchor="middle" fill="#999" font-size="12">Memory is the raw feed. Context is the reviewed, canonical output. The gate is the whole point.</text>
+</svg>
