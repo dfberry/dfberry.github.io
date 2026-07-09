@@ -28,7 +28,7 @@
   <!-- CLI -->
   <rect x="220" y="350" width="150" height="80" rx="8" fill="#2d4a7a" stroke="#4a90d9" stroke-width="2"/>
   <text x="295" y="385" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Copilot CLI</text>
-  <text x="295" y="418" text-anchor="middle" fill="#8ab4f8" font-size="9">reads</text>
+  <text x="295" y="418" text-anchor="middle" fill="#8ab4f8" font-size="9">reads + writes</text>
   
   <!-- Scout -->
   <rect x="400" y="350" width="150" height="80" rx="8" fill="#2d4a7a" stroke="#4a90d9" stroke-width="2"/>
@@ -63,8 +63,9 @@
   <line x1="520" y1="240" x2="655" y2="348" stroke="#4a90d9" stroke-width="2" marker-end="url(#arrowhead)"/>
   <line x1="560" y1="240" x2="815" y2="348" stroke="#4a90d9" stroke-width="2" marker-end="url(#arrowhead)"/>
   
-  <!-- Up arrows (write-back) for VS Code, Scout -->
+  <!-- Up arrows (write-back) for VS Code, CLI, Scout -->
   <line x1="130" y1="350" x2="360" y2="242" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowup)"/>
+  <line x1="310" y1="350" x2="400" y2="242" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowup)"/>
   <line x1="490" y1="350" x2="460" y2="242" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowup)"/>
   
   <!-- Legend -->
