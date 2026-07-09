@@ -15,6 +15,9 @@ tags:
   - mcp
   - productivity
   - architecture
+  - personal context vs memory
+  - mcp facade
+  - context broker
 keywords:
   - portable personal context
   - ai second brain
@@ -26,6 +29,10 @@ keywords:
   - model context protocol
   - portable ai memory
   - developer productivity ai
+  - personal context vs memory
+  - context broker
+  - prompt injection exfiltration
+  - mcp facade
 ---
 
 Every developer I know uses multiple AI surfaces daily. GitHub Copilot in VS Code for coding. Copilot CLI for terminal workflows. Microsoft 365 Copilot for email and meetings. Microsoft Scout for desktop orchestration. Maybe Claude, ChatGPT, or Cursor on the side.
@@ -34,7 +41,7 @@ The problem? **Every time you switch surfaces, you start over.** The AI that jus
 
 Your context — who you are, what you're working on, how you like to work, and what you've already decided — is trapped in whichever tool you happened to tell it to.
 
-This post describes how to fix that with a **portable personal context layer**: a structured set of files in a GitHub repo that any AI surface can read, giving every tool your "second brain" from the first interaction.
+This post **proposes** a fix: a **portable personal context layer** — a structured set of files in a GitHub repo that any AI surface *could* read, giving every tool your "second brain" from the first interaction. Today, no single vendor supports this end-to-end — not even across two surfaces from the same maker. This is a design for what *should* exist, and an invitation to tool builders to make it real.
 
 ---
 
@@ -165,6 +172,44 @@ Personal context is the root. Agents and skills are leaves that grow from it. Wi
 | **Best for** | App builders serving many users | Individual developers across their own tools |
 
 Mem0's own research says file-based memory "works beautifully for ≤200 static memories, single user, no concurrency." That's exactly the personal context use case — ~50-150 facts about you, curated deliberately.
+
+---
+
+## Personal Context Is Not Memory
+
+Before going further, one distinction that tripped me up when I started — and trips up half the tools in this space: **personal context is not memory.** They feel similar, they overlap, and plenty of products blur them on purpose. Architecturally, though, they're two different animals, and conflating them is exactly why so many "memory" features feel both magical and untrustworthy.
+
+Here's the one-line version:
+
+> **Context is your constitution. Memory is your diary.**
+
+Context is what you *ratified* — declared, curated, authoritative. Memory is what was *observed* — accreted, evidentiary, a byproduct of use.
+
+| | Personal Context | Memory |
+|---|---|---|
+| **Origin** | Authored intentionally | Accumulated automatically |
+| **Nature** | Curated / declared | Accreted / observed |
+| **Authority** | Authoritative ("this is the rule") | Evidentiary ("this is what happened") |
+| **Example** | "My branch naming convention is `{type}/{id}-{slug}`" | "Last Tuesday you renamed a branch to `wip-2`" |
+| **Volume** | Small, deliberate (~50-150 facts) | High-volume, ever-growing |
+| **Governance** | Human-reviewed | Auto-captured |
+
+They aren't rivals — they're two ends of a **promotion pipeline**:
+
+```
+observation  →  candidate  →  [ratification gate]  →  context
+ (memory)       (proposed)     (a human decision)      (canonical)
+```
+
+Memory is the raw feed. Context is the reviewed, canonical output. The gate in the middle — an explicit human decision — is the whole point. "You renamed a branch to `wip-2` last week" is an observation; it only becomes "my branch naming convention is X" when *I* say so.
+
+That distinction has real architectural consequences:
+
+- **Different stores.** Memory wants a high-volume append log optimized for recall. Context wants a small, curated, versioned set — exactly the git repo above.
+- **Different precedence.** When they conflict, **context outranks memory.** The constitution beats the diary. If memory "remembers" you pushed to `main` once, that never overrides the boundary that says you don't.
+- **Different retrieval, governance, and security.** Context is load-always and trusted; memory is search-when-relevant and treated as evidence, not instruction.
+
+Why does this matter for the thesis of this post? Because the portable layer I'm proposing is **context, not memory.** Tools like Mem0, Claude memory, and ChatGPT memory solve the *observe-and-recall* half — and they solve it well. What none of them give you is a portable, authored, authoritative layer you *ratify*. They observe; they don't ratify. That gap is the thing this repo pattern is trying to fill.
 
 ---
 
@@ -393,7 +438,9 @@ Now every other surface picks it up on next read. Decision made in Scout? VS Cod
 
 ---
 
-## Connecting Each Surface
+## Connecting Each Surface (Proposed Integrations)
+
+The specifics below are illustrative — some work today with manual setup, others would require tool vendors to add support. The point is that the *mechanism* is simple in every case: read a file, inject as context.
 
 ### GitHub Copilot in VS Code
 
@@ -515,9 +562,72 @@ The compound effect is significant. After a month, you've spent maybe 2 hours to
 
 ---
 
+## Beyond the Repo: When a Service Makes Sense
+
+Everything above is deliberately the **floor** — the simplest thing that could possibly work. A flat git repo of markdown is the whole point: no server, no vendor, no API key. So when *would* you reach for something more?
+
+The honest answer: when a flat repo can't enforce what you need. A git repo hands the whole file to anyone who can read it. A **hosted service** can hand back only the slice the caller is cleared to see. That's the line.
+
+### What a hosted version would buy you
+
+- **Server-side redaction by trust tier.** Split your context into `public` / `work` / `private` tiers and enforce the split *at the server*, not the client. The Copilot CLI on a work machine sees your work tier; a public-facing agent never sees your private tier at all. A flat repo can't do this — anyone with clone access gets everything.
+- **Audit and access control tied to real identity.** Who read your context, when, from which surface — logged. Per-surface access bound to an actual identity instead of an honor system.
+- **The precedence stack, enforced centrally.** The priority stack from earlier ("context outranks memory," boundaries always win) now runs server-side, so every consumer gets the same resolved answer instead of each surface re-implementing it.
+
+### The key design call: contract vs. transport
+
+If you build this, the mistake to avoid is making **MCP the canonical contract.** MCP is a fast-moving adapter for agentic surfaces — the right *transport*, the wrong thing to bet your data model on.
+
+Build a **REST/OpenAPI service as the source of truth**, and expose **MCP as a thin, swappable facade** over it.
+
+> **Build the contract you can't afford to rewrite in REST; expose MCP as a facade you can afford to throw away.**
+
+The REST contract is the thing you version carefully and support for years. The MCP facade is a convenience layer you can rewrite — or swap for the next protocol — without touching your data model.
+
+### A plausible stack (an example, not a mandate)
+
+| Concern | Example choice | Why |
+|---|---|---|
+| REST + MCP server | Azure Container Apps | Scales to zero, no cluster to run |
+| Storage | Cosmos DB serverless | Change feed gives you versioning + audit almost for free |
+| Secrets | Key Vault | Keep keys out of the app |
+| Auth / identity | Entra ID app registration + managed identity | Real identity, no shared secrets |
+| Output scanning (later) | API Management + Azure AI Content Safety / Prompt Shields | Add when you need it, not on day one |
+
+> **MCP is the transport; Entra is the identity.**
+
+### What the service actually is: a context broker
+
+Strip away the stack and the service does four jobs:
+
+1. **Merge** — combine the layers (core, decisions, process, active) into one view.
+2. **Priority** — apply the precedence stack so conflicts resolve deterministically.
+3. **Redaction** — return only the caller's trust tier.
+4. **Output scanning** — catch a prompt-injection attempt trying to exfiltrate a tier the caller shouldn't see.
+
+That fourth job names the dominant threat honestly: **prompt-injection exfiltration.** A malicious doc or tool convinces the agent to read your private context and leak it. Server-side tier redaction is the mitigation a flat git repo simply can't offer — the private tier never leaves the server in the first place.
+
+### Even a service still hits the standards wall
+
+Here's the deflating part, and it reinforces where this post is headed. Even with a hosted service, consumption stays uneven:
+
+| Surface | Talks to a remote MCP server? |
+|---|---|
+| VS Code / Copilot CLI / Foundry | Yes — directly |
+| Claude / ChatGPT | Only via an `mcp-remote` proxy |
+| Microsoft 365 Copilot | No — it wants Graph connectors / declarative agents |
+
+So the grown-up version doesn't escape the "no universal standard" problem from the next section — it runs straight into the same wall, just from a more capable starting point.
+
+And to be clear about scope: for one developer, the repo is usually enough. The service earns its complexity only when you have **multiple trust tiers, multiple consumers, or a real injection threat model.** Short of that, `git push` is the architecture.
+
+---
+
 ## What's Next: The Standard That Doesn't Exist Yet
 
-Today, this is a pattern you implement yourself. But the industry is converging on this problem:
+This post is a proposal, not a product announcement. Today, **none of this works automatically** — not even across two Copilot surfaces from the same company. Each tool reads its own context files, in its own format, from its own location.
+
+But the industry is converging on the problem:
 
 - **Mem0** raised $24M to solve "AI memory that persists across sessions"
 - **Anthropic** added memory to Claude and `CLAUDE.md` per project
@@ -530,11 +640,13 @@ What's missing is a **shared standard** — an agreement across tools about wher
 
 No such standard exists today. There's no "vCard for AI preferences," no "iCal for decisions." This is genuinely unoccupied territory.
 
-Until that standard emerges, a private GitHub repo with structured markdown is the most portable, most universal, most future-proof approach. Every tool speaks git. Every LLM speaks markdown. Every developer has a GitHub account.
+The GitHub repo approach described here is a bet: that structured markdown in a well-known location, with a manifest for selective retrieval, is the simplest architecture that *could* work — if tool builders agreed to read it. Every tool speaks git. Every LLM speaks markdown. Every developer has a GitHub account.
 
-Your second brain is just a `git push` away from every AI surface you use.
+**The ask to tool builders:** Add a `$COPILOT_CONTEXT_PATH` or equivalent. Let users point to a directory of markdown files that your surface reads as additional context. That's the entire integration. The portability follows naturally.
+
+Your second brain is just a `git push` away from every AI surface you use — once the surfaces agree to look for it.
 
 ---
 
-*Have thoughts on this approach? I'd love to hear how you're solving context portability across AI tools.*
+*This is a proposal and a conversation starter. Have thoughts? Disagree with the approach? Building something similar? I'd love to hear how you're thinking about context portability across AI tools.*
 
