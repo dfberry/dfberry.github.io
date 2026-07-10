@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="700" height="400" fill="#1a1a2e" rx="12"/>
+  
+  <!-- Title -->
+  <text x="350" y="35" text-anchor="middle" fill="#e0e0e0" font-size="18" font-weight="600">Four Layers: Separated by Durability</text>
+  
+  <!-- Time arrow on left -->
+  <line x1="60" y1="70" x2="60" y2="370" stroke="#666" stroke-width="2" marker-end="url(#timeArrow)"/>
+  <defs>
+    <marker id="timeArrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <text x="55" y="65" text-anchor="middle" fill="#999" font-size="10">STABLE</text>
+  <text x="55" y="380" text-anchor="middle" fill="#999" font-size="10">VOLATILE</text>
+  
+  <!-- Layer 1: Core -->
+  <rect x="100" y="60" width="560" height="70" rx="8" fill="#1b4332" stroke="#2d6a4f" stroke-width="2"/>
+  <text x="130" y="85" fill="#a8d8a8" font-size="14" font-weight="700">CORE</text>
+  <text x="130" y="105" fill="#a8d8a8" font-size="11">Identity, Expertise, Boundaries</text>
+  <text x="430" y="85" fill="#52b788" font-size="11">Changes: Rarely (months/years)</text>
+  <text x="430" y="105" fill="#52b788" font-size="11">Mutability: Human-only</text>
+  <text x="430" y="120" fill="#52b788" font-size="11">Example: "I'm a senior dev on Azure SDK docs"</text>
+  
+  <!-- Layer 2: Decisions -->
+  <rect x="100" y="145" width="560" height="70" rx="8" fill="#3d2c1e" stroke="#d4a039" stroke-width="2"/>
+  <text x="130" y="170" fill="#f8d87a" font-size="14" font-weight="700">DECISIONS</text>
+  <text x="130" y="190" fill="#f8d87a" font-size="11">Settled questions, directives</text>
+  <text x="430" y="170" fill="#d4a039" font-size="11">Changes: Append-only (never edit)</text>
+  <text x="430" y="190" fill="#d4a039" font-size="11">Mutability: Any surface appends</text>
+  <text x="430" y="205" fill="#d4a039" font-size="11">Example: "Use pipeline for namespace files"</text>
+  
+  <!-- Layer 3: Process -->
+  <rect x="100" y="230" width="560" height="70" rx="8" fill="#1a3a4a" stroke="#4a90d9" stroke-width="2"/>
+  <text x="130" y="255" fill="#87ceeb" font-size="14" font-weight="700">PROCESS</text>
+  <text x="130" y="275" fill="#87ceeb" font-size="11">Workflows, quality bar, preferences</text>
+  <text x="430" y="255" fill="#5dade2" font-size="11">Changes: Occasionally (weeks/months)</text>
+  <text x="430" y="275" fill="#5dade2" font-size="11">Mutability: Propose via PR</text>
+  <text x="430" y="290" fill="#5dade2" font-size="11">Example: "Branch naming: {type}/{id}-{slug}"</text>
+  
+  <!-- Layer 4: Active -->
+  <rect x="100" y="315" width="560" height="70" rx="8" fill="#3d1e3d" stroke="#9b59b6" stroke-width="2"/>
+  <text x="130" y="340" fill="#dda0dd" font-size="14" font-weight="700">ACTIVE</text>
+  <text x="130" y="360" fill="#dda0dd" font-size="11">Sprint focus, current projects</text>
+  <text x="430" y="340" fill="#af7ac5" font-size="11">Changes: Frequently (days/weeks)</text>
+  <text x="430" y="360" fill="#af7ac5" font-size="11">Mutability: Any surface overwrites</text>
+  <text x="430" y="375" fill="#af7ac5" font-size="11">Example: "Sprint 14: Ship auth namespace docs"</text>
+</svg>

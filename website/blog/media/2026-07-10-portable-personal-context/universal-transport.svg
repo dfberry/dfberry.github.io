@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="800" height="200" fill="#1a1a2e" rx="12"/>
+  
+  <!-- Markdown element -->
+  <rect x="40" y="50" width="200" height="100" rx="10" fill="#252540" stroke="#5dade2" stroke-width="2"/>
+  <text x="140" y="85" text-anchor="middle" fill="#fff" font-size="28">📝</text>
+  <text x="140" y="112" text-anchor="middle" fill="#5dade2" font-size="15" font-weight="700">Markdown</text>
+  <text x="140" y="132" text-anchor="middle" fill="#7fb3d3" font-size="10">Every LLM reads it</text>
+  <text x="140" y="145" text-anchor="middle" fill="#7fb3d3" font-size="10">natively</text>
+  
+  <!-- Plus sign -->
+  <text x="280" y="108" text-anchor="middle" fill="#888" font-size="36" font-weight="300">+</text>
+  
+  <!-- GitHub element -->
+  <rect x="320" y="50" width="200" height="100" rx="10" fill="#252540" stroke="#8ab4f8" stroke-width="2"/>
+  <text x="420" y="85" text-anchor="middle" fill="#fff" font-size="28">⚙️</text>
+  <text x="420" y="112" text-anchor="middle" fill="#8ab4f8" font-size="15" font-weight="700">GitHub</text>
+  <text x="420" y="132" text-anchor="middle" fill="#6d9fd4" font-size="10">Every dev tool</text>
+  <text x="420" y="145" text-anchor="middle" fill="#6d9fd4" font-size="10">authenticates with it</text>
+  
+  <!-- Equals sign -->
+  <text x="560" y="108" text-anchor="middle" fill="#888" font-size="36" font-weight="300">=</text>
+  
+  <!-- Result element -->
+  <rect x="600" y="50" width="170" height="100" rx="10" fill="#1b4332" stroke="#27ae60" stroke-width="3"/>
+  <text x="685" y="82" text-anchor="middle" fill="#fff" font-size="22">🌐</text>
+  <text x="685" y="108" text-anchor="middle" fill="#27ae60" font-size="14" font-weight="700">Universal</text>
+  <text x="685" y="125" text-anchor="middle" fill="#27ae60" font-size="14" font-weight="700">Portability</text>
+  <text x="685" y="145" text-anchor="middle" fill="#52b788" font-size="9">No new APIs</text>
+  <text x="685" y="157" text-anchor="middle" fill="#52b788" font-size="9">No vendor lock-in</text>
+  
+  <!-- Subtitle -->
+  <text x="400" y="185" text-anchor="middle" fill="#666" font-size="10">The simplest possible architecture: files that every tool already knows how to read, on a platform they already connect to.</text>
+</svg>

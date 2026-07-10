@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="900" height="400" fill="#1a1a2e" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" fill="#e0e0e0" font-size="18" font-weight="600">The Standard That Doesn't Exist Yet</text>
+
+  <!-- Left column: Current state (fragmented) -->
+  <text x="200" y="72" text-anchor="middle" fill="#e74c3c" font-size="13" font-weight="600">TODAY: Everyone's Own Format</text>
+
+  <!-- Vendor boxes -->
+  <rect x="50" y="88" width="130" height="45" rx="6" fill="#2d4a7a" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="115" y="108" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">GitHub Copilot</text>
+  <text x="115" y="124" text-anchor="middle" fill="#8ab4f8" font-size="9">copilot-instructions.md</text>
+
+  <rect x="200" y="88" width="130" height="45" rx="6" fill="#4a2d5e" stroke="#9b59b6" stroke-width="1.5"/>
+  <text x="265" y="108" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Anthropic</text>
+  <text x="265" y="124" text-anchor="middle" fill="#c39bd3" font-size="9">CLAUDE.md + memory</text>
+
+  <rect x="50" y="145" width="130" height="45" rx="6" fill="#2d4a3a" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="115" y="165" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">OpenAI</text>
+  <text x="115" y="181" text-anchor="middle" fill="#a8d8a8" font-size="9">Custom Instructions</text>
+
+  <rect x="200" y="145" width="130" height="45" rx="6" fill="#3a3a1e" stroke="#f39c12" stroke-width="1.5"/>
+  <text x="265" y="165" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Microsoft</text>
+  <text x="265" y="181" text-anchor="middle" fill="#f5d98e" font-size="9">Scout memories + M365</text>
+
+  <rect x="50" y="202" width="130" height="45" rx="6" fill="#2d2d4a" stroke="#5dade2" stroke-width="1.5"/>
+  <text x="115" y="222" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Cursor</text>
+  <text x="115" y="238" text-anchor="middle" fill="#aed6f1" font-size="9">.cursorrules</text>
+
+  <rect x="200" y="202" width="130" height="45" rx="6" fill="#3a2d2d" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="265" y="222" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Mem0</text>
+  <text x="265" y="238" text-anchor="middle" fill="#f0c29b" font-size="9">Cloud vector API</text>
+
+  <!-- Convergence arrows -->
+  <defs>
+    <marker id="arwG" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60"/>
+    </marker>
+  </defs>
+
+  <line x1="185" y1="115" x2="420" y2="175" stroke="#555" stroke-width="1.5" marker-end="url(#arwG)"/>
+  <line x1="335" y1="115" x2="420" y2="175" stroke="#555" stroke-width="1.5" marker-end="url(#arwG)"/>
+  <line x1="185" y1="170" x2="420" y2="185" stroke="#555" stroke-width="1.5" marker-end="url(#arwG)"/>
+  <line x1="335" y1="170" x2="420" y2="185" stroke="#555" stroke-width="1.5" marker-end="url(#arwG)"/>
+  <line x1="185" y1="225" x2="420" y2="195" stroke="#555" stroke-width="1.5" marker-end="url(#arwG)"/>
+  <line x1="335" y1="225" x2="420" y2="195" stroke="#555" stroke-width="1.5" marker-end="url(#arwG)"/>
+
+  <!-- Center: The missing standard -->
+  <rect x="425" y="110" width="200" height="130" rx="12" fill="#1a1a2e" stroke="#27ae60" stroke-width="3" stroke-dasharray="8,4"/>
+  <text x="525" y="152" text-anchor="middle" fill="#27ae60" font-size="28">?</text>
+  <text x="525" y="178" text-anchor="middle" fill="#2ecc71" font-size="13" font-weight="700">Shared Standard</text>
+  <text x="525" y="198" text-anchor="middle" fill="#a8d8a8" font-size="10">"vCard for AI preferences"</text>
+  <text x="525" y="215" text-anchor="middle" fill="#a8d8a8" font-size="10">Doesn't exist yet</text>
+
+  <!-- Right: What it enables -->
+  <line x1="630" y1="175" x2="670" y2="175" stroke="#27ae60" stroke-width="2.5" marker-end="url(#arwG)"/>
+
+  <rect x="675" y="90" width="190" height="175" rx="10" fill="#16213e" stroke="#4a90d9" stroke-width="2"/>
+  <text x="770" y="118" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Universal Context</text>
+
+  <text x="770" y="145" text-anchor="middle" fill="#8ab4f8" font-size="11">✓ Structured markdown</text>
+  <text x="770" y="167" text-anchor="middle" fill="#8ab4f8" font-size="11">✓ Well-known location</text>
+  <text x="770" y="189" text-anchor="middle" fill="#8ab4f8" font-size="11">✓ Selective retrieval</text>
+  <text x="770" y="211" text-anchor="middle" fill="#8ab4f8" font-size="11">✓ Git-backed versioning</text>
+  <text x="770" y="233" text-anchor="middle" fill="#8ab4f8" font-size="11">✓ Every surface reads it</text>
+
+  <!-- Bottom call to action -->
+  <rect x="120" y="300" width="660" height="70" rx="10" fill="#1e3a5f" stroke="#4a90d9" stroke-width="2"/>
+  <text x="450" y="325" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">The Ask: $COPILOT_CONTEXT_PATH</text>
+  <text x="450" y="348" text-anchor="middle" fill="#ccc" font-size="11">Let users point to a directory of markdown. Read it as context. That's the entire integration.</text>
+  <text x="450" y="363" text-anchor="middle" fill="#8ab4f8" font-size="10">Every tool speaks git. Every LLM speaks markdown. Every developer has GitHub.</text>
+</svg>

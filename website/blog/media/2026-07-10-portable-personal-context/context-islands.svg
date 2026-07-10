@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="900" height="400" fill="#1a1a2e" rx="12"/>
+  
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#e0e0e0" font-size="18" font-weight="600">Context Islands: Each Surface Is Isolated</text>
+  
+  <!-- Islands (circles with tool names) -->
+  <!-- VS Code -->
+  <ellipse cx="150" cy="200" rx="100" ry="70" fill="#2d4a7a" stroke="#4a90d9" stroke-width="2"/>
+  <text x="150" y="185" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Copilot in</text>
+  <text x="150" y="205" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">VS Code</text>
+  <text x="150" y="235" text-anchor="middle" fill="#8ab4f8" font-size="10">.copilot-instructions.md</text>
+  
+  <!-- CLI -->
+  <ellipse cx="370" cy="150" rx="90" ry="60" fill="#2d4a7a" stroke="#4a90d9" stroke-width="2"/>
+  <text x="370" y="145" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Copilot CLI</text>
+  <text x="370" y="170" text-anchor="middle" fill="#8ab4f8" font-size="10">No persistence</text>
+  
+  <!-- Scout -->
+  <ellipse cx="560" cy="220" rx="95" ry="65" fill="#2d4a7a" stroke="#4a90d9" stroke-width="2"/>
+  <text x="560" y="210" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Microsoft Scout</text>
+  <text x="560" y="235" text-anchor="middle" fill="#8ab4f8" font-size="10">me.md + memories DB</text>
+  
+  <!-- M365 -->
+  <ellipse cx="770" cy="170" rx="95" ry="60" fill="#2d4a7a" stroke="#4a90d9" stroke-width="2"/>
+  <text x="770" y="160" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">M365 Copilot</text>
+  <text x="770" y="185" text-anchor="middle" fill="#8ab4f8" font-size="10">Graph data (cloud only)</text>
+  
+  <!-- Claude -->
+  <ellipse cx="370" cy="310" rx="85" ry="55" fill="#4a2d5e" stroke="#9b59b6" stroke-width="2"/>
+  <text x="370" y="305" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Claude</text>
+  <text x="370" y="328" text-anchor="middle" fill="#c39bd3" font-size="10">CLAUDE.md + memory</text>
+  
+  <!-- Cursor -->
+  <ellipse cx="700" cy="320" rx="85" ry="55" fill="#4a2d5e" stroke="#9b59b6" stroke-width="2"/>
+  <text x="700" y="315" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Cursor</text>
+  <text x="700" y="338" text-anchor="middle" fill="#c39bd3" font-size="10">.cursorrules</text>
+  
+  <!-- Disconnection indicators (X marks between islands) -->
+  <text x="260" y="170" text-anchor="middle" fill="#e74c3c" font-size="20">✕</text>
+  <text x="465" y="180" text-anchor="middle" fill="#e74c3c" font-size="20">✕</text>
+  <text x="660" y="185" text-anchor="middle" fill="#e74c3c" font-size="20">✕</text>
+  <text x="460" y="270" text-anchor="middle" fill="#e74c3c" font-size="20">✕</text>
+  <text x="270" y="270" text-anchor="middle" fill="#e74c3c" font-size="20">✕</text>
+  <text x="630" y="270" text-anchor="middle" fill="#e74c3c" font-size="20">✕</text>
+  
+  <!-- Legend -->
+  <text x="450" y="385" text-anchor="middle" fill="#999" font-size="12">Each surface maintains its own isolated context. Switching tools means starting over.</text>
+</svg>
