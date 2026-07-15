@@ -1,0 +1,27 @@
+%%{init: {'theme':'base', 'themeVariables': {'background':'#1a1a2e','mainBkg':'#202040','primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#8BE9FD','lineColor':'#8BE9FD','edgeLabelBackground':'#1a1a2e','fontFamily':'inherit'}}}%%
+flowchart LR
+    subgraph Private["private tier"]
+        direction TB
+        Logs["📁 raw Copilot CLI logs"]
+    end
+
+    Parser["local parser"]
+    Scrub["scrub + ratify"]
+    Context["curated context repo"]
+    Untrusted["untrusted AI surface"]
+
+    Logs --> Parser
+    Logs --> Scrub --> Context
+    Logs -. "BLOCKED" .-> Untrusted
+
+    classDef privateNode fill:#3A1118,stroke:#FF5555,color:#FFFFFF,stroke-width:2px;
+    classDef allowed fill:#102A43,stroke:#8BE9FD,color:#FFFFFF,stroke-width:2px;
+    classDef scrub fill:#3D236B,stroke:#BD93F9,color:#FFFFFF,stroke-width:2px;
+    classDef blocked fill:#3A1118,stroke:#FF5555,color:#FFFFFF,stroke-width:3px;
+    class Logs privateNode;
+    class Parser,Context allowed;
+    class Scrub scrub;
+    class Untrusted blocked;
+    style Private fill:#241424,stroke:#FF5555,stroke-width:3px,color:#FFFFFF
+    linkStyle 0,1,2 stroke:#8BE9FD,stroke-width:3px;
+    linkStyle 3 stroke:#FF5555,stroke-width:4px,stroke-dasharray:6 4;

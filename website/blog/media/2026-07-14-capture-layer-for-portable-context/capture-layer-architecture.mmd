@@ -1,0 +1,23 @@
+%%{init: {'theme':'base', 'themeVariables': {'background':'#1a1a2e','mainBkg':'#202040','primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#8BE9FD','lineColor':'#8BE9FD','edgeLabelBackground':'#1a1a2e','fontFamily':'inherit'}}}%%
+flowchart LR
+    Prompt["User prompt"] --> TurnShell
+    subgraph Turn["Copilot CLI turn"]
+        direction TB
+        TurnShell[" "]
+        Response["assistant response"]
+        Events["events"]
+        TurnShell --- Response
+        TurnShell --- Events
+    end
+    TurnShell --> YAML["timestamped YAML file"]
+    YAML --> Optional["optional sections<br/>attachments<br/>tools<br/>usage<br/>skills<br/>errors"]
+    Note["all enriched captures<br/>default OFF"] -.-> Optional
+
+    classDef cyan fill:#102A43,stroke:#8BE9FD,color:#FFFFFF,stroke-width:2px;
+    classDef violet fill:#3D236B,stroke:#BD93F9,color:#FFFFFF,stroke-width:2px;
+    classDef note fill:#2B2640,stroke:#F1FA8C,color:#FFFFFF,stroke-dasharray:4 3;
+    class Prompt,YAML,Optional cyan;
+    class Response,Events violet;
+    class Note note;
+    style Turn fill:#202040,stroke:#BD93F9,stroke-width:2px,color:#FFFFFF
+    style TurnShell fill:transparent,stroke:transparent,color:transparent

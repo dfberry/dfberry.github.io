@@ -109,6 +109,8 @@ Two implementation details saved me from future debugging. Copilot CLI reserves 
 
 > 🎨 **Diagram prompt:** Create a dark-background technical diagram (#1a1a2e) titled "Copilot CLI capture layer". Left node: "User prompt". Middle node: "Copilot CLI turn" with two smaller internal labels: "assistant response" and "events". Right node: "timestamped YAML file". Under the YAML file, list optional sections: "attachments", "tools", "usage", "skills", "errors". Add a small note beside the optional sections: "all enriched captures default OFF". Use rounded boxes, cyan arrows, and compact developer-diagram styling.
 
+![Copilot CLI capture layer architecture](./media/2026-07-14-capture-layer-for-portable-context/capture-layer-architecture.png)
+
 ## Promote observations only after review
 
 The first post's pipeline feels less abstract now that I have real files on disk.
@@ -139,6 +141,8 @@ For example, a few sessions might suggest that I prefer targeted validation befo
 Boring is good here. The capture layer does not promote anything by itself. That keeps mistakes, one-off exceptions, and prompt-injection garbage out of my canonical context unless I approve them.
 
 > 🎨 **Diagram prompt:** Create a dark vector flow diagram on #1a1a2e showing four horizontal stages: "Observation (YAML log)", "Candidate (proposed fact)", "Ratification gate (human review)", and "Context (canonical markdown)". Make the ratification gate visually distinct as a narrow checkpoint with a lock icon. Add a red bypass arrow labeled "do not auto-promote" that is crossed out. Style should match a precise engineering architecture diagram.
+
+![Observation to context ratification pipeline](./media/2026-07-14-capture-layer-for-portable-context/observation-pipeline.png)
 
 ## Keep the feed in files I can inspect
 
@@ -171,6 +175,8 @@ So I treat `copilot-response-log` like the private tier from the first post:
 That last point is the security boundary. If an untrusted surface can read my raw logs, filtering the final answer is too late.
 
 > 🎨 **Diagram prompt:** Create a dark security-boundary diagram (#1a1a2e) with a folder labeled "raw Copilot CLI logs" inside a red-outlined zone labeled "private tier". Outside the zone, show three consumers: "local parser", "curated context repo", and "untrusted AI surface". Draw an allowed arrow from logs to local parser, an allowed arrow through "scrub + ratify" to curated context, and a blocked arrow from logs directly to untrusted AI surface. Use red for blocked access, cyan for allowed access.
+
+![Private-tier boundary for raw Copilot CLI logs](./media/2026-07-14-capture-layer-for-portable-context/private-tier-boundary.png)
 
 ## Sync only after the capture layer exists
 
