@@ -1,8 +1,8 @@
 [
   {
-    "prompt": "Watercolor illustration, soft wet-on-wet washes, warm muted tones. White female with pink hair sorting handwritten notes into a wooden box at a wooden desk, warm evening lamplight, visible paper texture, loose brushwork, no text, no labels",
+    "prompt": "Watercolor illustration, soft wet-on-wet washes, warm muted tones. White female with pink hair seated at a wooden desk, one hand holding a pen, the other hand resting on paper, warm evening lamplight, visible paper texture, loose brushwork, no text, no labels",
     "output": "outputs/2026-07-14-capture-layer-for-portable-context/watercolor-01-capture-hero.png",
     "seed": 71,
-    "negative_prompt": "text, letters, words, watermark, signature, UI elements, screenshots, photorealistic, 3D render, cartoon, anime, ink, line art, bold outlines, hard edges, comic, cel shading, digital art, sharp lines"
+    "negative_prompt": "text, letters, words, watermark, signature, photorealistic, 3D render, cartoon, anime, ink, line art, bold outlines, hard edges, comic, missing arm, extra arm, extra limbs, deformed hands, mutated hands, bad anatomy, disfigured"
   }
 ]

@@ -38,6 +38,10 @@ keywords:
 draft: true
 ---
 
+![A developer writing the day's notes by lamplight, watercolor illustration](./media/2026-07-14-capture-layer-for-portable-context/watercolor-01-capture-hero.png)
+
+*The capture layer is just this: every finished session leaves behind a note I can review later.*
+
 I built the missing memory half from my last post.
 
 In [Portable Personal Context Across AI Client Surfaces](/2026-07-10-portable-personal-context), I separated **personal context** from **memory**. Context is the small set of reviewed facts I want tools to trust. Memory is what happened while I worked.
