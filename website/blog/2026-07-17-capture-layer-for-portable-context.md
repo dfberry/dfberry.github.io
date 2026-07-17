@@ -7,32 +7,16 @@ sidebar_label: "2026.07.17 Capture layer"
 title: "I Built the Capture Layer for My Portable Personal Context"
 description: "I built a Copilot CLI extension that turns my sessions into structured YAML observations for a human-reviewed portable personal context pipeline."
 tags:
-  - ai
-  - copilot
-  - personal context
-  - github
-  - markdown
-  - productivity
-  - architecture
-  - memory
-  - copilot cli
-  - plugin
-  - extension
-  - observability
-  - yaml
+  - AI
+  - Personal Context
+  - Copilot CLI
+  - Architecture
 keywords:
-  - copilot cli plugin
-  - copilot cli extension
-  - portable personal context
-  - ai memory feed
-  - ai observation log
-  - copilot response logging
-  - yaml ai logs
-  - personal context pipeline
-  - observation candidate ratification context
-  - local first ai memory
-  - developer productivity ai
-  - ai context architecture
+  - portable personal context pipeline
+  - copilot session logging
+  - ai observation capture
+  - local-first ai memory
+  - context architecture
   - prompt injection retrieval boundary
   - second brain for developers
 ---
