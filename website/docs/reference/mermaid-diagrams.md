@@ -168,9 +168,9 @@ end
 
 ## Best Practices
 
-1. **Keep labels short** (<50 chars) for readability
+1. **Keep labels short** (\<50 chars) for readability
 2. **Use consistent emoji conventions** (✅ done, 🚀 future, ⚠️ warning)
-3. **Limit diagram complexity** (5-7 levels deep, <15 nodes for flowcharts)
+3. **Limit diagram complexity** (5-7 levels deep, \<15 nodes for flowcharts)
 4. **Apply watercolor theme** to all blog diagrams for visual cohesion
 5. **Use node styles consistently** (same semantic use = same style)
 6. **Test on both light and dark backgrounds** (theme designed for light)
