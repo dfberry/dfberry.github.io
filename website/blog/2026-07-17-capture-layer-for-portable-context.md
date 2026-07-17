@@ -127,8 +127,6 @@ For example, a few sessions might suggest that I prefer targeted validation befo
 
 Boring is good here. The capture layer does not promote anything by itself. That keeps mistakes, one-off exceptions, and prompt-injection garbage out of my canonical context unless I approve them.
 
-> 🎨 **Diagram prompt:** Create a dark vector flow diagram on #1a1a2e showing four horizontal stages: "Observation (YAML log)", "Candidate (proposed fact)", "Ratification gate (human review)", and "Context (canonical markdown)". Make the ratification gate visually distinct as a narrow checkpoint with a lock icon. Add a red bypass arrow labeled "do not auto-promote" that is crossed out. Style should match a precise engineering architecture diagram.
-
 ![Observation to context ratification pipeline](./media/2026-07-17-capture-layer-for-portable-context/observation-pipeline.png)
 
 ## Keep the feed in files I can inspect
@@ -160,8 +158,6 @@ So I treat `copilot-response-log` like the private tier from [my personal contex
 - I enforce trust tiers before retrieval.
 
 That last point is the security boundary. If an untrusted surface can read my raw logs, filtering the final answer is too late.
-
-> 🎨 **Security boundary diagram:**
 
 ![Private-tier boundary for raw Copilot CLI logs](./media/2026-07-17-capture-layer-for-portable-context/private-tier-boundary.png)
 
