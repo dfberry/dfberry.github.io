@@ -1,0 +1,47 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Inter, ui-sans-serif, system-ui",
+    "primaryColor": "#f5e6d3",
+    "primaryTextColor": "#3d2817",
+    "primaryBorderColor": "#d4896b",
+    "lineColor": "#c9956b",
+    "secondaryColor": "#fdf4e8",
+    "secondaryTextColor": "#3d2817",
+    "secondaryBorderColor": "#b8836f",
+    "tertiaryColor": "#f9ead8",
+    "tertiaryTextColor": "#4a3428",
+    "tertiaryBorderColor": "#d4896b",
+    "background": "#fef9f5",
+    "mainBkg": "#fef9f5",
+    "secondBkg": "#fef9f5",
+    "tertiaryBkg": "#fef9f5",
+    "textColor": "#3d2817",
+    "fontSize": "16px"
+  }
+}}%%
+
+graph LR
+    subgraph done["✅ This Post: Observation Capture"]
+        observation["📋 Observation<br/>YAML log<br/><br/>Raw evidence"]
+    end
+    
+    subgraph future["🚀 Future Posts: Candidate → Context"]
+        candidate["📝 Candidate<br/>Proposed fact<br/><br/>Not authoritative"]
+        ratify["🔒 Ratification<br/>Human Review<br/><br/>Decision point"]
+        context["✓ Context<br/>Canonical markdown<br/><br/>Approved rule"]
+        blocked["❌ Do not<br/>auto-promote"]
+    end
+    
+    observation -->|propose| candidate
+    candidate -->|review| ratify
+    ratify -->|approve| context
+    ratify -.->|reject| blocked
+    
+    style done fill:#fef9f5,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style future fill:#fef9f5,stroke:#a0734d,stroke-width:2px,stroke-dasharray:5,color:#6b4423
+    style observation fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style candidate fill:#fdf4e8,stroke:#b8836f,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style ratify fill:#f9ead8,stroke:#d4896b,stroke-width:4px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style context fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style blocked fill:#fef9f5,stroke:#a0734d,stroke-width:2px,stroke-dasharray:5,color:#6b4423,rx:10,ry:10,font-weight:600,font-size:13px

@@ -1,0 +1,16 @@
+%%{init: {'theme':'base', 'themeVariables': {'background':'#1a1a2e','mainBkg':'#202040','primaryColor':'#7B2FA0','primaryTextColor':'#FFFFFF','primaryBorderColor':'#8BE9FD','lineColor':'#8BE9FD','edgeLabelBackground':'#1a1a2e','fontFamily':'inherit'}}}%%
+flowchart LR
+    Observation["Observation<br/>(YAML log)"] --> Candidate["Candidate<br/>(proposed fact)"]
+    Candidate --> Gate["🔒 Ratification gate<br/>(human review)"]
+    Gate --> Context["Context<br/>(canonical markdown)"]
+    Candidate -. "do not auto-promote" .-> Stop["⛔ blocked"]
+    Stop -.-> Context
+
+    classDef stage fill:#102A43,stroke:#8BE9FD,color:#FFFFFF,stroke-width:2px;
+    classDef gate fill:#3D236B,stroke:#BD93F9,color:#FFFFFF,stroke-width:3px;
+    classDef blocked fill:#3A1118,stroke:#FF5555,color:#FFFFFF,stroke-width:3px;
+    class Observation,Candidate,Context stage;
+    class Gate gate;
+    class Stop blocked;
+    linkStyle 0,1,2 stroke:#8BE9FD,stroke-width:3px;
+    linkStyle 3,4 stroke:#FF5555,stroke-width:3px,stroke-dasharray:6 4;

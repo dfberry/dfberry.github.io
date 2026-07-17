@@ -1,0 +1,47 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Inter, ui-sans-serif, system-ui",
+    "primaryColor": "#f5e6d3",
+    "primaryTextColor": "#3d2817",
+    "primaryBorderColor": "#d4896b",
+    "lineColor": "#c9956b",
+    "secondaryColor": "#fdf4e8",
+    "secondaryTextColor": "#3d2817",
+    "secondaryBorderColor": "#b8836f",
+    "tertiaryColor": "#f9ead8",
+    "tertiaryTextColor": "#4a3428",
+    "tertiaryBorderColor": "#d4896b",
+    "background": "#fef9f5",
+    "mainBkg": "#fef9f5",
+    "secondBkg": "#fef9f5",
+    "tertiaryBkg": "#fef9f5",
+    "textColor": "#3d2817",
+    "fontSize": "16px"
+  }
+}}%%
+
+graph LR
+    subgraph done["✅ Implemented in This Post: Capture Layer"]
+        prompt["🔤 User prompt"]
+        turn["⚙️ Copilot CLI turn"]
+        response["📝 assistant response"]
+        events["📊 events"]
+        yaml["📋 timestamped<br/>YAML file"]
+        optional["⭐ optional sections:<br/>attachments<br/>tools<br/>usage<br/>skills<br/>errors"]
+        
+        prompt -->|input| turn
+        turn -->|output| response
+        turn -->|output| events
+        response --> yaml
+        events --> yaml
+        yaml -->|contains| optional
+    end
+    
+    style done fill:#fef9f5,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style prompt fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style turn fill:#fdf4e8,stroke:#b8836f,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style response fill:#f9ead8,stroke:#d4896b,stroke-width:2.5px,color:#3d2817,rx:10,ry:10,font-weight:600,font-size:14px
+    style events fill:#f9ead8,stroke:#d4896b,stroke-width:2.5px,color:#3d2817,rx:10,ry:10,font-weight:600,font-size:14px
+    style yaml fill:#f5e6d3,stroke:#c9956b,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style optional fill:#fef9f5,stroke:#b8836f,stroke-width:2.5px,color:#4a3428,rx:10,ry:10,font-weight:500,font-size:13px
