@@ -1,0 +1,52 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Inter, ui-sans-serif, system-ui",
+    "primaryColor": "#f5e6d3",
+    "primaryTextColor": "#3d2817",
+    "primaryBorderColor": "#d4896b",
+    "lineColor": "#c9956b",
+    "secondaryColor": "#fdf4e8",
+    "secondaryTextColor": "#3d2817",
+    "secondaryBorderColor": "#b8836f",
+    "tertiaryColor": "#f9ead8",
+    "tertiaryTextColor": "#4a3428",
+    "tertiaryBorderColor": "#d4896b",
+    "background": "#fef9f5",
+    "mainBkg": "#fef9f5",
+    "secondBkg": "#fef9f5",
+    "tertiaryBkg": "#fef9f5",
+    "textColor": "#3d2817",
+    "fontSize": "16px"
+  }
+}}%%
+
+graph LR
+    subgraph private["✅ This Post: Private Tier Capture"]
+        logs["📁 raw Copilot<br/>CLI logs<br/><br/>Sensitive data"]
+        parser["🔍 local parser<br/>candidate<br/>extraction"]
+    end
+    
+    subgraph future["🚀 Future Posts: Approval & Publishing"]
+        ratify["📋 scrub +<br/>ratify<br/><br/>human review"]
+        approved["✓ curated<br/>context repo<br/><br/>approved rules"]
+    end
+    
+    subgraph untrustedZone["⚠️ Untrusted Surfaces"]
+        untrusted["⚠️ untrusted<br/>AI surface<br/><br/>blocked access"]
+    end
+    
+    logs -->|private read| parser
+    parser -->|propose| ratify
+    ratify -->|promote| approved
+    untrusted -.->|blocked| logs
+    approved -->|allowed read| untrusted
+    
+    style private fill:#fef9f5,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style future fill:#fef9f5,stroke:#a0734d,stroke-width:2px,stroke-dasharray:5,color:#6b4423
+    style untrustedZone fill:#fef9f5,stroke:#a0734d,stroke-width:2px,stroke-dasharray:5,color:#6b4423
+    style logs fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style parser fill:#fdf4e8,stroke:#b8836f,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style ratify fill:#f9ead8,stroke:#d4896b,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style approved fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817,rx:12,ry:12,font-weight:700,font-size:15px
+    style untrusted fill:#fef9f5,stroke:#a0734d,stroke-width:2px,stroke-dasharray:5,color:#6b4423,rx:12,ry:12,font-weight:600,font-size:15px
