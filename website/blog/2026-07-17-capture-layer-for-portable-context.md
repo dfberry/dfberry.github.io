@@ -35,7 +35,6 @@ keywords:
   - ai context architecture
   - prompt injection retrieval boundary
   - second brain for developers
-draft: true
 ---
 
 ![A developer writing the day's notes by lamplight, watercolor illustration](./media/2026-07-17-capture-layer-for-portable-context/watercolor-01-capture-hero.png)
