@@ -4,8 +4,8 @@ date: 2026-07-20
 canonical_url: https://dfberry.github.io/blog/2026-07-20-candidate-extraction-and-ratification
 custom_edit_url: null
 sidebar_label: "2026.07.20 Candidate extraction"
-title: "I Built Candidate Extraction and Ratification for My Portable Personal Context"
-description: "I needed a safe way to turn repeated Copilot CLI session evidence into reviewed portable context, so I built candidate extraction with a human ratification gate."
+title: "Candidate Extraction: I Built a Ratification Gate for AI Memory"
+description: "Candidate extraction kept Copilot CLI memory from becoming rules by turning repeated evidence into review YAML with a ratification gate."
 tags:
   - ai
   - copilot
@@ -19,14 +19,17 @@ tags:
   - chronicle
   - candidate extraction
   - ratification
+  - ratification gate
   - yaml
   - node:sqlite
 keywords:
   - candidate extraction
   - ratification
+  - ratification gate
   - portable personal context
   - copilot cli chronicle
   - copilot cli memory
+  - copilot memory alternative
   - copilot memory
   - node sqlite
   - node:sqlite
@@ -40,9 +43,9 @@ updated: 2026-07-20 13:44 PST
 draft: true
 ---
 
-I built the step that keeps my AI memory from becoming my AI rules.
+Candidate extraction is the step that keeps my AI memory from becoming my AI rules.
 
-In [Portable Personal Context Across AI Client Surfaces](/2026-07-10-portable-personal-context), I separated reviewed context from raw memory. In [the capture-layer post](/2026-07-14-capture-layer-for-portable-context), I built the YAML feed. This post is the next piece: candidate extraction plus a human ratification gate, with an honest detour through Copilot CLI `/chronicle` and Copilot Memory.
+In [Portable Personal Context Across AI Client Surfaces](/2026-07-10-portable-personal-context), I separated reviewed context from raw memory. In [the Copilot CLI capture-layer post](/2026-07-14-capture-layer-for-portable-context), I built the YAML feed. This post is the next piece: candidate extraction plus a human ratification gate, with an honest detour through Copilot CLI `/chronicle` and Copilot Memory.
 
 The short version: extraction can propose facts. It cannot approve them.
 
@@ -50,7 +53,7 @@ The short version: extraction can propose facts. It cannot approve them.
 
 ---
 
-## Keep the pipeline honest
+## Keep candidate extraction out of the approval seat
 
 The first two posts gave me the shape of the system, but they did not yet give me the review loop. A log file on disk is useful evidence. It is not a rule I want every AI surface to trust.
 
@@ -148,7 +151,7 @@ Current authority: none, status is still pending.
 
 That last line is the safety property. The extractor can make a case. It cannot win the case.
 
-## Keep confidence boring
+## Use confidence only for triage
 
 I added confidence because review queues need sorting. I did not add it because I think the extractor knows the truth.
 
@@ -221,7 +224,7 @@ The prompt-injection case is the one I care about most. Suppose a pasted file in
 
 This is also why I do not let assistant responses become canonical on their own. An assistant can summarize my behavior, but my portable context should not trust that summary until I approve it.
 
-## Notice the `/chronicle` overlap
+## Compare Copilot CLI `/chronicle` overlap honestly
 
 Here is the honest twist: after building the capture layer, I found that Copilot CLI already has `/chronicle`.
 
@@ -243,7 +246,7 @@ The default stays `yaml` because my capture files are the portable shape I contr
 
 That turned a collision into a better design. YAML capture remains useful when I want explicit files, easy redaction, and a tool-owned format. Chronicle becomes another local evidence source for Copilot CLI sessions.
 
-## Read chronicle without taking a dependency
+## Read chronicle with `node:sqlite` and no runtime dependency
 
 The chronicle integration reads the local SQLite store in read-only mode and maps its turns into the same observation shape as YAML captures.
 
