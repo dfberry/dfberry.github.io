@@ -43,19 +43,17 @@ and tools on the desk, soft watercolor washes, gentle ink outlines."
 
 ![A pink-haired girl examining nesting dolls that grow from a small scroll to a winged figure, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
 
-This is for anyone in an organization who knows how the work should be done but does not want to start by filing a developer request.
+I had forty working skills, and they were carrying around more process knowledge than I realized.
 
-The aim is to help domain and process experts capture how they make decisions in a form they can run, correct, and eventually automate. The goal is empowerment: AI helps where it saves time, while people stay responsible for their own work and decisions.
+Some of those skills had scripts doing real work: calling APIs, generating reports, creating pull requests. The scripts were good, but each one lived inside one skill. Useful work had become a set of tiny nesting dolls, and a few of the dolls were carrying around power tools.
 
-A skill gives them a way to write the workflow in natural language and keep ownership while it matures.
+That problem matters beyond my repo. If you know how work should be done, you should be able to capture that process in natural language, run it, correct it, and keep ownership while it matures. You do not need to start by filing a developer request.
 
-They do not need to be developers to articulate the workflow or the decision points. The process starts with human judgment. Automation comes later, after repeated correct outcomes prove the flow.
+A skill gives domain and process experts a place to express decisions and workflow in plain language. AI helps where it saves time, while people stay responsible for their own work and decisions. The process starts with human judgment. Automation comes later, after repeated correct outcomes prove the flow.
 
 The work also does not have to get tossed over the wall and hope it lands upright. The person who understands the process stays close to it.
 
-My own path started with forty skills that worked. Each skill captured useful process knowledge, and many of them had scripts inside that did real work: calling APIs, generating reports, creating pull requests. The scripts were good, but they were scoped to one skill. That made the captured process harder to reuse, test, and run without me.
-
-The architecture I landed on is a progressive promotion model where domain expertise starts as a natural language skill, hardens into typed MCP tools, and promotes to autonomous execution only when the process is ready.
+The architecture I landed on is a progressive promotion model: domain expertise starts as a natural language skill, hardens into typed MCP tools, and promotes to autonomous execution only when the process is ready.
 
 ---
 
