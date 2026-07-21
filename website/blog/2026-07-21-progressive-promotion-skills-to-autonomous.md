@@ -5,7 +5,7 @@ canonical_url: https://dfberry.github.io/blog/2026-07-21-progressive-promotion-s
 custom_edit_url: null
 sidebar_label: "2026.07.21 Progressive promotion"
 title: "From Natural Language to Autonomous Actions: A Progressive Promotion Model"
-description: "Build AI automation that starts as a cheap skill, hardens into an MCP tool, then promotes to autonomous agent—without rewriting anything at each stage. A practical architecture for cost-effective AI pipelines."
+description: "A progressive promotion model for helping domain experts capture process knowledge in natural language, keep ownership, and promote validated workflows to MCP tools and autonomy."
 tags:
   - AI
   - Architecture
@@ -16,16 +16,18 @@ tags:
   - Automation
 keywords:
   - progressive promotion model
-  - ai automation lifecycle
+  - domain expert workflow
+  - process automation
+  - natural language automation
+  - no-code process capture
+  - process ownership
   - mcp tools
+  - model context protocol
   - copilot skills
   - autonomous agents
   - prompt caching
-  - ai cost optimization
   - skill to agent pipeline
-  - model context protocol
-  - copilot cli autonomous
-  - ai development lifecycle
+  - copilot cli
   - determinism extraction
 ---
 
