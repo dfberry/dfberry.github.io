@@ -47,6 +47,8 @@ Each skill had a script inside it that did real work—calling APIs, generating 
 
 This post documents the architecture I landed on: a progressive promotion model where work starts as a natural language skill, hardens into typed MCP tools, and promotes to fully autonomous execution—without rewriting anything at each stage.
 
+The starting point matters. A skill is natural language on purpose, so a domain expert or process expert can capture the workflow before anyone turns it into code.
+
 ---
 
 ## The mistake I kept making
@@ -162,15 +164,19 @@ Build the script once. Wrap it in a typed tool once. Then change only the driver
 
 I did not start with this architecture. I watched the pattern emerge across dozens of skills and then named it.
 
+> Start in natural language. Promote only after repeated correct outcomes prove the process flow.
+
 ### Phase A: Exploration
 
-A new skill starts with the LLM doing everything inline. The instructions say something like "query the GitHub API for recent releases, then compare against our changelog." The LLM reasons through each step. It works, but it is slow and expensive—because the LLM is re-deriving the same logic every time.
+A new skill starts with the LLM doing everything inline on purpose. The instructions say something like "query the GitHub API for recent releases, then compare against our changelog." A non-technical domain or process expert can own that workflow because the first version is written in plain language, not code.
+
+At this stage, correctness matters more than speed. I want to see the process produce the right outcome more than once before I freeze any part of it into a tool.
 
 ### Phase B: Determinism emerges
 
 After a few runs, I notice: step 2 is always the same. Same API call, same parsing, same output format. The LLM is not adding judgment here. It is following a mechanical procedure.
 
-This is the signal. When you catch yourself writing the same tool calls and parsing steps into skill instructions for the third time, you are looking at determinism that should be extracted.
+This is the signal. When you catch yourself writing the same tool calls and parsing steps into skill instructions for the third time, and the outcomes have been correct, you are looking at determinism that should be extracted.
 
 ### Phase C: Extract to MCP (not script-in-skill)
 
@@ -199,7 +205,7 @@ The skill now says "call `detect_releases`" instead of embedding the detection l
 
 ### Phase D: Promote to agent
 
-When the skill has run reliably for a while and I want it to run without me, I promote it. The agent uses the same MCP tools. The only difference is who drives: me (interactive) or the agent (autonomous).
+Autonomy is not the starting point, and it is not always the goal. When the skill has run reliably for a while and I want it to run without me, I promote it. The agent uses the same MCP tools. The only difference is who drives: me (interactive) or the agent (autonomous).
 
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
