@@ -1,0 +1,30 @@
+%%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
+graph TB
+    subgraph MCP["🔧 MCP Server (built once)"]
+        T1["detect_releases"]
+        T2["generate_metadata"]
+        T3["analyze_impact"]
+    end
+
+    subgraph Interactive["💬 Phase C: Skill drives"]
+        S["You say: 'sync releases'"]
+        S --> T1
+        T1 --> T2
+        T2 -->|"⏸ You approve PRs"| T3
+    end
+
+    subgraph Autonomous["🤖 Phase D: Agent drives"]
+        AG["Cron: daily 8am"]
+        AG --> T1
+        T1 --> T2
+        T2 -->|"📱 Teams notification"| T3
+    end
+
+    style MCP fill:#fef9f5,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style Interactive fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style Autonomous fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style T1 fill:#f5e6d3,stroke:#d4896b,stroke-width:2px,color:#3d2817
+    style T2 fill:#f5e6d3,stroke:#d4896b,stroke-width:2px,color:#3d2817
+    style T3 fill:#f5e6d3,stroke:#d4896b,stroke-width:2px,color:#3d2817
+    style S fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style AG fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
