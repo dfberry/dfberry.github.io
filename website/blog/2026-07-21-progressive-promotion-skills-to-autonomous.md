@@ -41,11 +41,13 @@ and tools on the desk, soft watercolor washes, gentle ink outlines."
 
 ![A pink-haired girl examining nesting dolls that grow from a small scroll to a winged figure, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
 
-I want domain experts to capture how they make decisions without starting in code.
+This is for anyone in an organization who knows how the work should be done but does not want to start by filing a developer request.
 
-A skill gives them a way to write the workflow in natural language, run it, correct it, and keep ownership while it matures. They do not need to be developers to articulate the workflow or the decision points. The process starts with human judgment. Automation comes later, after repeated correct outcomes prove the flow.
+I want domain and process experts to capture how they make decisions in a form they can run, correct, and eventually automate. The goal is empowerment: AI helps where it saves time, while people stay responsible for their own work and decisions.
 
-That matters because the goal is empowerment. AI should help people in the places where it can save time, while they stay responsible for their own work and decisions.
+A skill gives them a way to write the workflow in natural language and keep ownership while it matures.
+
+They do not need to be developers to articulate the workflow or the decision points. The process starts with human judgment. Automation comes later, after repeated correct outcomes prove the flow.
 
 I built forty skills that worked. Each skill captured useful process knowledge, and many of them had scripts inside that did real work: calling APIs, generating reports, creating pull requests. The scripts were good, but they were scoped to one skill. That made the captured process harder to reuse, test, and run without me.
 
@@ -53,34 +55,19 @@ This post documents the architecture I landed on: a progressive promotion model 
 
 ---
 
-## Where my first design stopped
+## The automation tradeoff changed
 
-My first development path was:
+The old tradeoff was business value versus engineering work. If automation took a developer project to build, only high-value work usually made the cut. The domain expert often had to describe the workflow, hand it to developers, and wait for someone else to turn it into software.
 
-1. Write a skill (natural language instructions for the LLM)
-2. Notice that part of the skill is deterministic (same inputs → same outputs every time)
-3. Extract that logic into a script inside the skill
-4. Done
+This model changes the cost of the next step. The domain expert hones the workflow in natural language while they use it. When repeated correct outcomes prove the process, the stable parts can move behind MCP tools without a large rewrite. Cached tool definitions, reusable scripts, and typed contracts make promotion cheap enough for smaller workflows too.
 
-Step 4 is where the design stopped too early. The skill captured the process, and the script worked, but only from that skill. No other skill can call it. No agent can use it. No CI pipeline can run it. If I want the same logic somewhere else, I copy-paste.
+That is the empowerment piece. The expert gets time back while keeping ownership of the process and the decisions inside it.
 
-After forty skills, I had forty pieces of process knowledge with scripts scoped to individual skills, no typed contracts, no shared interfaces, and no clear path to autonomous execution.
-
-<!-- Watercolor image prompt (dead-end):
-"Watercolor illustration, warm earth tones, soft peach and cream palette.
-A pink-haired girl standing at a crossroads in a garden. The left path leads
-to a stone wall covered in vines (dead end). The right path opens to a
-rolling landscape with a distant village. She's looking at the wall, holding
-a small box (a script). At her feet are many identical small boxes stacked
-up against the wall. Warm lamplight filtering through trees, soft watercolor
-washes, gentle ink outlines."
--->
-
-![A pink-haired girl at a garden crossroads, with boxes stacked against a dead-end wall, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-02-dead-end.png)
+---
 
 ## The four layers
 
-The model I use now puts each concern in its own layer:
+Here is the path at a high level. The model I use now puts each concern in its own layer. MCP stands for Model Context Protocol. In this post, an MCP tool is the typed interface that lets a skill, agent, or CI job call code in a predictable way:
 
 | Layer | What it does | Who uses it |
 |-------|-------------|-------------|
@@ -248,6 +235,31 @@ The MCP server does not change. The tools do not change. The scripts do not chan
 
 ---
 
+## Where my first design stopped
+
+My own forty-skill batch showed me where this path breaks if I stop too early. My first development path was:
+
+1. Write a skill (natural language instructions for the LLM)
+2. Notice that part of the skill is deterministic (same inputs → same outputs every time)
+3. Extract that logic into a script inside the skill
+4. Done
+
+Step 4 is where the design stopped too early. The skill captured the process, and the script worked, but only from that skill. No other skill can call it. No agent can use it. No CI pipeline can run it. If I want the same logic somewhere else, I copy-paste.
+
+After forty skills, I had forty pieces of process knowledge with scripts scoped to individual skills, no typed contracts, no shared interfaces, and no clear path to autonomous execution.
+
+<!-- Watercolor image prompt (dead-end):
+"Watercolor illustration, warm earth tones, soft peach and cream palette.
+A pink-haired girl standing at a crossroads in a garden. The left path leads
+to a stone wall covered in vines (dead end). The right path opens to a
+rolling landscape with a distant village. She's looking at the wall, holding
+a small box (a script). At her feet are many identical small boxes stacked
+up against the wall. Warm lamplight filtering through trees, soft watercolor
+washes, gentle ink outlines."
+-->
+
+![A pink-haired girl at a garden crossroads, with boxes stacked against a dead-end wall, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-02-dead-end.png)
+
 ## Why MCP tools instead of scripts-in-skills
 
 The decision to extract into MCP rather than keep scripts inside skills comes down to three things:
@@ -309,16 +321,6 @@ After:   Script → JSON → MCP protocol → any consumer receives it directly
 ```
 
 That gave me a useful signal. I had already built toward MCP without naming it. The structured-output spec I wrote a month earlier was the MCP response contract.
-
----
-
-## The automation tradeoff changed
-
-The old tradeoff was business value versus engineering work. If automation took a developer project to build, only high-value work usually made the cut. The domain expert often had to describe the workflow, hand it to developers, and wait for someone else to turn it into software.
-
-This model changes the cost of the next step. The domain expert hones the workflow in natural language while they use it. When repeated correct outcomes prove the process, the stable parts can move behind MCP tools without a large rewrite. Cached tool definitions, reusable scripts, and typed contracts make promotion cheap enough for smaller workflows too.
-
-That is the empowerment piece. The expert gets time back while keeping ownership of the process and the decisions inside it.
 
 ---
 
