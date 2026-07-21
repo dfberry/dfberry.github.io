@@ -41,13 +41,13 @@ and tools on the desk, soft watercolor washes, gentle ink outlines."
 
 ![A pink-haired girl examining nesting dolls that grow from a small scroll to a winged figure, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
 
-I built forty skills that worked. Then I noticed they were hard to reuse.
+I want domain experts to capture how they make decisions without starting in code.
 
-Each skill had a script inside it that did real work: calling APIs, generating reports, creating pull requests. The scripts were good. The problem was where they lived. They were scoped to one skill, so nothing else could reuse them or run them on their own.
+A skill gives them a way to write the workflow in natural language, run it, correct it, and keep ownership while it matures. They do not need to be developers to articulate the workflow or the decision points. The process starts with human judgment. Automation comes later, after repeated correct outcomes prove the flow.
 
-This post documents the architecture I landed on: a progressive promotion model where work starts as a natural language skill, hardens into typed MCP tools, and promotes to autonomous execution without rewriting everything at each stage.
+I built forty skills that worked. Each skill captured useful process knowledge, and many of them had scripts inside that did real work: calling APIs, generating reports, creating pull requests. The scripts were good, but they were scoped to one skill. That made the captured process harder to reuse, test, and run without me.
 
-The starting point matters. A skill is natural language on purpose, so a domain expert or process expert can capture the workflow before anyone turns it into code.
+This post documents the architecture I landed on: a progressive promotion model where domain expertise starts as a natural language skill, hardens into typed MCP tools, and promotes to autonomous execution only when the process is ready.
 
 ---
 
@@ -60,9 +60,9 @@ My first development path was:
 3. Extract that logic into a script inside the skill
 4. Done
 
-Step 4 is where the design stopped too early. The script works, but only from that skill. No other skill can call it. No agent can use it. No CI pipeline can run it. If I want the same logic somewhere else, I copy-paste.
+Step 4 is where the design stopped too early. The skill captured the process, and the script worked, but only from that skill. No other skill can call it. No agent can use it. No CI pipeline can run it. If I want the same logic somewhere else, I copy-paste.
 
-After forty skills, I had forty scripts scoped to individual skills, with no typed contracts, no shared interfaces, and no clear path to autonomous execution.
+After forty skills, I had forty pieces of process knowledge with scripts scoped to individual skills, no typed contracts, no shared interfaces, and no clear path to autonomous execution.
 
 <!-- Watercolor image prompt (dead-end):
 "Watercolor illustration, warm earth tones, soft peach and cream palette.
@@ -162,25 +162,27 @@ I write the script once, wrap it in a typed tool once, and change only the drive
 
 ## How work naturally evolves
 
-I did not start with this architecture. I watched the pattern emerge across dozens of skills and then named it.
+I did not start with this architecture. I watched process knowledge mature across dozens of skills and then named the pattern.
 
-> Start in natural language. Promote only after repeated correct outcomes prove the process flow.
+> Start in natural language. Let the domain expert hone the process. Promote only after repeated correct outcomes prove the flow.
 
 ### Phase A: Exploration
 
 A new skill starts with the LLM doing everything inline on purpose. The instructions say something like "query the GitHub API for recent releases, then compare against our changelog." A domain or process expert can own that workflow because the first version is written in plain language, not code.
 
-At this stage, correctness matters more than speed. I want to see the process produce the right outcome more than once before I freeze any part of it into a tool.
+At this stage, correctness matters more than speed. The person with the domain knowledge can run the skill, adjust the instructions, and decide whether the outcome matches their judgment. I want to see the process produce the right outcome more than once before I freeze any part of it into a tool.
+
+The domain expert keeps the process close. They keep running it, correcting it, and deciding when it is ready for more structure.
 
 ### Phase B: Determinism emerges
 
-After a few runs, I notice: step 2 is always the same. Same API call, same parsing, same output format. The LLM is not adding judgment here. It is following a mechanical procedure.
+After a few runs, I notice: step 2 is always the same. Same API call, same parsing, same output format. The LLM is not adding judgment here. It is following a mechanical procedure inside a process the expert has already validated.
 
-This is the signal. When you catch yourself writing the same tool calls and parsing steps into skill instructions for the third time, and the outcomes have been correct, you are looking at determinism that should be extracted.
+This is the signal. When the same tool calls and parsing steps keep showing up in the skill instructions, and the outcomes have been correct, the process is mature enough to extract that deterministic part.
 
 ### Phase C: Extract to MCP (not script-in-skill)
 
-This is the decision point. The deterministic logic becomes a typed MCP tool instead of a script inside the skill.
+This is the decision point. The deterministic logic becomes a typed MCP tool instead of a script inside the skill. The domain expert still controls the workflow through the skill. The stable part moves behind a typed interface.
 
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
@@ -205,7 +207,7 @@ The skill now says "call `detect_releases`" instead of embedding the detection l
 
 ### Phase D: Promote to agent
 
-I start with the skill and promote to autonomy only when the runs are reliable and unattended execution is useful. The agent uses the same MCP tools. The only difference is who drives: me (interactive) or the agent (autonomous).
+I start with the skill and promote to autonomy only when the process is reliable and unattended execution is useful. The agent uses the same MCP tools. The only difference is who drives: me (interactive) or the agent (autonomous).
 
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
@@ -489,9 +491,9 @@ I did not find a named, concrete "Skill → MCP → Agent → CI" promotion mode
 
 ## The rule I use now
 
-> When determinism emerges from a skill, I move reusable logic directly to an MCP tool. I treat scripts-in-skills as prototype code.
+> When a process proves repeatable, I move reusable logic directly to an MCP tool. I treat scripts-in-skills as prototype code.
 
-I ask where the work is on the promotion ladder and what driver it needs right now.
+I ask who owns the process, how mature it is, and what driver it needs right now.
 
 | If the work is... | Use... |
 |-------------------|--------|
@@ -516,10 +518,10 @@ washes, gentle ink outlines, pastoral feeling."
 
 ![A pink-haired girl on a hilltop watching automatons travel between villages, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-05-horizon.png)
 
-Echo is the pilot. Once the content-pipeline MCP server wraps Echo's three scripts and the `/echo-sync` skill drives them interactively, I will validate the token savings and decide whether autonomous execution is the right next step.
+Echo is the pilot. Once the content-pipeline MCP server wraps Echo's three scripts and the `/echo-sync` skill drives them interactively, I will validate both things that matter: the process still produces the right outcome, and the token savings are real.
 
 After that, I will work through Finn, the reporting tools, and the remaining skills one at a time.
 
-I am using this as a development rule: start flexible, harden the parts that stabilize, make them reusable through typed interfaces, and change only the driver when I need more autonomy.
+The pattern is simple: start with the person who owns the domain knowledge, capture the workflow in a skill, run it until the outcomes are consistently right, move the repeatable parts behind MCP tools, and change the driver only when autonomy helps.
 
-The next step is to move one workflow at a time and measure each promotion.
+The ownership stays with the person who understands the process. The system matures around that expertise.
