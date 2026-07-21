@@ -45,6 +45,8 @@ I want domain experts to capture how they make decisions without starting in cod
 
 A skill gives them a way to write the workflow in natural language, run it, correct it, and keep ownership while it matures. They do not need to be developers to articulate the workflow or the decision points. The process starts with human judgment. Automation comes later, after repeated correct outcomes prove the flow.
 
+That matters because the goal is empowerment. AI should help people in the places where it can save time, while they stay responsible for their own work and decisions.
+
 I built forty skills that worked. Each skill captured useful process knowledge, and many of them had scripts inside that did real work: calling APIs, generating reports, creating pull requests. The scripts were good, but they were scoped to one skill. That made the captured process harder to reuse, test, and run without me.
 
 This post documents the architecture I landed on: a progressive promotion model where domain expertise starts as a natural language skill, hardens into typed MCP tools, and promotes to autonomous execution only when the process is ready.
@@ -307,6 +309,16 @@ After:   Script → JSON → MCP protocol → any consumer receives it directly
 ```
 
 That gave me a useful signal. I had already built toward MCP without naming it. The structured-output spec I wrote a month earlier was the MCP response contract.
+
+---
+
+## The automation tradeoff changed
+
+The old tradeoff was business value versus engineering work. If automation took a developer project to build, only high-value work usually made the cut. The domain expert often had to describe the workflow, hand it to developers, and wait for someone else to turn it into software.
+
+This model changes the cost of the next step. The domain expert hones the workflow in natural language while they use it. When repeated correct outcomes prove the process, the stable parts can move behind MCP tools without a large rewrite. Cached tool definitions, reusable scripts, and typed contracts make promotion cheap enough for smaller workflows too.
+
+That is the empowerment piece. The expert gets time back while keeping ownership of the process and the decisions inside it.
 
 ---
 
