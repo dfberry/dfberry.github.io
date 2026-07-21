@@ -87,6 +87,58 @@ The fix is to put each concern in its own layer:
 
 The script is the logic. The MCP tool is the interface. The skill is the orchestration. The agent is the driver.
 
+The important move is physical: the script leaves the skill and moves behind the MCP tool.
+
+```mermaid
+%%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
+graph LR
+    subgraph Before["BEFORE: script-in-skill"]
+        direction TB
+        subgraph SkillBefore["💬 Skill"]
+            direction TB
+            InstrBefore["Natural-language instructions"]
+            ScriptBefore["🔒 Script inside skill<br/><i>only this skill can use it</i>"]
+            InstrBefore --> ScriptBefore
+        end
+    end
+
+    ScriptBefore ==>|extract and relocate| ScriptAfter
+
+    subgraph After["AFTER: script behind MCP"]
+        direction TB
+        subgraph SkillAfter["💬 Skill"]
+            direction TB
+            InstrAfter["Natural-language instructions only"]
+        end
+        subgraph MCPAfter["🔧 MCP Tool"]
+            direction TB
+            ToolAfter["Typed tool contract"]
+            ScriptAfter["📜 Script inside MCP tool<br/><i>reusable logic</i>"]
+            ToolAfter --> ScriptAfter
+        end
+        InstrAfter -->|"calls"| ToolAfter
+        AgentAfter["🤖 Agent"] -->|"calls"| ToolAfter
+        CIAfter["⚙️ CI"] -->|"calls"| ToolAfter
+        OtherAfter["💬 Other skills"] -->|"call"| ToolAfter
+    end
+
+    style Before fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style After fill:#fef9f5,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style SkillBefore fill:#f9ead8,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style SkillAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:3px,color:#3d2817
+    style MCPAfter fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style InstrBefore fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style ScriptBefore fill:#f9ead8,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style InstrAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style ToolAfter fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style ScriptAfter fill:#f9ead8,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style AgentAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style CIAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style OtherAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
+```
+
+The resulting stack looks like this:
+
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
 graph TD
@@ -128,10 +180,10 @@ This is the key decision point. The deterministic logic becomes a typed MCP tool
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
 graph LR
     subgraph "❌ Wrong path"
-        W1["Skill"] --> W2["Script-in-skill"] --> W3["Trapped forever"]
+        W1["Skill owns the script"] --> W2["🔒 Script stays inside skill"] --> W3["Only this skill can use it"]
     end
     subgraph "✅ Right path"
-        R1["Skill"] --> R2["Script"] --> R3["MCP Tool"] --> R4["Skill calls tool"]
+        R1["Extract script"] --> R2["🔧 MCP tool owns the script"] --> R3["Skill calls tool"] --> R4["Agents, CI, other skills can call too"]
     end
 
     style W1 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
