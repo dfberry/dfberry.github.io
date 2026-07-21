@@ -43,7 +43,7 @@ and tools on the desk, soft watercolor washes, gentle ink outlines."
 
 ![A pink-haired girl examining nesting dolls that grow from a small scroll to a winged figure, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
 
-If you know how work should be done, you should be able to capture that process in natural language, run it, correct it, and keep ownership while it matures. You do not need to start by filing a developer request.
+If you know how work should be done, you should be able to capture that process in natural language, run it, correct it, and keep ownership while it matures. You do not need to wait for a software team to build it for you first.
 
 A skill gives domain and process experts a place to express decisions and workflow in plain language. AI helps where it saves time, while people stay responsible for their own work and decisions. The process starts with human judgment. Automation comes later, after repeated correct outcomes prove the flow.
 
