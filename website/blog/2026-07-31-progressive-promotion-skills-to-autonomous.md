@@ -385,7 +385,7 @@ copilot -p "Execute" \
   --agent echo-pipeline \
   --autopilot --no-ask-user \
   --yolo --silent \
-  --model gpt-4o
+  --model gpt-5.4
 
 # Sealed sandbox: only specific tools available
 copilot -p "Sync releases" \
