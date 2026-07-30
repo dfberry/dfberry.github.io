@@ -31,6 +31,10 @@ keywords:
   - determinism extraction
 ---
 
+:::note[CLI version]
+CLI examples written for **GitHub Copilot CLI v1.0.77**. Flag names and behavior may change in later releases.
+:::
+
 <!-- Watercolor image prompt (hero):
 "Watercolor illustration, warm earth tones, soft peach and cream palette.
 A pink-haired girl sitting at a workbench with five nesting matryoshka dolls
