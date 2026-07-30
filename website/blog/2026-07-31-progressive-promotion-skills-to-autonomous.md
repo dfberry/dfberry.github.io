@@ -1,9 +1,9 @@
 ---
-slug: /2026-07-21-progressive-promotion-skills-to-autonomous
-date: 2026-07-21
-canonical_url: https://dfberry.github.io/blog/2026-07-21-progressive-promotion-skills-to-autonomous
+slug: /2026-07-31-progressive-promotion-skills-to-autonomous
+date: 2026-07-31
+canonical_url: https://dfberry.github.io/blog/2026-07-31-progressive-promotion-skills-to-autonomous
 custom_edit_url: null
-sidebar_label: "2026.07.21 Progressive promotion"
+sidebar_label: "2026.07.31 Progressive promotion"
 title: "From Natural Language to Autonomous Actions: A Progressive Promotion Model"
 description: "A progressive promotion model for helping domain experts capture process knowledge in natural language, keep ownership, and promote validated workflows to MCP tools and autonomy."
 tags:
@@ -41,7 +41,7 @@ and is lifting off the table (autonomous). Warm lamplight, scattered papers
 and tools on the desk, soft watercolor washes, gentle ink outlines."
 -->
 
-![A pink-haired girl examining nesting dolls that grow from a small scroll to a winged figure, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
+![A pink-haired girl examining nesting dolls that grow from a small scroll to a winged figure, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
 
 If you know how work should be done, you should be able to capture that process in natural language, run it, correct it, and keep ownership while it matures. You do not need to wait for a software team to build it for you first.
 
@@ -87,34 +87,34 @@ The nesting-doll part works better when the smallest doll is not holding every t
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
 graph LR
-    subgraph Before["BEFORE: script-in-skill"]
+    subgraph Before["  BEFORE: script-in-skill  "]
         direction TB
-        subgraph SkillBefore["💬 Skill"]
+        subgraph SkillBefore["  💬 Skill  "]
             direction TB
-            InstrBefore["Natural-language instructions"]
-            ScriptBefore["🔒 Script inside skill<br/><i>only this skill can use it</i>"]
+            InstrBefore["  Natural-language instructions  "]
+            ScriptBefore["  🔒 Script inside skill<br/><i>only this skill can use it</i>  "]
             InstrBefore --> ScriptBefore
         end
     end
 
     ScriptBefore ==>|extract and relocate| ScriptAfter
 
-    subgraph After["AFTER: script behind MCP"]
+    subgraph After["  AFTER: script behind MCP  "]
         direction TB
-        subgraph SkillAfter["💬 Skill"]
+        subgraph SkillAfter["  💬 Skill  "]
             direction TB
-            InstrAfter["Natural-language instructions only"]
+            InstrAfter["  Natural-language instructions only  "]
         end
-        subgraph MCPAfter["🔧 MCP Tool"]
+        subgraph MCPAfter["  🔧 MCP Tool  "]
             direction TB
-            ToolAfter["Typed tool contract"]
-            ScriptAfter["📜 Script inside MCP tool<br/><i>reusable logic</i>"]
+            ToolAfter["  Typed tool contract  "]
+            ScriptAfter["  📜 Script inside MCP tool<br/><i>reusable logic</i>  "]
             ToolAfter --> ScriptAfter
         end
         InstrAfter -->|"calls"| ToolAfter
-        AgentAfter["🤖 Agent"] -->|"calls"| ToolAfter
-        CIAfter["⚙️ CI"] -->|"calls"| ToolAfter
-        OtherAfter["💬 Other skills"] -->|"call"| ToolAfter
+        AgentAfter["  🤖 Agent  "] -->|"calls"| ToolAfter
+        CIAfter["  ⚙️ CI  "] -->|"calls"| ToolAfter
+        OtherAfter["  💬 Other skills  "] -->|"call"| ToolAfter
     end
 
     style Before fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#3d2817
@@ -137,10 +137,10 @@ The resulting stack looks like this:
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
 graph TD
-    A["📜 Script<br/><i>The logic</i>"] --> B["🔧 MCP Tool<br/><i>Typed interface</i>"]
-    B --> C["💬 Skill<br/><i>Orchestration</i>"]
-    B --> D["🤖 Agent<br/><i>Autonomous driver</i>"]
-    B --> E["⚙️ CI/CD<br/><i>No LLM needed</i>"]
+    A["  📜 Script<br/><i>The logic</i>  "] --> B["  🔧 MCP Tool<br/><i>Typed interface</i>  "]
+    B --> C["  💬 Skill<br/><i>Orchestration</i>  "]
+    B --> D["  🤖 Agent<br/><i>Autonomous driver</i>  "]
+    B --> E["  ⚙️ CI/CD<br/><i>No LLM needed</i>  "]
 
     style A fill:#f9ead8,stroke:#d4896b,stroke-width:3px,color:#3d2817
     style B fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
@@ -181,10 +181,10 @@ This is the decision point. The deterministic logic becomes a typed MCP tool ins
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
 graph LR
     subgraph "❌ Wrong path"
-        W1["Skill owns the script"] --> W2["🔒 Script stays inside skill"] --> W3["Only this skill can use it"]
+        W1["  Skill owns the script  "] --> W2["  🔒 Script stays inside skill  "] --> W3["  Only this skill can use it  "]
     end
     subgraph "✅ Right path"
-        R1["Extract script"] --> R2["🔧 MCP tool owns the script"] --> R3["Skill calls tool"] --> R4["Agents, CI, other skills can call too"]
+        R1["  Extract script  "] --> R2["  🔧 MCP tool owns the script  "] --> R3["  Skill calls tool  "] --> R4["  Agents, CI, other skills can call too  "]
     end
 
     style W1 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
@@ -205,21 +205,21 @@ The path starts with the skill and promotes to autonomy only when the process is
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
 graph TB
-    subgraph MCP["🔧 MCP Server (built once)"]
-        T1["detect_releases"]
-        T2["generate_metadata"]
-        T3["analyze_impact"]
+    subgraph MCP["  🔧 MCP Server (built once)  "]
+        T1["  detect_releases  "]
+        T2["  generate_metadata  "]
+        T3["  analyze_impact  "]
     end
 
-    subgraph Interactive["💬 Phase C: Skill drives"]
-        S["You say: 'sync releases'"]
+    subgraph Interactive["  💬 Phase C: Skill drives  "]
+        S["  You say: 'sync releases'  "]
         S --> T1
         T1 --> T2
         T2 -->|"⏸ You approve PRs"| T3
     end
 
-    subgraph Autonomous["🤖 Phase D: Agent drives"]
-        AG["Cron: daily 8am"]
+    subgraph Autonomous["  🤖 Phase D: Agent drives  "]
+        AG["  Cron: daily 8am  "]
         AG --> T1
         T1 --> T2
         T2 -->|"📱 Teams notification"| T3
@@ -262,7 +262,7 @@ up against the wall. Warm lamplight filtering through trees, soft watercolor
 washes, gentle ink outlines."
 -->
 
-![A pink-haired girl at a garden crossroads, with boxes stacked against a dead-end wall, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-02-dead-end.png)
+![A pink-haired girl at a garden crossroads, with boxes stacked against a dead-end wall, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-02-dead-end.png)
 
 ## Why MCP tools instead of scripts-in-skills
 
@@ -341,7 +341,7 @@ has price tags hanging from the railings, getting smaller as she climbs
 higher. Warm lamplight through tower windows, soft watercolor washes."
 -->
 
-![A pink-haired girl climbing a tower staircase with price tags getting smaller at each level, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-03-cost-ladder.png)
+![A pink-haired girl climbing a tower staircase with price tags getting smaller at each level, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-03-cost-ladder.png)
 
 Each promotion stage changes the driver but keeps the same tools. The cost changes because the driver changes:
 
@@ -427,7 +427,7 @@ reaching for one of the three tools. A small card next to the jar reads
 'SEALED'. Warm lamplight, soft watercolor washes, gentle ink outlines."
 -->
 
-![A pink-haired girl placing an automaton inside a sealed glass bell jar with exactly three tools, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-04-sandbox.png)
+![A pink-haired girl placing an automaton inside a sealed glass bell jar with exactly three tools, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-04-sandbox.png)
 
 When something runs autonomously, the context must be fully specified at launch and immutable during execution. The agent gets exactly the tools it needs and no extra tools. The glass bell jar is boring on purpose.
 
@@ -447,7 +447,7 @@ Copilot CLI implements this through `--available-tools` and the `"tools"` allowl
   "mcpServers": {
     "content-pipeline": {
       "command": "node",
-      "args": ["./mcp-servers/content-pipeline/index.js"],
+      "args": ["  ./mcp-servers/content-pipeline/index.js  "],
       "tools": ["detect_releases", "generate_metadata", "analyze_impact"]
     }
   }
@@ -466,16 +466,16 @@ A common name for this pattern did not turn up, but similar progressions did:
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
 graph LR
     subgraph "This model"
-        A1["Skill"] --> A2["MCP Tool"] --> A3["Agent"] --> A4["CI/CD"]
+        A1["  Skill  "] --> A2["  MCP Tool  "] --> A3["  Agent  "] --> A4["  CI/CD  "]
     end
     subgraph "Anthropic"
-        B1["Augmented LLM"] --> B2["Workflows"] --> B3["Agents"]
+        B1["  Augmented LLM  "] --> B2["  Workflows  "] --> B3["  Agents  "]
     end
     subgraph "Autonomous vehicles"
-        C1["L0: No automation"] --> C2["L2: Partial"] --> C3["L4: High"] --> C4["L5: Full"]
+        C1["  L0: No automation  "] --> C2["  L2: Partial  "] --> C3["  L4: High  "] --> C4["  L5: Full  "]
     end
     subgraph "SRE"
-        D1["Runbook"] --> D2["Automation"] --> D3["Self-healing"]
+        D1["  Runbook  "] --> D2["  Automation  "] --> D3["  Self-healing  "]
     end
 
     style A1 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
@@ -534,7 +534,7 @@ holding a notebook and smiling. Warm sunrise light, soft watercolor
 washes, gentle ink outlines, pastoral feeling."
 -->
 
-![A pink-haired girl on a hilltop watching automatons travel between villages, watercolor illustration](./media/2026-07-21-progressive-promotion-skills-to-autonomous/watercolor-05-horizon.png)
+![A pink-haired girl on a hilltop watching automatons travel between villages, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-05-horizon.png)
 
 Echo is the pilot. Once the content-pipeline MCP server wraps Echo's three scripts and the `/echo-sync` skill drives them interactively, the first validation has two parts: the process still produces the right outcome, and the token savings are real.
 
