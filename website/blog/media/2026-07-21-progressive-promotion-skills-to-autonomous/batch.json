@@ -1,0 +1,43 @@
+{
+  "description": "Blog images for PR #78 — From Natural Language to Autonomous Actions. Dina's watercolor style, tuned for crispness: SDXL refiner ON (second-stage detail pass), 35 steps, quality negatives (blurry/muddy/smudged). Protagonist is a modern, confident pink-haired woman (maker, not subservient/domestic). Prompts are concept-forward and token-tight so the concept survives CLIP's 77-token truncation; crisp/fine-detail tags trail the concept.",
+  "settings": {
+    "steps": 35,
+    "guidance": 7.5,
+    "width": 1024,
+    "height": 1024,
+    "refine": true,
+    "cpu": true
+  },
+  "prompts": [
+    {
+      "filename": "watercolor-01-hero.png",
+      "seed": 101,
+      "prompt": "Watercolor painting, wet-on-wet washes, warm muted tones. Confident pink-haired woman at a workbench, sleeves rolled up, lining up five brass clockwork figures that grow left to right from a tiny paper sketch to a tall winged machine lifting off the bench, self-assured posture, warm studio light, crisp clean watercolor, fine detail, luminous washes",
+      "negative_prompt": "text, watermark, signature, blurry, muddy, smudged, grainy, noisy, low detail, low contrast, dull, photorealistic, 3D render, cartoon, anime, ink, line art, bold outlines, hard edges, comic, storybook, chibi, subservient, submissive, housewife, apron, cooking, knitting, nesting dolls, kneeling, bowing, domestic chores, passive, deformed hands, extra limbs, bad anatomy"
+    },
+    {
+      "filename": "watercolor-02-dead-end.png",
+      "seed": 102,
+      "prompt": "Watercolor painting, wet-on-wet washes, warm muted tones. Confident pink-haired woman turning away from a bricked-up doorway with identical wooden boxes piled against it, toward a bright open doorway leading out to rolling green hills, decisive stance, warm natural light, crisp clean watercolor, fine detail, luminous washes",
+      "negative_prompt": "text, watermark, signature, blurry, muddy, smudged, grainy, noisy, low detail, low contrast, dull, photorealistic, 3D render, cartoon, anime, ink, line art, bold outlines, hard edges, comic, storybook, chibi, subservient, submissive, housewife, apron, cooking, knitting, nesting dolls, kneeling, bowing, domestic chores, passive, deformed hands, extra limbs, bad anatomy"
+    },
+    {
+      "filename": "watercolor-03-cost-ladder.png",
+      "seed": 103,
+      "prompt": "Watercolor painting, wet-on-wet washes, warm muted tones. Confident pink-haired woman striding up a spiral staircase toward glowing light at the top, one large price tag on the low railing and tiny price tags on the high railings, strong upward motion, warm light through tall windows, crisp clean watercolor, fine detail",
+      "negative_prompt": "text, watermark, signature, blurry, muddy, smudged, grainy, noisy, low detail, low contrast, dull, photorealistic, 3D render, cartoon, anime, ink, line art, bold outlines, hard edges, comic, storybook, chibi, subservient, submissive, housewife, apron, cooking, knitting, nesting dolls, kneeling, bowing, domestic chores, passive, deformed hands, extra limbs, bad anatomy"
+    },
+    {
+      "filename": "watercolor-04-sandbox.png",
+      "seed": 104,
+      "prompt": "Watercolor painting, wet-on-wet washes, warm muted tones. Confident pink-haired woman at a workbench sealing a small brass clockwork figure under a clear glass dome, exactly three neat tools arranged inside the dome, many scattered tools on the bench outside it, focused expert posture, warm studio light, crisp clean watercolor, fine detail",
+      "negative_prompt": "text, watermark, signature, blurry, muddy, smudged, grainy, noisy, low detail, low contrast, dull, photorealistic, 3D render, cartoon, anime, ink, line art, bold outlines, hard edges, comic, storybook, chibi, subservient, submissive, housewife, apron, cooking, knitting, nesting dolls, kneeling, bowing, domestic chores, passive, deformed hands, extra limbs, bad anatomy"
+    },
+    {
+      "filename": "watercolor-05-horizon.png",
+      "seed": 105,
+      "prompt": "Watercolor painting, wet-on-wet washes, warm muted tones. Confident pink-haired woman standing on a hilltop at sunrise holding an open notebook, watching several small brass figures walk along clear worn paths between distant villages, calm assured smile, warm golden light, crisp clean watercolor, fine detail",
+      "negative_prompt": "text, watermark, signature, blurry, muddy, smudged, grainy, noisy, low detail, low contrast, dull, photorealistic, 3D render, cartoon, anime, ink, line art, bold outlines, hard edges, comic, storybook, chibi, subservient, submissive, housewife, apron, cooking, knitting, nesting dolls, kneeling, bowing, domestic chores, passive, deformed hands, extra limbs, bad anatomy"
+    }
+  ]
+}
