@@ -37,17 +37,13 @@ CLI examples written for **GitHub Copilot CLI v1.0.77**. Flag names and behavior
 
 ![A pink-haired working with scientific equipment](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
 
-If you know how work should be done, you should be able to capture that process in natural language, run it, correct it, and keep ownership while it matures. You do not need to wait for a software team to build it for you first.
+**You've built a workflow that works. But automating it requires engineering. Now you're stuck.**
 
-A skill gives domain and process experts a place to express decisions and workflow in plain language. AI helps where it saves time, while people stay responsible for their own work and decisions. The process starts with human judgment. Automation comes later, after repeated correct outcomes prove the flow.
+You know *exactly* how the process should run—you do it repeatedly, correctly, and it saves your team real time. But the moment you try to automate it, you hit a wall: write a script (and maintain it forever), hire engineers (and lose control to the project backlog), or give up and do it manually. None of these are wins.
 
-I found this through forty working skills that were carrying around more process knowledge than I realized.
+There's a better way. What if you could capture your workflow in plain language, test it out, refine it, and gradually promote it to automation—keeping ownership the whole time? No developers required until you're absolutely sure the workflow is stable.
 
-Some of those skills had scripts doing real work: calling APIs, generating reports, creating pull requests. The scripts were good, but each one lived inside one skill. Useful work had become a set of tiny nesting dolls, and a few of the dolls were carrying around power tools.
-
-The work also does not have to get tossed over the wall and hope it lands upright. The person who understands the process stays close to it.
-
-The architecture I landed on is a progressive promotion model: domain expertise starts as a natural language skill, hardens into typed MCP tools, and promotes to autonomous execution only when the process is ready.
+This is the progressive promotion model. Domain expertise starts as a natural language skill. You run it, refine it, test it. When repeated correct outcomes prove the flow is deterministic, the stable parts move behind MCP tools—reusable logic anyone can call. Then the skill can run autonomously. Ownership stays with the person who understands the process the whole time.
 
 ---
 
