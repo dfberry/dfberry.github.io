@@ -21,7 +21,6 @@ const site = require('./site.config');
 
   themes: [
     '@docusaurus/theme-mermaid',
-    '@saucelabs/theme-github-codeblock',
   ],
   markdown: {
     mermaid: true,
