@@ -65,12 +65,12 @@ Here is the path at a high level. The model puts each concern in its own layer. 
 |-------|-------------|-------------|
 | **Script** | The actual logic (API calls, file operations, data transforms) | Everything below |
 | **MCP tool** | Typed interface around the script (JSON input → JSON output) | Skills, agents, CI, other tools |
-| **Skill** | Natural language orchestration (when to call which tool, in what order) | Human-driven sessions |
+| **Skill** | Natural language orchestration (when to call which MCP tool, in what order) | Human-driven sessions |
 | **Agent** | Autonomous driver (same skill logic, but it decides when to run) | Cron, webhooks, event triggers |
 
-The script is the logic. The MCP tool wraps it in a typed interface. The skill decides when to call which tools. The agent runs the skill without you. Each layer has one job.
+The script is the logic. The MCP tool wraps it in a typed interface. The skill decides when to call which MCP tools. The agent runs the skill without you. Each layer has one job.
 
-The key move: pull the script out of the skill and put it behind the MCP tool. Now any consumer can call it—another skill, an agent, a CI pipeline, a future tool. The script is no longer locked inside one skill.
+The key move: pull the script out of the skill and put it behind the MCP tool. Now any consumer can call it—another skill, an agent, a CI pipeline, an external system. The script is no longer locked inside one skill.
 
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
@@ -155,7 +155,7 @@ Correctness matters more than speed here. You run the skill, adjust the instruct
 
 After a few runs, you spot a pattern. Step 2 is always the same. Same API call, same parsing, same output format. The LLM isn't adding judgment here—it's just following a mechanical procedure that you've already validated.
 
-This is your signal to move. When the same tool calls and parsing steps keep showing up, and the outcomes have been consistently correct, that part is ready to extract.
+This is your signal to move. When the same API calls and parsing steps keep showing up, and the outcomes have been consistently correct, that part is ready to extract.
 
 ### Phase C: Extract to MCP (not script-in-skill)
 
@@ -168,7 +168,7 @@ graph LR
         W1["  Skill owns the script  "] --> W2["  🔒 Script stays inside skill  "] --> W3["  Only this skill can use it  "]
     end
     subgraph "✅ Right path"
-        R1["  Extract script  "] --> R2["  🔧 MCP tool owns the script  "] --> R3["  Skill calls tool  "] --> R4["  Agents, CI, other skills can call too  "]
+        R1["  Extract script  "] --> R2["  🔧 MCP tool owns the script  "] --> R3["  Skill calls tool  "] --> R4["  Agents, CI, other skills can call it too  "]
     end
 
     style W1 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
@@ -180,7 +180,7 @@ graph LR
     style R4 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
 ```
 
-The skill now calls `detect_releases` instead of embedding the logic. The MCP tool has a JSON input schema, a JSON output schema, and error handling. It's independently testable. Any consumer—another skill, an agent, a CI pipeline, or a future tool—can call it.
+The skill now calls `detect_releases` instead of embedding the logic. The MCP tool has a JSON input schema, a JSON output schema, and error handling. It's independently testable. Any consumer—another skill, an agent, a CI pipeline, or an external system—can call it.
 
 ### Phase D: Promote to agent
 
@@ -254,7 +254,7 @@ The decision to extract into MCP rather than keep scripts inside skills comes do
 
 ### Reusability
 
-A script locked inside one skill is only callable by that skill. An MCP tool is callable by any skill, any agent, any CI pipeline, and any future tool. Reuse changes everything.
+A script locked inside one skill is only callable by that skill. An MCP tool is callable by any skill, any agent, any CI pipeline, and any external system. Reuse changes everything.
 
 ### Typed contracts
 
