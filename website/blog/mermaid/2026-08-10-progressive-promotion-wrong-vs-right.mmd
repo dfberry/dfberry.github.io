@@ -1,0 +1,16 @@
+%%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
+graph LR
+    subgraph wrong["❌ Wrong path"]
+        W1["Skill"] --> W2["Script-in-skill"] --> W3["Trapped forever"]
+    end
+    subgraph right["✅ Right path"]
+        R1["Skill"] --> R2["Script"] --> R3["MCP Tool"] --> R4["Skill calls tool"]
+    end
+
+    style W1 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
+    style W2 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
+    style W3 fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#4a3428
+    style R1 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style R2 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style R3 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style R4 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817

@@ -1,0 +1,29 @@
+%%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
+graph LR
+    subgraph thismodel["This model"]
+        A1["Skill"] --> A2["MCP Tool"] --> A3["Agent"] --> A4["CI/CD"]
+    end
+    subgraph anthropic["Anthropic"]
+        B1["Augmented LLM"] --> B2["Workflows"] --> B3["Agents"]
+    end
+    subgraph vehicles["Autonomous vehicles"]
+        C1["L0: No automation"] --> C2["L2: Partial"] --> C3["L4: High"] --> C4["L5: Full"]
+    end
+    subgraph sre["SRE"]
+        D1["Runbook"] --> D2["Automation"] --> D3["Self-healing"]
+    end
+
+    style A1 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style A2 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style A3 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style A4 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
+    style B1 fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style B2 fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style B3 fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
+    style C1 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
+    style C2 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
+    style C3 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
+    style C4 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
+    style D1 fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#4a3428
+    style D2 fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#4a3428
+    style D3 fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#4a3428
