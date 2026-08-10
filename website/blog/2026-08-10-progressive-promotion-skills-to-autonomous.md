@@ -117,18 +117,6 @@ The problem is step 4. The skill works. The script works. But only that skill ca
 
 After forty skills, I had forty pieces of scattered process knowledge with scripts locked inside individual skills, no typed contracts, no reusability, and no clear path to autonomous execution. The scripts weren't going anywhere.
 
-<!-- Watercolor image prompt (dead-end):
-"Watercolor illustration, warm earth tones, soft peach and cream palette.
-A pink-haired girl standing at a crossroads in a garden. The left path leads
-to a stone wall covered in vines (dead end). The right path opens to a
-rolling landscape with a distant village. She's looking at the wall, holding
-a small box (a script). At her feet are many identical small boxes stacked
-up against the wall. Warm lamplight filtering through trees, soft watercolor
-washes, gentle ink outlines."
--->
-
-![A pink-haired girl at a garden crossroads, with boxes stacked against a dead-end wall, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-02-dead-end.png)
-
 ## Why MCP tools instead of scripts-in-skills
 
 The decision to extract into MCP rather than keep scripts inside skills comes down to three things:
