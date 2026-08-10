@@ -72,70 +72,11 @@ The script is the logic. The MCP tool wraps it in a typed interface. The skill d
 
 The key move: pull the script out of the skill and put it behind the MCP tool. Now any consumer can call it—another skill, an agent, a CI pipeline, an external system. The script is no longer locked inside one skill.
 
-```mermaid
-%%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
-graph LR
-    subgraph Before["  BEFORE: script-in-skill  "]
-        direction TB
-        subgraph SkillBefore["  💬 Skill  "]
-            direction TB
-            InstrBefore["  Natural-language instructions  "]
-            ScriptBefore["  🔒 Script inside skill<br/><i>only this skill can use it</i>  "]
-            InstrBefore --> ScriptBefore
-        end
-    end
-
-    ScriptBefore ==>|extract and relocate| ScriptAfter
-
-    subgraph After["  AFTER: script behind MCP  "]
-        direction TB
-        subgraph SkillAfter["  💬 Skill  "]
-            direction TB
-            InstrAfter["  Natural-language instructions only  "]
-        end
-        subgraph MCPAfter["  🔧 MCP Tool  "]
-            direction TB
-            ToolAfter["  Typed tool contract  "]
-            ScriptAfter["  📜 Script inside MCP tool<br/><i>reusable logic</i>  "]
-            ToolAfter --> ScriptAfter
-        end
-        InstrAfter -->|"calls"| ToolAfter
-        AgentAfter["  🤖 Agent  "] -->|"calls"| ToolAfter
-        CIAfter["  ⚙️ CI  "] -->|"calls"| ToolAfter
-        OtherAfter["  💬 Other skills  "] -->|"call"| ToolAfter
-    end
-
-    style Before fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style After fill:#fef9f5,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style SkillBefore fill:#f9ead8,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style SkillAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:3px,color:#3d2817
-    style MCPAfter fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style InstrBefore fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style ScriptBefore fill:#f9ead8,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style InstrAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style ToolAfter fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style ScriptAfter fill:#f9ead8,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style AgentAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style CIAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style OtherAfter fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-```
+![01 Script In Skill To Mcp Tool](./images/2026-08-10-progressive-promotion/01-script-in-skill-to-mcp-tool.png)
 
 The resulting stack looks like this:
 
-```mermaid
-%%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
-graph TD
-    A["  📜 Script<br/><i>The logic</i>  "] --> B["  🔧 MCP Tool<br/><i>Typed interface</i>  "]
-    B --> C["  💬 Skill<br/><i>Orchestration</i>  "]
-    B --> D["  🤖 Agent<br/><i>Autonomous driver</i>  "]
-    B --> E["  ⚙️ CI/CD<br/><i>No LLM needed</i>  "]
-
-    style A fill:#f9ead8,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style B fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style C fill:#fdf4e8,stroke:#b8836f,stroke-width:3px,color:#3d2817
-    style D fill:#fdf4e8,stroke:#b8836f,stroke-width:3px,color:#3d2817
-    style E fill:#fdf4e8,stroke:#b8836f,stroke-width:3px,color:#3d2817
-```
+![02 Resulting Stack](./images/2026-08-10-progressive-promotion/02-resulting-stack.png)
 
 The script gets written once, wrapped in a typed tool once, and then only the driver changes during promotion from interactive to autonomous.
 
@@ -161,24 +102,7 @@ This is your signal to move. When the same API calls and parsing steps keep show
 
 Now make the move. Extract the deterministic logic into a typed MCP tool instead of keeping it inside the skill. You still control the workflow through the skill. The stable, reusable part moves behind a typed interface.
 
-```mermaid
-%%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
-graph LR
-    subgraph "❌ Wrong path"
-        W1["  Skill owns the script  "] --> W2["  🔒 Script stays inside skill  "] --> W3["  Only this skill can use it  "]
-    end
-    subgraph "✅ Right path"
-        R1["  Extract script  "] --> R2["  🔧 MCP tool owns the script  "] --> R3["  Skill calls tool  "] --> R4["  Agents, CI, other skills can call it too  "]
-    end
-
-    style W1 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
-    style W2 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
-    style W3 fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#4a3428
-    style R1 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style R2 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style R3 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style R4 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-```
+![03 Wrong Vs Right Path](./images/2026-08-10-progressive-promotion/03-wrong-vs-right-path.png)
 
 The skill now calls `detect_releases` instead of embedding the logic. The MCP tool has a JSON input schema, a JSON output schema, and error handling. It's independently testable. Any consumer—another skill, an agent, a CI pipeline, or an external system—can call it.
 
@@ -186,38 +110,7 @@ The skill now calls `detect_releases` instead of embedding the logic. The MCP to
 
 When the process is reliable and you want it to run without you, promote to autonomous execution. The agent uses the same MCP tools. The only difference is who drives: you (interactive) or the agent (autonomous).
 
-```mermaid
-%%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
-graph TB
-    subgraph MCP["  🔧 MCP Server (built once)  "]
-        T1["  detect_releases  "]
-        T2["  generate_metadata  "]
-        T3["  analyze_impact  "]
-    end
-
-    subgraph Interactive["  💬 Phase C: Skill drives  "]
-        S["  You say: 'sync releases'  "]
-        S --> T1
-        T1 --> T2
-        T2 -->|"⏸ You approve PRs"| T3
-    end
-
-    subgraph Autonomous["  🤖 Phase D: Agent drives  "]
-        AG["  Cron: daily 8am  "]
-        AG --> T1
-        T1 --> T2
-        T2 -->|"📱 Teams notification"| T3
-    end
-
-    style MCP fill:#fef9f5,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style Interactive fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style Autonomous fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style T1 fill:#f5e6d3,stroke:#d4896b,stroke-width:2px,color:#3d2817
-    style T2 fill:#f5e6d3,stroke:#d4896b,stroke-width:2px,color:#3d2817
-    style T3 fill:#f5e6d3,stroke:#d4896b,stroke-width:2px,color:#3d2817
-    style S fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style AG fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-```
+![04 Phase C Phase D Promotion](./images/2026-08-10-progressive-promotion/04-phase-c-phase-d-promotion.png)
 
 The MCP server does not change. The tools do not change. The scripts do not change. Only the driver changes.
 
