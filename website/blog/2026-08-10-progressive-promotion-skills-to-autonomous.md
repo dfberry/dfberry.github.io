@@ -4,36 +4,24 @@ date: 2026-08-10
 canonical_url: https://dfberry.github.io/blog/2026-08-10-progressive-promotion-skills-to-autonomous
 custom_edit_url: null
 sidebar_label: "2026.08.10 Progressive promotion"
-title: "From Natural Language to Autonomous Actions: A Progressive Promotion Model"
-description: "A progressive promotion model for helping domain experts capture process knowledge in natural language, keep ownership, and promote validated workflows to MCP tools and autonomy."
+title: "From Natural Language to Autonomous Actions"
+description: "A progressive promotion model for turning domain expertise into reusable MCP tools and autonomous workflows while keeping ownership with the expert."
 tags:
-  - AI
-  - Architecture
-  - Copilot CLI
-  - MCP
-  - Skills
-  - Agents
-  - Automation
+  - ai
+  - mcp
+  - copilot-cli
+  - skills
+  - agents
+  - automation
 keywords:
   - progressive promotion model
   - domain expert workflow
   - process automation
   - natural language automation
-  - no-code process capture
-  - process ownership
   - mcp tools
-  - model context protocol
-  - copilot skills
   - autonomous agents
-  - prompt caching
-  - skill to agent pipeline
-  - copilot cli
-  - determinism extraction
+image: ./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png
 ---
-
-:::note[CLI version]
-CLI examples written for **GitHub Copilot CLI v1.0.77**. Flag names and behavior may change in later releases.
-:::
 
 ![A pink-haired working with scientific equipment](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
 
@@ -345,3 +333,7 @@ Then come Finn, the reporting tools, and the rest one by one.
 The pattern is straightforward: Start with the person who owns the domain knowledge. Capture the workflow in a skill. Run it until the outcomes are consistently correct. Move the repeatable parts behind MCP tools. Change the driver only when autonomy helps.
 
 Ownership stays with the person who understands the process. The system matures around that expertise.
+
+:::note[CLI version]
+CLI examples written for **GitHub Copilot CLI v1.0.77**. Flag names and behavior may change in later releases.
+:::
