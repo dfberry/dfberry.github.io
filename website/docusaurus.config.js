@@ -22,6 +22,7 @@ const site = require('./site.config');
   themes: [
     '@docusaurus/theme-mermaid',
   ],
+
   markdown: {
     mermaid: true,
   },
