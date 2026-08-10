@@ -1,9 +1,9 @@
 ---
-slug: /2026-07-31-progressive-promotion-skills-to-autonomous
-date: 2026-07-31
-canonical_url: https://dfberry.github.io/blog/2026-07-31-progressive-promotion-skills-to-autonomous
+slug: /2026-08-10-progressive-promotion-skills-to-autonomous
+date: 2026-08-10
+canonical_url: https://dfberry.github.io/blog/2026-08-10-progressive-promotion-skills-to-autonomous
 custom_edit_url: null
-sidebar_label: "2026.07.31 Progressive promotion"
+sidebar_label: "2026.08.10 Progressive promotion"
 title: "From Natural Language to Autonomous Actions: A Progressive Promotion Model"
 description: "A progressive promotion model for helping domain experts capture process knowledge in natural language, keep ownership, and promote validated workflows to MCP tools and autonomy."
 tags:
@@ -45,7 +45,7 @@ and is lifting off the table (autonomous). Warm lamplight, scattered papers
 and tools on the desk, soft watercolor washes, gentle ink outlines."
 -->
 
-![A pink-haired girl examining nesting dolls that grow from a small scroll to a winged figure, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
+![A pink-haired girl examining nesting dolls that grow from a small scroll to a winged figure, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
 
 If you know how work should be done, you should be able to capture that process in natural language, run it, correct it, and keep ownership while it matures. You do not need to wait for a software team to build it for you first.
 
@@ -266,7 +266,7 @@ up against the wall. Warm lamplight filtering through trees, soft watercolor
 washes, gentle ink outlines."
 -->
 
-![A pink-haired girl at a garden crossroads, with boxes stacked against a dead-end wall, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-02-dead-end.png)
+![A pink-haired girl at a garden crossroads, with boxes stacked against a dead-end wall, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-02-dead-end.png)
 
 ## Why MCP tools instead of scripts-in-skills
 
@@ -345,7 +345,7 @@ has price tags hanging from the railings, getting smaller as she climbs
 higher. Warm lamplight through tower windows, soft watercolor washes."
 -->
 
-![A pink-haired girl climbing a tower staircase with price tags getting smaller at each level, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-03-cost-ladder.png)
+![A pink-haired girl climbing a tower staircase with price tags getting smaller at each level, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-03-cost-ladder.png)
 
 Each promotion stage changes the driver but keeps the same tools. The cost changes because the driver changes:
 
@@ -431,7 +431,7 @@ reaching for one of the three tools. A small card next to the jar reads
 'SEALED'. Warm lamplight, soft watercolor washes, gentle ink outlines."
 -->
 
-![A pink-haired girl placing an automaton inside a sealed glass bell jar with exactly three tools, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-04-sandbox.png)
+![A pink-haired girl placing an automaton inside a sealed glass bell jar with exactly three tools, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-04-sandbox.png)
 
 When something runs autonomously, the context must be fully specified at launch and immutable during execution. The agent gets exactly the tools it needs and no extra tools. The glass bell jar is boring on purpose.
 
@@ -538,7 +538,7 @@ holding a notebook and smiling. Warm sunrise light, soft watercolor
 washes, gentle ink outlines, pastoral feeling."
 -->
 
-![A pink-haired girl on a hilltop watching automatons travel between villages, watercolor illustration](./media/2026-07-31-progressive-promotion-skills-to-autonomous/watercolor-05-horizon.png)
+![A pink-haired girl on a hilltop watching automatons travel between villages, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-05-horizon.png)
 
 Echo is the pilot. Once the content-pipeline MCP server wraps Echo's three scripts and the `/echo-sync` skill drives them interactively, the first validation has two parts: the process still produces the right outcome, and the token savings are real.
 
