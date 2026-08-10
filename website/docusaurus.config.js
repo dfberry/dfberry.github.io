@@ -20,7 +20,12 @@ const site = require('./site.config');
   projectName: site.githubRepo, // Usually your repo name.
 
   themes: [
-    '@saucelabs/theme-github-codeblock'],
+    '@docusaurus/theme-mermaid',
+    '@saucelabs/theme-github-codeblock',
+  ],
+  markdown: {
+    mermaid: true,
+  },
 
   presets: [
     [
@@ -81,6 +86,9 @@ const site = require('./site.config');
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      mermaid: {
+        theme: { light: 'default', dark: 'dark' },
       },
       feedOptions: site.feedOptions
     }),
