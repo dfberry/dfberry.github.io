@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://www.googletagmanager.com">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2F4N5RRH1Q"></script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2F4N5RRH1Q",{})</script><link rel="stylesheet" href="/assets/css/styles.6ca8b731.css">
-<script src="/assets/js/runtime~main.94d33c70.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.8e6afabe.js" defer="defer"></script>
 <script src="/assets/js/main.19ee4eb2.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -66,7 +66,6 @@
 </ol>
 <p>The problem is step 4. The skill works. The script works. But only that skill can use it. No other skill can call it. No agent can use it. No CI pipeline can run it. When you need that logic elsewhere, you copy-paste the whole thing.</p>
 <p>After forty skills, I had forty pieces of scattered process knowledge with scripts locked inside individual skills, no typed contracts, no reusability, and no clear path to autonomous execution. The scripts weren&#x27;t going anywhere.</p>
-<p><img decoding="async" loading="lazy" alt="A pink-haired girl at a garden crossroads, with boxes stacked against a dead-end wall, watercolor illustration" src="/assets/images/watercolor-02-dead-end-f8359608f9efdf58825fdf9df436c86f.png" width="1024" height="1024" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-mcp-tools-instead-of-scripts-in-skills">Why MCP tools instead of scripts-in-skills<a href="#why-mcp-tools-instead-of-scripts-in-skills" class="hash-link" aria-label="Direct link to Why MCP tools instead of scripts-in-skills" title="Direct link to Why MCP tools instead of scripts-in-skills" translate="no">​</a></h2>
 <p>The decision to extract into MCP rather than keep scripts inside skills comes down to three things:</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="reusability">Reusability<a href="#reusability" class="hash-link" aria-label="Direct link to Reusability" title="Direct link to Reusability" translate="no">​</a></h3>
@@ -133,7 +132,7 @@
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="related-patterns">Related patterns<a href="#related-patterns" class="hash-link" aria-label="Direct link to Related patterns" title="Direct link to Related patterns" translate="no">​</a></h2>
 <p>Similar progressions appear in other domains under different names:</p>
-<table><thead><tr><th>Source</th><th>Their pattern</th><th>Maps to this model</th></tr></thead><tbody><tr><td>Anthropic, &quot;Building Effective Agents&quot;</td><td>Start simple, increase complexity</td><td>Augmented LLM → Workflows → Agents</td></tr><tr><td>Claude Agent SDK</td><td>Permission modes as autonomy dial</td><td><code>plan</code> → <code>acceptEdits</code> → <code>dontAsk</code></td></tr><tr><td>MCP Skills Working Group</td><td>Progressive disclosure</td><td>Tools → Skills → Agents</td></tr><tr><td>SAE J3016 (autonomous vehicles)</td><td>L0–L5 autonomy levels</td><td>Human-in-loop → human-on-loop → human-out-of-loop</td></tr><tr><td>SRE</td><td>Runbook → Automation → Self-Healing</td><td>Manual → scripted → autonomous</td></tr><tr><td>LangGraph</td><td><code>interrupt()</code> architecture</td><td>Remove interrupts = autonomous</td></tr></tbody></table>
+<table><thead><tr><th>Source</th><th>Their pattern</th><th>Maps to this model</th></tr></thead><tbody><tr><td>Anthropic, &quot;Building Effective Agents&quot;</td><td>Start simple, increase complexity</td><td>Augmented LLM → Workflows → Agents</td></tr><tr><td>Claude Agent SDK</td><td>Permission modes as autonomy dial</td><td><code>plan</code> → <code>acceptEdits</code> → <code>dontAsk</code></td></tr><tr><td>MCP Skills Working Group</td><td>Progressive disclosure</td><td>Tools   → Skills → Agents</td></tr><tr><td>SAE J3016 (autonomous vehicles)</td><td>L0–L5 autonomy levels</td><td>Human-in-loop → human-on-loop → human-out-of-loop</td></tr><tr><td>SRE</td><td>Runbook → Automation → Self-Healing</td><td>Manual → scripted → autonomous</td></tr><tr><td>LangGraph</td><td><code>interrupt()</code> architecture</td><td>Remove interrupts = autonomous</td></tr></tbody></table>
 <p>The pattern exists in pieces across many domains. What was missing: a practical &quot;Skill → MCP → Agent → CI&quot; progression with extraction checklists and validation gates, tailored specifically for domain experts who want to keep ownership.</p>
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-rule-i-use-now">The rule I use now<a href="#the-rule-i-use-now" class="hash-link" aria-label="Direct link to The rule I use now" title="Direct link to The rule I use now" translate="no">​</a></h2>

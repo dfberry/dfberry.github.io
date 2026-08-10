@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://www.googletagmanager.com">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2F4N5RRH1Q"></script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2F4N5RRH1Q",{})</script><link rel="stylesheet" href="/assets/css/styles.6ca8b731.css">
-<script src="/assets/js/runtime~main.94d33c70.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.8e6afabe.js" defer="defer"></script>
 <script src="/assets/js/main.19ee4eb2.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -66,7 +66,6 @@
 </ol>
 <p>The problem is step 4. The skill works. The script works. But only that skill can use it. No other skill can call it. No agent can use it. No CI pipeline can run it. When you need that logic elsewhere, you copy-paste the whole thing.</p>
 <p>After forty skills, I had forty pieces of scattered process knowledge with scripts locked inside individual skills, no typed contracts, no reusability, and no clear path to autonomous execution. The scripts weren&#x27;t going anywhere.</p>
-<p><img decoding="async" loading="lazy" alt="A pink-haired girl at a garden crossroads, with boxes stacked against a dead-end wall, watercolor illustration" src="/assets/images/watercolor-02-dead-end-f8359608f9efdf58825fdf9df436c86f.png" width="1024" height="1024" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-mcp-tools-instead-of-scripts-in-skills">Why MCP tools instead of scripts-in-skills<a href="#why-mcp-tools-instead-of-scripts-in-skills" class="hash-link" aria-label="Direct link to Why MCP tools instead of scripts-in-skills" title="Direct link to Why MCP tools instead of scripts-in-skills" translate="no">​</a></h2>
 <p>The decision to extract into MCP rather than keep scripts inside skills comes down to three things:</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="reusability">Reusability<a href="#reusability" class="hash-link" aria-label="Direct link to Reusability" title="Direct link to Reusability" translate="no">​</a></h3>
@@ -199,7 +198,7 @@
 <p>Here&#x27;s a simple test: if you had to hand your work to someone else before going on vacation, and you&#x27;d explain a process step by step, that process is probably a skill. The moment you find yourself writing &quot;first do this, then do that, then check for this&quot; — you&#x27;re describing something a skill can hold. Capture it.</p>
 <p>Not everything passes the test. Codify the parts that are repetitive and stable; leave the genuinely judgment-heavy or one-off work to a person. Repetition is the tell — when you catch yourself doing the same thing the same way again and again, that&#x27;s the signal.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="part-3--the-guardrails-things-that-arent-people">Part 3 — The guardrails: things that aren&#x27;t people<a href="#part-3--the-guardrails-things-that-arent-people" class="hash-link" aria-label="Direct link to Part 3 — The guardrails: things that aren&#x27;t people" title="Direct link to Part 3 — The guardrails: things that aren&#x27;t people" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="least-privilege-for-agents--and-the-third-thing-thats-easy-to-miss">Least privilege for agents — and the third thing that&#x27;s easy to miss<a href="#least-privilege-for-agents--and-the-third-thing-thats-easy-to-miss" class="hash-link" aria-label="Direct link to Least privilege for agents — and the third thing that&#x27;s easy to miss" title="Direct link to Least privilege for agents — and the third thing that&#x27;s easy to miss" translate="no">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="least-privilege-for-agents--and-the-third-thing-thats-easy-to-miss">Least privilege for agents — and the third thing that&#x27;s easy to miss<a href="#least-privilege-for-agents--and-the-third-thing-thats-easy-to-miss" class="hash-link" aria-label="Direct link to Least privilege for agents — and the third thing that&#x27;s easy to miss" title="Direct link to Least privilege for agents — and the third thing that&#x27;s easy to miss" translate="no">  ​</a></h3>
 <p>You already put real effort into deciding what access your <em>people</em> should have. Do the same for agents — don&#x27;t let them roam your systems with <em>your</em> full authorization. And notice there are three distinct ideas here, not two:</p>
 <ul>
 <li class=""><strong>Identity</strong> — <em>who the agent is.</em> It&#x27;ll likely look a lot like an app or service principal (Entra Agent ID and similar platforms point that way).</li>
