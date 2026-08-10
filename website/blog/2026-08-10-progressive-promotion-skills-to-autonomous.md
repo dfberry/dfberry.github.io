@@ -35,17 +35,7 @@ keywords:
 CLI examples written for **GitHub Copilot CLI v1.0.77**. Flag names and behavior may change in later releases.
 :::
 
-<!-- Watercolor image prompt (hero):
-"Watercolor illustration, warm earth tones, soft peach and cream palette.
-A pink-haired girl sitting at a workbench with five nesting matryoshka dolls
-in front of her, each progressively larger. The smallest doll is labeled with
-a tiny scroll (skill), the next has gears visible inside (MCP), the next has
-small legs as if it can walk on its own (agent), and the largest has wings
-and is lifting off the table (autonomous). Warm lamplight, scattered papers
-and tools on the desk, soft watercolor washes, gentle ink outlines."
--->
-
-![A pink-haired girl examining nesting dolls that grow from a small scroll to a winged figure, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
+![A pink-haired working with scientific equipment](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-01-hero.png)
 
 If you know how work should be done, you should be able to capture that process in natural language, run it, correct it, and keep ownership while it matures. You do not need to wait for a software team to build it for you first.
 
@@ -63,11 +53,11 @@ The architecture I landed on is a progressive promotion model: domain expertise 
 
 ## The automation tradeoff changed
 
-The old tradeoff was business value versus engineering work. If automation took a developer project to build, only high-value work usually made the cut. The domain expert often had to describe the workflow, hand it to developers, and wait for someone else to turn it into software.
+The old tradeoff was simple: business value or engineering time. Only high-value workflows got built. Mid-tier work died in the backlog because no developer had bandwidth. The domain expert had to describe the process, hand it to a team, and wait months for the software to arrive.
 
-This model changes the cost of the next step. The domain expert hones the workflow in natural language while they use it. When repeated correct outcomes prove the process, the stable parts can move behind MCP tools without a large rewrite. Cached tool definitions, reusable scripts, and typed contracts make promotion cheap enough for smaller workflows too.
+This model shifts that cost to zero. The domain expert writes and runs the workflow in a skill right now, while they work. When the process proves reliable through repeated correct outcomes, the stable parts move behind MCP tools without a full rewrite. Cached tool definitions and typed contracts mean even small workflows can graduate.
 
-That is the empowerment piece. The expert gets time back while keeping ownership of the process and the decisions inside it.
+The payoff is ownership. You hone your own process, keep control of your decisions, and run it yourself while it matures.
 
 ---
 
@@ -82,11 +72,9 @@ Here is the path at a high level. The model puts each concern in its own layer. 
 | **Skill** | Natural language orchestration (when to call which tool, in what order) | Human-driven sessions |
 | **Agent** | Autonomous driver (same skill logic, but it decides when to run) | Cron, webhooks, event triggers |
 
-The script is the logic. The MCP tool is the interface. The skill is the orchestration. The agent is the driver.
+The script is the logic. The MCP tool wraps it in a typed interface. The skill decides when to call which tools. The agent runs the skill without you. Each layer has one job.
 
-The important move is physical: the script leaves the skill and moves behind the MCP tool.
-
-The nesting-doll part works better when the smallest doll is not holding every tool.
+The key move: pull the script out of the skill and put it behind the MCP tool. Now any consumer can call it—another skill, an agent, a CI pipeline, a future tool. The script is no longer locked inside one skill.
 
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
@@ -159,27 +147,23 @@ The script gets written once, wrapped in a typed tool once, and then only the dr
 
 ## How work naturally evolves
 
-This architecture came later. The pattern showed up as process knowledge matured across dozens of skills.
+Start in natural language. Let the domain expert hone the process. Promote only after repeated correct outcomes prove the flow.
 
-> Start in natural language. Let the domain expert hone the process. Promote only after repeated correct outcomes prove the flow.
+Here's how that progression works in practice:
 
-### Phase A: Exploration
+A new skill starts with the LLM doing everything inline. Your instructions might say "query the GitHub API for recent releases, then compare against our changelog." The first version is written in plain language, not code. You stay in control.
 
-A new skill starts with the LLM doing everything inline on purpose. The instructions say something like "query the GitHub API for recent releases, then compare against our changelog." A domain or process expert can own that workflow because the first version is written in plain language, not code.
-
-At this stage, correctness matters more than speed. The person with the domain knowledge can run the skill, adjust the instructions, and decide whether the outcome matches their judgment. The process should produce the right outcome more than once before any part of it gets frozen into a tool.
-
-The domain expert keeps the process close. They keep running it, correcting it, and deciding when it is ready for more structure.
+Correctness matters more than speed here. You run the skill, adjust the instructions, and decide if the outcome matches your judgment. Repeat it several times until it consistently produces the right result.
 
 ### Phase B: Determinism emerges
 
-After a few runs, a pattern shows up: step 2 is always the same. Same API call, same parsing, same output format. The LLM is not adding judgment here. It is following a mechanical procedure inside a process the expert has already validated.
+After a few runs, you spot a pattern. Step 2 is always the same. Same API call, same parsing, same output format. The LLM isn't adding judgment here—it's just following a mechanical procedure that you've already validated.
 
-This is the signal. When the same tool calls and parsing steps keep showing up in the skill instructions, and the outcomes have been correct, the process is mature enough to extract that deterministic part.
+This is your signal to move. When the same tool calls and parsing steps keep showing up, and the outcomes have been consistently correct, that part is ready to extract.
 
 ### Phase C: Extract to MCP (not script-in-skill)
 
-This is the decision point. The deterministic logic becomes a typed MCP tool instead of a script inside the skill. The domain expert still controls the workflow through the skill. The stable part moves behind a typed interface.
+Now make the move. Extract the deterministic logic into a typed MCP tool instead of keeping it inside the skill. You still control the workflow through the skill. The stable, reusable part moves behind a typed interface.
 
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
@@ -200,11 +184,11 @@ graph LR
     style R4 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
 ```
 
-The skill now says "call `detect_releases`" instead of embedding the detection logic. The tool has a JSON input schema, a JSON output schema, and error handling. It is independently testable. Any consumer, including another skill, an agent, or a CI pipeline, can call it.
+The skill now calls `detect_releases` instead of embedding the logic. The MCP tool has a JSON input schema, a JSON output schema, and error handling. It's independently testable. Any consumer—another skill, an agent, a CI pipeline, or a future tool—can call it.
 
 ### Phase D: Promote to agent
 
-The path starts with the skill and promotes to autonomy only when the process is reliable and unattended execution is useful. The agent uses the same MCP tools. The only difference is who drives: me (interactive) or the agent (autonomous).
+When the process is reliable and you want it to run without you, promote to autonomous execution. The agent uses the same MCP tools. The only difference is who drives: you (interactive) or the agent (autonomous).
 
 ```mermaid
 %%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
@@ -245,16 +229,16 @@ The MCP server does not change. The tools do not change. The scripts do not chan
 
 ## Where my first design stopped
 
-My own forty-skill batch showed me where this path breaks if it stops too early. The first development path was:
+My forty-skill portfolio showed me where this breaks if you stop too early. My original approach was:
 
-1. Write a skill (natural language instructions for the LLM)
-2. Notice that part of the skill is deterministic (same inputs → same outputs every time)
+1. Write a skill (natural language instructions)
+2. Notice a pattern is deterministic (same inputs → same outputs)
 3. Extract that logic into a script inside the skill
 4. Done
 
-Step 4 is where the design stopped too early. The skill captured the process, and the script worked, but only from that skill. No other skill can call it. No agent can use it. No CI pipeline can run it. The same logic gets copy-pasted when it is needed somewhere else.
+The problem is step 4. The skill works. The script works. But only that skill can use it. No other skill can call it. No agent can use it. No CI pipeline can run it. When you need that logic elsewhere, you copy-paste the whole thing.
 
-After forty skills, there were forty pieces of process knowledge with scripts scoped to individual skills, no typed contracts, no shared interfaces, and no clear path to autonomous execution. The scripts were going nowhere fast, mostly because they had nowhere else to go.
+After forty skills, I had forty pieces of scattered process knowledge with scripts locked inside individual skills, no typed contracts, no reusability, and no clear path to autonomous execution. The scripts weren't going anywhere.
 
 <!-- Watercolor image prompt (dead-end):
 "Watercolor illustration, warm earth tones, soft peach and cream palette.
@@ -274,23 +258,23 @@ The decision to extract into MCP rather than keep scripts inside skills comes do
 
 ### Reusability
 
-A script inside `echo-release-detection/scripts/detect.ps1` is only callable by the echo-release-detection skill. An MCP tool called `detect_releases` is callable by any skill, any agent, any CI pipeline, and any future tool that speaks the MCP protocol.
+A script locked inside one skill is only callable by that skill. An MCP tool is callable by any skill, any agent, any CI pipeline, and any future tool. Reuse changes everything.
 
 ### Typed contracts
 
-A script takes string arguments from a shell command. An MCP tool has a JSON input schema and a JSON output schema. The LLM knows exactly what to send and what to expect back. No parsing surprises.
+A script takes string arguments. An MCP tool has a JSON input schema and JSON output schema. The LLM knows exactly what to send and what to expect back. No parsing surprises.
 
 ### Prompt caching
 
-The cost reason came from Burke Holland's [prompt caching video](https://www.youtube.com/watch?v=TYOhNRp5n7Y). The math was clear: MCP tool definitions live in the system prompt prefix and get cached at a 50-90% discount. Agent spawns create fresh uncached context windows every time.
+The cost reason is direct: MCP tool definitions live in the system prompt and get cached at a 50-90% discount. Every time you spawn an agent fresh, you lose that cache.
 
-| What | Token cost | Cache behavior |
-|------|-----------|----------------|
-| Skill instructions | ~0 (loaded on invocation) | Part of system prompt (cached) |
-| MCP tool definitions | ~400-1600 (when enabled) | Part of system prompt (cached) |
-| Agent spawn | ~10-25K per invocation | Fresh context window (uncached) |
+| What | Cost | Cache |
+|------|------|-------|
+| Skill instructions | ~0 | Part of system prompt (cached) |
+| MCP tool definitions | ~400-1600 | Part of system prompt (cached) |
+| Agent spawn | ~10-25K per run | Fresh context (uncached) |
 
-For this workflow, MCP tools reduced uncached per-invocation tokens by roughly 90%+ compared with agent spawns.
+Using MCP tools instead of spawning fresh agents cut uncached tokens by roughly 90%.
 
 ---
 
@@ -300,79 +284,62 @@ When you find yourself writing a script inside a skill, ask one question:
 
 > Will anything other than this skill ever need to call this logic?
 
-- If **yes** → MCP tool immediately
-- If **maybe someday** → MCP tool (future reuse is easier than a later move)
-- If **truly never** (one-off, will be deleted) → script-in-skill is fine
+- If **yes** → extract to MCP immediately
+- If **maybe someday** → extract to MCP (future reuse is cheaper than a later move)
+- If **truly never** (one-off, will be deleted soon) → script-in-skill is fine
 
-In my portfolio of forty skills, the answer was almost always yes.
+In my forty-skill portfolio, the answer was almost always yes.
 
 ---
 
 ## What promotion looks like in practice
 
-I have a content pipeline called Echo that detects new SDK releases, generates documentation metadata, and produces content impact reports. It ran as a Squad agent with a fresh ~25K token context window every invocation.
+I have a content pipeline called Echo that detects new SDK releases, generates documentation metadata, and produces content reports. It started as a Squad agent spawning fresh context every time.
 
 After extracting to MCP + skill:
 
-| Before (agent) | After (skill + MCP) |
-|----------------|-------------------|
-| ~25K uncached tokens | ~1-2K uncached tokens |
-| Squad coordinator + agent spawn | Skill in cached system prompt |
-| Two context windows | Zero new context windows |
-| Scripts available only to agent | Tools callable by anything |
+| Before | After |
+|--------|-------|
+| ~25K uncached tokens per run | ~1-2K uncached tokens per run |
+| Squad agent spawned fresh | Skill in cached system prompt |
+| Two separate context windows | One cached context window |
+| Scripts locked inside agent | Tools callable by anything |
 
-The scripts did not change. The structured output envelopes they already produced worked as MCP tool responses: same JSON schema, different transport.
+The scripts themselves didn't change. The structured JSON output envelopes they produced already matched MCP tool responses—same schema, different transport.
 
-```
-Before:  Script → JSON file → next skill reads file from disk
-After:   Script → JSON → MCP protocol → any consumer receives it directly
-```
-
-That gave me a useful signal. The earlier structured-output spec was already close to an MCP response contract. It just did not have that name yet.
+Before: Script → JSON file → next skill reads file from disk  
+After: Script → JSON → MCP protocol → any consumer gets it directly
 
 ---
 
 ## The cost model across stages
 
-<!-- Watercolor image prompt (cost ladder):
-"Watercolor illustration, warm earth tones, soft peach and cream palette.
-A pink-haired girl climbing a spiral staircase in a tower. Each landing has
-a different scene: the bottom landing shows her talking to a small glowing
-orb (interactive), the middle landing shows the orb walking on its own
-with small legs (autonomous), and the top landing shows the orb has
-transformed into a bird flying out an open window (CI/CD). The staircase
-has price tags hanging from the railings, getting smaller as she climbs
-higher. Warm lamplight through tower windows, soft watercolor washes."
--->
+Each stage changes the driver but reuses the same tools. Costs drop because the driver changes:
 
-![A pink-haired girl climbing a tower staircase with price tags getting smaller at each level, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-03-cost-ladder.png)
-
-Each promotion stage changes the driver but keeps the same tools. The cost changes because the driver changes:
-
-| Stage | Per-run cost | Who drives | What changes |
-|-------|-------------|-----------|-------------|
-| **Skill + MCP** | ~1-2K uncached tokens | You, interactively | Lowest token use. Tools cached. Only I/O is new. |
-| **Agent + MCP** | ~5-10K uncached tokens | Agent, autonomously | Agent charter is a fresh window, but tools stay cached. |
+| Stage | Per-run cost | Driver | What saves |
+|-------|-------------|--------|----------|
+| **Skill + MCP** | ~1-2K uncached | You, interactively | Lowest token use. Tools cached. Only I/O is new. |
+| **Agent + MCP** | ~5-10K uncached | Agent, autonomously | Agent charter is fresh, but tools stay cached. |
 | **CI/CD** | 0 tokens | GitHub Action | No LLM at all for deterministic steps. |
-| **Agent spawn (old way)** | ~25K uncached tokens | Squad coordinator | Two fresh windows every time. Highest token use here. |
+| **Agent spawn (old way)** | ~25K uncached | Squad coordinator | Two fresh windows every time. Highest token use. |
 
-The progression changes both autonomy and cost. As work hardens, it needs less LLM reasoning per run, until the final stage needs no LLM at all.
+As work matures, it needs less LLM reasoning per run, until CI/CD needs none at all.
 
 ---
 
 ## Context occupation cost of MCP
 
-MCP tools have lower per-token cost when cached, but they occupy context window space every turn they are enabled, even when unused. A 4-tool server adds ~600-1600 tokens to every conversation.
+MCP tools have lower per-token cost when cached, but they occupy context window space every turn, even when unused. A 4-tool server adds ~600-1600 tokens to every conversation.
 
-Grouping and toggling handle this:
+Control this with grouping and toggling:
 
 | Strategy | How it works |
 |----------|-------------|
-| **Group by workflow** | Combine related tools into one server (`content-pipeline-mcp` for all content tools) |
-| **Toggle per task** | Enable the server when doing content work, disable when doing email |
-| **Skill as entry point** | The skill reminds you to enable the MCP if it is off |
+| **Group by workflow** | Combine related tools into one server (`content-pipeline-mcp` for all content work) |
+| **Toggle per task** | Enable the server when doing that work, disable when doing something else |
+| **Skill as gatekeeper** | The skill reminds you to enable MCP if it's off |
 
-The pattern here: **skill triggers workflow** (zero idle cost) → **skill activates MCP tools** (cost only when needed) → **tools do I/O** (cached calls). The MCP stays enabled only when it is needed.
+The pattern: **skill triggers workflow** (zero idle cost) → **skill activates MCP** (cost only when needed) → **tools do work** (cached calls). The MCP stays enabled only when you're using it.
 
 ---
 
@@ -421,129 +388,71 @@ COPILOT_GITHUB_TOKEN=github_pat_xxx copilot -p "Run pipeline" \
 
 ## The sealed sandbox
 
-<!-- Watercolor image prompt (sandbox):
-"Watercolor illustration, warm earth tones, soft peach and cream palette.
-A pink-haired girl placing a small clockwork automaton inside a glass bell
-jar on her desk. Inside the jar are exactly three small tools laid out
-neatly. Outside the jar, the desk is covered with dozens of other tools
-and gadgets, but the jar has a clear boundary. The automaton inside is
-reaching for one of the three tools. A small card next to the jar reads
-'SEALED'. Warm lamplight, soft watercolor washes, gentle ink outlines."
--->
-
-![A pink-haired girl placing an automaton inside a sealed glass bell jar with exactly three tools, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-04-sandbox.png)
-
-When something runs autonomously, the context must be fully specified at launch and immutable during execution. The agent gets exactly the tools it needs and no extra tools. The glass bell jar is boring on purpose.
+When something runs autonomously, the context must be fully specified at launch and locked in place. The agent gets exactly the tools it needs and nothing extra. The glass bell jar is boring on purpose.
 
 A sealed sandbox manifest specifies:
 
 1. **Identity**: who the agent is
-2. **Available tools**: exhaustive list (nothing else exists)
+2. **Available tools**: exhaustive list—nothing else exists
 3. **Execution plan**: exact steps, no deviation
 4. **Error handling**: complete rules, no improvisation
 5. **Output routing**: where results go
 6. **Boundaries**: hard constraints (violation = immediate exit)
 
-Copilot CLI implements this through `--available-tools` and the `"tools"` allowlist in MCP config:
+Copilot CLI does this through `--available-tools` and the `"tools"` allowlist in MCP config. The MCP server might have twenty tools. The agent only sees three.
 
 ```json
 {
   "mcpServers": {
     "content-pipeline": {
       "command": "node",
-      "args": ["  ./mcp-servers/content-pipeline/index.js  "],
+      "args": ["./mcp-servers/content-pipeline/index.js"],
       "tools": ["detect_releases", "generate_metadata", "analyze_impact"]
     }
   }
 }
 ```
 
-The MCP server might have twenty tools. The agent only sees three.
-
 ---
 
 ## Related patterns
 
-A common name for this pattern did not turn up, but similar progressions did:
+Similar progressions appear in other domains under different names:
 
-```mermaid
-%%{init: { "theme": "base", "themeVariables": { "fontFamily": "Inter, ui-sans-serif", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "background": "#fef9f5" } } }%%
-graph LR
-    subgraph "This model"
-        A1["  Skill  "] --> A2["  MCP Tool  "] --> A3["  Agent  "] --> A4["  CI/CD  "]
-    end
-    subgraph "Anthropic"
-        B1["  Augmented LLM  "] --> B2["  Workflows  "] --> B3["  Agents  "]
-    end
-    subgraph "Autonomous vehicles"
-        C1["  L0: No automation  "] --> C2["  L2: Partial  "] --> C3["  L4: High  "] --> C4["  L5: Full  "]
-    end
-    subgraph "SRE"
-        D1["  Runbook  "] --> D2["  Automation  "] --> D3["  Self-healing  "]
-    end
-
-    style A1 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style A2 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style A3 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style A4 fill:#f5e6d3,stroke:#d4896b,stroke-width:3px,color:#3d2817
-    style B1 fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style B2 fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style B3 fill:#fdf4e8,stroke:#b8836f,stroke-width:2px,color:#3d2817
-    style C1 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
-    style C2 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
-    style C3 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
-    style C4 fill:#f9ead8,stroke:#d4896b,stroke-width:2px,color:#3d2817
-    style D1 fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#4a3428
-    style D2 fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#4a3428
-    style D3 fill:#fef9f5,stroke:#b8836f,stroke-width:2px,color:#4a3428
-```
-
-| Source | Their pattern | The mapping |
-|--------|--------------|-------------|
-| Anthropic, "Building Effective Agents" | Start simple, promote complexity | Augmented LLM → Workflows → Agents |
+| Source | Their pattern | Maps to this model |
+|--------|--------------|-----------|
+| Anthropic, "Building Effective Agents" | Start simple, increase complexity | Augmented LLM → Workflows → Agents |
 | Claude Agent SDK | Permission modes as autonomy dial | `plan` → `acceptEdits` → `dontAsk` |
 | MCP Skills Working Group | Progressive disclosure | Tools → Skills → Agents |
 | SAE J3016 (autonomous vehicles) | L0–L5 autonomy levels | Human-in-loop → human-on-loop → human-out-of-loop |
 | SRE | Runbook → Automation → Self-Healing | Manual → scripted → autonomous |
 | LangGraph | `interrupt()` architecture | Remove interrupts = autonomous |
 
-No named, concrete "Skill → MCP → Agent → CI" promotion model with extraction checklists and validation gates turned up. The pattern exists in pieces. A practical version was the missing piece for my work.
+The pattern exists in pieces across many domains. What was missing: a practical "Skill → MCP → Agent → CI" progression with extraction checklists and validation gates, tailored specifically for domain experts who want to keep ownership.
 
 ---
 
 ## The rule I use now
 
-> When a process proves repeatable, reusable logic moves directly to an MCP tool. Scripts-in-skills are prototype code.
+When a process proves repeatable, reusable logic moves to an MCP tool. Scripts-in-skills are prototype code.
 
-The useful questions are who owns the process, how mature it is, and what driver it needs right now.
+Ask three questions: Who owns this? How stable is it? What driver does it need now?
 
 | If the work is... | Use... |
 |-------------------|--------|
-| Still being figured out | Skill (exploration, cheap) |
-| Deterministic and repeatable | MCP tool (typed, reusable) |
+| Still being figured out | Skill (cheap exploration) |
+| Repeatable and deterministic | MCP tool (reusable, typed) |
 | Needs to run without you | Agent (autonomous driver) |
-| Fully deterministic, no judgment needed | CI/CD (no LLM at all) |
+| Fully deterministic, no judgment | CI/CD (no LLM at all) |
 
 ---
 
 ## What's next
 
-<!-- Watercolor image prompt (horizon):
-"Watercolor illustration, warm earth tones, soft peach and cream palette.
-A pink-haired girl standing on a hilltop at sunrise, looking out over a
-landscape where small automatons are walking along paths between villages.
-Each village has a different banner (one with gears, one with scrolls,
-one with wings). The paths between them are well-worn and clear. She's
-holding a notebook and smiling. Warm sunrise light, soft watercolor
-washes, gentle ink outlines, pastoral feeling."
--->
+Echo is the pilot. Once the content-pipeline MCP server wraps Echo's three scripts and the `/echo-sync` skill drives them interactively, validation has two parts: the process still produces the right output, and the token savings are real.
 
-![A pink-haired girl on a hilltop watching automatons travel between villages, watercolor illustration](./media/2026-08-10-progressive-promotion-skills-to-autonomous/watercolor-05-horizon.png)
+Then come Finn, the reporting tools, and the rest one by one.
 
-Echo is the pilot. Once the content-pipeline MCP server wraps Echo's three scripts and the `/echo-sync` skill drives them interactively, the first validation has two parts: the process still produces the right outcome, and the token savings are real.
+The pattern is straightforward: Start with the person who owns the domain knowledge. Capture the workflow in a skill. Run it until the outcomes are consistently correct. Move the repeatable parts behind MCP tools. Change the driver only when autonomy helps.
 
-After that comes Finn, the reporting tools, and the remaining skills one at a time.
-
-The pattern is simple: start with the person who owns the domain knowledge, capture the workflow in a skill, run it until the outcomes are consistently right, move the repeatable parts behind MCP tools, and change the driver only when autonomy helps.
-
-The ownership stays with the person who understands the process. The system matures around that expertise.
+Ownership stays with the person who understands the process. The system matures around that expertise.
