@@ -1,0 +1,31 @@
+{
+  "description": "Blog images for 'Writing the History of Software' — Dina's watercolor style. Consistent pink-haired woman architect character. SDXL refiner ON (detail pass), 35 steps, quality negatives. Concept-forward prompts optimized for CLIP 77-token limit. Prompts tightened to survive token truncation while maintaining the book/Squad/stewardship narrative metaphors.",
+  "settings": {
+    "steps": 35,
+    "guidance": 7.5,
+    "width": 1024,
+    "height": 1024,
+    "refine": true,
+    "cpu": true
+  },
+  "prompts": [
+    {
+      "filename": "watercolor-01-hero.png",
+      "seed": 201,
+      "prompt": "Watercolor painting, wet-on-wet washes, warm muted tones. Confident pink-haired woman software architect at a forked road at golden hour holding an open field notebook labeled project book filled with tiny architecture sketches, beside her a modern autonomous car symbolizing Squad, wooden signs point to quick fixes and safe grounded progress, atmospheric clouds, gentle ink outlines, hand-painted editorial style, 16:9",
+      "negative_prompt": "text, watermark, signature, blurry, muddy, smudged, low detail, low contrast, photorealistic, 3D render, cartoon, anime, ink drawing, bold outlines, hard edges, comic, storybook, chibi, subservient, domestic, housewife, apron, cooking, passive, deformed hands, extra limbs, bad anatomy"
+    },
+    {
+      "filename": "watercolor-02-archaeology-to-stewardship.png",
+      "seed": 202,
+      "prompt": "Watercolor diptych with continuous horizon, pink-haired woman on both sides. Left: software archaeology with dusty ruins, fragmented code tablets, tangled cables, faded commit notes, muted earth tones. Right: software stewardship with cultivated garden, labeled pathways, healthy branching trees shaped like repo graphs, organized notebooks, fresh greens and warm light, loose wet-on-wet, subtle linework, 3:2",
+      "negative_prompt": "text, watermark, signature, blurry, muddy, smudged, low detail, low contrast, photorealistic, 3D render, cartoon, anime, ink drawing, bold outlines, hard edges, comic, storybook, chibi, subservient, domestic, housewife, apron, cooking, passive, deformed hands, extra limbs, bad anatomy"
+    },
+    {
+      "filename": "watercolor-03-squad-vs-book.png",
+      "seed": 203,
+      "prompt": "Watercolor studio scene, pink-haired woman at workbench sorting glowing index cards into two containers, one transparent container labeled operational memory and one bound journal labeled institutional memory, cards show architecture decisions, sprint tactics, incident lessons, tradeoffs, meeting notes, balanced composition, calm focused mood, layered watercolor, visible paper grain, hand-painted editorial style, 4:5",
+      "negative_prompt": "text, watermark, signature, blurry, muddy, smudged, low detail, low contrast, photorealistic, 3D render, cartoon, anime, ink drawing, bold outlines, hard edges, comic, storybook, chibi, subservient, domestic, housewife, apron, cooking, passive, deformed hands, extra limbs, bad anatomy"
+    }
+  ]
+}
