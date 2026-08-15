@@ -24,8 +24,6 @@ keywords:
 image: ./media/2026-08-15-too-much-to-know/watercolor-01-hero.png
 ---
 
-![Woman architect at forked road with project book notebook and Squad car symbolizing partnership](./media/2026-08-15-too-much-to-know/watercolor-01-hero.png)
-
 # Writing the history of software
 
 I have several projects I periodically update now as the sole maintainer. A few are projects I was on from the beginning, so I know the journey they took. One or two are new to me, and the people who carried that history are gone, changed roles, or told me to figure it out. I have the source code. I have the repos. I have all the commits. The source code should speak for itself.
@@ -123,8 +121,6 @@ That is the difference between replaying commits and understanding a system.
 ## Operationalizing this
 
 I needed this to be more than a good idea, so I turned it into a repeatable weekly practice. This is where theory becomes practice, where chaos becomes system.
-
-![A journey from scattered notes and confusion to an organized, operationalized workflow shown across four frames: planning, decision-making, documentation, and execution](./media/2026-08-15-too-much-to-know/watercolor-02-archaeology-to-stewardship.png)
 
 This pattern is bigger than any one product. It fits a growing class of brownfield context tools that turn scattered project signals into usable memory.
 
