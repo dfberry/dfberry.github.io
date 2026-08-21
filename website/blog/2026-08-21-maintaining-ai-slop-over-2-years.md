@@ -36,7 +36,7 @@ It read source code and output what I asked it to based on my ever-growing promp
 
 ## Stage 2 - shifting sands of source code
 
-There were a few bumps in the road that caused the prompt file to sputter and halt. The related source code repo moved. That was just one place in the prompt file - an easy change. Then the source code repo completely refactored into a monorepo - that was much harder. The prompt file was looking at specific folders, files, classes and property names. A much bigger change to the prompt file. And of course, I still other things to do. 
+There were a few bumps in the road that caused the prompt file to sputter and halt. The related source code repo moved. That was just one place in the prompt file - an easy change. Then the source code repo completely refactored into a monorepo - that was much harder. The prompt file was looking at specific folders, files, classes and property names. A much bigger change to the prompt file. And of course, I still had other things to do. 
 
 Then the source project became much more popular and the feature set grew. Lots of changes and additions. This resulted in a short cycle of my wondering if AI, or my prompt file needed another rewrite. 
 
