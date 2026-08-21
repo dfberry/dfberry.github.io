@@ -4,11 +4,57 @@
         <title>Dina Berry RSS feed</title>
         <link>http://dfberry.github.io</link>
         <description>Dina Berry developer and technical writer RSS feed</description>
-        <lastBuildDate>Sat, 15 Aug 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 21 Aug 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>Copyright © 2026 Dina Berry.</copyright>
+        <item>
+            <title><![CDATA[Maintaining AI Slop Over 2 Years]]></title>
+            <link>http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years</link>
+            <guid>http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years</guid>
+            <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[A practical field guide for growing an AI-generated project over a two-year window.]]></description>
+            <content:encoded><![CDATA[<p>Two years ago seems like decades in the world of AI. <em>AI slop</em> wasn't a term I was familiar with, and the project I started with AI was meant to be short-lived—a stopgap until systems and people caught up to support the work.</p>
+<p><img decoding="async" loading="lazy" alt="Woman on road littered with debris" src="http://dfberry.github.io/assets/images/hero-2-3008736f6f82a21f98cfb7987594e7c1.png" width="1024" height="1024" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="stage-1---time-savings-over-process-design">Stage 1 - time-savings over process design<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#stage-1---time-savings-over-process-design" class="hash-link" aria-label="Direct link to Stage 1 - time-savings over process design" title="Direct link to Stage 1 - time-savings over process design" translate="no">​</a></h2>
+<p>Because it was meant to be a short-term solution, I didn't care about the what or how as much as the output and time savings. I didn't spend much time on it and certainly didn't <em>architect</em> it in any meaningful way. It was a markdown file - a prompt.</p>
+<p>Back then, there was little concern for context size and the only harnesses were custom-made or 3rd party like LangChain.</p>
+<p>It read source code and output what I asked it to based on my ever-growing prompt file. I fiddled with it when I had time but usually just took the output and made manual edits as needed.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="stage-2---shifting-sands-of-source-code">Stage 2 - shifting sands of source code<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#stage-2---shifting-sands-of-source-code" class="hash-link" aria-label="Direct link to Stage 2 - shifting sands of source code" title="Direct link to Stage 2 - shifting sands of source code" translate="no">​</a></h2>
+<p>There were a few bumps in the road that caused the prompt file to sputter and halt. The related source code repo moved. That was just one place in the prompt file - an easy change. Then the source code repo completely refactored into a monorepo - that was much harder. The prompt file was looking at specific folders, files, classes and property names. A much bigger change to the prompt file. And of course, I still other things to do.</p>
+<p>Then the source project became much more popular and the feature set grew. Lots of changes and additions. This resulted in a short cycle of my wondering if AI, or my prompt file needed another rewrite.</p>
+<p>At this point, I thought regex and a script might be faster. Leave any LLM decision/transition until later.</p>
+<p>This was becoming an experiment in how to gain efficiency in a rapidly changing AI world.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="stage-3---back-to-reality">Stage 3 - back to reality<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#stage-3---back-to-reality" class="hash-link" aria-label="Direct link to Stage 3 - back to reality" title="Direct link to Stage 3 - back to reality" translate="no">​</a></h2>
+<p>While I was considering shifting to a code-based solutions, the source repo created a CLI to reveal its features. That was exactly what I needed: a dependable input to my process.</p>
+<p>The AI SDKs had also progressed, so instead of regex and a script, I switched to .NET and the OpenAI SDK for chat completions. This time I designed the process deliberately, and Copilot Chat in VS Code was available, which helped accelerate development.</p>
+<p>This time the architecture, project structure, maintainability, and testability were top considerations as I was still relying on <em>this thing</em> to help me.</p>
+<p>There were a few iterations of this but it was beginning to hum along.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="stage-4---the-infrastructure">Stage 4 - the infrastructure<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#stage-4---the-infrastructure" class="hash-link" aria-label="Direct link to Stage 4 - the infrastructure" title="Direct link to Stage 4 - the infrastructure" translate="no">​</a></h2>
+<p>Since I only had the OpenAI resource in Azure, I kept it live and never shut it down. However, I used keys instead of managed identity—not because I didn't know the best practices, but simply because I lacked the time to implement them.</p>
+<p>I was doing a lot of Bicep work, not an expert but not a newbie either, so cooking up the <code>./infra</code> and <code>azure.yml</code> for Azure Developer CLI wasn't hard. Adding the RBAC roles for managed identity helped. And then finally I had that repeatable infrastructure I told everyone else they should have.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="stage-5---monkey-on-the-keyboard">Stage 5 - monkey on the keyboard<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#stage-5---monkey-on-the-keyboard" class="hash-link" aria-label="Direct link to Stage 5 - monkey on the keyboard" title="Direct link to Stage 5 - monkey on the keyboard" translate="no">​</a></h2>
+<p>The underlying project repo had matured significantly, the source code had stabilized, and <em>my system</em> was working well for its purpose too. However, as <em>AI slop</em> became an industry term, the underlying project matured alongside the industry specs it supported but my project had not.</p>
+<p>I managed the project in chat one turn at a time, and the .NET app generated the output. However, every change to the system required several to many turns, redirections, and re-runs. AI kept making the same mistakes, and I spent my time minute by minute watching the output to see when it went off track. I needed a better process—a process to manage the process.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="stage-6---hiring-a-squad">Stage 6 - hiring a squad<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#stage-6---hiring-a-squad" class="hash-link" aria-label="Direct link to Stage 6 - hiring a squad" title="Direct link to Stage 6 - hiring a squad" translate="no">​</a></h2>
+<p>It was around this time I started working with Brady Gaster's Squad. Having a team of agents accelerated progress and caught issues and inconsistencies I hadn't been able to spot before. I onboarded Squad to the repo and had them take on much of the work.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="stage-7---industry-grows-up">Stage 7 - industry grows up<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#stage-7---industry-grows-up" class="hash-link" aria-label="Direct link to Stage 7 - industry grows up" title="Direct link to Stage 7 - industry grows up" translate="no">​</a></h2>
+<p>While I was learning Squad's inner workings, <code>SKILL.md</code> and <code>agent.md</code> specifications emerged. I dug into skills first to impose structure on my manual process management. I used WAZA and other frameworks to understand context size, triggers, and evaluations.</p>
+<p>Building and maintaining skills locally gave me practical understanding of task boundaries, debugging, and chaining. Working with these units of AI many times a week gave me opportunities to fail.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="stage-8---leaving-squad-behind">Stage 8 - leaving Squad behind<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#stage-8---leaving-squad-behind" class="hash-link" aria-label="Direct link to Stage 8 - leaving Squad behind" title="Direct link to Stage 8 - leaving Squad behind" translate="no">​</a></h2>
+<p>Squad is an amazing build and maintenance platform. However, I need skills that succeed independently. The plugin specification is now available, so I took my chained skills, wrapped them in an orchestrating agent to manage gates between skills and human review, and packaged everything as a plugin.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="stage-9---the-agent-and-the-app">Stage 9 - the agent and the app<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#stage-9---the-agent-and-the-app" class="hash-link" aria-label="Direct link to Stage 9 - the agent and the app" title="Direct link to Stage 9 - the agent and the app" translate="no">​</a></h2>
+<p>What about the .NET app? It's now used only when the agent determines it needs that full pipeline. The agent and skills handle most of the work.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion">Conclusion<a href="http://dfberry.github.io/2026-08-21-maintaining-ai-slop-over-2-years#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion" translate="no">​</a></h2>
+<p>You'll likely continue to hear a lot about AI slop. Just like any industry, AI is maturing and developing better specifications and expectations. Look for them and try them out.</p>
+<p>Focus on the fundamentals available at the time. Build with principles and practices that support them. Grow with industry specifications that enable better results.</p>]]></content:encoded>
+            <category>ai</category>
+            <category>maintenance</category>
+            <category>software quality</category>
+            <category>technical debt</category>
+            <category>workflows</category>
+        </item>
         <item>
             <title><![CDATA[Writing the History of Software]]></title>
             <link>http://dfberry.github.io/2026-08-15-writing-history-of-software</link>
@@ -117,30 +163,6 @@
             <category>institutional knowledge</category>
             <category>ai agents</category>
             <category>squad</category>
-        </item>
-        <item>
-            <title><![CDATA[Watercolor image prompts for "Writing the history of software"]]></title>
-            <link>http://dfberry.github.io/2026/08/15/media/too-much-to-know/watercolor-image-prompts</link>
-            <guid>http://dfberry.github.io/2026/08/15/media/too-much-to-know/watercolor-image-prompts</guid>
-            <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[Use these with the same pink-haired woman character across all images.]]></description>
-            <content:encoded><![CDATA[<p>Use these with the same pink-haired woman character across all images.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-book-and-squad-on-the-same-road">1) Book and Squad on the same road<a href="http://dfberry.github.io/2026/08/15/media/too-much-to-know/watercolor-image-prompts#1-book-and-squad-on-the-same-road" class="hash-link" aria-label="Direct link to 1) Book and Squad on the same road" title="Direct link to 1) Book and Squad on the same road" translate="no">​</a></h2>
-<p>Prompt:
-Watercolor illustration, soft paper texture, expressive brush blooms, a pink-haired woman software architect at a forked road at golden hour, she holds an open field notebook labeled project book filled with tiny architecture sketches, beside her is a modern autonomous car symbolizing Squad, one wooden sign points to quick fixes and another to safe and grounded progress, atmospheric clouds, gentle ink outlines, hand-painted look, editorial storytelling composition, no text overlay, 16:9.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-from-archaeology-to-stewardship">2) From archaeology to stewardship<a href="http://dfberry.github.io/2026/08/15/media/too-much-to-know/watercolor-image-prompts#2-from-archaeology-to-stewardship" class="hash-link" aria-label="Direct link to 2) From archaeology to stewardship" title="Direct link to 2) From archaeology to stewardship" translate="no">​</a></h2>
-<p>Prompt:
-Watercolor diptych style scene with one continuous horizon, same pink-haired woman on both sides, left side shows software archaeology with dusty ruins, fragmented code tablets, tangled cables, faded commit notes, muted earth tones; right side shows software stewardship with a cultivated garden of labeled pathways, healthy branching trees shaped like repo graphs, organized notebooks and living documentation, fresh greens and warm light, loose wet-on-wet washes, subtle linework, no text overlay, 3:2.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-what-stays-in-squad-and-what-moves-to-the-book">3) What stays in Squad and what moves to the book<a href="http://dfberry.github.io/2026/08/15/media/too-much-to-know/watercolor-image-prompts#3-what-stays-in-squad-and-what-moves-to-the-book" class="hash-link" aria-label="Direct link to 3) What stays in Squad and what moves to the book" title="Direct link to 3) What stays in Squad and what moves to the book" translate="no">​</a></h2>
-<p>Prompt:
-Watercolor studio scene, same pink-haired woman at a workbench sorting glowing index cards into two containers, one transparent container for operational memory and one bound journal for institutional memory, cards imply architecture decisions, sprint tactics, incident lessons, tradeoffs, meeting transcript notes, and chat decisions from Teams and Slack, balanced composition, calm focused mood, layered watercolor washes, visible paper grain, hand-painted editorial style, no text overlay, 4:5.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="consistency-notes">Consistency notes<a href="http://dfberry.github.io/2026/08/15/media/too-much-to-know/watercolor-image-prompts#consistency-notes" class="hash-link" aria-label="Direct link to Consistency notes" title="Direct link to Consistency notes" translate="no">​</a></h2>
-<ul>
-<li class="">Keep the same character design, hair color, and face shape in all three images.</li>
-<li class="">Keep watercolor as the primary medium: wet-on-wet gradients, soft edges, and paper texture.</li>
-<li class="">Keep a warm, reflective mood that matches the article voice.</li>
-<li class="">Keep the theme centered on safety, consistency, and grounding, not speed alone.</li>
-</ul>]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[From Natural Language to Autonomous Actions]]></title>
@@ -1441,7 +1463,7 @@ Skills still matter to the overall ecosystem, but Azure's review workflows are n
 <p>The limitation: everything is still per-session. Copilot doesn't automatically carry context between sessions — it won't remember decisions from yesterday's refactor. It doesn't have persistent context about your project's evolving state. It doesn't coordinate with other instances of itself.</p>
 <p>Enter <a href="https://bradygaster.github.io/squad/" target="_blank" rel="noopener noreferrer" class="">Squad</a>.</p>
 <hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="level-3-squad--a-team-working-in-concert">Level 3: Squad — A Team Working in Concert<a href="http://dfberry.github.io/2026-05-15-from-autocomplete-to-ai-team#level-3-squad--a-team-working-in-concert" class="hash-link" aria-label="Direct link to Level 3: Squad — A Team Working in Concert" title="Direct link to Level 3: Squad — A Team Working in Concert" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="level-3-squad--a-team-working-in-concert">Level 3: Squad — A Team Working in Concert<a href="http://dfberry.github.io/2026-05-15-from-autocomplete-to-ai-team#level-3-squad--a-team-working-in-concert" class="hash-link" aria-label="Direct link to Level 3: Squad �— A Team Working in Concert" title="Direct link to Level 3: Squad — A Team Working in Concert" translate="no">​</a></h2>
 <p>🖥️ VS Code · ⌨️ CLI · 👤 Interactive · 💻 Local</p>
 <p><img decoding="async" loading="lazy" alt="Watercolor illustration of craftspeople collaborating at a shared workbench in a woodworking shop" src="http://dfberry.github.io/assets/images/level-3-squad-team-2f0e0d78705e975f3b04969c42071927.png" width="1024" height="1024" class="img_ev3q"></p>
 <p><em>The workshop is getting busy. You're at the bench, studying the blueprint. Around you, a small team of helpers is assembling a cabinet together — one holds the frame, another drives the dowels, another checks the level. Each knows their role. Each stays in their lane. The work moves faster because they each know their job and coordinate with each other, not just with you.</em></p>
