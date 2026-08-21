@@ -6,7 +6,6 @@ custom_edit_url: null
 sidebar_label: "2026.08.21 AI slop maintenance"
 title: "Maintaining AI Slop Over 2 Years"
 description: "A practical field guide for growing an AI-generated project over a two-year window."
-draft: true
 tags:
   - ai
   - maintenance
