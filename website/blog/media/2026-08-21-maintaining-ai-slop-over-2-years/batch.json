@@ -1,0 +1,19 @@
+{
+  "description": "Blog image for 'Maintaining AI Slop Over 2 Years' — Dina's watercolor style. Pink-haired woman architect on a winding, cluttered journey path. SDXL refiner ON (detail pass), 35 steps, quality negatives.",
+  "settings": {
+    "steps": 35,
+    "guidance": 7.5,
+    "width": 1024,
+    "height": 1024,
+    "refine": true,
+    "cpu": true
+  },
+  "prompts": [
+    {
+      "filename": "/Users/geraldinefberry/repos/project-dfberry/repos/dfberry.github.io/website/blog/media/2026-08-21-maintaining-ai-slop-over-2-years/hero.png",
+      "seed": 2024,
+      "prompt": "Watercolor painting, warm muted tones. Pink-haired modern woman in pink coat standing on a long straight road, behind her in the road is littered with broken down cars, car wheels. On road side is collapsed buildings. Above is electrical lines hanging down disconnected. Woman looks forward with determined resolve",
+      "negative_prompt": "text, watermark, signature, blurry, muddy, smudged, low detail, low contrast, photorealistic, 3D render, cartoon, anime, ink drawing, bold outlines, hard edges, comic, storybook, chibi, subservient, domestic, housewife, apron, cooking, passive, deformed hands, extra limbs, bad anatomy"
+    }
+  ]
+}
