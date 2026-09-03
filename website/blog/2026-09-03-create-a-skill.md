@@ -1,66 +1,133 @@
-Quick recommendation
-•	For a single portable skill: start with dotnet create-skill, then apply the Anthropic evaluation loop.
-•	For a Codex-oriented skill: use OpenAI skill-creator as the primary design guide.
-•	For expert operational knowledge: add Forge’s vocabulary and anti-pattern techniques.
-•	For a family of skills or publication pipeline: use AgriciDaniel Skill Forge or tripleyak SkillForge.
+---
+slug: /2026-09-03-create-a-skill
+date: 2026-09-03
+canonical_url: https://dfberry.github.io/blog/2026-09-03-create-a-skill
+custom_edit_url: null
+sidebar_label: "2026.09.03 Create an agent skill"
+title: "How to Create Agent Plugin Skills That Work"
+description: "Learn how plugins organize agent skills, then compare six public skill creators for routing, structure, testing, and reliable execution."
+tags:
+  - ai
+  - agent plugins
+  - agent skills
+  - GitHub Copilot
+  - Claude
+  - Codex
+keywords:
+  - create an agent plugin
+  - agent plugin skills
+  - create an agent skill
+  - SKILL.md
+  - agent skill creator
+  - skill routing metadata
+  - test agent skills
+---
 
-What the sources collectively teach about SKILL.md
-•	The description is routing metadata: Write what the skill does and when to use it using the user’s likely wording. Include boundaries against nearby skills because the main body may not load until after selection.
-•	Keep the main file lean: Place essential operational instructions in SKILL.md. Move deep domain references, schemas, long examples, and reusable execution logic into references and scripts.
-•	Choose the right determinism: Use flexible instructions when several approaches are valid. Add scripts or tightly ordered steps when consistency, safety, or fragile operations require them.
-•	Define negative scope: State when the skill should not run, which alternative owns the request, and what distinguishes similar capabilities.
-•	Specify output and failure behavior: Describe the expected output shape, partial-success representation, retries, fallback sources, stop conditions, and the smallest clarification needed from the user.
-•	Test activation and execution separately: A skill can produce good results when forced but still fail to activate naturally. Evaluate routing descriptions as well as task outcomes.
-•	Use examples strategically: Concrete input/output examples and copyable commands often teach behavior more efficiently than additional explanatory prose.
-•	Treat platform rules as overlays: Open Agent Skills conventions provide the portable base. Internal runtimes may add metadata, packaging, authentication, registration, validation, or publishing requirements.
+# How to create agent plugin skills that work
 
-Suggested reading order
-1.	dotnet create-skill: Learn routing, description design, and skill boundaries.
-2.	Anthropic skill-creator: Adopt the create, test, evaluate, and iterate lifecycle.
-3.	OpenAI Codex skill-creator: Choose the appropriate level of freedom and reduce unnecessary context.
-4.	Forge skill-creator: Improve domain vocabulary, examples, and anti-pattern guidance.
-5.	Skill Forge or SkillForge: Scale into subskills, validation, packaging, publishing, and cross-platform work.
+I wanted a better way to create skills for an agent plugin, so I read six public skill creators to see what they agreed on. A plugin is the top-level package. It can contain several skills, with each skill providing one reusable capability. A portable skill can also stand alone.
 
-## Anthropic skill-creator
+## My quick recommendation
 
-### When to use it. 
-Use when creating a skill from scratch, improving an existing skill, testing whether it activates correctly, or measuring output quality. It is the most complete end-to-end creator in this set because it treats skill authoring as an iterative loop: define the task, draft the skill, create test prompts, run evaluations, review results, revise, and expand the test set.
+- For one portable skill, start with [.NET create-skill](https://github.com/dotnet/skills/blob/main/.agents/skills/create-skill/SKILL.md), then use the [Anthropic skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md) evaluation loop.
+- For a Codex skill, use the [OpenAI skill-creator](https://github.com/openai/skills/blob/main/skills/.system/skill-creator/SKILL.md) as the design guide.
+- For deep operational knowledge, borrow the vocabulary and anti-pattern techniques from the [Forge skill-creator](https://github.com/jdforsythe/forge/blob/master/skills/skill-creator/SKILL.md).
+- For a plugin containing a family of skills or a publication pipeline, look at [Skill Forge by AgriciDaniel](https://github.com/AgriciDaniel/skill-forge/blob/main/skill-forge/SKILL.md) or [SkillForge by tripleyak](https://github.com/tripleyak/SkillForge/blob/main/SKILL.md).
 
-### What you learn from the skill file. 
-Reading the file teaches that activation quality and execution quality should be evaluated separately. It also shows how scripts, references, assets, evaluation data, and review tooling can support a lean SKILL.md instead of turning the main file into a monolith.
+## What makes a useful SKILL.md
 
+### The description does the routing
 
-## OpenAI Codex skill-creator
+The agent often sees the skill name and description before it loads the full file. Write the description in the words a person would use when asking for help. Include the artifacts, symptoms, or tasks that should trigger the skill.
 
-When to use it. Use when building or updating a Codex skill, or when you want a concise platform-neutral design philosophy. It is particularly useful for deciding whether the agent should receive flexible prose guidance, parameterized automation, or tightly controlled executable steps.
-What you learn from the skill file. The key lesson is to match the degree of freedom to the fragility of the task. Flexible work can use heuristics, moderately constrained work can use scripts with parameters, and fragile work needs specific sequences and guardrails. It also reinforces that the shared context window should contain only information the model truly needs.
-dotnet create-skill
-Visibility: PUBLIC
-Open the public source
-When to use it. Use when scaffolding a new Agent Skill for GitHub Copilot-compatible environments, especially when multiple neighboring skills could compete for the same request. It covers naming, directory setup, frontmatter, description design, section templates, and validation guidance.
-What you learn from the skill file. The standout lesson is that the description is the router. The runtime sees the name and description before loading the body, so descriptions should include the user’s vocabulary, recognizable artifacts, symptoms or error codes, positive triggers, and explicit exclusions. Closely related skills should be partitioned using the real discriminator rather than a broad topic label.
-Forge skill-creator
-Visibility: PUBLIC
-Open the public source
-When to use it. Use when the skill must capture deep professional or domain knowledge, rather than merely restating a generic workflow. It is suited to Claude Code and Cowork skills and emphasizes vocabulary payloads, dual-register descriptions, canonical examples, progressive disclosure, and anti-pattern watchlists.
-What you learn from the skill file. Reading it teaches how precise expert terminology influences routing and behavior. It also provides a useful quality test: remove generic consultant language and replace it with the exact terms an experienced practitioner would use with a peer.
-Skill Forge by AgriciDaniel
-Visibility: PUBLIC
-Open the public source
-When to use it. Use when one SKILL.md is no longer enough. Skill Forge supports planning, complexity tiers, subskill decomposition, complete directory scaffolding, review, evolution, publication, evaluation, benchmarking, and conversion to other agent environments.
-What you learn from the skill file. It teaches how to separate a broad capability into parent and subskills, how to package scripts and references alongside instructions, and how to treat publishing and evaluation as part of the skill lifecycle. It is best viewed as a skill-development system rather than a single template.
-SkillForge by tripleyak
-Visibility: PUBLIC
-Open the public source
-When to use it. Use when maintainability, governance, context efficiency, validation, and safe packaging are the dominant concerns. It provides a methodology for moving skill creation from ad hoc prompting toward a repeatable engineering process.
-What you learn from the skill file. The strongest lesson is that every line in SKILL.md competes with the user’s work for context. Activation guidance belongs in the description, while deep explanations and supporting material belong in references that load only when necessary. The project also demonstrates validation and packaging as first-class concerns.
+Also say when the skill should not run. If two skills both claim "GitHub help," the router has little reason to choose the right one. "Review a pull request" and "repair a failing GitHub Actions workflow" are easier to route.
 
-## Source index
+A narrow description can carry both the positive and negative routing signals:
 
-•	Anthropic skill-creator — Public. Open source
-•	OpenAI Codex skill-creator — Public. Open source
-•	dotnet create-skill — Public. Open source
-•	Forge skill-creator — Public. Open source
-•	Skill Forge by AgriciDaniel — Public. Open source
-•	SkillForge by tripleyak — Public. Open source
+```markdown
+---
+name: workflow-repair
+description: Diagnoses and repairs failing CI workflows. Use for failed jobs, logs, or workflow YAML. Do not use for pull request reviews or feature development.
+---
+```
 
+### The main file stays lean
+
+Put the instructions needed for most runs in `SKILL.md`. Move long examples, schemas, and domain references into files the agent can open when needed. Put repeatable or fragile operations in scripts.
+
+A lean main file protects the shared context. Every line of background material competes with the task, conversation, and source files the agent also needs.
+
+The main file can name the common path and disclose details only when needed:
+
+```markdown
+---
+name: release-notes
+description: Drafts release notes from completed changes.
+---
+
+## Workflow
+
+1. Identify user-visible changes.
+2. Draft the summary.
+3. Check [the style guide](references/style.md) when wording is unclear.
+4. Run `scripts/check-notes.py` before returning the result.
+```
+
+### The instructions match the risk
+
+Some work needs judgment. Give the agent principles and room to choose. Other work must happen the same way every time. Give that work a script or a strict sequence.
+
+The OpenAI creator frames this as choosing the right degree of freedom. I find that more useful than treating every skill as a prose prompt. If a missed step can damage data or publish the wrong thing, do not rely on the agent remembering a suggestion buried in a paragraph.
+
+### The skill defines a finish line
+
+Say what the output should contain, how to represent partial success, and when to stop. Include the smallest question the agent should ask when it cannot continue safely.
+
+Without a finish line, a skill can produce a plausible answer while skipping the check that mattered. "Update the file" is weaker than "update the file, run the existing validator, and report any failed checks without hiding them."
+
+The finish line should make output, validation, and stopping conditions explicit:
+
+```markdown
+## Finish
+
+- Return the updated file and a short change summary.
+- Run `scripts/validate.py`.
+- Report every failed check; do not claim completion if validation fails.
+- If the target file is unknown, ask for its path and stop.
+```
+
+### Activation and execution get separate tests
+
+A skill can work perfectly when you force the agent to use it and still fail in normal conversation because the description never attracts the right prompts.
+
+Test both:
+
+1. Does the skill activate for several realistic requests?
+2. Does it stay out of nearby requests owned by another skill?
+3. Once selected, does it complete the task and produce the expected result?
+
+Anthropic's creator is especially useful here because it treats skill authoring as a loop: draft, test, review the results, revise, and add the failures to the test set.
+
+## Microsoft and Azure skill examples
+
+These Microsoft-owned repositories provide strong Agent Skill examples for Azure and developer workflows. They are not ranked by usage. Each one demonstrates a pattern worth borrowing:
+
+- The [Azure AI skill](https://github.com/microsoft/azure-skills/blob/main/skills/azure-ai/SKILL.md) routes requests across several AI services while keeping service-specific details in supporting references.
+- The [Azure Cost Management skill](https://github.com/microsoft/azure-skills/blob/main/skills/azure-cost/SKILL.md) defines positive and negative routing, required roles, separate workflows, and safety guidance.
+- The [Azure SDK pipeline troubleshooting skill](https://github.com/Azure/azure-sdk-tools/blob/main/plugins/azure-sdk-tools/skills/pipeline-troubleshooting/SKILL.md) follows a focused identify, analyze, reproduce, fix, and verify sequence with fallback behavior.
+- The [Azure Policy external evaluation authoring skill](https://github.com/Azure/azure-policy/blob/master/ExternalEvaluationPolicies/agent-skills/azure-arg-external-evaluation-policy-author/SKILL.md) shows how permissions, rejection criteria, validation, and stop conditions belong in safety-sensitive work.
+- The [ASP.NET Core Web API skill](https://github.com/dotnet/skills/blob/main/plugins/dotnet-aspnetcore/skills/dotnet-webapi/SKILL.md) combines precise exclusions and deep domain guidance with security checks, examples, and a verification checklist.
+
+## A simple way to start
+
+I would create the next skill in this order:
+
+1. Write three prompts that should activate it and three that should not.
+2. Draft the description from the words used in those prompts.
+3. Write only the instructions needed to complete the common path.
+4. Move reusable facts into references and deterministic work into scripts.
+5. Test routing and results separately, then revise from the failures.
+
+The [Agent Skills specification](https://agentskills.io/specification) provides the portable base. Platform guidance, such as the [GitHub Copilot agent skills overview](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills), adds its own locations and runtime behavior. When skills are packaged in a plugin, keep plugin discovery and runtime rules separate from the portable skill instructions.
+
+I came away with a practical test: can the agent find this skill from a normal request, and can it finish the work without guessing? If both answers are yes, `SKILL.md` is doing its job.
