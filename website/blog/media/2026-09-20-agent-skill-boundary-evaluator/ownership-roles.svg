@@ -1,47 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">Ownership boundary between skills, agents, and external connectors</title>
-  <desc id="desc">A diagram showing that a skill owns a reusable playbook, an agent owns goals and coordination, and an MCP connector owns external system access.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">Split responsibilities between overloaded agent file, skill, agent, MCP, and hook layers</title>
+  <desc id="desc">A diagram showing that a difficult task is split by moving reusable procedures to a skill, coordination to an agent, external access to MCP, and guarding rules to a hook.</desc>
   <defs>
     <style>
-      .bg { fill: #f7f5f2; }
-      .card { fill: #ffffff; stroke: #d9d2c8; stroke-width: 2; }
-      .skill { fill: #e8f8ed; stroke: #66a57b; stroke-width: 2; }
-      .agent { fill: #fef3c7; stroke: #d6a75b; stroke-width: 2; }
-      .mcp { fill: #eaf3ff; stroke: #7ea7d8; stroke-width: 2; }
-      .title { font: 700 30px 'Segoe UI', sans-serif; fill: #1f2937; }
-      .label { font: 700 22px 'Segoe UI', sans-serif; fill: #1f2937; }
-      .small { font: 500 17px 'Segoe UI', sans-serif; fill: #3d4d5a; }
-      .arrow { stroke: #4b5563; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
-      .dashed { stroke-dasharray: 8 8; }
+      .bg { fill: #f5f5f3; }
+      .left { fill: #f3dfe1; stroke: #516a73; stroke-width: 2.2; }
+      .agent { fill: #dfeaf7; stroke: #4d6b8a; stroke-width: 2.2; }
+      .skill { fill: #dfeee4; stroke: #4d7d60; stroke-width: 2.2; }
+      .mcp { fill: #f3ebcc; stroke: #8a7a35; stroke-width: 2.2; }
+      .hook { fill: #e9dff4; stroke: #5f4d84; stroke-width: 2.2; }
+      .main { font: 700 30px 'Segoe UI', sans-serif; fill: #1b2733; }
+      .label { font: 700 31px 'Segoe UI', sans-serif; fill: #1b2733; }
+      .small { font: 500 20px 'Segoe UI', sans-serif; fill: #334155; }
+      .list { font: 500 20px 'Segoe UI', sans-serif; fill: #334155; }
+      .split { font: 700 26px 'Segoe UI', sans-serif; fill: #23334d; }
+      .arrow { stroke: #2f3d52; stroke-width: 5; fill: none; marker-end: url(#arrowhead); }
     </style>
-    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#4b5563" /></marker>
+    <marker id="arrowhead" markerWidth="16" markerHeight="16" refX="12" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L12,4 z" fill="#2f3d52" />
+    </marker>
   </defs>
-  <rect class="bg" width="1200" height="700"/>
-  <text x="600" y="60" text-anchor="middle" class="title">Clear ownership makes the decision easier</text>
 
-  <rect class="card" x="110" y="120" width="260" height="420" rx="22"/>
-  <rect class="skill" x="150" y="190" width="180" height="90" rx="18"/>
-  <text x="240" y="245" text-anchor="middle" class="label">Skill</text>
-  <text x="240" y="300" text-anchor="middle" class="small">Reusable playbook</text>
-  <text x="240" y="325" text-anchor="middle" class="small">Procedure and examples</text>
-  <text x="240" y="350" text-anchor="middle" class="small">Stable repeatable steps</text>
+  <rect class="bg" width="1280" height="760"/>
+  <text x="640" y="70" text-anchor="middle" class="main">Move each responsibility to the layer that owns it</text>
 
-  <rect class="card" x="470" y="120" width="260" height="420" rx="22"/>
-  <rect class="agent" x="510" y="190" width="180" height="90" rx="18"/>
-  <text x="600" y="245" text-anchor="middle" class="label">Agent</text>
-  <text x="600" y="300" text-anchor="middle" class="small">Goal owner</text>
-  <text x="600" y="325" text-anchor="middle" class="small">Context and coordination</text>
-  <text x="600" y="350" text-anchor="middle" class="small">Judgment and handoff</text>
+  <rect class="left" x="80" y="130" width="320" height="440" rx="22"/>
+  <text x="240" y="185" text-anchor="middle" class="label">Overloaded agent file</text>
+  <text x="145" y="240" class="list">• Specialist role</text>
+  <text x="145" y="280" class="list">• Repeatable procedure</text>
+  <text x="145" y="320" class="list">• External service calls</text>
+  <text x="145" y="360" class="list">• Mandatory safety checks</text>
+  <text x="145" y="400" class="list">• Templates and examples</text>
+  <text x="145" y="440" class="list">• Tool and handoff policy</text>
 
-  <rect class="card" x="830" y="120" width="260" height="420" rx="22"/>
-  <rect class="mcp" x="870" y="190" width="180" height="90" rx="18"/>
-  <text x="960" y="245" text-anchor="middle" class="label">Connector</text>
-  <text x="960" y="300" text-anchor="middle" class="small">MCP or external access</text>
-  <text x="960" y="325" text-anchor="middle" class="small">Typed interface</text>
-  <text x="960" y="350" text-anchor="middle" class="small">Not the role owner</text>
+  <text x="505" y="338" text-anchor="middle" class="split">split</text>
+  <path d="M420 370 L610 370" class="arrow"/>
 
-  <path d="M370 320 L470 320" class="arrow"/>
-  <path d="M730 320 L830 320" class="arrow"/>
-  <path d="M240 540 L960 540" class="dashed arrow"/>
-  <text x="600" y="575" text-anchor="middle" class="small">The same task can run locally or through MCP without changing the ownership model.</text>
+  <rect class="agent" x="650" y="150" width="240" height="145" rx="20"/>
+  <text x="770" y="210" text-anchor="middle" class="label">Agent</text>
+  <text x="770" y="245" text-anchor="middle" class="small">Role, tools, context</text>
+  <text x="770" y="272" text-anchor="middle" class="small">and handoff</text>
+
+  <rect class="skill" x="960" y="150" width="240" height="145" rx="20"/>
+  <text x="1080" y="210" text-anchor="middle" class="label">Skill</text>
+  <text x="1080" y="245" text-anchor="middle" class="small">Procedure, templates</text>
+  <text x="1080" y="272" text-anchor="middle" class="small">and examples</text>
+
+  <rect class="mcp" x="650" y="370" width="240" height="150" rx="20"/>
+  <text x="770" y="430" text-anchor="middle" class="label">MCP</text>
+  <text x="770" y="465" text-anchor="middle" class="small">External system</text>
+  <text x="770" y="492" text-anchor="middle" class="small">access</text>
+
+  <rect class="hook" x="960" y="370" width="240" height="150" rx="20"/>
+  <text x="1080" y="430" text-anchor="middle" class="label">Hook</text>
+  <text x="1080" y="465" text-anchor="middle" class="small">Mandatory checks</text>
+  <text x="1080" y="492" text-anchor="middle" class="small">and blocking rules</text>
 </svg>
