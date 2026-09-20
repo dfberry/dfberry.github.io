@@ -1,0 +1,19 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui", "primaryColor": "#f5e6d3", "primaryTextColor": "#3d2817", "primaryBorderColor": "#d4896b", "lineColor": "#c9956b", "secondaryColor": "#fdf4e8", "tertiaryColor": "#f9ead8", "textColor": "#3d2817", "fontSize": "18px"}}}%%
+flowchart TB
+    subgraph ownership["Ownership boundary"]
+        skill["Skill<br/>Reusable playbook"]
+        agent["Agent<br/>Goals + coordination"]
+    end
+
+    subgraph runtime["Runtime topology"]
+        local["Local execution"]
+        mcp["MCP / connector"]
+    end
+
+    skill --> local
+    agent --> local
+    agent --> mcp
+    skill --> mcp
+
+    skill -. "Method" .-> agent
+    agent -. "Decision + orchestration" .-> mcp

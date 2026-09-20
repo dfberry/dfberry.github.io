@@ -20,7 +20,8 @@ const site = require('./site.config');
   projectName: site.githubRepo, // Usually your repo name.
 
   themes: [
-    '@saucelabs/theme-github-codeblock'],
+    '@saucelabs/theme-github-codeblock',
+    '@docusaurus/theme-mermaid'],
 
   presets: [
     [
@@ -84,6 +85,10 @@ const site = require('./site.config');
       },
       feedOptions: site.feedOptions
     }),
+
+  markdown: {
+    mermaid: true,
+  },
 
   plugins: [
     [

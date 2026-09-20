@@ -33,7 +33,7 @@ A skill is usually the reusable playbook: a clear procedure, good examples, and 
 
 The real problem is that this is easy to describe in theory and hard to judge in practice. So if I wanted to build an evaluator for this boundary, I would make it compare the same task through several candidate designs and then score them using the same evidence.
 
-![Diagram showing one task evaluated under a skill-only design, an agent-only design, and a skill-plus-agent design](./media/2026-09-20-agent-skill-boundary-evaluator/hero-decision.png)
+![Diagram showing one task evaluated under a skill-only design, an agent-only design, and a skill-plus-agent design](./media/2026-09-20-agent-skill-boundary-evaluator/hero-decision.svg)
 
 *The evaluator treats the same task as the same input problem, then measures which design yields the best fit without just guessing from the naming alone.*
 
@@ -88,7 +88,7 @@ That is far more useful than a vague verdict like "use a skill" or "use an agent
 
 I would keep the evaluator intentionally simple and grounded.
 
-![Diagram showing the evaluator flow: input, normalize, generate candidate designs, run comparison, score against evidence, and produce a recommendation with citations](./media/2026-09-20-agent-skill-boundary-evaluator/evaluator-flow.png)
+![Diagram showing the evaluator flow: input, normalize, generate candidate designs, run comparison, score against evidence, and produce a recommendation with citations](./media/2026-09-20-agent-skill-boundary-evaluator/evaluator-flow.svg)
 
 *This is the kind of pipeline I would want: intake the source, normalize it, generate the design options, score them, and attach evidence to the final recommendation.*
 
@@ -164,7 +164,7 @@ A skill can run locally. An agent can also run locally. An MCP-backed tool can s
 
 This separation matters because a lot of bad design comes from collapsing separate concerns into a single abstraction. A local workflow is not automatically better or worse than an MCP-backed one. It is simply a different runtime topology.
 
-![Diagram showing that skill owns a reusable playbook, agent owns goals and coordination, and MCP or connector owns external access](./media/2026-09-20-agent-skill-boundary-evaluator/ownership-roles.png)
+![Diagram showing that skill owns a reusable playbook, agent owns goals and coordination, and MCP or connector owns external access](./media/2026-09-20-agent-skill-boundary-evaluator/ownership-roles.svg)
 
 *The responsibility boundary is different from the execution topology. The decision about role ownership should remain stable even when the runtime changes.*
 
