@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkdocusaurus_blog_with_search=globalThis.webpackChunkdocusaurus_blog_with_search||[]).push([[7089],{37089(s,c,e){e.d(c,{createArchitectureServices:()=>u.S});var u=e(45796);e(4954)}}]);
