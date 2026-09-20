@@ -27,3 +27,21 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem auto;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.mermaid svg,
+.markdown img,
+.theme-blog-content img,
+article img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
