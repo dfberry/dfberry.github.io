@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Three candidate designs for the same AI task</title>
+  <desc id="desc">A diagram showing skill-only, agent-only, and agent-plus-skill designs as three alternate routes for the same task.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f5f2; }
+      .panel { fill: #ffffff; stroke: #d9d2c8; stroke-width: 2; }
+      .title { font: 700 30px 'Segoe UI', sans-serif; fill: #1f2937; }
+      .label { font: 700 24px 'Segoe UI', sans-serif; fill: #1f2937; }
+      .small { font: 500 18px 'Segoe UI', sans-serif; fill: #3d4d5a; }
+      .pill { fill: #eaf3ff; stroke: #7ea7d8; stroke-width: 2; }
+      .agent { fill: #fef3c7; stroke: #d6a75b; stroke-width: 2; }
+      .skill { fill: #e8f8ed; stroke: #66a57b; stroke-width: 2; }
+      .hybrid { fill: #f3e8ff; stroke: #9a67d1; stroke-width: 2; }
+      .arrow { stroke: #4b5563; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563" />
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="700"/>
+  <text x="600" y="60" text-anchor="middle" class="title">One task. Three candidate designs.</text>
+
+  <rect class="panel" x="80" y="120" width="300" height="430" rx="18"/>
+  <rect class="skill" x="120" y="170" width="220" height="90" rx="18"/>
+  <text x="230" y="225" text-anchor="middle" class="label">Skill-only</text>
+  <text x="230" y="285" text-anchor="middle" class="small">Reusable playbook</text>
+  <text x="230" y="315" text-anchor="middle" class="small">Procedure, examples, checks</text>
+  <text x="230" y="370" text-anchor="middle" class="small">Best when the work is</text>
+  <text x="230" y="395" text-anchor="middle" class="small">repeatable, teachable, and stable</text>
+
+  <rect class="panel" x="450" y="120" width="300" height="430" rx="18"/>
+  <rect class="agent" x="490" y="170" width="220" height="90" rx="18"/>
+  <text x="600" y="225" text-anchor="middle" class="label">Agent-only</text>
+  <text x="600" y="285" text-anchor="middle" class="small">Specialist role</text>
+  <text x="600" y="315" text-anchor="middle" class="small">Owns goal, context, and choices</text>
+  <text x="600" y="370" text-anchor="middle" class="small">Best when the work is</text>
+  <text x="600" y="395" text-anchor="middle" class="small">context-heavy and adaptive</text>
+
+  <rect class="panel" x="820" y="120" width="300" height="430" rx="18"/>
+  <rect class="hybrid" x="860" y="170" width="220" height="90" rx="18"/>
+  <text x="970" y="225" text-anchor="middle" class="label">Agent + skill</text>
+  <text x="970" y="285" text-anchor="middle" class="small">Coordinator and playbook</text>
+  <text x="970" y="315" text-anchor="middle" class="small">Goal in the agent; procedure in the skill</text>
+  <text x="970" y="370" text-anchor="middle" class="small">Best when the work needs</text>
+  <text x="970" y="395" text-anchor="middle" class="small">both judgment and repeatability</text>
+
+  <path d="M380 335 L450 335" class="arrow"/>
+  <path d="M750 335 L820 335" class="arrow"/>
+
+  <rect class="pill" x="410" y="520" width="380" height="60" rx="18"/>
+  <text x="600" y="558" text-anchor="middle" class="small">The evaluator compares all three against the same evidence.</text>
+</svg>

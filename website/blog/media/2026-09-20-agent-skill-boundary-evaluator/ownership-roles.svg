@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Ownership boundary between skills, agents, and external connectors</title>
+  <desc id="desc">A diagram showing that a skill owns a reusable playbook, an agent owns goals and coordination, and an MCP connector owns external system access.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f5f2; }
+      .card { fill: #ffffff; stroke: #d9d2c8; stroke-width: 2; }
+      .skill { fill: #e8f8ed; stroke: #66a57b; stroke-width: 2; }
+      .agent { fill: #fef3c7; stroke: #d6a75b; stroke-width: 2; }
+      .mcp { fill: #eaf3ff; stroke: #7ea7d8; stroke-width: 2; }
+      .title { font: 700 30px 'Segoe UI', sans-serif; fill: #1f2937; }
+      .label { font: 700 22px 'Segoe UI', sans-serif; fill: #1f2937; }
+      .small { font: 500 17px 'Segoe UI', sans-serif; fill: #3d4d5a; }
+      .arrow { stroke: #4b5563; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .dashed { stroke-dasharray: 8 8; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#4b5563" /></marker>
+  </defs>
+  <rect class="bg" width="1200" height="700"/>
+  <text x="600" y="60" text-anchor="middle" class="title">Clear ownership makes the decision easier</text>
+
+  <rect class="card" x="110" y="120" width="260" height="420" rx="22"/>
+  <rect class="skill" x="150" y="190" width="180" height="90" rx="18"/>
+  <text x="240" y="245" text-anchor="middle" class="label">Skill</text>
+  <text x="240" y="300" text-anchor="middle" class="small">Reusable playbook</text>
+  <text x="240" y="325" text-anchor="middle" class="small">Procedure and examples</text>
+  <text x="240" y="350" text-anchor="middle" class="small">Stable repeatable steps</text>
+
+  <rect class="card" x="470" y="120" width="260" height="420" rx="22"/>
+  <rect class="agent" x="510" y="190" width="180" height="90" rx="18"/>
+  <text x="600" y="245" text-anchor="middle" class="label">Agent</text>
+  <text x="600" y="300" text-anchor="middle" class="small">Goal owner</text>
+  <text x="600" y="325" text-anchor="middle" class="small">Context and coordination</text>
+  <text x="600" y="350" text-anchor="middle" class="small">Judgment and handoff</text>
+
+  <rect class="card" x="830" y="120" width="260" height="420" rx="22"/>
+  <rect class="mcp" x="870" y="190" width="180" height="90" rx="18"/>
+  <text x="960" y="245" text-anchor="middle" class="label">Connector</text>
+  <text x="960" y="300" text-anchor="middle" class="small">MCP or external access</text>
+  <text x="960" y="325" text-anchor="middle" class="small">Typed interface</text>
+  <text x="960" y="350" text-anchor="middle" class="small">Not the role owner</text>
+
+  <path d="M370 320 L470 320" class="arrow"/>
+  <path d="M730 320 L830 320" class="arrow"/>
+  <path d="M240 540 L960 540" class="dashed arrow"/>
+  <text x="600" y="575" text-anchor="middle" class="small">The same task can run locally or through MCP without changing the ownership model.</text>
+</svg>

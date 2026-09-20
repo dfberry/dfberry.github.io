@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Evaluator flow for agent-skill design decisions</title>
+  <desc id="desc">A flowchart showing source intake, normalization, candidate generation, comparison, scoring, and recommendation output.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f5f2; }
+      .panel { fill: #ffffff; stroke: #d9d2c8; stroke-width: 2; }
+      .step { fill: #edf6ff; stroke: #7fa9d6; stroke-width: 2; }
+      .result { fill: #ebf8ee; stroke: #69b17a; stroke-width: 2; }
+      .title { font: 700 30px 'Segoe UI', sans-serif; fill: #1f2937; }
+      .label { font: 700 22px 'Segoe UI', sans-serif; fill: #1f2937; }
+      .small { font: 500 17px 'Segoe UI', sans-serif; fill: #3d4d5a; }
+      .arrow { stroke: #4b5563; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563" />
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="700"/>
+  <text x="600" y="60" text-anchor="middle" class="title">How the evaluator works</text>
+
+  <rect class="panel" x="70" y="120" width="170" height="120" rx="18"/>
+  <text x="155" y="170" text-anchor="middle" class="label">Source</text>
+  <text x="155" y="200" text-anchor="middle" class="small">agent, skill,</text>
+  <text x="155" y="223" text-anchor="middle" class="small">or task description</text>
+
+  <rect class="panel" x="280" y="120" width="170" height="120" rx="18"/>
+  <text x="365" y="170" text-anchor="middle" class="label">Normalize</text>
+  <text x="365" y="200" text-anchor="middle" class="small">description, scope,</text>
+  <text x="365" y="223" text-anchor="middle" class="small">tools, constraints</text>
+
+  <rect class="panel" x="490" y="120" width="180" height="120" rx="18"/>
+  <text x="580" y="170" text-anchor="middle" class="label">Build candidates</text>
+  <text x="580" y="200" text-anchor="middle" class="small">S, A, H</text>
+  <text x="580" y="223" text-anchor="middle" class="small">with provenance</text>
+
+  <rect class="panel" x="710" y="120" width="180" height="120" rx="18"/>
+  <text x="800" y="170" text-anchor="middle" class="label">Compare</text>
+  <text x="800" y="200" text-anchor="middle" class="small">same task,</text>
+  <text x="800" y="223" text-anchor="middle" class="small">same evidence</text>
+
+  <rect class="result" x="930" y="120" width="200" height="120" rx="18"/>
+  <text x="1030" y="170" text-anchor="middle" class="label">Recommendation</text>
+  <text x="1030" y="200" text-anchor="middle" class="small">clear owner,</text>
+  <text x="1030" y="223" text-anchor="middle" class="small">confidence, tradeoff</text>
+
+  <path d="M240 180 L280 180" class="arrow"/>
+  <path d="M450 180 L490 180" class="arrow"/>
+  <path d="M670 180 L710 180" class="arrow"/>
+  <path d="M890 180 L930 180" class="arrow"/>
+
+  <rect class="step" x="260" y="330" width="680" height="220" rx="26"/>
+  <text x="600" y="375" text-anchor="middle" class="label">Evidence model</text>
+  <text x="315" y="430" class="small">• source provenance</text>
+  <text x="315" y="460" class="small">• deterministic checks</text>
+  <text x="315" y="490" class="small">• generated counterfactuals labeled as generated</text>
+  <text x="315" y="520" class="small">• guardrails, accuracy, reuse, and ownership scores</text>
+  <text x="700" y="430" class="small">• clear final explanation</text>
+  <text x="700" y="460" class="small">• confidence cap for synthetic evidence</text>
+  <text x="700" y="490" class="small">• separation of runtime topology from design ownership</text>
+</svg>
