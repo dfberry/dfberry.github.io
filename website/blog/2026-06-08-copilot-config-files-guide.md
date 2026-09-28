@@ -1,5 +1,6 @@
 ---
 slug: /2026-06-08-copilot-config-files-guide
+authors: [dfberry]
 date: 2026-06-08
 image: ./media/2026-06-08-copilot-config-files-guide/watercolor-1-layers-of-governance.png
 canonical_url: https://dfberry.github.io/blog/2026-06-08-copilot-config-files-guide
@@ -184,6 +185,10 @@ A skill is a folder with a `SKILL.md` file plus whatever supporting templates, s
 
 GitHub's documentation describes what each feature does, but doesn't frame the relationship as explicitly as I'd like. Here's my mental model: **Instructions set the rules. Agents decide. Skills execute.** This is my interpretation, not GitHub's official framing, but it helps me remember which tool to reach for.
 
+![Mental model hierarchy showing instructions governing agents and skills](./media/2026-06-08-copilot-config-files-guide/diagram-1-mental-model-v3-color.svg)
+
+*This cascade makes the control flow explicit: rules constrain decisions, and decisions choose the reusable execution path.*
+
 ---
 
 ## Skills vs. Prompts: The Critical Difference
@@ -277,6 +282,12 @@ Separately from the workflow trigger, [archie.agent.md](https://github.com/Azure
 
 **6. Skills are adjacent, not proven by this example**
 Skills still matter to the overall ecosystem, but Azure's review workflows are not the example I would use to claim that agents are invoking skills behind the scenes. If I want to show skills, I use an actual `SKILL.md` repo.
+
+That's the loop I trust: a label starts a workflow, the workflow runs the reviewer, the reviewer uses repo guidance, and comments come back to the PR.
+
+![Sequence diagram for the Azure SDK architecture review workflow](./media/2026-06-08-copilot-config-files-guide/diagram-4-azure-sdk-workflow-trigger-color.svg)
+
+*This sequence shows the asynchronous handoff from label to workflow to reviewer guidance and back to a PR comment.*
 
 ---
 
