@@ -1,0 +1,43 @@
+name: Capture blog ideas
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  capture:
+    if: contains(github.event.issue.labels.*.name, 'blog')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Capture issue notes
+        run: node ../.github/scripts/blog-automation.mjs capture
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ',') }}
+
+      - name: Open pull request with captured notes
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/blog-capture-${{ github.event.issue.number }}
+          commit-message: "chore(blog): capture idea from issue #${{ github.event.issue.number }}"
+          title: "Capture blog idea from issue #${{ github.event.issue.number }}"
+          body: |
+            Capture the blog idea from issue #${{ github.event.issue.number }} so it can be reviewed before the weekly draft workflow turns it into a post.
+          labels: blog
