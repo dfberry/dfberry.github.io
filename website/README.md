@@ -40,5 +40,5 @@ The ordering of an item in the directory is controlled in each file's metadata `
 
 1. Add the `blog` label to an issue with a post idea.
 2. The capture workflow writes that issue into `website/internal/blog-captures/`.
-3. Every Wednesday morning UTC, the draft workflow takes the oldest open `blog` issue and opens a pull request with a starter post in `website/blog/`.
+3. Every Wednesday morning UTC, the draft workflow asks GitHub Models to turn the oldest open `blog` issue into a personal, engaging starter post in `website/blog/`.
 4. Review and expand the draft before merging it.
