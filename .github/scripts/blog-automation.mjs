@@ -63,14 +63,42 @@ function issueSummary(issue) {
   return issue.title;
 }
 
-function buildDraftPrompt(issue) {
+function buildRepoContextSummary(repoContext) {
+  if (!repoContext) {
+    return '';
+  }
+
+  try {
+    const items = JSON.parse(repoContext);
+    if (!Array.isArray(items) || !items.length) {
+      return '';
+    }
+
+    return [
+      'Relevant repository context:',
+      ...items.map((item) => {
+        const label = item.type || 'Update';
+        const state = item.state ? ` (${item.state})` : '';
+        const summary = item.body ? ` — ${excerpt(item.body, 140)}` : '';
+        return `- ${label} #${item.number}${state}: ${item.title}${summary}`;
+      }),
+      '',
+    ].join('\n');
+  } catch {
+    return `Relevant repository context:\n${repoContext}\n\n`;
+  }
+}
+
+function buildDraftPrompt(issue, repoContext = '') {
+  const repoSummary = buildRepoContextSummary(repoContext);
+
   return [
-    'You are helping write a personal, engaging blog post for Dina Berry.',
-    'Write in first person with a thoughtful, practical, human voice.',
-    'Turn the issue into a real blog draft instead of a checklist.',
+    'You are a thoughtful editorial assistant helping turn repository activity into an engaging developer blog post.',
+    'Write in first person with a warm, practical, human voice that feels like a real post from Dina Berry.',
+    'Treat the issue as a seed for the story, not as a checklist or issue dump.',
     'Use markdown headings and paragraphs only; do not add front matter or a title line.',
-    'Keep the tone warm, specific, and reflective.',
-    'Do not simply restate the issue bullets. Expand the idea into a narrative that sounds like a real blog post.',
+    'Do not simply restate the issue bullets or enumerate tasks. Instead, identify the likely themes, tensions, and lessons behind the work.',
+    'Synthesize the issue and the repository context into a coherent narrative: explain the problem, why it matters, what changed, and what the reader should take away.',
     '',
     `Issue title: ${issue.title}`,
     `Issue number: ${issue.number}`,
@@ -79,11 +107,18 @@ function buildDraftPrompt(issue) {
     'Issue notes:',
     issueSummary(issue),
     '',
+    repoSummary || 'Repository context: none provided.',
+    'Writing workflow:',
+    '1. Identify 2-4 meaningful themes or patterns in the issue and the surrounding repo activity.',
+    '2. Explain the practical stakes and tradeoffs in a way that helps a reader understand the context.',
+    '3. Draft a polished blog body with a strong hook, a few narrative sections, and a reflective close.',
+    '',
     'Requirements:',
-    '- Start with a strong hook that feels personal.',
+    '- Start with a strong hook that feels personal and grounded.',
     '- Include a few short sections that explain the idea, the tradeoffs, and why it matters.',
-    '- Keep the writing grounded in the issue without inventing specific facts that are not present.',
-    '- End with a reflective close or next steps.',
+    '- Keep the writing grounded in the issue and repo context without inventing specific facts that are not present.',
+    '- End with a reflective close or next steps that invite the reader to think further.',
+    '- Avoid issue trackers, bullet-heavy summaries, and a flat changelog tone.',
     '',
     'Return only the markdown body.',
   ].join('\n');
@@ -182,16 +217,66 @@ async function callModel({token, model, prompt}) {
   return content;
 }
 
+async function fetchRepoContext(issue) {
+  const number = Number(issue.number);
+  if (!number) {
+    return '';
+  }
+
+  const headers = {
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+  };
+
+  const candidates = [
+    `https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues?state=all&per_page=10&sort=updated&direction=desc`,
+    `https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues?state=all&labels=blog&per_page=10&sort=updated&direction=desc`,
+  ];
+
+  for (const url of candidates) {
+    try {
+      const response = await fetch(url, {headers});
+      if (!response.ok) {
+        continue;
+      }
+
+      const items = await response.json();
+      if (!Array.isArray(items) || items.length === 0) {
+        continue;
+      }
+
+      return JSON.stringify(
+        items
+          .filter((item) => item && item.number !== number && !item.pull_request)
+          .slice(0, 5)
+          .map((item) => ({
+            number: item.number,
+            title: item.title,
+            body: item.body || '',
+            state: item.state,
+            type: item.pull_request ? 'PR' : 'Issue',
+          })),
+      );
+    } catch {
+      continue;
+    }
+  }
+
+  return '';
+}
+
 async function generateDraftBody(issue, token, model = defaultModel) {
   if (!token) {
     return fallbackDraftBody(issue);
   }
 
   try {
+    const repoContext = await fetchRepoContext(issue);
     return await callModel({
       token,
       model,
-      prompt: buildDraftPrompt(issue),
+      prompt: buildDraftPrompt(issue, repoContext),
     });
   } catch (error) {
     console.error(`Model call failed: ${error.message}`);
