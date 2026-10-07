@@ -35,3 +35,10 @@ The ordering of an item in the directory is controlled in each file's metadata `
 5. Blog post is in drafts, review it to make sure images and code blocks display correctly.
 6. Code blocks may need to be recopied because they don't have end of lines.
 7. Change publish from false to true in the top metadata.
+
+## Blog issue workflow
+
+1. Add the `blog` label to an issue with a post idea.
+2. The capture workflow writes that issue into `website/internal/blog-captures/`.
+3. Every Wednesday morning UTC, the draft workflow asks GitHub Models to turn the oldest open `blog` issue into a personal, engaging starter post in `website/blog/`.
+4. Review and expand the draft before merging it.
