@@ -8,6 +8,9 @@ on:
   workflow_dispatch:
 permissions: {}
 strict: true
+concurrency:
+  group: "gh-aw-${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 network:
   allowed: [defaults, github]
 tools:
