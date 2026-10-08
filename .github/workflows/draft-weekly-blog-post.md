@@ -4,7 +4,7 @@ name: Draft weekly blog post
 description: Turn the oldest open blog issue and the repo’s recent activity into a narrative, reader-friendly blog draft for review.
 on:
   schedule:
-    - cron: "0 9 * * 3"
+    - cron: "0 9 * * 3" #wed 9am
   workflow_dispatch:
 permissions:
   contents: read
@@ -34,9 +34,9 @@ Use the repo’s actual activity as grounding, but write as a thoughtful editor 
 
 ## Workflow
 
-1. Inspect the oldest open issue tagged `blog`.
+1. Inspect all issues labeled with `blog`. 
 2. Read the issue title, body, and any related repo context that helps explain the theme or story behind it.
-3. Identify the core narrative arc:
+3. Identify the core narrative arc of each `blog` issue:
    - what problem or opportunity is being explored
    - why it matters in practical terms
    - what changed or what the reader should pay attention to
